@@ -6,11 +6,11 @@ To highlight what we can achieve with coSNARKs imagine two parties, Alice and Bo
 
 <img src="figures/step1.png" alt="alice-bob" width="100%"/>
 
-Alice and Bob own a secret value $a$ and $b$ respectively. They want to compute the [Poseidon](https://eprint.iacr.org/2019/458.pdf) hash of their combined secrets, but without revealing $a$ or $b$ to each other, while also producing a ZKP that their computation was correct and resulted in said public hash (a real use-case would also additionally prove properties about $a,b$).
+Alice and Bob own a secret value $$a$$ and $$b$$ respectively. They want to compute the [Poseidon](https://eprint.iacr.org/2019/458.pdf) hash of their combined secrets, but without revealing $$a$$ or $$b$$ to each other, while also producing a ZKP that their computation was correct and resulted in said public hash (a real use-case would also additionally prove properties about $$a,b$$).
 
 Sure, they could send their secrets to a trusted third party to compute the hash and return the result. But then that third party would learn both of their secrets, which they’re not comfortable with. This is where coSNARKs come into play, allowing them to securely compute the hash together without exposing their private values.
 
-First of all, Alice and Bob need to [secret-share](https://en.wikipedia.org/wiki/Secret_sharing) $a$ and $b$.
+First of all, Alice and Bob need to [secret-share](https://en.wikipedia.org/wiki/Secret_sharing) $$a$$ and $$b$$.
 
 <img src="figures/step2.png" alt="secret-share input" width="100%"/>
 
@@ -22,7 +22,7 @@ In our example, the MPC-network consists of three computing nodes. In a real-wor
 
 <img src="figures/step4.png" alt="secret-share input" width="100%"/>
 
-The MPC network now computes the extended witness of $a$ and $b$. If you are confused what this means, we recommend reading the explanation in the [circom documentation](https://docs.circom.io/getting-started/computing-the-witness/)! TLDR: we compute the circuit with the inputs $a$ and $b$ and get the result of the circuit. In our case, this is the Poseidon hash of $a$ and $b$!
+The MPC network now computes the extended witness of $$a$$ and $$b$$. If you are confused what this means, we recommend reading the explanation in the [circom documentation](https://docs.circom.io/getting-started/computing-the-witness/)! TLDR: we compute the circuit with the inputs $$a$$ and $$b$$ and get the result of the circuit. In our case, this is the Poseidon hash of $$a$$ and $$b$$!
 
 <img src="figures/step5.png" alt="secret-share input" width="100%"/>
 
@@ -30,4 +30,4 @@ The last step is to compute the proof! Computing the proof can either be done by
 
 <img src="figures/step6.png" alt="secret-share input" width="100%"/>
 
-The final result is the Poseidon hash of $a$ and $b$ and a coSNARK attesting the validity of the Poseidon hash!
+The final result is the Poseidon hash of $$a$$ and $$b$$ and a coSNARK attesting the validity of the Poseidon hash!
