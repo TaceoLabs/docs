@@ -1,25 +1,19 @@
-# Introduction
+# Table of Contents
 
 - [Overview](./overview.md)
 - [MPC Primer](./mpc-primer.md)
 - [Collaborative SNARKs Primer](./collabSNARKs-primer.md)
 
-# Use Cases
+- Use Cases
+  - [DeFi](./use-cases/use-case-defi.md)
+  - [AI](./use-cases/use-case-ai.md)
+  - [Data Ownership](./use-cases/use-case-data-ownership.md)
+  - [Gaming](./use-cases/use-case-gaming.md)
 
-- [DeFi](./use-cases/use-case-defi.md)
-- [AI](./use-cases/use-case-ai.md)
-- [Data Ownership](./use-cases/use-case-data-ownership.md)
-- [Gaming](./use-cases/use-case-gaming.md)
-
-# Getting Started
-
-- [Quick Start](./getting-started/quick_start.md)
-- [Installation](./getting-started/install.md)
-- [Usage](./getting-started/usage.md)
-
-<!--- [Computing a ZKP in MPC](./proving.md) -->
-<!--- [C- [Computing the extended witness in MPC](./witness.md) -->
-<!--- [C- [Collecting input from multiple parties](./multiple_inputs.md) -->
+- Getting Started
+  - [Quick Start](./getting-started/quick_start.md)
+  - [Installation](./getting-started/install.md)
+  - [Usage](./getting-started/usage.md)
 
 - [co-circom CLI](./co-circom-cli/co-circom.md)
   - [split-input](./co-circom-cli/split-input.md)
