@@ -1,8 +1,8 @@
 # Introduction
 
-[Overview](./overview.md)
-[MPC Primer](./mpc-primer.md)
-[Collaborative SNARKs Primer](./collabSNARKs-primer.md)
+- [Overview](./overview.md)
+- [MPC Primer](./mpc-primer.md)
+- [Collaborative SNARKs Primer](./collabSNARKs-primer.md)
 
 # Use Cases
 
