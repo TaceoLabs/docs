@@ -1,4 +1,4 @@
-# Multiplier 2 From Multiple Parties
+# Input From Multiple Parties
 
 One of the most compelling applications of co-SNARKs is enabling distrusting
 parties to jointly compute a ZK proof for private shared state. This example
@@ -35,7 +35,7 @@ cargo run --release --bin co-circom -- merge-input-shares --inputs test_vectors/
 ```
 
 This sequence illustrates the secret-sharing of inputs by both parties and the
-subsequent [merging](./merge-input-shares.md) of these inputs into a single file, executed by the computing
+subsequent [merging](../co-circom-cli/merge-input-shares.md) of these inputs into a single file, executed by the computing
 nodes.
 
 [^1]:

@@ -56,6 +56,7 @@ const sidebars: SidebarsConfig = {
     {
       type: "category",
       label: "Examples",
+      link: { type: "doc", id: "examples/examples" },
       items: ["examples/poseidon", "examples/kyc", "examples/multiplier2"],
     },
     {
