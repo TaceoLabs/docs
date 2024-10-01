@@ -29,8 +29,6 @@
   - [KYC](./examples/kyc.md)
   - [Input from Multiple Parties](./examples/multiplier2.md)
 
-# Further Information
-
 - [Design](./design/design.md)
   - [MPC-VM](./design/mpc_vm.md)
   - [Known Issues](./design/known_issues.md)
