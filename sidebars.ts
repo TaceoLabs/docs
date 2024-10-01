@@ -17,8 +17,8 @@ const sidebars: SidebarsConfig = {
   // But you can create a sidebar manually
   coSnarkSidebar: [
     "overview",
-    "primer/collabSNARKs-primer",
     "primer/mpc-primer",
+    "primer/collabSNARKs-primer",
     {
       type: "category",
       label: "Use Cases",

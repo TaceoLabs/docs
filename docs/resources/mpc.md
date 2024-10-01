@@ -13,9 +13,11 @@ With $[x]$ we denote that $x\in\mathbb F_p$ is additively secret shared amongst 
 
 Replicated secret sharing is based on additive secret sharing, with the twist that each party has multiple additive shares. Thus, in the 3-party case a secret $x\in\mathbb F_p$ is shared the following way. First, the $x$ is split into three random shares $x_1, x_2, x_3\in\mathbb F_p$ such that $x=x_1+x_2+x_3 \mod p$ and each party gets two shares:
 $$
+\begin{align*}
     P_1: (x_1, x_3)\\
     P_2: (x_2, x_1)\\
     P_3: (x_3, x_2)
+\end{align*}
 $$
 
 ### Rng Setup
@@ -27,9 +29,11 @@ Random values are required during many parts of MPC executions. For cheaper rand
 In order to create random shares $(r_i, r_{i-1})$, random additive shares of $0$ (i.e., $r_i - r_{i-1}$), or random binary shares of $0$ (i.e., $r_i \oplus r_{i-1}$) without interaction, Rep3 sets up a correlated random number generator during the setup phase. Each party $P_i$ chooses a seed $s_i$ and sends it to the next party $P_{i+1}$. Thus, each party has two seeds and can set up an RNG's, where two party are able to create the same random numbers:
 
 $$
+\begin{align*}
     P_1: (\text{RNG}_1, \text{RNG}_3)\\
     P_2: (\text{RNG}_2, \text{RNG}_1)\\
     P_3: (\text{RNG}_3, \text{RNG}_2)
+\end{align*}
 $$
 
 #### Binary To Arithmetic Conversion
@@ -37,9 +41,11 @@ $$
 For the binary to arithmetic conversion, we need correlated randomness as well. The goal is to setup RNG's, such that:
 
 $$
-    P_1: (\text{RNG1}_1, \text{RNG1}_3), (\text{RNG2}_1, \text{RNG2}_2, \text{RNG2}_3)\\
-    P_1: (\text{RNG1}_1, \text{RNG1}_2, \text{RNG1}_3), (\text{RNG2}_2, \text{RNG2}_1)\\
-    P_3: (\text{RNG1}_1, \text{RNG1}_2, \text{RNG1}_3), (\text{RNG2}_1, \text{RNG2}_2, \text{RNG2}_3)
+\begin{align*}
+    P_1: (&\text{RNG1}_1, \text{RNG1}_3), (\text{RNG2}_1, \text{RNG2}_2, \text{RNG2}_3)\\
+    P_2: (&\text{RNG1}_1, \text{RNG1}_2, \text{RNG1}_3), (\text{RNG2}_2, \text{RNG2}_1)\\
+    P_3: (&\text{RNG1}_1, \text{RNG1}_2, \text{RNG1}_3), (\text{RNG2}_1, \text{RNG2}_2, \text{RNG2}_3)
+\end{align*}
 $$
 In other words, $P_2$ and $P_3$ can use RNG1 create the same field element, while all parties can sample valid shares for it. Similar, $P_1$ and $P_3$ can use RNG2 to create the same field element, while all parties can sample valid shares for it. This setup can be achieved by sampling seeds from the already set up RNG for shared random values and resharing the seeds correctly.
 
@@ -68,9 +74,11 @@ Thus, multiplications involve a local operation followed by a resharing of the r
 
 Thus, party $P_i$ calculates:
 $$
-    r_i = \text{RNG}_i - \text{RNG}_{i-1}\\
-    z_i = x_i \cdot y_i + x_i \cdot y_{i-1} + x_{i-1} \cdot y_i + r_i\\
-    z_{i-1} = \text{SendReceive}(z_i)
+\begin{align*}
+    r_i &= \text{RNG}_i - \text{RNG}_{i-1}\\
+    z_i &= x_i \cdot y_i + x_i \cdot y_{i-1} + x_{i-1} \cdot y_i + r_i\\
+    z_{i-1} &= \text{SendReceive}(z_i)
+\end{align*}
 $$
 
 The resharing, thereby, is simply implemented as $P_i$ sending $z_i$ to $P_{i+1}$.
@@ -80,9 +88,11 @@ The resharing, thereby, is simply implemented as $P_i$ sending $z_i$ to $P_{i+1}
 AND gates follow directly from multiplications:
 
 $$
-    r_i = \text{RNG}_i \oplus \text{RNG}_{i-1}\\
-    z_i = (x_i \wedge y_i) \oplus (x_i \wedge y_{i-1}) \oplus (x_{i-1} \wedge y_i) \oplus r_i\\
-    z_{i-1} = \text{SendReceive}(z_i)
+\begin{align*}
+    r_i &= \text{RNG}_i \oplus \text{RNG}_{i-1}\\
+    z_i &= (x_i \wedge y_i) \oplus (x_i \wedge y_{i-1}) \oplus (x_{i-1} \wedge y_i) \oplus r_i\\
+    z_{i-1} &= \text{SendReceive}(z_i)
+\end{align*}
 $$
 
 #### Arithmetic to Binary Conversion
@@ -177,7 +187,7 @@ $$
         1 & 2 & 3 & ... & n \\
         1 & 2^2 & 3^2 & ... & n^2 \\
         \vdots & \vdots & \vdots & \ddots & \vdots  \\
-        1 & 2^t & 3^t & ... & n^t \\
+        1 & 2^t & 3^t & ... & n^t
     \end{array}\right)
 $$
 

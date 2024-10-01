@@ -32,6 +32,13 @@ const config: Config = {
     locales: ["en"],
   },
 
+  stylesheets: [
+    {
+      href: "/katex/katex.min.css",
+      type: "text/css",
+    },
+  ],
+
   presets: [
     [
       "classic",
