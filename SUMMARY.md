@@ -1,17 +1,50 @@
-# Table of contents
+# Introduction
 
-* [Welcome](README.md)
+[Overview](./overview.md)
+[MPC Primer](./mpc-primer.md)
+[Collaborative SNARKs Primer](./collabSNARKs-primer.md)
 
-## Getting Started
+# Use Cases
 
-* [Quickstart](getting-started/quickstart.md)
-* [Publish your docs](getting-started/publish-your-docs.md)
+- [DeFi](./use-cases/use-case-defi.md)
+- [AI](./use-cases/use-case-ai.md)
+- [Data Ownership](./use-cases/use-case-data-ownership.md)
+- [Gaming](./use-cases/use-case-gaming.md)
 
-## Basics
+# Getting Started
 
-* [Editor](basics/editor.md)
-* [Markdown](basics/markdown.md)
-* [Images & media](basics/images-and-media.md)
-* [Interactive blocks](basics/interactive-blocks.md)
-* [OpenAPI](basics/openapi.md)
-* [Integrations](basics/integrations.md)
+- [Quick Start](./getting-started/quick_start.md)
+- [Installation](./getting-started/install.md)
+- [Usage](./getting-started/usage.md)
+
+<!--- [Computing a ZKP in MPC](./proving.md) -->
+<!--- [C- [Computing the extended witness in MPC](./witness.md) -->
+<!--- [C- [Collecting input from multiple parties](./multiple_inputs.md) -->
+
+- [co-circom CLI](./co-circom-cli/co-circom.md)
+  - [split-input](./co-circom-cli/split-input.md)
+  - [merge-input-shares](./co-circom-cli/merge-input-shares.md)
+  - [split-witness](./co-circom-cli/split-witness.md)
+  - [generate-witness](./co-circom-cli/generate-witness.md)
+  - [translate-witness](./co-circom-cli/translate-witness.md)
+  - [generate-proof](./co-circom-cli/generate-proof.md)
+  - [verify](./co-circom-cli/verify.md)
+  - [Configuration](./co-circom-cli/config.md)
+- [Examples](./examples/examples.md)
+  - [Poseidon](./examples/poseidon.md)
+  - [KYC](./examples/kyc.md)
+  - [Input from Multiple Parties](./examples/multiplier2.md)
+
+# Further Information
+
+- [Design](./design/design.md)
+  - [MPC-VM](./design/mpc_vm.md)
+  - [Known Issues](./design/known_issues.md)
+  - [Roadmap](./design/roadmap.md)
+- [Background Material](./resources/resources.md)
+  - [Circom](./resources/circom.md)
+  - [MPC](./resources/mpc.md)
+  - [Zero Knowledge Proofs](./resources/zkp.md)
+  - [Collaborative SNARKs](./resources/collsnarks.md)
+
+[Contact](./contact.md)
