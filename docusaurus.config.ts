@@ -7,7 +7,7 @@ import rehypeKatex from "rehype-katex";
 const config: Config = {
   title: "TACEO coSNARKs",
   tagline: "[Don't] share your data",
-  favicon: "img/favicon.ico",
+  favicon: "img/favicon.png",
 
   // Set the production url of your site here
   url: "https://docs.taceo.io",
@@ -60,13 +60,12 @@ const config: Config = {
   ],
 
   themeConfig: {
-    // Replace with your project's social card
-    image: "img/docusaurus-social-card.jpg",
     navbar: {
       // title: 'TACEO Docs',
       logo: {
         alt: "TACEO Logo",
-        src: "img/TACEO_Logo_WEB-color.svg",
+        src: "img/logo.svg",
+        srcDark: "img/logo-dark.svg",
       },
       items: [
         {
@@ -109,6 +108,10 @@ const config: Config = {
             {
               label: "Twitter",
               href: "https://twitter.com/taceo_io",
+            },
+            {
+              label: "Telegram",
+              href: "https://t.me/collaborativeSNARK",
             },
           ],
         },
