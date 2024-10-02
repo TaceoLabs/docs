@@ -1,7 +1,3 @@
----
-id: overview
-slug: /
----
 
 # Overview
 
