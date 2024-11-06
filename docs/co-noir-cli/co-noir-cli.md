@@ -1,4 +1,6 @@
-# UltraHonk
+# Getting Started With Co-Noir
+
+## UltraHonk
 
 Our co-Noir implementation cuurently supports the UltraHonk prover (with Keccak and Poseidon2 as transcript) from Barretenberg v0.62.0. To get Barretenberg with this version, use the following commands:
 
