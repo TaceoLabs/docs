@@ -54,10 +54,25 @@ const sidebars: SidebarsConfig = {
       ],
     },
     {
+        type: "category",
+        label: "co-noir CLI",
+        link: { type: "doc", id: "co-noir-cli/co-noir-cli" },
+        items: [
+        //   "co-circom-cli/split-input",
+        //   "co-circom-cli/merge-input-shares",
+        //   "co-circom-cli/split-witness",
+        //   "co-circom-cli/generate-witness",
+        //   "co-circom-cli/translate-witness",
+        //   "co-circom-cli/generate-proof",
+        //   "co-circom-cli/verify",
+        //   "co-circom-cli/config",
+        ],
+      },
+    {
       type: "category",
       label: "Examples",
       link: { type: "doc", id: "examples/examples" },
-      items: ["examples/poseidon", "examples/kyc", "examples/multiplier2"],
+      items: ["examples/poseidon", "examples/poseidon_noir", "examples/kyc", "examples/multiplier2"],
     },
     {
       type: "category",
