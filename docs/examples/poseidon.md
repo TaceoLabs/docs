@@ -1,4 +1,4 @@
-# Poseidon
+# Poseidon Circom
 
 [Poseidon](https://eprint.iacr.org/2019/458.pdf) is a cryptographic hash
 function optimized for efficiency in ZK. Circom comes with an
