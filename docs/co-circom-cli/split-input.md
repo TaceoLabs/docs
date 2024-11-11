@@ -12,6 +12,28 @@ The above command takes the input `test_vectors/poseidon/input.json` for the cir
 
 These shares can be handed to the 3 different MPC parties for the witness generation phase.
 
+### Input Arrays
+
+Elements in an input array can be provided by different parties by using the `?` character as placeholder for unknown inputs.
+
+`input0.json`:
+
+```json
+{
+  "a": ["1", "?"]
+}
+```
+
+`input1.json`:
+
+```json
+{
+  "a": ["?", "2"]
+}
+```
+
+After sharing these inputs, they must be merged with [merge-input-shares](./merge-input-shares.md).
+
 ## Reference
 
 ```txt
