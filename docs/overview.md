@@ -13,6 +13,7 @@ If you are completely new to working in an MPC environment, it may be worth chec
 If you wish to deploy your new coSNARK circuits, you'll need MPC nodes to run them on. You can either set this up yourself, or you can get in touch with us if you are interested to be an early tester of the coSNARK alphanet.
 
 ## Useful Resources
+
 Throughout the docs you will find many links to useful articles and talks, but if you want to get started with some quick overviews, you can check out:
 
 * [Overview of what we're doing at TACEO](https://www.youtube.com/watch?v=tlVFbr3_eEU)
