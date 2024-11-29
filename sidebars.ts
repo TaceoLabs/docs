@@ -69,6 +69,11 @@ const sidebars: SidebarsConfig = {
       link: { type: "doc", id: "examples/examples" },
       items: ["examples/poseidon", "examples/poseidon_noir", "examples/kyc", "examples/multiplier2"],
     },
+    {
+      type: "category",
+      label: "Releases",
+      items: ["releases/co-noir-nov"]
+    },
     // {
     //   type: "category",
     //   label: "Design",

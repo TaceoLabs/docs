@@ -1,8 +1,8 @@
-# Major update coNoir
+# Major update to coNoir
 
 ## Summary
 
-We’ve made significant progress to bring coSNARKs to Noir. It is now possible with the coNoir CLI tool to **build simple zkApps that leverage private shared state or private proof delegation** (provided you have the necessary MPC nodes in place)
+We’ve made significant progress to bring coSNARKs to Noir. It is now possible with the [coNoir CLI](../co-noir-cli/co-noir-cli.md) tool to **build simple zkApps that leverage private shared state or private proof delegation** (provided you have the necessary MPC nodes in place)
 
 Speaking of nodes, in case you missed it, we previously launched our coSNARKs [alphanet](https://blog.taceo.io/devcon-demo/). One of the **next steps is to integrate coNoir into the alphanet**. This will allow select developers to use coNoir to experiment with private shared state and private proof delegation.
 
@@ -10,7 +10,7 @@ Example: We are currently **supporting** the Private Shared State Grantee **Hash
 
 ## New features
 
-First, let’s look back at the status quo from zkSummit (early Oct.). At this point coNoir was “only” supporting basic field arithmetic, thus coNoir programs could just use the field datatype and simple operations, like additions and multiplications (see [A First Look at Collaborative Noir | TACEO Blog](https://blog.taceo.io/co-noir-intro/)). This has changed drastically, so let’s give some update:
+First, let’s look back at the status quo from zkSummit (early Oct.) At this point coNoir was “only” supporting basic field arithmetic, thus coNoir programs could just use the field datatype and simple operations, like additions and multiplications (see [A First Look at Collaborative Noir | TACEO Blog](https://blog.taceo.io/co-noir-intro/)). This has changed drastically, so let’s give some update:
 
 ### Range checks
 
@@ -44,7 +44,3 @@ The Brillig VM in general requires a fully functional MPC-VM, so don’t expect 
 ## Compatibility
 
 CoNoir is **compatible with the Noir version 1.0.0-beta.0**. That means, our UltraHonk prover is also compatible with Barretenberg v0.63.0.
-
-## Feedback
-
-As we are starting to give more regular updates, we’d **love to hear your feedback** what is useful, what is missing, etc.; Also if you know from any projects that want to work on private shared state or thinking about private proof delegation as an option, we are more than happy to support them.
