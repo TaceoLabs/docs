@@ -21,16 +21,6 @@ const sidebars: SidebarsConfig = {
     "primer/collabSNARKs-primer",
     {
       type: "category",
-      label: "Use Cases",
-      items: [
-        "use-cases/defi",
-        "use-cases/ai",
-        "use-cases/data-ownership",
-        "use-cases/gaming",
-      ],
-    },
-    {
-      type: "category",
       label: "Getting Started",
       items: [
         "getting-started/quick-start",
@@ -79,11 +69,11 @@ const sidebars: SidebarsConfig = {
       link: { type: "doc", id: "examples/examples" },
       items: ["examples/poseidon", "examples/poseidon_noir", "examples/kyc", "examples/multiplier2"],
     },
-    {
-      type: "category",
-      label: "Design",
-      items: ["design/mpc-vm", "design/known-issues", "design/roadmap"],
-    },
+    // {
+    //   type: "category",
+    //   label: "Design",
+    //   items: ["design/mpc-vm", "design/known-issues", "design/roadmap"],
+    // },
     {
       type: "category",
       label: "Background Material",
@@ -92,6 +82,16 @@ const sidebars: SidebarsConfig = {
         "resources/mpc",
         "resources/zkp",
         "resources/collsnarks",
+      ],
+    },
+    {
+      type: "category",
+      label: "Use Cases",
+      items: [
+        "use-cases/defi",
+        "use-cases/ai",
+        "use-cases/data-ownership",
+        "use-cases/gaming",
       ],
     },
   ],

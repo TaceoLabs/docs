@@ -1,4 +1,4 @@
-# Quick Start
+# coCircom Quick Start
 
 coCircom is an implementation of [collaborative SNARKs](../resources/collsnarks.md), with a focus on the [circom](https://circom.io) framework.
 In contrast to traditional SNARKs, which are run by a single prover, collaborative SNARKs are executed using a [multiparty computation protocol](../resources/mpc.md).
