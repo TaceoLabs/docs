@@ -21,16 +21,6 @@ const sidebars: SidebarsConfig = {
     "primer/collabSNARKs-primer",
     {
       type: "category",
-      label: "Use Cases",
-      items: [
-        "use-cases/defi",
-        "use-cases/ai",
-        "use-cases/data-ownership",
-        "use-cases/gaming",
-      ],
-    },
-    {
-      type: "category",
       label: "Getting Started",
       items: [
         "getting-started/quick-start",
@@ -81,9 +71,14 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: "category",
-      label: "Design",
-      items: ["design/mpc-vm", "design/known-issues", "design/roadmap"],
+      label: "Releases",
+      items: ["releases/co-noir-nov"]
     },
+    // {
+    //   type: "category",
+    //   label: "Design",
+    //   items: ["design/mpc-vm", "design/known-issues", "design/roadmap"],
+    // },
     {
       type: "category",
       label: "Background Material",
@@ -92,6 +87,16 @@ const sidebars: SidebarsConfig = {
         "resources/mpc",
         "resources/zkp",
         "resources/collsnarks",
+      ],
+    },
+    {
+      type: "category",
+      label: "Use Cases",
+      items: [
+        "use-cases/defi",
+        "use-cases/ai",
+        "use-cases/data-ownership",
+        "use-cases/gaming",
       ],
     },
   ],
