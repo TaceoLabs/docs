@@ -11,8 +11,7 @@ First, let’s look back at the status quo from ZK12 (early October where Franco
 
 ### Range checks
 
-We implemented the functionality required for **range checks** in MPC. These range checks now enable users of coNoir to use more than just the field datatype -- **u64, u16, ect. are now also supported**.
-
+We implemented the functionality required for **range checks** in MPC. These range checks now enable users of coNoir to use more than just the field datatype; **u64, u16, ect. are now also supported**.
 Here is a [range check example](https://github.com/TaceoLabs/co-snarks/blob/main/co-noir/co-noir/examples/test_vectors/mul3u64/src/main.nr).
 
 For those interested, this mainly required us to implement _decomposing field elements_ to smaller chunks and an _oblivious sorting_ algorithm in MPC.
@@ -20,7 +19,6 @@ For those interested, this mainly required us to implement _decomposing field el
 ### Asserts
 
 CoNoir users can now add asserts to their code (as long as the statement inside the assert is also supported):
-
 Here is an [asserts example](https://github.com/TaceoLabs/co-snarks/blob/main/co-noir/co-noir/examples/test_vectors/add3_assert/src/main.nr).
 
 ### Part of Brillig VM
