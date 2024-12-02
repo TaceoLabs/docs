@@ -1,34 +1,31 @@
-# Major update to coNoir
+# Major update to coNoir (November 2024)
 
 ## Summary
 
-We’ve made significant progress to bring coSNARKs to Noir. It is now possible with the [coNoir CLI](../co-noir-cli/co-noir-cli.md) tool to **build simple zkApps that leverage private shared state or private proof delegation** (provided you have the necessary MPC nodes in place)
-
-Speaking of nodes, in case you missed it, we previously launched our coSNARKs [alphanet](https://blog.taceo.io/devcon-demo/). One of the **next steps is to integrate coNoir into the alphanet**. This will allow select developers to use coNoir to experiment with private shared state and private proof delegation.
-
-Example: We are currently **supporting** the Private Shared State Grantee **Hashcloak** for their private machine learning proof-of-concept (some code snippets below).
+We’ve made significant progress to bring coSNARKs to Noir. It is now possible with the [coNoir CLI](../co-noir-cli/co-noir-cli.md) tool to **build simple zkApps that leverage private shared state or private proof delegation.**
+Example: We are currently supporting the Private Shared State Grantee **Hashcloak** for their private machine learning proof-of-concept (some code snippets below).
 
 ## New features
 
-First, let’s look back at the status quo from zkSummit (early Oct.) At this point coNoir was “only” supporting basic field arithmetic, thus coNoir programs could just use the field datatype and simple operations, like additions and multiplications (see [A First Look at Collaborative Noir | TACEO Blog](https://blog.taceo.io/co-noir-intro/)). This has changed drastically, so let’s give some update:
+First, let’s look back at the status quo from ZK12 (early October where Franco gave a [.](https://www.youtube.com/watch?v=w2HJxrDE01k)) At this point coNoir was "only" supporting basic field arithmetic, and coNoir programs could just use the field datatype and simple operations, like additions and multiplications (see [A First Look at Collaborative Noir | TACEO Blog](https://blog.taceo.io/co-noir-intro/)). This has changed drastically, so let’s give some update:
 
 ### Range checks
 
-We implemented the functionality required for range checks in MPC. These range checks now enable users of coNoir to use more than just the field datatype -- **u64, u16, ect. are now also supported**.
+We implemented the functionality required for **range checks** in MPC. These range checks now enable users of coNoir to use more than just the field datatype -- **u64, u16, ect. are now also supported**.
 
-Example: https://github.com/TaceoLabs/co-snarks/blob/main/co-noir/co-noir/examples/test_vectors/mul3u64/src/main.nr
+Here is a [range check example](https://github.com/TaceoLabs/co-snarks/blob/main/co-noir/co-noir/examples/test_vectors/mul3u64/src/main.nr).
 
-For those interested, this mainly required us to implement decomposing field elements to smaller chunks and an oblivious sorting algorithm in MPC.
+For those interested, this mainly required us to implement _decomposing field elements_ to smaller chunks and an _oblivious sorting_ algorithm in MPC.
 
 ### Asserts
 
 CoNoir users can now add asserts to their code (as long as the statement inside the assert is also supported):
 
-Example: https://github.com/TaceoLabs/co-snarks/blob/main/co-noir/co-noir/examples/test_vectors/add3_assert/src/main.nr
+Here is an [asserts example](https://github.com/TaceoLabs/co-snarks/blob/main/co-noir/co-noir/examples/test_vectors/add3_assert/src/main.nr).
 
 ### Part of Brillig VM
 
-Context: A lot of features from Noir are evaluated as unconstrained functions. Whenever an unconstrained function is encountered the Brillig VM is invoked in the background.
+Context: A lot of features from Noir are evaluated as _unconstrained_ functions. Whenever an unconstrained function is encountered the Brillig VM is invoked in the background.
 
 In the last weeks we worked hard to also implement a **first version of the Brillig VM in MPC**!
 
