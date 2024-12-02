@@ -7,7 +7,7 @@ Example: We are currently supporting the Private Shared State Grantee **Hashcloa
 
 ## New features
 
-First, let’s look back at the status quo from ZK12 (early October where Franco gave a [.](https://www.youtube.com/watch?v=w2HJxrDE01k)) At this point coNoir was "only" supporting basic field arithmetic, and coNoir programs could just use the field datatype and simple operations, like additions and multiplications (see [A First Look at Collaborative Noir | TACEO Blog](https://blog.taceo.io/co-noir-intro/)). This has changed drastically, so let’s give some update:
+First, let’s look back at the status quo from ZK12 (early October where Franco gave a [workshop.](https://www.youtube.com/watch?v=w2HJxrDE01k)) At this point coNoir was "only" supporting basic field arithmetic, and coNoir programs could just use the field datatype and simple operations, like additions and multiplications (see [A First Look at Collaborative Noir | TACEO Blog](https://blog.taceo.io/co-noir-intro/)). This has changed drastically, so let’s give some update:
 
 ### Range checks
 
