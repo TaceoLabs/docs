@@ -4,7 +4,7 @@ Similar to [Poseidon in Circom](../poseidon), we can also prove Poseidon in Noir
 
 To quickly get started, we provide a bash script that runs the Poseidon circuit
 using co-circom. After cloning the repository, navigate to the
-`/co-noir/examples` directory and execute the following command:
+`/co-noir/co-noir/examples` directory and execute the following command:
 
 ```bash
 sh run_full_poseidon.sh

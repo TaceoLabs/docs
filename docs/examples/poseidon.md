@@ -13,7 +13,7 @@ inputs originating from the same party.
 
 To quickly get started, we provide a bash script that runs the Poseidon circuit
 using co-circom. After cloning the repository, navigate to the
-`/co-circom/examples` directory and execute the following command:
+`/co-circom/co-circom/examples` directory and execute the following command:
 
 ```bash
 sh run_full_poseidon.sh
