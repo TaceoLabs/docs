@@ -98,7 +98,7 @@ Here, `poseidon.gz.shared` is the share of the witness, `poseidon.json` is the c
 The corresponding Barretenberg command (from `barretenberg/cpp/build/bin`) is:
 
 ```bash
-./bb prove_ultra_honk -b poseidon.json -w poseidon.gz -o proof.proof
+bb prove_ultra_honk -b poseidon.json -w poseidon.gz -o proof.proof
 ```
 
 where poseidon.gz is the witness file created by Noir (which is equivalent to a non-secret-shared variant of `poseidon.gz.shared`). The generated proof key is the same, regardless of using Co-Noir or Barretenberg.
@@ -117,7 +117,7 @@ Here, `poseidon.json` is the circuit file from Noir, `bn254_g1.dat` is the file 
 The corresponding Barretenberg command (from `barretenberg/cpp/build/bin`) is:
 
 ```bash
-./bb write_vk_ultra_honk -b poseidon.json -o verification_key
+bb write_vk_ultra_honk -b poseidon.json -o verification_key
 ```
 
 Here, `poseidon.json` is the circuit file from Noir. The output verification key is the same, regardless of using Co-Noir or Barretenberg.
@@ -136,7 +136,7 @@ Here, `proof.proof` is the proof we want to verify, `verification_key` is the ou
 The corresponding Barretenberg command (from `barretenberg/cpp/build/bin`) is:
 
 ```bash
-./bb verify_ultra_honk -k verification_key -p proof.proof
+bb verify_ultra_honk -k verification_key -p proof.proof
 ```
 
 Note: Barretenberg does not require the file for storing the CRS, since Barretenberg automatically downloads it if it is not present.
