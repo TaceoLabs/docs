@@ -35,7 +35,7 @@ cargo run --release --bin co-circom -- merge-input-shares --inputs test_vectors/
 ```
 
 This sequence illustrates the secret-sharing of inputs by both parties and the
-subsequent [merging](../co-circom-cli/merge-input-shares.md) of these inputs into a single file, executed by the computing
+subsequent [merging](../co-circom/merge-input-shares.md) of these inputs into a single file, executed by the computing
 nodes.
 
 [^1]:

@@ -16,6 +16,7 @@ Commands:
   build-and-generate-proof  Builds the proving key and evaluates the prover algorithm for the specified circuit and witness share in MPC
   create-vk                 Create a verification key for the specified circuit
   verify                    Verification of a Noir proof
+  download-crs              Download a CRS with a given number of points
   help                      Print this message or the help of the given subcommand(s)
 
 Options:

@@ -1,3 +1,7 @@
+# build-proving-key
+
+## Example
+
 ## Reference
 
 ```txt

@@ -5,8 +5,8 @@ TACEO is building tooling for collaborative zkSNARKs (coSNARKs), and the MPC env
 
 Here you will find documentation for tooling that lifts your code to work in MPC. So far, we have support for building collaborative SNARKs in
 
-* Circom (see [coCircom](/co-circom-cli/co-circom.md)), and
-* Noir (see [coNoir](/co-noir-cli/co-noir-cli.md))
+* Circom (see [coCircom](/co-circom/co-circom.md)), and
+* Noir (see [coNoir](/co-noir/co-noir.md))
 
 If you are completely new to working in an MPC environment, it may be worth checking out the [coCircom quick start](/getting-started/quick-start.md) guide. It walks through compiling circuits, splitting the input, the witness extension, and proving and verifying the circuit.
 
