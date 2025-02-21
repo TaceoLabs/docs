@@ -14,5 +14,6 @@ Options:
       --out-dir <OUT_DIR>          The path to the (existing) output directory
   -t, --threshold <THRESHOLD>      The threshold of tolerated colluding parties [default: 1]
   -n, --num-parties <NUM_PARTIES>  The number of parties [default: 3]
+      --recursive                  Generate a recursive proof
   -h, --help                       Print help (see more with '--help')
 ```

@@ -13,5 +13,7 @@ Options:
       --out <OUT>                    The output file where the final proof is written to. If not passed, this party will not write the proof to a file
       --public-input <PUBLIC_INPUT>  The output JSON file where the public inputs are written to. If not passed, this party will not write the public inputs to a file
   -t, --threshold <THRESHOLD>        The threshold of tolerated colluding parties [default: 1]
+      --recursive                    Generate a recursive friendly proof
+      --crs <CRS>                    The path to the prover crs file
   -h, --help                         Print help (see more with '--help')
 ```
