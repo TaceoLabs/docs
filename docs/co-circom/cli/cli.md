@@ -1,6 +1,6 @@
-# co-circom CLI
+# cli
 
-```txt
+```text
 Usage: co-circom <COMMAND>
 
 Commands:
