@@ -15,7 +15,6 @@ The above command takes the two input shares `input0.json.0.shared` and `input1.
 ## Reference
 
 ```txt
-co-circom merge-input-shares --help
 Merge multiple shared inputs received from multiple parties into a single one
 
 Usage: co-circom merge-input-shares [OPTIONS]

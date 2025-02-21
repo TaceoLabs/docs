@@ -13,17 +13,17 @@ The above command takes a shared input file `input.json.0.shared` for the circui
 ## Reference
 
 ```txt
-$ co-circom generate-witness --help
 Evaluates the extended witness generation for the specified circuit and input share in MPC
 
 Usage: co-circom generate-witness [OPTIONS]
 
 Options:
-      --config <CONFIG>              The path to the config file
-      --input <INPUT>                The path to the input share file
-      --circuit <CIRCUIT>            The path to the circuit file
-      --protocol <PROTOCOL>          The MPC protocol to be used [possible values: REP3, SHAMIR]
-      --curve <CURVE>                The pairing friendly curve to be used [possible values: BN254, BLS12-381]
-      --out <OUT>                    The output file where the final witness share is written to
-  -h, --help                         Print help (see more with '--help')
+      --config <CONFIG>          The path to the config file
+      --input <INPUT>            The path to the input share file
+      --circuit <CIRCUIT>        The path to the circuit file
+      --protocol <PROTOCOL>      The MPC protocol to be used [possible values: REP3, SHAMIR]
+      --curve <CURVE>            The pairing friendly curve to be used [possible values: BN254, BLS12-381]
+      --out <OUT>                The output file where the final witness share is written to
+  -O <SIMPLIFICATION_LEVEL>      The simplification level passed to the circom compiler (0-2) [default: 1]
+  -h, --help                     Print help (see more with '--help')
 ```

@@ -13,7 +13,6 @@ The above command takes the witness file `test_vectors/poseidon/witness.wtns` wh
 ## Reference
 
 ```txt
-$ co-circom translate-witness --help
 Translates the witness generated with one MPC protocol to a witness for a different one
 
 Usage: co-circom translate-witness [OPTIONS]
