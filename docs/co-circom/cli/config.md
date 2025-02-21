@@ -60,7 +60,7 @@ Structs such as the CompilerConfig can be set with `COCIRCOM_COMPILER={allow_lea
 
 ## Cli Arguments
 
-See [co-circom CLI](./co-circom.md)
+See [co-circom CLI](./cli.md)
 
 ## Compiler Configuration
 

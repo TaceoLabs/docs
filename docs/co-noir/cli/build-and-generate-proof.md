@@ -1,3 +1,7 @@
+# build-and-generate-proof
+
+## Example
+
 ## Reference
 
 ```txt
