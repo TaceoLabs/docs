@@ -2,7 +2,7 @@
 
 ## Summary
 
-We’ve made significant progress to bring coSNARKs to Noir. It is now possible with the [coNoir CLI](../co-noir/cli.md) tool to **build simple zkApps that leverage private shared state or private proof delegation.**
+We’ve made significant progress to bring coSNARKs to Noir. It is now possible with the [coNoir CLI](../co-noir/cli/cli.md) tool to **build simple zkApps that leverage private shared state or private proof delegation.**
 Example: We are currently supporting the Private Shared State Grantee **Hashcloak** for their private machine learning proof-of-concept (some code snippets below).
 
 ## New features
