@@ -1,6 +1,5 @@
-# Configuration
-
-`co-circom` uses a configuration for general settings and network configuration.
+# Network Configuration
+Out tools [coCircom CLI](./co-circom/cli/cli.md) and [coNoir CLI](./co-noir/cli/cli.md) both use a configuration for general settings and network configuration.
 The configuration can be done via a config file, environment variables, and cli arguments.
 Values are loaded in hierarchical order `file < environment variables < cli args`.
 
@@ -43,9 +42,11 @@ dns_name = "127.0.0.1:10002"
 cert_path = "data/cert2.der"
 ```
 
-See the example configuration in the `collaborative-circom/examples/configs` folder, with pre-generated certificates and keys in the `collaborative-circom/examples/data` folder.
+See the example configuration in the [configs](https://github.com/TaceoLabs/co-snarks/blob/main/co-circom/co-circom/examples/configs) directory, with pre-generated certificates and keys in the [data](https://github.com/TaceoLabs/co-snarks/blob/main/co-circom/co-circom/examples/data) directory.
 
 ## Env Variables
+
+TODO check this and generalize to coNoir and coCircom.
 
 Environment variables use the prefix `COCIRCOM_`.
 The different types can be set as follows:
@@ -60,7 +61,7 @@ Structs such as the CompilerConfig can be set with `COCIRCOM_COMPILER={allow_lea
 
 ## Cli Arguments
 
-See [co-circom CLI](./cli.md)
+See [coCircom CLI](./co-circom/cli/cli.md) and [coNoir CLI](./co-noir/cli/cli.md).
 
 ## Compiler Configuration
 

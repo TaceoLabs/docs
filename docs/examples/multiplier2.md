@@ -5,7 +5,7 @@ parties to jointly compute a ZK proof for private shared state. This example
 illustrates generating a proof for a simple multiplication circuit involving two
 parties, each providing inputs.
 
-We reuse the circuit introduced in our [Quick Start](../getting-started/quick-start.md) guide
+We reuse the circuit introduced in our [coCircom Quick Start](../getting-started/quick-start-co-circom.md) guide
 [^1].
 
 In this scenario, two input files are needed, one from each party. Both parties

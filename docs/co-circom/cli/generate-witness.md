@@ -8,7 +8,7 @@ The aim of the `generate-witness` command is to generate a secret-shared witness
 co-circom generate-witness --input test_vectors/poseidon/input.json.0.shared --circuit test_vectors/poseidon/circuit.circom --protocol REP3 --curve BN254 --config configs/party1.toml --out test_vectors/poseidon/witness.wtns.0.shared --config test_vectors/poseidon/config.toml
 ```
 
-The above command takes a shared input file `input.json.0.shared` for the circuit `circuit.circom` with the [network config](./config.md) and outputs the witness share to `test_vectors/poseidon/witness.wtns.0.shared`.
+The above command takes a shared input file `input.json.0.shared` for the circuit `circuit.circom` with the [network config](../../network-config.md) and outputs the witness share to `test_vectors/poseidon/witness.wtns.0.shared`.
 
 ## Reference
 
