@@ -23,28 +23,20 @@ const sidebars: SidebarsConfig = {
       type: "category",
       label: "Getting Started",
       items: [
-        "getting-started/quick-start",
+        "getting-started/quick-start-co-circom",
+        "getting-started/quick-start-co-noir",
         "getting-started/install",
         "getting-started/usage",
       ],
     },
     {
       type: "category",
-      label: "co-circom",
+      label: "coCircom",
       link: { type: "doc", id: "co-circom/co-circom" },
       items: [
         {
           type: "category",
-          label: "lib",
-          link: { type: "doc", id: "co-circom/lib/lib" },
-          items: [            
-            "co-circom/lib/api",
-            "co-circom/lib/example",
-          ],
-        },
-        {
-          type: "category",
-          label: "cli",
+          label: "Command-Line Interface",
           link: { type: "doc", id: "co-circom/cli/cli" },
           items: [
             "co-circom/cli/split-input",
@@ -54,29 +46,28 @@ const sidebars: SidebarsConfig = {
             "co-circom/cli/translate-witness",
             "co-circom/cli/generate-proof",
             "co-circom/cli/verify",
-            "co-circom/cli/config",
           ],
         },
+        {
+          type: "category",
+          label: "Rust Library",
+          link: { type: "doc", id: "co-circom/lib/lib" },
+          items: [            
+            "co-circom/lib/api",
+            "co-circom/lib/example",
+          ],
+        }
       ],
     },
     {
       type: "category",
-      label: "co-noir",
+      label: "coNoir",
       link: { type: "doc", id: "co-noir/co-noir" },
       items: [
         {
           type: "category",
-          label: "lib",
-          link: { type: "doc", id: "co-noir/lib/lib" },
-          items: [            
-            "co-noir/lib/api",
-            "co-noir/lib/example",
-          ],
-        },
-        {
-          type: "category",
-          label: "cli",
-          link: { type: "doc", id: "co-circom/cli/cli" },
+          label: "Command-Line Interface",
+          link: { type: "doc", id: "co-noir/cli/cli" },
           items: [
             "co-noir/cli/split-input",
             "co-noir/cli/merge-input-shares",
@@ -90,11 +81,20 @@ const sidebars: SidebarsConfig = {
             "co-noir/cli/build-and-generate-proof",
             "co-noir/cli/create-vk",
             "co-noir/cli/verify",
-            "co-noir/cli/config",
+          ],
+        },
+        {
+          type: "category",
+          label: "Rust Library",
+          link: { type: "doc", id: "co-noir/lib/lib" },
+          items: [            
+            "co-noir/lib/api",
+            "co-noir/lib/example",
           ],
         },
       ],
     },
+    "network-config",
     {
       type: "category",
       label: "Examples",

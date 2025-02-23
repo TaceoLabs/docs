@@ -11,7 +11,7 @@ Here, `proof.proof` is the proof we want to verify, `verification_key` is the ou
 The corresponding Barretenberg command (from `barretenberg/cpp/build/bin`) is:
 
 ```bash
-./bb verify_ultra_honk -k verification_key -p proof.proof
+bb verify_ultra_honk -k verification_key -p proof.proof
 ```
 
 Note: Barretenberg does not require the file for storing the CRS, since Barretenberg automatically downloads it if it is not present.

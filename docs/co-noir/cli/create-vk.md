@@ -13,7 +13,7 @@ Here, `poseidon.json` is the circuit file from Noir, `bn254_g1.dat` is the file 
 The corresponding Barretenberg command (from `barretenberg/cpp/build/bin`) is:
 
 ```bash
-./bb write_vk_ultra_honk -b poseidon.json -o verification_key
+bb write_vk_ultra_honk -b poseidon.json -o verification_key
 ```
 
 Here, `poseidon.json` is the circuit file from Noir. The output verification key is the same, regardless of using Co-Noir or Barretenberg.

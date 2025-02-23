@@ -8,7 +8,7 @@ The aim of the `translate-witness` command is to take a witness file `witness.wt
 co-circom translate-witness --witness test_vectors/poseidon/witness.wtns --src-protocol REP3 --target-protocol SHAMIR --curve BN254 --config configs/party1.toml --out test_vectors/poseidon/shamir_witness.wtns
 ```
 
-The above command takes the witness file `test_vectors/poseidon/witness.wtns` which was generated with the source MPC protocol `REP3` and translates it to the witness file `test_vectors/poseidon/shamir_witness.wtns` which is suitable for the target MPC protocol `SHAMIR`. The translation process requires network interaction, thus a [networking config](./config.md) is required as well.
+The above command takes the witness file `test_vectors/poseidon/witness.wtns` which was generated with the source MPC protocol `REP3` and translates it to the witness file `test_vectors/poseidon/shamir_witness.wtns` which is suitable for the target MPC protocol `SHAMIR`. The translation process requires network interaction, thus a [networking config](../../network-config.md) is required as well.
 
 ## Reference
 
