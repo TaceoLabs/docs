@@ -8,7 +8,7 @@ This command can be used to translate extended witnesses (outputs of GenerateWit
 cargo run --release --bin co-noir -- translate-witness --witness test_vectors/poseidon/poseidon.gz.shared --src-protocol REP3 --target-protocol SHAMIR --config configs/party.toml --out test_vectors/poseidon/shamir_poseidon.gz.shared
 ```
 
-Here, `poseidon.gz.shared` is the REP3 input share, `shamir_poseidon.gz.shared` the Shamir output share, and `party.toml` is a network configuration.
+Here, `poseidon.gz.shared` is the REP3 input share, `shamir_poseidon.gz.shared` the Shamir output share, and `party.toml` is a [network configuration](../../network-config.md).
 
 ## Reference
 

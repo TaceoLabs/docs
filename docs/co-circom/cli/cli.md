@@ -1,4 +1,8 @@
-# cli
+# coCircom Command-Line Interface
+
+This section expands on using the coCircom CLI to perform witness extension and proof generation in MPC including preparation steps thereof. As mentioned earlier, coCircom is best used alongside circom and snarkjs for generating intermediate artifacts.
+
+The [interactive workshop at ZK12](https://www.youtube.com/watch?v=w2HJxrDE01k) demonstrates the usage and workflow of the coCircom CLI (some background in the beginning, using the coCircom CLI starts around [28:58](https://youtu.be/w2HJxrDE01k?si=QcHRR-V8tXX6FPmw&t=1738)), as well as the coNoir CLI later on in the video.
 
 ```text
 Usage: co-circom <COMMAND>
@@ -17,3 +21,5 @@ Options:
   -h, --help     Print help
   -V, --version  Print version
 ```
+
+The subsections go into detail for each of `co-circom`'s commands.

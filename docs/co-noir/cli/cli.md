@@ -1,3 +1,9 @@
+# Command-Line Interface
+
+This section expands on using the coNoir CLI to perform witness extension and proof generation in MPC including preparation steps thereof. As mentioned earlier, coNoir is best used alongside [Noir](https://aztec.network/noir)'s package manager [nargo](https://docs.aztec.network/aztec/glossary#nargo) and Aztec's proof system [barretenberg](https://github.com/AztecProtocol/barretenberg) for generating intermediate artifacts.
+
+The [interactive workshop at ZK12](https://www.youtube.com/watch?v=w2HJxrDE01k) demonstrates the usage and workflow of the coNoir CLI (at the end of the video, starting at [44:45](https://youtu.be/w2HJxrDE01k?si=HshhExrhce4KCgzG&t=2685)), as well as the coCircom CLI (at the beginning of the video).
+
 ## Reference
 
 ```txt

@@ -1,4 +1,4 @@
-# coCircom Quick Start
+# Quick Start coCircom
 
 coCircom is an implementation of [collaborative SNARKs](../resources/collsnarks.md), with a focus on the [circom](https://circom.io) framework.
 In contrast to traditional SNARKs, which are run by a single prover, collaborative SNARKs are executed using a [multiparty computation protocol](../resources/mpc.md).
@@ -72,7 +72,7 @@ This command secret shares the private inputs (everything that is not explicitly
 
 Now we have to compute the extended witness. In a real-world setting you would have to send the input files from the previous step to the parties.
 
-To achieve that we need a network config for every party (you can read an in-depth explanation about the config [here](../co-circom/cli/config.md)). You can copy-paste the config from here and call it `party0.toml` for party0 and so on:
+To achieve that we need a network config for every party (you can read an in-depth explanation about the config [here](../network-config.md)). You can copy-paste the config from here and call it `party0.toml` for party0 and so on:
 
 ```toml
 [network]

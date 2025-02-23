@@ -1,9 +1,7 @@
 # Usage
 
-This section is empty at the moment 😭
+There are two ways of interacting with TACEO's tooling:
+  1. Standalone binaries that provide a command-line interface (CLI)
+  2. Rust libraries that you can use in your projects
 
-It will be updated in the course of the next weeks, so please be patient!
-
-For the time being we recommend checking out the [Quick Start Guide](./quick-start.md) or the [examples folder on our GitHub](https://github.com/TaceoLabs/collaborative-circom/tree/main/co-circom/co-circom/examples), where we provide different `bash` scripts to prove some circom files.
-
-Additionally, have a look at [the CLI commands](../co-circom/cli/cli.md) and the [additional material](../design/mpc-vm.md)!
+As mentioned earlier, TACEO provides [coCircom](/co-circom/co-circom.md) and [coNoir](/co-noir/co-noir.md) at the moment. The docs for each tool are split into two main sections, covering the CLI usage and a library description.
