@@ -4,3 +4,4 @@ The coCircom Rust library provides the same set of features as the [CLI](../cli/
 
 The library is meant to support you in developing your own application that makes use of coCircom's functionality. The next pages will guide you through setting up and including coCircom in your project.
 
+To view the more detailed docs, clone the repo and run `cargo doc --open --no-deps -p co-circom` to generate the rustdoc.

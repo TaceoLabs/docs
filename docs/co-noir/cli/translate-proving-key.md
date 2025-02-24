@@ -1,6 +1,12 @@
 # translate-proving-key
 
+Translates the given REP3 proving key into a Shamir proving key.
+
 ## Example
+
+```bash
+cargo run --release --bin co-noir -- translate-proving-key --proving-key proving_key.0.shared --src-protocol REP3 --target-protocol SHAMIR --config configs/party1.toml --out shamir_proving_key.0.shared
+```
 
 ## Reference
 
