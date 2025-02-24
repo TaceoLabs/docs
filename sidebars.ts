@@ -53,7 +53,6 @@ const sidebars: SidebarsConfig = {
           label: "Rust Library",
           link: { type: "doc", id: "co-circom/lib/lib" },
           items: [            
-            "co-circom/lib/api",
             "co-circom/lib/example",
           ],
         }
@@ -89,7 +88,6 @@ const sidebars: SidebarsConfig = {
           label: "Rust Library",
           link: { type: "doc", id: "co-noir/lib/lib" },
           items: [            
-            "co-noir/lib/api",
             "co-noir/lib/example",
           ],
         },
