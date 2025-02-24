@@ -52,10 +52,8 @@ const sidebars: SidebarsConfig = {
           type: "category",
           label: "Rust Library",
           link: { type: "doc", id: "co-circom/lib/lib" },
-          items: [            
-            "co-circom/lib/example",
-          ],
-        }
+          items: ["co-circom/lib/example"],
+        },
       ],
     },
     {
@@ -87,9 +85,7 @@ const sidebars: SidebarsConfig = {
           type: "category",
           label: "Rust Library",
           link: { type: "doc", id: "co-noir/lib/lib" },
-          items: [            
-            "co-noir/lib/example",
-          ],
+          items: ["co-noir/lib/example"],
         },
       ],
     },
@@ -98,12 +94,17 @@ const sidebars: SidebarsConfig = {
       type: "category",
       label: "Examples",
       link: { type: "doc", id: "examples/examples" },
-      items: ["examples/poseidon", "examples/poseidon_noir", "examples/kyc", "examples/multiplier2"],
+      items: [
+        "examples/poseidon",
+        "examples/poseidon_noir",
+        "examples/kyc",
+        "examples/multiplier2",
+      ],
     },
     {
       type: "category",
       label: "Releases",
-      items: ["releases/co-noir-nov"]
+      items: ["releases/co-noir-nov", "releases/co-noir-feb"],
     },
     // {
     //   type: "category",
