@@ -81,6 +81,7 @@ const sidebars: SidebarsConfig = {
             "co-noir/cli/build-and-generate-proof",
             "co-noir/cli/create-vk",
             "co-noir/cli/verify",
+            "co-noir/cli/download-crs",
           ],
         },
         {

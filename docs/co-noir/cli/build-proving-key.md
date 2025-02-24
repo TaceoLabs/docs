@@ -1,6 +1,12 @@
 # build-proving-key
 
+This command takes the shared witness and circuit, and builds a shared proving key.
+
 ## Example
+
+```bash
+cargo run --release --bin co-noir -- build-proving-key --witness test_vectors/poseidon/poseidon.gz.0.shared --circuit test_vectors/poseidon/poseidon.json  --protocol REP3 --config configs/party1.toml --out proving_key.0.shared
+```
 
 ## Reference
 
