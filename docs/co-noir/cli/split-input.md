@@ -5,7 +5,7 @@ If you want to calculate the extended witness and the prove from the input file 
 ## Example
 
 ```bash
-cargo run --release --bin co-noir -- split-input --circuit test_vectors/poseidon/poseidon.json --input test_vectors/poseidon/Prover.toml --protocol REP3 --out-dir test_vectors/poseidon
+co-noir split-input --circuit test_vectors/poseidon/poseidon.json --input test_vectors/poseidon/Prover.toml --protocol REP3 --out-dir test_vectors/poseidon
 ```
 
 This command uses the *REP3* MPC protocol and produces the shares for 3 MPC in the `test_vectors/poseidon` folder. As input it takes the circuit file `poseidon.json` and the `Prover.toml` file which contains the preimage of the hash which we want to share.

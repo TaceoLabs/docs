@@ -7,7 +7,7 @@ A use case for this would be to have multiple parties provide different parts of
 ## Example
 
 ```bash
-cargo run --release --bin co-noir -- merge-input-shares --inputs test_vectors/poseidon_input2/Prover1.toml.0.shared --inputs test_vectors/poseidon_input2/Prover2.toml.0.shared --protocol REP3 --out test_vectors/poseidon_input2/Prover.toml.0.shared
+co-noir merge-input-shares --inputs test_vectors/poseidon_input2/Prover1.toml.0.shared --inputs test_vectors/poseidon_input2/Prover2.toml.0.shared --protocol REP3 --out test_vectors/poseidon_input2/Prover.toml.0.shared
 ```
 
 The above command takes the two input shares `Prover1.toml.0.shared` and `Prover2.toml.0.shared` (note both are intended for party 0) and combines them into a single input share `Prover.toml.0.shared`.

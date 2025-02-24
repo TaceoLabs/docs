@@ -3,7 +3,7 @@
 ## Example
 
 ```bash
-cargo run --release --bin co-noir -- verify --proof proof.proof --vk test_vectors/poseidon/verification_key --hasher POSEIDON --crs test_vectors/bn254_g2.dat
+co-noir verify --proof proof.proof --vk test_vectors/poseidon/verification_key --hasher POSEIDON --crs test_vectors/bn254_g2.dat
 ```
 
 Here, `proof.proof` is the proof we want to verify, `verification_key` is the output of CreateVK, and `bn254_g2.dat` is the verifier CRS. Again, `--hasher POSEIDON` defines that Poseidon2 is used as the transcript hasher.

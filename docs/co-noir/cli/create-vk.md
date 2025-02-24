@@ -5,7 +5,7 @@
 To verify the created proof, we first need to create a verification key. This can be done with:
 
 ```bash
-cargo run --release --bin co-noir -- create-vk --circuit test_vectors/poseidon/poseidon.json --crs test_vectors/bn254_g1.dat --hasher POSEIDON --vk test_vectors/poseidon/verification_key
+co-noir create-vk --circuit test_vectors/poseidon/poseidon.json --crs test_vectors/bn254_g1.dat --hasher POSEIDON --vk test_vectors/poseidon/verification_key
 ```
 
 Here, `poseidon.json` is the circuit file from Noir, `bn254_g1.dat` is the file storing the prover CRS, and the output is written to `verification_key`. Again, `--hasher POSEIDON` defines that Poseidon2 is used as the transcript hasher.

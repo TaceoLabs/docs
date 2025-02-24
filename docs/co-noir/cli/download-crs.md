@@ -5,7 +5,7 @@ This command can be sued to download the prover CRS with a given number of point
 ## Example
 
 ```bash
-cargo run --release --bin co-noir -- download-crs --crs ./bn254_g1.dat --num-points 1024
+co-noir download-crs --crs ./bn254_g1.dat --num-points 1024
 ```
 
 ## Reference

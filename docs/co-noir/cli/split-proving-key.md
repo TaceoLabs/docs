@@ -5,7 +5,7 @@ Instead of building the proving key in MPC, one can also take the  secret share 
 ## Example
 
 ```bash
-cargo run --release --bin co-noir -- split-proving-key --witness test_vectors/poseidon/poseidon.gz --circuit test_vectors/poseidon/poseidon.json --crs test_vectors/bn254_g1.dat --protocol REP3 --out-dir .
+co-noir split-proving-key --witness test_vectors/poseidon/poseidon.gz --circuit test_vectors/poseidon/poseidon.json --crs test_vectors/bn254_g1.dat --protocol REP3 --out-dir .
 ```
 
 ## Reference

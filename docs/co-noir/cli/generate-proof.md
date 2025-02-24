@@ -5,7 +5,7 @@ To create a proof in MPC, one needs the extended witness (from GenerateWitness, 
 ## Example
 
 ```bash
-cargo run --release --bin co-noir -- build-and-generate-proof --witness test_vectors/poseidon/poseidon.gz.shared --circuit test_vectors/poseidon/poseidon.json --crs test_vectors/bn254_g1.dat --protocol REP3 --hasher POSEIDON --config configs/party.toml --out proof.proof --public-input public_input.json
+co-noir build-and-generate-proof --witness test_vectors/poseidon/poseidon.gz.shared --circuit test_vectors/poseidon/poseidon.json --crs test_vectors/bn254_g1.dat --protocol REP3 --hasher POSEIDON --config configs/party.toml --out proof.proof --public-input public_input.json
 ```
 
 Here, `poseidon.gz.shared` is the share of the witness, `poseidon.json` is the circuit file from Noir, `bn254_g1.dat` is the file storing the prover CRS and `party.toml` is the [network configuration](../../network-config.md). As output, one creates the UltraHonk proof `proof.proof` and the output of the circuit `public_input.json`. The parameter `--hasher POSEIDON` defines that Poseidon2 is used as the transcript hasher, the other implemented option would be Keccak256.
