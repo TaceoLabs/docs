@@ -19,19 +19,17 @@ These resources will provide the necessary information to get your environment s
 
 ## Compile from Source
 
-First, download the source from [GitHub](https://github.com/TaceoLabs/collaborative-circom). We tested the compilation on Ubuntu 22.04.
+- coCircom
 
 ```bash
-git clone git@github.com:TaceoLabs/collaborative-circom.git
+cargo install --git https://github.com/TaceoLabs/co-snarks --branch main co-circom
 ```
 
-After downloading the source, build the toolchain simply by typing:
+- coNoir
 
 ```bash
-cargo build --release
+cargo install --git https://github.com/TaceoLabs/co-snarks --branch main co-noir
 ```
-
-You can find the `co-circom` binary under `target/release/`.
 
 ## Download Binary from Release
 
