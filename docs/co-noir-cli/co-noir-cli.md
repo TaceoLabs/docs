@@ -2,23 +2,11 @@
 
 ## UltraHonk
 
-Our co-Noir implementation currently supports the UltraHonk prover (with Keccak and Poseidon2 as transcript) from Barretenberg v0.62.0. To get Barretenberg with this version, use the following commands:
+Our co-Noir implementation currently supports the UltraHonk prover (with Keccak and Poseidon2 as transcript) from Barretenberg v0.66.0. To get Barretenberg with this version, use the following commands:
 
 ```bash
-git clone https://github.com/AztecProtocol/aztec-packages.git
-cd aztec-packages
-git checkout tags/aztec-package-v0.62.0
-```
-
-To compile Barretenberg, one can use:
-
-```bash
-cd barretenberg/cpp
-bash ./scripts/docker_interactive.sh ubuntu
-mkdir build
-cd build
-cmake --preset clang16 -DCMAKE_BUILD_TYPE=RelWithDebInfo ..
-cmake --build .
+curl -L https://raw.githubusercontent.com/AztecProtocol/aztec-packages/refs/heads/master/barretenberg/bbup/install | bash
+bbup -v 0.66.0
 ```
 
 Our prover, i.e., ``UltraHonk::prove`` in `src/prover.rs`, is compatible with `UltraProver_<UltraFlavor>/UltraProver_<UltraKeccakFlavor>` (depending on the used transcript hasher) in Barretenberg. Similar, the ``Ultrahnok::verify`` verifier in `src/verifier.rs` is compatible with `UltraVerifier_<UltraFlavor>/UltraVerifier_<UltraKeccakFlavor>` in Barretenberg.
@@ -33,7 +21,8 @@ First, one needs to create the circuit file from a Noir source code. Your Noir p
 - `Nargo.toml`: Similar to Cargo.toml, just for Noir projects.
 - `Prover.toml`: The inputs for the main function in `src/main.nr` used in proof generation.
 
-To create the circuit file used in Co-Noir, one needs to install Nargo following the instructions in [https://noir-lang.org/docs/getting_started/quick_start](https://noir-lang.org/docs/getting_started/quick_start). Our prover is compatible with Nargo version 0.33.0.
+To create the circuit file used in Co-Noir, one needs to install Nargo following the instructions in [https://noir-lang.org/docs/getting_started/quick_start](https://noir-lang.org/docs/getting_started/quick_start). Our prover is compatible with Nargo version 1.0.0-beta.1.
+
 Then you can just execute the following command:
 
 ```bash
@@ -110,7 +99,7 @@ Here, `poseidon.gz.shared` is the share of the witness, `poseidon.json` is the c
 The corresponding Barretenberg command (from `barretenberg/cpp/build/bin`) is:
 
 ```bash
-./bb prove_ultra_honk -b poseidon.json -w poseidon.gz -o proof.proof
+bb prove_ultra_honk -b poseidon.json -w poseidon.gz -o proof.proof
 ```
 
 where poseidon.gz is the witness file created by Noir (which is equivalent to a non-secret-shared variant of `poseidon.gz.shared`). The generated proof key is the same, regardless of using Co-Noir or Barretenberg.
@@ -129,7 +118,7 @@ Here, `poseidon.json` is the circuit file from Noir, `bn254_g1.dat` is the file 
 The corresponding Barretenberg command (from `barretenberg/cpp/build/bin`) is:
 
 ```bash
-./bb write_vk_ultra_honk -b poseidon.json -o verification_key
+bb write_vk_ultra_honk -b poseidon.json -o verification_key
 ```
 
 Here, `poseidon.json` is the circuit file from Noir. The output verification key is the same, regardless of using Co-Noir or Barretenberg.
@@ -148,7 +137,7 @@ Here, `proof.proof` is the proof we want to verify, `verification_key` is the ou
 The corresponding Barretenberg command (from `barretenberg/cpp/build/bin`) is:
 
 ```bash
-./bb verify_ultra_honk -k verification_key -p proof.proof
+bb verify_ultra_honk -k verification_key -p proof.proof
 ```
 
 Note: Barretenberg does not require the file for storing the CRS, since Barretenberg automatically downloads it if it is not present.
