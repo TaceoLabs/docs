@@ -5,10 +5,10 @@ Instead of performing the witness extension in MPC, one can also secret share th
 ## Example
 
 ```bash
-cargo run --release --bin co-noir -- split-witness --witness test_vectors/poseidon/poseidon.gz --circuit test_vectors/poseidon/poseidon.json --protocol REP3 --out-dir test_vectors/poseidon
+co-noir split-witness --witness test_vectors/poseidon/poseidon.gz --circuit test_vectors/poseidon/poseidon.json --protocol REP3 --out-dir test_vectors/poseidon
 ```
 
-Here, `poseidon.json` is the circuit file from Noir, `poseidon.gz` the extended witness from noir, and the output shares are stored in `test_vectors/poseidon`. The output shares are therebey indistinguishable from the output shares produced by the GenerateWitness command.
+Here, `poseidon.json` is the circuit file from Noir, `poseidon.gz` the extended witness from noir, and the output shares are stored in `test_vectors/poseidon`. The output shares are thereby indistinguishable from the output shares produced by the GenerateWitness command.
 For SplitWitness, both REP3 and Shamir are supported.
 
 ## Reference

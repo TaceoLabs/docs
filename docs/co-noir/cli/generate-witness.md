@@ -5,7 +5,7 @@ After the SplitInput command, the computing parties engage in executing the circ
 ## Example
 
 ```bash
-cargo run --release --bin co-noir -- generate-witness --input test_vectors/poseidon/Prover.toml.shared --circuit test_vectors/poseidon/poseidon.json --protocol REP3 --config configs/party.toml --out test_vectors/poseidon/poseidon.gz.shared
+co-noir generate-witness --input test_vectors/poseidon/Prover.toml.shared --circuit test_vectors/poseidon/poseidon.json --protocol REP3 --config configs/party.toml --out test_vectors/poseidon/poseidon.gz.shared
 ```
 
 Again, `poseidon.json` is the circuit file from Noir, while `Prover.toml.shared` is one output of SplitWitness and `party.toml` is a [network configuration](../../network-config.md). As MPC protocol we currently only support *REP3* for the Witness extension.
