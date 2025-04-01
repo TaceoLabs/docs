@@ -31,6 +31,10 @@ const config: Config = {
     }
   ],
 
+  // module.exports = {
+  //     plugins: [require.resolve('docusaurus-lunr-search')],
+  // },
+
   // Even if you don't use internationalization, you can use this field to set
   // useful metadata like html lang. For example, if your site is Chinese, you
   // may want to replace "en" with "zh-Hans".
@@ -77,9 +81,16 @@ const config: Config = {
       items: [
         {
           type: "docSidebar",
+          sidebarId: "howItWorksSidebar",
+          // docId: "howitworks/overview",
+          position: "left",
+          label: "How it Works", 
+        },
+        {
+          type: "docSidebar",
           sidebarId: "coSnarkSidebar",
           position: "left",
-          label: "coSNARK Docs",
+          label: "Developer Docs",
         },
         {
           href: "https://blog.taceo.io",
@@ -89,6 +100,10 @@ const config: Config = {
         {
           href: "https://github.com/TaceoLabs/collaborative-circom",
           label: "GitHub",
+          position: "right",
+        },
+        {
+          type: "search",
           position: "right",
         },
       ],

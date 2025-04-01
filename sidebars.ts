@@ -132,6 +132,24 @@ const sidebars: SidebarsConfig = {
       ],
     },
   ],
+  howItWorksSidebar: [
+    "howitworks/overview",
+    "howitworks/pss",
+    "howitworks/why",
+    "howitworks/ppd",
+    "howitworks/network",
+    {
+      type: "category",
+      label: "Building Blocks",
+      items: [
+        "howitworks/buildingblocks/mpc",
+        "howitworks/buildingblocks/cosnarks",
+      ],
+    },
+    "howitworks/cosnarksdk",
+    "howitworks/psscontracts",
+    "howitworks/architecture",
+  ],
 };
 
 export default sidebars;
