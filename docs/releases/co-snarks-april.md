@@ -10,6 +10,12 @@ For the multi-threading improvements, this was mostly utilizing rayon whenever p
 
 For the work reduction efforts, we have a blog post detailing the main ideas: https://blog.taceo.io/honest-majority-mpc-for-cosnarks/. As a quick summary, we can utilize the fact that for these types of secret sharing schemes, after doing a multiplication, one can perform additional linear operations on the result of the multiplication before needing to communicate with other parties. This enables communication savings (instead of communicating a vector of N field elements after a element-wise multiplication, we can do an MSM with public points (a linear operation) and only then communicate the result, which is now a single field element). Furthermore, for replicated secret sharing we can use this technique to work on non-replicated shares for many operations, cutting down computation costs by a factor of two. Finally, for Shamir sharing in the 3-party case, we have also described and implemented a method to generate the correlated randomness needed without any communication required between the parties.
 
+#### Benchmark results
+
+To quantify these improvements, we benchmarked the latest version of the coSNARK prover (as used in coCircom) against its previous release from August 2024, as well as against SnarkJS and Rapidsnark. The chart below shows the time taken to generate Groth16 proofs across a range of constraint sizes from $2^13$ to $2^22$. As the results indicate, the April 2025 release is significantly faster, with up to $2.5$x reduction in proof time compared to August 2024 and substantially better performance than SnarkJS across all sizes. While Rapidsnark remains the fastest in absolute terms, coCircom now operates well within the same performance envelope, with the added benefit of being MPC-compatible. Circuits used by leading ZK applications fall around the $2^16$-constrain range and hence can achieve sub-second proving times.
+
+![coSNARK benchmarks](/img/april_benchmarks.png)
+
 ### ark-groth16 compatibility
 
 Our co-groth16 library is now also compatible with the libsnark-specific R1CS to QAP reduction that ark-groth16 uses by default. In the past, we implemented the reduction that Circom used only, now both of them are available. The co-circom binary is still only using the Circom reduction since it is intended to be analogous to the normal Circom workflow.
