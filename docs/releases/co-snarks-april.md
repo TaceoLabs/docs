@@ -1,4 +1,4 @@
-# Release Notes April 03, 2025
+# CoSNARKs Release (April 2025)
 
 ## coCircom
 
@@ -14,7 +14,7 @@ For the work reduction efforts, we have a blog post detailing the main ideas: ht
 
 To quantify these improvements, we benchmarked the latest version of the coSNARK prover (as used in coCircom) against its previous release from August 2024, as well as against SnarkJS and Rapidsnark. The chart below shows the time taken to generate Groth16 proofs across a range of constraint sizes from $2^13$ to $2^22$. As the results indicate, the April 2025 release is significantly faster, with up to $2.5$x reduction in proof time compared to August 2024 and substantially better performance than SnarkJS across all sizes. While Rapidsnark remains the fastest in absolute terms, coCircom now operates well within the same performance envelope, with the added benefit of being MPC-compatible. Circuits used by leading ZK applications fall around the $2^16$-constrain range and hence can achieve sub-second proving times.
 
-![coSNARK benchmarks](/img/april_benchmarks.png)
+![coSNARK benchmarks](april-benchmarks.png)
 
 ### ark-groth16 compatibility
 

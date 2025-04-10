@@ -104,7 +104,7 @@ const sidebars: SidebarsConfig = {
     {
       type: "category",
       label: "Releases",
-      items: ["releases/co-noir-nov", "releases/co-noir-feb"],
+      items: ["releases/co-snarks-april", "releases/co-noir-feb", "releases/co-noir-nov"],
     },
     // {
     //   type: "category",
