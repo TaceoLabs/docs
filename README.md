@@ -1,3 +1,7 @@
+Every commit to main gets deployed to https://docs.taceo.io via cloudflare pages.
+
+--- original Docusaurus readme below ---
+
 # Website
 
 This website is built using [Docusaurus](https://docusaurus.io/), a modern static website generator.
