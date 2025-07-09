@@ -81,16 +81,16 @@ const config: Config = {
       items: [
         {
           type: "docSidebar",
-          sidebarId: "howItWorksSidebar",
-          // docId: "howitworks/overview",
+          sidebarId: "coSnarkSidebar",
           position: "left",
-          label: "How it Works", 
+          label: "CoSNARKs",
         },
         {
           type: "docSidebar",
-          sidebarId: "coSnarkSidebar",
+          sidebarId: "proofSidebar",
+          // docId: "proofsidebar/overview",
           position: "left",
-          label: "Developer Docs",
+          label: "TACEO:Proof", 
         },
         {
           href: "https://blog.taceo.io",

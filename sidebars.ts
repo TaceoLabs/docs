@@ -132,23 +132,30 @@ const sidebars: SidebarsConfig = {
       ],
     },
   ],
-  howItWorksSidebar: [
-    "howitworks/overview",
-    "howitworks/pss",
-    "howitworks/why",
-    "howitworks/ppd",
-    "howitworks/network",
+  proofSidebar: [
+    "taceo-proof/overview",
     {
       type: "category",
-      label: "Building Blocks",
+      label: "Building Applications",
       items: [
-        "howitworks/buildingblocks/mpc",
-        "howitworks/buildingblocks/cosnarks",
+        "taceo-proof/dev/quickstart",
+        "taceo-proof/dev/blueprints",
+        "taceo-proof/dev/integrations",
+        "taceo-proof/dev/bestpractice",
       ],
     },
-    "howitworks/cosnarksdk",
-    "howitworks/psscontracts",
-    "howitworks/architecture",
+        {
+      type: "category",
+      label: "Running Nodes",
+      items: [
+        "taceo-proof/ops/onboarding",
+        "taceo-proof/ops/deploying",
+        "taceo-proof/ops/ops-scaling",
+        "taceo-proof/ops/security",
+        "taceo-proof/ops/troubleshooting",
+      ],
+    },
+    "taceo-proof/api",
   ],
 };
 

@@ -1,0 +1,45 @@
+# TACEO:Proof Overview
+
+### What is TACEO:Proof?
+
+TACEO:Proof is an MPC + coSNARK network that offloads Groth16 proof generation from browsers and mobile devices. 
+Clients submit encrypted input shares and a short-lived voucher; 
+within milliseconds they receive back a standard ZK proof, 
+verifiable by any existing verifier, 
+with no single party ever seeing the full witness.
+
+### Key Terminology
+
+- **CCL (Cryptographic Coordination Layer):** Orchestrates jobs, manages vouchers and blueprints, dispatches work via AWS SNS/SQS and collects proofs.
+- **NPS (Node Provider Service):** Runs on each provider, pulls work from SQS, assigns it to a local CSE, and handles retries and resource tracking.
+- **CSE (coSNARK Engine):** Dockerised binary that connects peer-to-peer over QUIC, executes the MPC + SNARK circuit, and produces proof shares.
+- **Voucher:** A JWT issued by the CCL that authorises a specific blueprint and usage limits.
+- **Blueprint:** A circuit definition plus proving/verification keys and cluster configuration.
+- **MPC (Multiparty Computation):** Secret-shares inputs across nodes to compute functions without revealing private data.
+- **coSNARK:** A SNARK prover embedded in an MPC protocol—multiple parties jointly generate a succinct proof.
+
+### High-Level Architecture
+
+1. **Client** packages inputs (with or without local witness extension), encrypts shares under CSE public keys, and calls the CCL.
+2. **CCL** verifies the voucher, writes a job record, and publishes to three NPS queues.
+3. **NPS** picks a CSE, delivers encrypted shares and peer info, then waits for the proof share.
+4. **CSEs** form an MPC group over QUIC, run the full SNARK circuit inside MPC, assemble the Groth16 proof, and hand it back to their NPS.
+5. **CCL** gathers the final proof, verifies node signatures, stores the result, and returns it to the client.
+
+(diagram here)
+
+### Proof Flow Summary
+
+- **Client-side witness extension:** you compute the full witness locally, then secret-share and submit, or,
+- **MPC-side witness extension:** secret-share raw witness; the network extends the witness during MPC.
+- **One RPC call:** replace `prove()` with a single network invocation.
+- **Sub-second turnaround:** typical proofs return in under 250 ms.
+- **Groth16 only (beta):** byte-identical proofs for seamless verifier compatibility.
+
+---
+
+**Next:**
+
+- [For Application Developers](dev/quickstart)
+- [For Node Providers](ops/onboarding)
+- [Full API Reference](api)
