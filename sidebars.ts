@@ -154,8 +154,7 @@ const sidebars: SidebarsConfig = {
         "taceo-proof/ops/security",
         "taceo-proof/ops/troubleshooting",
       ],
-    },
-    "taceo-proof/api",
+    }
   ],
 };
 
