@@ -62,29 +62,19 @@ The choice depends on your use case. Here’s what to consider:
 ### Handling Proof Latencies & Fallbacks
 When scheduling a coSNARK execution, there are a few practical steps and strategies to help reduce latency and improve robustness in case of failures.
 
-#### Step 1: Fetch Node Provider Keys
-Before submitting a job, end-users need to retrieve public key material from randomly selected **Node Providers**:
-```ts
-// TODO: insert snippet for get_random_nps()
-```
-This step fetches the public keys you’ll need to encrypt secret shares for each selected Node Provider.
-> 💡 If you're submitting multiple proofs at once, you can reuse the same set of Node Providers across jobs. This reduces the number of HTTP calls and enables you to encrypt in parallel.
+ - You can **cache** the used **Node Providers** temporarily if you're planning to submit additional proofs soon after. Just be aware that **Node Providers can go offline** — if a cached key is stale, your request will fail at scheduling time.
+This reduces them amount of API calls to schedule a coSNARK job to just 1!
 
-You may also **cache** the public keys temporarily if you're planning to submit additional proofs soon after. Just be aware that **Node Providers can go offline**—if a cached key is stale, your request will fail at scheduling time.
-#### Step 2: Schedule the coSNARK Job
-After encrypting your input shares for the selected providers, you include the corresponding Node Provider IDs and submit the job:
-```ts
-// TODO: insert snippet for scheduleCoSnark()
-```
+- After encrypting your input shares for the selected providers, you include the corresponding Node Provider IDs and submit the job.
 If one or more of the selected Node Providers is offline or unresponsive, the call may fail. In that case, you’ll need to:
 
-1) Fetch a new set of Node Providers.
-2) Encrypt the shares again using the new keys.
-3) Retry scheduling the job.
+  1) Fetch a new set of Node Providers.
+  2) Encrypt the shares again using the new keys.
+  3) Retry scheduling the job.
 
 ### Redundancy & Resilience Strategies
 To improve reliability or reduce tail latency, you can **schedule multiple coSNARK executions in parallel** and accept the one that completes first. This is especially useful in latency-sensitive applications.
-> ⚠️ Important: If you schedule redundant jobs, you **must perform secret-sharing separately for each**. Even if some Node Providers overlap across jobs, this prevents any leakage and maintains security.
+> ⚠️ Important: If you schedule redundant jobs, you **must perform secret-sharing separately for each**. Even if some Node Providers overlap across jobs, this prevents any leakage and maintains security. If you are using our client libraries, this is done for you.
 
 At the moment, redundancy handling needs to be implemented at the **call site**. We're exploring the possibility of **native support for redundant job scheduling** in the future.
 

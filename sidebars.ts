@@ -140,7 +140,6 @@ const sidebars: SidebarsConfig = {
       items: [
         "taceo-proof/dev/quickstart",
         "taceo-proof/dev/blueprints",
-        "taceo-proof/dev/integrations",
         "taceo-proof/dev/bestpractice",
       ],
     },

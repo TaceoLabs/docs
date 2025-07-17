@@ -29,9 +29,35 @@ Clients submit encrypted input shares and a short-lived voucher; within millisec
 
 - **Client-side witness extension:** you compute the full witness locally, then secret-share and submit, or,
 - **MPC-side witness extension:** secret-share inputs only; the network extends the witness during MPC.
-- **One RPC call:** replace `prove()` with a single network invocation.
+- **One API call:** replace `prove()` with a single network invocation.
 - **Sub-second turnaround:** typical proofs ($2^{16}$ constraints) return take $\approx$ 500 ms.
 - **Groth16:** byte-identical proofs for seamless verifier compatibility.
+
+### How it works
+
+1) **Request set of Node Providers**
+
+    The client gives you the ability to request a set of 3 distinct Node Providers of **TACEO:Proof**.
+    You receive the Node Providers with their ids, encryption keys and verification keys.
+    You should request a new set of Node Providers for each coSNARK job to decrease waiting times.
+    We do not recommend to use the same Node Providers over a longer period of time.
+    But you may **cache** them temporarily if you're planning to submit additional proofs soon after. Just be aware that **Node Providers can go offline** — if a cached key is stale, your request will fail at scheduling time.
+    > 💡 If you're submitting multiple proofs at once, you can reuse the same set of Node Providers across jobs. This reduces the number of HTTP calls and enables you to encrypt in parallel.
+
+2) **Schedule a coSNARK Job on the TACEO:Proof Network**
+
+    To schedule a job you must provided the unique identifier of the blueprint that you want to use.
+    In the client, the private inputs (Extended Witness or Inputs to Witness Extension, depends on the job type) get secret-shared and encrypted using the Node Providers' public keys (encryption keys).
+    The client then schedules the coSNARK job and uploads the encrypted shares to **TACEO:Proof** where the job gets send to nodes that compute the proof with Multi-Party Computation (MPC).
+    In response you receive a unique identifier for this job.
+    All of this is handled by the client libraries, you just need to call the provided functions.
+
+3) **Fetch coSNARK Job Results**
+
+    Using the received unique identifier, you can subscribe to receive the results of a coSNARK job via a WebSocket connection.
+    By calling the provided functions you can wait for the results without needed to do any manual polling.
+    The returned results include the proofs which are signed by the Node Providers.
+    You can use the initially received verification keys to verify the signatures.
 
 ---
 
