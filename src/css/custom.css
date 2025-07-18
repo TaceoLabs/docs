@@ -16,7 +16,57 @@
   --ifm-background-color: #f1f0ec;
 }
 
-.navbar {
+/* Light mode styling */
+html[data-theme="light"] .navbar,
+html:not([data-theme="dark"]) .navbar {
+  background-color: #f1f0ec;
+}
+
+/* Logo styling - make it black in light mode */
+html[data-theme="light"] .navbar__logo img,
+html:not([data-theme="dark"]) .navbar__logo img {
+  filter: brightness(0);
+}
+
+/* Main content area - light mode only */
+html[data-theme="light"] main,
+html:not([data-theme="dark"]) main {
+  background-color: #f1f0ec;
+}
+
+/* Footer - light mode only */
+html[data-theme="light"] .footer,
+html:not([data-theme="dark"]) .footer {
+  background-color: #e8e6e0; /* Slightly darker variant of #f1f0ec */
+}
+
+/* Light mode footer text styling */
+html[data-theme="light"] .footer,
+html[data-theme="light"] .footer *,
+html:not([data-theme="dark"]) .footer,
+html:not([data-theme="dark"]) .footer * {
+  color: #333333; /* Dark text for good contrast */
+}
+
+/* Footer links in light mode */
+html[data-theme="light"] .footer a,
+html:not([data-theme="dark"]) .footer a {
+  color: #05525a; /* Use your primary brand color for links */
+}
+
+html[data-theme="light"] .footer a:hover,
+html:not([data-theme="dark"]) .footer a:hover {
+  color: #044a51; /* Darker on hover */
+}
+
+/* Ensure the entire page body uses the same background - light mode only */
+html[data-theme="light"] {
+  background-color: #f1f0ec;
+}
+
+/* Content wrapper - light mode only */
+html[data-theme="light"] .main-wrapper,
+html:not([data-theme="dark"]) .main-wrapper {
   background-color: #f1f0ec;
 }
 
@@ -31,7 +81,40 @@
   --ifm-color-primary-lighter: #1ec6af;
   --ifm-color-primary-lightest: #24dec4;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+  /* Override text colors to use #f1f0ec */
+  --ifm-color-content: #f1f0ec;
+  --ifm-color-content-secondary: #f1f0ec;
+  --ifm-font-color-base: #f1f0ec;
+  --ifm-heading-color: #f1f0ec;
 }
+
+/* Dark mode logo styling */
+[data-theme="dark"] .navbar__logo img {
+  filter: brightness(0) invert(1) sepia(1) saturate(0) hue-rotate(0deg) brightness(0.9);
+  /* This filter combination creates the #f1f0ec color */
+}
+
+/* Dark mode text styling */
+[data-theme="dark"] {
+  color: #f1f0ec;
+}
+
+[data-theme="dark"] .navbar__link,
+[data-theme="dark"] .navbar__brand,
+[data-theme="dark"] .navbar__title,
+[data-theme="dark"] .menu__link,
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4,
+[data-theme="dark"] h5,
+[data-theme="dark"] h6,
+[data-theme="dark"] p,
+[data-theme="dark"] li,
+[data-theme="dark"] .markdown {
+  color: #f1f0ec;
+}
+
 [data-theme="dark"] .hero--primary {
   background-color: #05525a;
   color: var(--ifm-color-base);

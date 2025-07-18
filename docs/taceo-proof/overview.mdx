@@ -3,7 +3,7 @@
 ### What is TACEO:Proof?
 
 TACEO:Proof is an MPC + coSNARK network that enables developers to offload Groth16 proof generation from browsers and mobile devices. 
-Clients submit encrypted input shares and a short-lived voucher; within milliseconds they receive back a standard ZK proof, verifiable by existing verifiers, with no single party in the network seeing the full witness.
+Clients submit encrypted input shares and a short-lived voucher, and receive back a standard ZK proof, verifiable by existing verifiers, with no single party in the network seeing the full witness.
 
 ### Key Terminology
 
@@ -17,10 +17,10 @@ Clients submit encrypted input shares and a short-lived voucher; within millisec
 
 ### High-Level Architecture
 
-1. **Client** packages inputs (with or without local witness extension), encrypts shares under the selected Node Provider's public keys, and calls the CCL.
-2. **CCL** verifies the voucher, writes a job record, and notifies the Node Providers.
-3. **CSEs** receive the job via gRPC, form an MPC group over TCP, run the full SNARK circuit inside MPC, assemble the Groth16 proof, and hand it back to the CCL.
-5. **CCL** gathers the final proof, verifies node signatures, stores the result, and returns it to the client.
+1. Client packages inputs (with or without local witness extension), encrypts shares under the selected Node Provider's public keys, and calls the CCL.
+2. CCL verifies the voucher, writes a job record, and notifies the Node Providers.
+3. CSEs receive the job via gRPC, form an MPC group over TCP, run the full SNARK circuit inside MPC, assemble the Groth16 proof, and hand it back to the CCL.
+5. CCL gathers the final proof, verifies node signatures, stores the result, and returns it to the client.
 
 <img src={require("./figures/actors.png").default} alt="actors" width="80%"/>
 
@@ -65,4 +65,3 @@ Clients submit encrypted input shares and a short-lived voucher; within millisec
 
 - [For Application Developers](../dev/quickstart)
 - [For Node Providers](../ops/onboarding)
-- [Full API Reference](../api)

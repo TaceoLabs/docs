@@ -93,8 +93,8 @@ const config: Config = {
           label: "TACEO:Proof", 
         },
         {
-          href: "https://blog.taceo.io",
-          label: "Blog",
+          href: "https://core.taceo.io",
+          label: "Core",
           position: "right",
         },
         {
