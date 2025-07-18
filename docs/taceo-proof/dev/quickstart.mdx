@@ -1,0 +1,96 @@
+# TACEO:Proof Quickstart
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+To make it easy to seamlessly integrate **TACEO:Proof** into your applications, we implemented client libraries for different languages.
+You can find the client libraries and example clients in the [proof-client](https://github.com/TaceoLabs/proof-client) repository.
+There you will find installations instructions and example circuits.
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript/TypeScript" default>
+
+The JavaScript clients use WebAssembly generated with [wasm-pack](https://github.com/rustwasm/wasm-pack) and therefore need different packages for different [targets](https://rustwasm.github.io/docs/wasm-pack/commands/build.html#target).
+Currently we support `nodejs` and `bundler` with their respective npm packages `@taceo/proof-client-node` and `@taceo/proof-client-bundler`.
+
+- Install the package for your target using your favorite package manager 
+
+  ```bash
+  npm install @taceo/proof-client-node
+  ```
+
+- Setup the API client configuration
+
+  ```ts
+  const configParams: ConfigurationParameters = {
+    basePath: "https://taceo.proof.network",
+  }
+  const configuration = new Configuration(configParams)
+  const jobInstance = new JobApi(configuration );
+  const nodeInstance = new NodeApi(configuration );
+  ```
+
+- Request distinct set of Node Providers
+
+  ```ts
+  const nodes = await nodeInstance.randomNodeProviders();
+  ```
+
+- Choose Blueprint + Job Type + MPC Protocol
+
+  Witness Extension + Prove with REP3
+  ```ts
+  const blueprint = "69c28d4a-f3de-468d-ba5a-0117b0c9d316";
+  const voucher = null; // only required for Restricted blueprints
+  const publicInputs = ["public_input_name_a", "public_input_name_b"];
+  const input = new Uint8Array(fs.readFileSync("input.json"));
+  const jobId = await scheduleFullJobRep3(jobInstance, nodes, blueprint, voucher, "Bn254", publicInputs, input);
+  ```
+
+  Prove with REP3
+  ```ts
+  const blueprint = "69c28d4a-f3de-468d-ba5a-0117b0c9d316";
+  const voucher = null; // only required for Restricted blueprints
+  const numInputs = 2;
+  const witness = new Uint8Array(fs.readFileSync("witness.wtns"));
+  const jobId = await scheduleProveJobRep3(jobInstance, nodes, blueprint, voucher, "Bn254", numInputs, witness);
+  ```
+
+  Prove with Shamir
+  ```ts
+  const blueprint = "69c28d4a-f3de-468d-ba5a-0117b0c9d316";
+  const voucher = null; // only required for Restricted blueprints
+  const numInputs = 2;
+  const witness = new Uint8Array(fs.readFileSync("witness.wtns"));
+  const jobId = await scheduleProveJobShamir(jobInstance, nodes, blueprint, voucher, "Bn254", numInputs, witness);
+  ```
+- Fetch the job Results
+
+  ```ts
+  const jobResult = await fetchJobResult("wss://taceo.proof.network/api/v1/reports/subs", jobId);
+  fs.writeFileSync(outPath, jobResult.proof);
+  console.log("wrote proof to {%s}", "proof.json");
+  fs.writeFileSync(outPublicInputsPath, jobResult.public_inputs);
+  console.log("wrote public inputs to {%s}", "public.json");
+  ```
+After following these steps, you should have 2 files called `proof.json` and `public.json` which contain the **Circom Groth16** proof and public inputs.
+> Assuming that the provided blueprint type was for Circom + Groth16, other blueprint type results are encoded differently.
+
+You can now use [snarkjs](https://github.com/iden3/snarkjs) to verify the proof
+```bash
+snarkjs groth16 verify verification_key.json public.json proof.json
+```
+
+</TabItem>
+<TabItem value="rust" label="Rust">
+
+Rust client library quickstart goes here
+
+</TabItem>
+<TabItem value="cli" label="CLI tool">
+
+CLI tool documentation goes here.
+
+</TabItem>
+</Tabs>
+
