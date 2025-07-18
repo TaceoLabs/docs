@@ -31,9 +31,7 @@ const config: Config = {
     }
   ],
 
-  // module.exports = {
-  //     plugins: [require.resolve('docusaurus-lunr-search')],
-  // },
+  plugins: [require.resolve('docusaurus-lunr-search')],
 
   // Even if you don't use internationalization, you can use this field to set
   // useful metadata like html lang. For example, if your site is Chinese, you
@@ -93,6 +91,10 @@ const config: Config = {
           label: "TACEO:Proof", 
         },
         {
+          type: "search",
+          position: "right",
+        },
+        {
           href: "https://core.taceo.io",
           label: "Core",
           position: "right",
@@ -100,10 +102,6 @@ const config: Config = {
         {
           href: "https://github.com/TaceoLabs/collaborative-circom",
           label: "GitHub",
-          position: "right",
-        },
-        {
-          type: "search",
           position: "right",
         },
       ],

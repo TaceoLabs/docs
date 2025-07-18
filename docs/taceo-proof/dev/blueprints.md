@@ -18,7 +18,7 @@ Registered users can upload and manage blueprints either through our API or the 
 
 > ⚠️ The cryptographic curve is tightly coupled to the uploaded artifacts and cannot be changed after creation.
 
-### Public vs. Restricted Blueprints
+### Public vs. restricted blueprints
 
 Blueprints can be either public or restricted:
 
