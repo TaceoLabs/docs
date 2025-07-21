@@ -148,10 +148,8 @@ const sidebars: SidebarsConfig = {
       label: "Running Nodes",
       items: [
         "taceo-proof/ops/onboarding",
-        "taceo-proof/ops/deploying",
         "taceo-proof/ops/ops-scaling",
         "taceo-proof/ops/security",
-        "taceo-proof/ops/troubleshooting",
       ],
     }
   ],

@@ -1,7 +1,35 @@
 # Operations
+This section covers best practices for running your CSEs in production, including monitoring, recovery, and failover strategies.
 
-## Monitoring health (latency, throughput, errors)
+## Monitoring Health (Latency, Throughput, Errors)
+Each CSE includes built-in support for **Prometheus / StatsD** metrics export, allowing you to monitor system performance, health, and job statistics.
 
-## Auto-recovery and failover
+To enable Prometheus mode, configure the following environment variables:
+```bash
+METRICS_EXPORTER=prometheus
+METRICS_PROMETHEUS_MODE=scrape
+METRICS_PROMETHEUS_BIND_ADDR=0.0.0.0:4321
+```
+If you're running CSEs in Docker, don’t forget to **bind the Prometheus port (e.g. 4321)** to allow access from your metrics infrastructure.
+> We do not collect logs or metrics from your node. All exported metrics are for your internal monitoring only.
 
-## Resource tuning (CPU, RAM, network settings)
+## Metrics Sent to TACEO:Proof
+While we don’t ingest logs or metrics, your CSE _does_ send minimal runtime measurements when submitting job results. These include:
+
+* Time to establish network connections
+* Time to run the coSNARK prover
+* Time to download blueprint artifacts (e.g., Proving Key, Verification Key, Circuit)
+
+These are used solely for **job-level tracing and auditing**, not continuous telemetry.
+
+## Auto-Recovery & Failover
+Each CSE instance is **stateless** and identified by your secret key phrase. From TACEO:Proof’s perspective, **restarting your CSE creates a fresh logical instance**—there’s no persistent session management required.
+
+If you’re using our official Docker image, it comes preconfigured with:
+```yaml
+restart: unless-stopped
+```
+
+This ensures your CSE will **automatically restart on** crashes or restarts, keeping your node reliably online.
+> 🛠️ Best Practice:
+On any unrecoverable error, your first line of defense is to restart the CSE process. This is safe and expected behavior in our architecture.
