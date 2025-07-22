@@ -8,13 +8,17 @@
   --ifm-color-primary-lighter: #065e68;
   --ifm-color-primary-lightest: #066b75;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
-  --ifm-background-color: #f1f0ec;
+  --ifm-background-color: #f2f0ed;
+  --taceo-green: #52ffc5;
+  --taceo-background: #f2f0ed;
+  --taceo-foreground: #000;
 }
 
 /* Light mode styling */
 html[data-theme="light"] .navbar,
 html:not([data-theme="dark"]) .navbar {
-  background-color: #f1f0ec;
+  background-color: #f2f0ed;
+  box-shadow: 0 2px 8px rgba(82, 255, 197, 0.1);
 }
 
 /* Logo styling - make it black in light mode */
@@ -26,13 +30,20 @@ html:not([data-theme="dark"]) .navbar__logo img {
 /* Main content area - light mode only */
 html[data-theme="light"] main,
 html:not([data-theme="dark"]) main {
-  background-color: #f1f0ec;
+  background-color: #f2f0ed;
+}
+
+/* Homepage specific styling */
+html[data-theme="light"] .homepage-layout,
+html:not([data-theme="dark"]) .homepage-layout {
+  background: linear-gradient(180deg, #f2f0ed 0%, #e8e6e0 100%);
 }
 
 /* Footer - light mode only */
 html[data-theme="light"] .footer,
 html:not([data-theme="dark"]) .footer {
-  background-color: #e8e6e0; /* Slightly darker variant of #f1f0ec */
+  background-color: #e8e6e0; /* Slightly darker variant of #f2f0ed */
+  border-top: 1px solid rgba(82, 255, 197, 0.1);
 }
 
 /* Light mode footer text styling */
@@ -40,58 +51,58 @@ html[data-theme="light"] .footer,
 html[data-theme="light"] .footer *,
 html:not([data-theme="dark"]) .footer,
 html:not([data-theme="dark"]) .footer * {
-  color: #333333; /* Dark text for good contrast */
+  color: #000; /* TACEO foreground color */
 }
 
 /* Footer links in light mode */
 html[data-theme="light"] .footer a,
 html:not([data-theme="dark"]) .footer a {
-  color: #05525a; /* Use your primary brand color for links */
+  color: #05525a; /* Original teal for links */
 }
 
 html[data-theme="light"] .footer a:hover,
 html:not([data-theme="dark"]) .footer a:hover {
-  color: #044a51; /* Darker on hover */
+  color: #044a51; /* Darker teal on hover */
 }
 
 /* Ensure the entire page body uses the same background - light mode only */
 html[data-theme="light"] {
-  background-color: #f1f0ec;
+  background-color: #f2f0ed;
 }
 
 /* Content wrapper - light mode only */
 html[data-theme="light"] .main-wrapper,
 html:not([data-theme="dark"]) .main-wrapper {
-  background-color: #f1f0ec;
+  background-color: #f2f0ed;
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
 
 [data-theme="dark"] {
-  --ifm-color-primary: #1aac98;
-  --ifm-color-primary-dark: #179b89;
-  --ifm-color-primary-darker: #169281;
-  --ifm-color-primary-darkest: #12786a;
-  --ifm-color-primary-light: #1dbda7;
-  --ifm-color-primary-lighter: #1ec6af;
-  --ifm-color-primary-lightest: #24dec4;
+  --ifm-color-primary: #52ffc5;
+  --ifm-color-primary-dark: #3affbb;
+  --ifm-color-primary-darker: #26ffb6;
+  --ifm-color-primary-darkest: #00ff9a;
+  --ifm-color-primary-light: #6affcf;
+  --ifm-color-primary-lighter: #7effd4;
+  --ifm-color-primary-lightest: #a6ffde;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
-  /* Override text colors to use #f1f0ec */
-  --ifm-color-content: #f1f0ec;
-  --ifm-color-content-secondary: #f1f0ec;
-  --ifm-font-color-base: #f1f0ec;
-  --ifm-heading-color: #f1f0ec;
+  /* Override text colors to use #f2f0ed */
+  --ifm-color-content: #f2f0ed;
+  --ifm-color-content-secondary: #f2f0ed;
+  --ifm-font-color-base: #f2f0ed;
+  --ifm-heading-color: #f2f0ed;
 }
 
 /* Dark mode logo styling */
 [data-theme="dark"] .navbar__logo img {
   filter: brightness(0) invert(1) sepia(1) saturate(0) hue-rotate(0deg) brightness(0.9);
-  /* This filter combination creates the #f1f0ec color */
+  /* This filter combination creates the #f2f0ed color */
 }
 
 /* Dark mode text styling */
 [data-theme="dark"] {
-  color: #f1f0ec;
+  color: #f2f0ed;
 }
 
 [data-theme="dark"] .navbar__link,
@@ -107,11 +118,11 @@ html:not([data-theme="dark"]) .main-wrapper {
 [data-theme="dark"] p,
 [data-theme="dark"] li,
 [data-theme="dark"] .markdown {
-  color: #f1f0ec;
+  color: #f2f0ed;
 }
 
 [data-theme="dark"] .hero--primary {
-  background-color: #05525a;
+  background-color: #000;
   color: var(--ifm-color-base);
 }
 

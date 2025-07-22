@@ -5,8 +5,8 @@ import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 
 const config: Config = {
-  title: "TACEO coSNARKs",
-  tagline: "[Don't] share your data",
+  title: "TACEO Documentation",
+  tagline: "Privacy-preserving computation for the modern world",
   favicon: "img/favicon.png",
 
   // Set the production url of your site here
