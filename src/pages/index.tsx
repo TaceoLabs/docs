@@ -8,15 +8,15 @@ function NetworkTools() {
   const tools = [
     {
       title: "CoSNARKs<br/>for Circom and Noir",
-      status: "Status: Feature Complete",
-      description: "Developer tooling to run circom and Noir circuits in an MPC environment with private shared state.",
+      status: "Status: coCircom feature complete, coNoir in development",
+      description: "Developer tooling to run circom and Noir circuits in an MPC environment.",
       link: "/docs/overview",
       linkText: "Get started",
       highlight: true,
     },
     {
       title: "TACEO:Proof<br/>Private Proof Network", 
-      status: "Status: Live in Production",
+      status: "Status: Live in Production and ready for use",
       description: "CoSNARK network to outsource proof generation while maintaining privacy.",
       link: "/docs/taceo-proof/overview",
       linkText: "Learn more",

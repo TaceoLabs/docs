@@ -6,7 +6,7 @@ import rehypeKatex from "rehype-katex";
 
 const config: Config = {
   title: "TACEO Documentation",
-  tagline: "Privacy-preserving computation for the modern world",
+  tagline: "MPC and coSNARKs for Proof Delegation and Private Shared State",
   favicon: "img/favicon.png",
 
   // Set the production url of your site here
@@ -115,6 +115,10 @@ const config: Config = {
             {
               label: "Collaborative SNARKs",
               to: "/docs/overview",
+            },
+            {
+              label: "TACEO:Proof",
+              to: "/docs/proofsidebar/overview",
             },
           ],
         },
