@@ -23,7 +23,7 @@ Currently we support `nodejs` and `bundler` with their respective npm packages `
 
   ```ts
   const configParams: ConfigurationParameters = {
-    basePath: "https://taceo.proof.network",
+    basePath: "https://proof.taceo.network",
   }
   const configuration = new Configuration(configParams)
   const jobInstance = new JobApi(configuration );
@@ -67,12 +67,208 @@ Currently we support `nodejs` and `bundler` with their respective npm packages `
 - Fetch the job Results
 
   ```ts
-  const jobResult = await fetchJobResult("wss://taceo.proof.network/api/v1/reports/subs", jobId);
-  fs.writeFileSync(outPath, jobResult.proof);
-  console.log("wrote proof to {%s}", "proof.json");
-  fs.writeFileSync(outPublicInputsPath, jobResult.public_inputs);
-  console.log("wrote public inputs to {%s}", "public.json");
+  const jobResult = await fetchJobResult("wss://proof.taceo.network/api/v1/reports/subs", jobId);
+  fs.writeFileSync("proof.json", jobResult.proof);
+  fs.writeFileSync("public.json", jobResult.public_inputs);
   ```
+
+</TabItem>
+<TabItem value="rust" label="Rust">
+
+Currently we don't publish the Rust client lib to [crates.io](https://crates.io/), instead you can add it as a git dependency to your `Cargo.toml` file.
+
+- Add the following line to your `Cargo.toml`
+
+  ```toml
+  taceo-proof-client = { git = "https://github.com/TaceoLabs/proof-client" }
+  ```
+
+- Setup the API client configuration
+
+  ```rust
+  let config = Configuration {
+      base_path: "https://proof.taceo.network".to_string(),
+      ..Default::default()
+  };
+  ```
+
+- Request distinct set of Node Providers
+
+  ```rust
+  let nodes = taceo_proof_client::get_random_node_providers(&config).await?;
+  ```
+
+- Choose <span className="tooltip" data-tooltip="A circuit definition plus proving/verification keys">Blueprint</span> + Job Type + MPC Protocol
+
+  Witness Extension + Prove with REP3
+  ```rust
+  let blueprint_id = uuid::Uuid::parse_str("54f9ee38-0160-44e2-a1d8-08d1b6771cbf")?;
+  let voucher = None; // only required for Restricted blueprints
+  let public_inputs = ["public_input_name_a".to_string(), "public_input_name_b".to_string()];
+  let input = serde_json::from_reader(std::fs::File::open("input.json")?)?;
+  let job_id = taceo_proof_client::schedule_full_job_rep3::<ark_bn254::Bn254>(
+      &config,
+      &nodes,
+      blueprint_id,
+      voucher,
+      public_inputs,
+      input
+  )
+  .await?;
+  ```
+
+  Prove with REP3
+  ```rust
+  let blueprint_id = uuid::Uuid::parse_str("54f9ee38-0160-44e2-a1d8-08d1b6771cbf")?;
+  let voucher = None; // only required for Restricted blueprints
+  let num_inputs = 2;
+  let witness = circom_types::Witness::from_reader(std::fs::File::open("witness.wtns")?)?;
+  let job_id = taceo_proof_client::schedule_prove_job_rep3::<ark_bn254::Bn254>(
+      &config,
+      &nodes,
+      blueprint_id,
+      voucher,
+      num_inputs,
+      witness,
+  )
+  .await?;
+  ```
+
+  Prove with Shamir
+  ```rust
+  let blueprint_id = uuid::Uuid::parse_str("54f9ee38-0160-44e2-a1d8-08d1b6771cbf")?;
+  let voucher = None; // only required for Restricted blueprints
+  let num_inputs = 2;
+  let witness = circom_types::Witness::from_reader(std::fs::File::open("witness.wtns")?)?;
+  let job_id = taceo_proof_client::schedule_prove_job_shamir::<ark_bn254::Bn254>(
+      &config,
+      &nodes,
+      blueprint_id,
+      voucher,
+      num_inputs,
+      witness,
+  )
+  .await?;
+  ```
+- Fetch the job Results
+
+  ```rust
+  let ws_url = "wss://proof.taceo.network/api/v1/reports/subs".to_string();
+  let res = taceo_proof_client::fetch_job_result(&ws_url, job_id, taceo_proof_client::StopStrategy::default()).await?;
+  // CircomGroth16 proofs compatible with circom
+  std::fs::write("proof.json", &res.proof)?;
+  std::fs::write("public.json", &res.public_inputs)?;
+  // LibsnarkGroth16 proofs
+  let proof = ark_groth16::Proof::<ark_bn254::Bn254>::deserialize_uncompressed(
+      base64ct::Base64::decode_vec(&res.proof)?.as_slice(),
+  );
+  let public_inputs = Vec::<ark_bn254::Fr>::deserialize_uncompressed(
+      base64ct::Base64::decode_vec(&res.public_inputs)?.as_slice(),
+  );
+  ```
+
+</TabItem>
+<TabItem value="cli" label="CLI tool">
+
+In the [proof-client](https://github.com/TaceoLabs/proof-client) you can also find a Rust CLI example that you can install and use to schedule coSNARK jobs.
+After installing the CLI, you can run it with the `--help` flag to get more information.
+
+```bash
+Usage: taceo-proof-client <COMMAND>
+
+Commands:
+  full-prove  Schedule a full coSNARK job including witness extension
+  prove       Schedule a prove coSNARK job
+  help        Print this message or the help of the given subcommand(s)
+
+Options:
+  -h, --help  Print help
+```
+
+```bash
+Usage: taceo-proof-client prove [OPTIONS] --curve <CURVE> --blueprint <BLUEPRINT> --witness <WITNESS> <--r1cs <R1CS>|--num-inputs <NUM_INPUTS>>
+
+Options:
+      --api-url <API_URL>
+          The API endpoint URL [env: TACEO_PROOF_API_URL=] [default: https://proof.taceo.network]
+      --curve <CURVE>
+          The curve [env: PROOF_CURVE=] [possible values: bn254, bls381, bls377]
+      --voucher <VOUCHER>
+          The voucher for a proof job [env: PROOF_VOUCHER=]
+      --blueprint <BLUEPRINT>
+          The job blueprint [env: PROOF_BLUEPRINT=]
+      --protocol <PROTOCOL>
+          The MPC protocol [env: PROOF_MPC_PROTOCOL=] [default: rep3] [possible values: rep3, shamir]
+      --witness <WITNESS>
+          The path to the witness file [env: PROOF_WITNESS=]
+      --r1cs <R1CS>
+          The path to the r1cs file [env: PROOF_R1CS=]
+      --num-inputs <NUM_INPUTS>
+          The number of inputs for the circuit [env: PROOF_NUM_INPUTS=]
+      --out <OUT>
+          The output file where the final proof is written to [env: PROOF_OUT=] [default: proof.json]
+      --out-public-inputs <OUT_PUBLIC_INPUTS>
+          The output JSON file where the public inputs are written to [env: PROOF_OUT_PUBLIC_INPUTS=] [default: public.json]
+  -h, --help
+          Print help
+```
+
+```bash
+Usage: taceo-proof-client full-prove [OPTIONS] --curve <CURVE> --blueprint <BLUEPRINT> --input <INPUT>
+
+Options:
+      --api-url <API_URL>
+          The API endpoint URL [env: TACEO_PROOF_API_URL=] [default: https://proof.taceo.network]
+      --curve <CURVE>
+          The curve [env: PROOF_CURVE=] [possible values: bn254, bls381, bls377]
+      --voucher <VOUCHER>
+          The voucher for a proof job [env: PROOF_VOUCHER=]
+      --blueprint <BLUEPRINT>
+          The job blueprint [env: PROOF_BLUEPRINT=]
+      --input <INPUT>
+          The path to the job input [env: PROOF_INPUT=]
+      --public-inputs <PUBLIC_INPUTS>
+          The public inputs for witness extension [env: PROOF_PUBLIC_INPUTS=]
+      --out <OUT>
+          The output file where the final proof is written to [env: PROOF_OUT=] [default: proof.json]
+      --out-public-inputs <OUT_PUBLIC_INPUTS>
+          The output JSON file where the public inputs are written to [env: PROOF_OUT_PUBLIC_INPUTS=] [default: public.json]
+  -h, --help
+          Print help
+```
+
+Witness Extension + Prove with REP3
+```bash
+taceo-proof-client full-prove \
+  --blueprint a1ce14e7-628e-4dfc-be2e-8f44ccdf8b29 \
+  --curve bn254 \
+  --input input.json \
+  --public-inputs public_input_name_a,public_input_name_b
+```
+
+Prove with REP3
+```bash
+taceo-proof-client prove \
+  --blueprint a1ce14e7-628e-4dfc-be2e-8f44ccdf8b29 \
+  --curve bn254 \
+  --protocol rep3 \
+  --witness witness.wtns \
+  --num-inputs 2
+```
+
+Prove with Shamir
+```bash
+taceo-proof-client prove \
+  --blueprint a1ce14e7-628e-4dfc-be2e-8f44ccdf8b29 \
+  --curve bn254 \
+  --protocol shamir \
+  --witness witness.wtns \
+  --num-inputs 2
+```
+
+</TabItem>
+</Tabs>
+
 After following these steps, you should have 2 files called `proof.json` and `public.json` which contain the **Circom Groth16** proof and public inputs.
 > Assuming that the provided blueprint type was for Circom + Groth16, other blueprint type results are encoded differently.
 
@@ -80,17 +276,3 @@ You can now use [snarkjs](https://github.com/iden3/snarkjs) to verify the proof
 ```bash
 snarkjs groth16 verify verification_key.json public.json proof.json
 ```
-
-</TabItem>
-<TabItem value="rust" label="Rust">
-
-Rust client library quickstart goes here
-
-</TabItem>
-<TabItem value="cli" label="CLI tool">
-
-CLI tool documentation goes here.
-
-</TabItem>
-</Tabs>
-
