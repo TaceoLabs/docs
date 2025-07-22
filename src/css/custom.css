@@ -115,72 +115,65 @@ html:not([data-theme="dark"]) .main-wrapper {
   color: var(--ifm-color-base);
 }
 
-/* Tab-style navigation for main sections - simplified approach */
-.navbar__item:has(.navbar__link[href*="/docs/"]) .navbar__link,
-.navbar__item .navbar__link[href*="/docs/"],
-.navbar .navbar__link[href*="/docs/"] {
+/* Tooltip styling for term definitions */
+.tooltip {
   position: relative;
-  margin: 0 2px !important;
-  padding: 10px 20px !important;
-  border-radius: 12px 12px 0 0 !important;
-  background-color: rgba(0, 0, 0, 0.05) !important;
-  border: 2px solid #ccc !important;
-  border-bottom: none !important;
-  transition: all 0.3s ease !important;
-  font-weight: 500 !important;
+  display: inline-block;
+  border-bottom: 1px dotted #999;
+  cursor: help;
 }
 
-.navbar__item:has(.navbar__link[href*="/docs/"]) .navbar__link:hover,
-.navbar__item .navbar__link[href*="/docs/"]:hover,
-.navbar .navbar__link[href*="/docs/"]:hover {
-  background-color: rgba(5, 82, 90, 0.15) !important;
-  border-color: #05525a !important;
-  transform: translateY(-2px) !important;
+.tooltip[data-tooltip]:before {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--ifm-color-emphasis-900);
+  color: var(--ifm-color-content-inverse);
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: normal;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  width: max-content;
+  max-width: 600px;
+  min-width: 120px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  line-height: 1.4;
 }
 
-/* Active tab styling - more aggressive */
-.navbar__item:has(.navbar__link[href*="/docs/"]) .navbar__link.navbar__link--active,
-.navbar__item .navbar__link[href*="/docs/"].navbar__link--active,
-.navbar .navbar__link[href*="/docs/"].navbar__link--active {
-  background-color: #ffffff !important;
-  border-color: #05525a !important;
-  border-bottom: 2px solid #ffffff !important;
-  color: #05525a !important;
-  font-weight: 700 !important;
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1) !important;
+.tooltip[data-tooltip]:after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: var(--ifm-color-emphasis-900);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
 }
 
-/* Dark mode overrides */
-[data-theme="dark"] .navbar__item:has(.navbar__link[href*="/docs/"]) .navbar__link,
-[data-theme="dark"] .navbar__item .navbar__link[href*="/docs/"],
-[data-theme="dark"] .navbar .navbar__link[href*="/docs/"] {
-  background-color: rgba(255, 255, 255, 0.05) !important;
-  border-color: #666 !important;
-  color: #f1f0ec !important;
+.tooltip:hover[data-tooltip]:before,
+.tooltip:hover[data-tooltip]:after {
+  opacity: 1;
+  visibility: visible;
 }
 
-[data-theme="dark"] .navbar__item:has(.navbar__link[href*="/docs/"]) .navbar__link:hover,
-[data-theme="dark"] .navbar__item .navbar__link[href*="/docs/"]:hover,
-[data-theme="dark"] .navbar .navbar__link[href*="/docs/"]:hover {
-  background-color: rgba(241, 240, 236, 0.15) !important;
-  border-color: #f1f0ec !important;
+/* Dark mode tooltip adjustments */
+[data-theme='dark'] .tooltip[data-tooltip]:before {
+  background-color: var(--ifm-color-emphasis-200);
+  color: var(--ifm-color-emphasis-900);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
-[data-theme="dark"] .navbar__item:has(.navbar__link[href*="/docs/"]) .navbar__link.navbar__link--active,
-[data-theme="dark"] .navbar__item .navbar__link[href*="/docs/"].navbar__link--active,
-[data-theme="dark"] .navbar .navbar__link[href*="/docs/"].navbar__link--active {
-  background-color: #333333 !important;
-  border-color: #f1f0ec !important;
-  border-bottom: 2px solid #333333 !important;
-  color: #f1f0ec !important;
-  box-shadow: 0 -2px 10px rgba(255, 255, 255, 0.1) !important;
-}
-
-/* Add a subtle bottom border to navbar to complete the tab effect */
-.navbar {
-  border-bottom: 1px solid #d0cdc7;
-}
-
-[data-theme="dark"] .navbar {
-  border-bottom: 1px solid #444;
+[data-theme='dark'] .tooltip[data-tooltip]:after {
+  border-top-color: var(--ifm-color-emphasis-200);
 }

@@ -31,7 +31,7 @@ Vouchers serve as short-lived, verifiable permits. They authorize the use of a s
 
 To use a **restricted blueprint**, users must first obtain **a voucher** from the blueprint creator. This process involves an out-of-band authentication step—TACEO:Proof does not manage or enforce this interaction. It’s entirely up to the application or project to decide how users are verified and approved.
 
-Once a user is deemed eligible, the blueprint creator authenticates with the CCL using their credentials. The CCL then issues a signed voucher, which is returned to the user.
+Once a user is deemed eligible, the blueprint creator authenticates with the <span className="tooltip" data-tooltip="Cryptographic Coordination Layer">CCL</span> using their credentials. The CCL then issues a signed voucher, which is returned to the user.
 
 To initiate a proof generation, the user submits the voucher along with their job request to the CCL. The CCL verifies the voucher’s validity and, if accepted, schedules the corresponding coSNARK execution.
 
