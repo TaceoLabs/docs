@@ -86,7 +86,6 @@ const config: Config = {
         {
           type: "docSidebar",
           sidebarId: "proofSidebar",
-          // docId: "proofsidebar/overview",
           position: "left",
           label: "TACEO:Proof", 
         },
@@ -118,7 +117,7 @@ const config: Config = {
             },
             {
               label: "TACEO:Proof",
-              to: "/docs/proofsidebar/overview",
+              to: "/docs/taceo-proof/overview",
             },
           ],
         },
