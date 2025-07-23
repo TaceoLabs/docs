@@ -177,3 +177,37 @@ html:not([data-theme="dark"]) .main-wrapper {
 [data-theme='dark'] .tooltip[data-tooltip]:after {
   border-top-color: var(--ifm-color-emphasis-200);
 }
+
+/* External link arrows in navbar */
+.navbar__item .navbar__link[href^="http"]:not([href*="docs.taceo.io"]) {
+  position: relative;
+}
+
+.navbar__item .navbar__link[href^="http"]:not([href*="docs.taceo.io"])::before {
+  content: '→';
+  font-size: 1.4rem;
+  margin-right: 0;
+  width: 0;
+  overflow: hidden;
+  transition: all 0.2s ease;
+  display: inline-block;
+}
+
+.navbar__item .navbar__link[href^="http"]:not([href*="docs.taceo.io"])::after {
+  content: '→';
+  font-size: 1.4rem;
+  margin-left: 0.8rem;
+  transition: all 0.2s ease;
+  display: inline-block;
+}
+
+.navbar__item .navbar__link[href^="http"]:not([href*="docs.taceo.io"]):hover::before {
+  margin-right: 0.8rem;
+  width: auto;
+}
+
+.navbar__item .navbar__link[href^="http"]:not([href*="docs.taceo.io"]):hover::after {
+  margin-left: 0;
+  width: 0;
+  overflow: hidden;
+}

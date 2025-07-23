@@ -143,7 +143,7 @@ const sidebars: SidebarsConfig = {
         "taceo-proof/dev/bestpractice",
       ],
     },
-        {
+    {
       type: "category",
       label: "Running Nodes",
       items: [
@@ -151,7 +151,7 @@ const sidebars: SidebarsConfig = {
         "taceo-proof/ops/ops-scaling",
         "taceo-proof/ops/security",
       ],
-    }
+    },
   ],
 };
 

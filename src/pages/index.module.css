@@ -1,0 +1,225 @@
+/**
+ * CSS files with the .module.css suffix will be treated as CSS modules
+ * and scoped locally.
+ */
+
+/* Network Section - Based on website's Network component */
+.network {
+  position: relative;
+  z-index: 1;
+  background-color: var(--taceo-foreground);
+  padding: 3rem 0 6rem 0;
+}
+
+.networkTitle {
+  font-weight: 100 !important;
+  color: var(--taceo-background) !important;
+  font-size: 3.5rem !important;
+  line-height: 4rem !important;
+  text-align: center;
+  margin-bottom: 2rem !important;
+}
+
+.networkDescription {
+  font-size: 1.2rem !important;
+  color: var(--taceo-background) !important;
+  font-weight: 400 !important;
+  line-height: 1.4rem !important;
+  max-width: 50rem;
+  margin: 0 auto;
+  text-align: center;
+  padding-bottom: 4rem;
+}
+
+.networkGrid {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  align-items: stretch;
+  max-width: 900px;
+  margin: 0 auto;
+  gap: 2.5rem;
+  padding: 0 1.5rem;
+}
+
+.networkCard {
+  height: 100%;
+  position: relative;
+}
+
+.networkCard::after {
+  display: none;
+}
+
+.networkCard:first-child::after {
+  display: none;
+}
+
+.networkCardInner {
+  position: relative;
+  border: 1px solid #000000;
+  padding: 1.5rem 1.2rem;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+
+.networkIcon {
+  grid-column: span 2;
+  display: flex;
+  align-items: flex-start;
+  padding-top: 1rem;
+}
+
+.networkIconBar {
+  width: 100%;
+  height: 0.8rem;
+  background-color: #52ffc5;
+  transform: rotate(-45deg);
+}
+
+.networkContent {
+  grid-column: span 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.networkCardTitle {
+  color: var(--taceo-background) !important;
+  font-weight: 300 !important;
+  font-size: 1.8rem !important;
+  line-height: 1.2 !important;
+  margin-bottom: 1.5rem !important;
+}
+
+.networkStatus {
+  font-size: 1.1rem !important;
+  color: var(--taceo-green) !important;
+  font-weight: 400;
+  margin-bottom: 1.2rem;
+}
+
+.networkCardDescription {
+  font-size: 1.1rem !important;
+  color: var(--taceo-background) !important;
+  font-weight: 400 !important;
+  line-height: 1.4rem !important;
+  margin-bottom: 1.5rem;
+}
+
+.networkLinkWrapper {
+  margin-top: auto;
+}
+
+.networkLink {
+  position: relative;
+  color: var(--taceo-background) !important;
+  font-weight: 400 !important;
+  font-size: 1.1rem !important;
+  text-decoration: none !important;
+  padding: 0.5rem 0;
+  display: inline-block;
+}
+
+.networkLink::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 0.5px;
+  bottom: 0;
+  left: 0;
+  background-color: #000000;
+  transition: all 0.2s ease;
+}
+
+.networkLink:hover {
+  text-decoration: none !important;
+}
+
+.networkLink:hover::after {
+  background-color: #000000;
+  height: 1px;
+}
+
+/* Dark mode overrides */
+[data-theme='dark'] .network {
+  background-color: var(--ifm-background-color);
+}
+
+[data-theme='dark'] .networkCardInner {
+  border: 1px solid #f1f0ec;
+}
+
+[data-theme='dark'] .networkTitle,
+[data-theme='dark'] .networkDescription,
+[data-theme='dark'] .networkCardTitle,
+[data-theme='dark'] .networkCardDescription,
+[data-theme='dark'] .networkLink {
+  color: #f1f0ec !important;
+}
+
+[data-theme='dark'] .networkStatus {
+  color: var(--ifm-color-primary) !important;
+}
+
+[data-theme='dark'] .networkLink::after {
+  background-color: #f1f0ec;
+}
+
+[data-theme='dark'] .networkLink:hover::after {
+  background-color: #f1f0ec;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 1200px) {
+  .networkGrid {
+    padding: 0 1rem;
+    gap: 2rem;
+  }
+}
+
+@media screen and (max-width: 996px) {
+  .networkTitle {
+    font-size: 2.8rem !important;
+    line-height: 3.2rem !important;
+  }
+  
+  .networkGrid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 0 1rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .networkTitle {
+    font-size: 2.2rem !important;
+    line-height: 2.6rem !important;
+  }
+  
+  .networkGrid {
+    gap: 1.5rem;
+    padding: 0 1rem;
+  }
+  
+  .networkCardInner {
+    grid-template-columns: 1fr;
+    text-align: center;
+    padding: 1.2rem 1rem;
+  }
+  
+  .networkIcon {
+    grid-column: 1;
+    justify-content: center;
+    padding-top: 0;
+    margin-bottom: 0.8rem;
+  }
+  
+  .networkContent {
+    grid-column: 1;
+  }
+}
