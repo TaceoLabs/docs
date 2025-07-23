@@ -20,7 +20,7 @@ $$
 \end{align*}
 $$
 
-### Rng Setup
+### Rng setup
 
 Random values are required during many parts of MPC executions. For cheaper randomness generation, correlated random number generators are set up before protocol execution.
 

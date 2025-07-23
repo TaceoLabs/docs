@@ -1,8 +1,3 @@
-/**
- * Any CSS included here will be global. The classic template
- * bundles Infima by default. Infima is a CSS framework designed to
- * work well for content-centric websites.
- */
 
 :root {
   --ifm-color-primary: #05525a;
@@ -13,6 +8,61 @@
   --ifm-color-primary-lighter: #065e68;
   --ifm-color-primary-lightest: #066b75;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  --ifm-background-color: #f1f0ec;
+}
+
+/* Light mode styling */
+html[data-theme="light"] .navbar,
+html:not([data-theme="dark"]) .navbar {
+  background-color: #f1f0ec;
+}
+
+/* Logo styling - make it black in light mode */
+html[data-theme="light"] .navbar__logo img,
+html:not([data-theme="dark"]) .navbar__logo img {
+  filter: brightness(0);
+}
+
+/* Main content area - light mode only */
+html[data-theme="light"] main,
+html:not([data-theme="dark"]) main {
+  background-color: #f1f0ec;
+}
+
+/* Footer - light mode only */
+html[data-theme="light"] .footer,
+html:not([data-theme="dark"]) .footer {
+  background-color: #e8e6e0; /* Slightly darker variant of #f1f0ec */
+}
+
+/* Light mode footer text styling */
+html[data-theme="light"] .footer,
+html[data-theme="light"] .footer *,
+html:not([data-theme="dark"]) .footer,
+html:not([data-theme="dark"]) .footer * {
+  color: #333333; /* Dark text for good contrast */
+}
+
+/* Footer links in light mode */
+html[data-theme="light"] .footer a,
+html:not([data-theme="dark"]) .footer a {
+  color: #05525a; /* Use your primary brand color for links */
+}
+
+html[data-theme="light"] .footer a:hover,
+html:not([data-theme="dark"]) .footer a:hover {
+  color: #044a51; /* Darker on hover */
+}
+
+/* Ensure the entire page body uses the same background - light mode only */
+html[data-theme="light"] {
+  background-color: #f1f0ec;
+}
+
+/* Content wrapper - light mode only */
+html[data-theme="light"] .main-wrapper,
+html:not([data-theme="dark"]) .main-wrapper {
+  background-color: #f1f0ec;
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
@@ -26,8 +76,138 @@
   --ifm-color-primary-lighter: #1ec6af;
   --ifm-color-primary-lightest: #24dec4;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+  /* Override text colors to use #f1f0ec */
+  --ifm-color-content: #f1f0ec;
+  --ifm-color-content-secondary: #f1f0ec;
+  --ifm-font-color-base: #f1f0ec;
+  --ifm-heading-color: #f1f0ec;
 }
+
+/* Dark mode logo styling */
+[data-theme="dark"] .navbar__logo img {
+  filter: brightness(0) invert(1) sepia(1) saturate(0) hue-rotate(0deg) brightness(0.9);
+  /* This filter combination creates the #f1f0ec color */
+}
+
+/* Dark mode text styling */
+[data-theme="dark"] {
+  color: #f1f0ec;
+}
+
+[data-theme="dark"] .navbar__link,
+[data-theme="dark"] .navbar__brand,
+[data-theme="dark"] .navbar__title,
+[data-theme="dark"] .menu__link,
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4,
+[data-theme="dark"] h5,
+[data-theme="dark"] h6,
+[data-theme="dark"] p,
+[data-theme="dark"] li,
+[data-theme="dark"] .markdown {
+  color: #f1f0ec;
+}
+
 [data-theme="dark"] .hero--primary {
   background-color: #05525a;
   color: var(--ifm-color-base);
+}
+
+/* Tooltip styling for term definitions */
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted #999;
+  cursor: help;
+}
+
+.tooltip[data-tooltip]:before {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--ifm-color-emphasis-900);
+  color: var(--ifm-color-content-inverse);
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: normal;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  width: max-content;
+  max-width: 600px;
+  min-width: 120px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  line-height: 1.4;
+}
+
+.tooltip[data-tooltip]:after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: var(--ifm-color-emphasis-900);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+.tooltip:hover[data-tooltip]:before,
+.tooltip:hover[data-tooltip]:after {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Dark mode tooltip adjustments */
+[data-theme='dark'] .tooltip[data-tooltip]:before {
+  background-color: var(--ifm-color-emphasis-200);
+  color: var(--ifm-color-emphasis-900);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme='dark'] .tooltip[data-tooltip]:after {
+  border-top-color: var(--ifm-color-emphasis-200);
+}
+
+/* External link arrows in navbar */
+.navbar__item .navbar__link[href^="http"]:not([href*="docs.taceo.io"]) {
+  position: relative;
+}
+
+.navbar__item .navbar__link[href^="http"]:not([href*="docs.taceo.io"])::before {
+  content: '→';
+  font-size: 1.4rem;
+  margin-right: 0;
+  width: 0;
+  overflow: hidden;
+  transition: all 0.2s ease;
+  display: inline-block;
+}
+
+.navbar__item .navbar__link[href^="http"]:not([href*="docs.taceo.io"])::after {
+  content: '→';
+  font-size: 1.4rem;
+  margin-left: 0.8rem;
+  transition: all 0.2s ease;
+  display: inline-block;
+}
+
+.navbar__item .navbar__link[href^="http"]:not([href*="docs.taceo.io"]):hover::before {
+  margin-right: 0.8rem;
+  width: auto;
+}
+
+.navbar__item .navbar__link[href^="http"]:not([href*="docs.taceo.io"]):hover::after {
+  margin-left: 0;
+  width: 0;
+  overflow: hidden;
 }

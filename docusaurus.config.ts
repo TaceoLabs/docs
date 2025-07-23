@@ -5,8 +5,8 @@ import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 
 const config: Config = {
-  title: "TACEO coSNARKs",
-  tagline: "[Don't] share your data",
+  title: "TACEO Documentation",
+  tagline: "MPC and coSNARKs for Proof Delegation and Private Shared State",
   favicon: "img/favicon.png",
 
   // Set the production url of your site here
@@ -30,6 +30,8 @@ const config: Config = {
       async: false,
     }
   ],
+
+  plugins: [require.resolve('docusaurus-lunr-search')],
 
   // Even if you don't use internationalization, you can use this field to set
   // useful metadata like html lang. For example, if your site is Chinese, you
@@ -79,11 +81,22 @@ const config: Config = {
           type: "docSidebar",
           sidebarId: "coSnarkSidebar",
           position: "left",
-          label: "coSNARK Docs",
+          label: "CoSNARKs",
         },
         {
-          href: "https://blog.taceo.io",
-          label: "Blog",
+          type: "docSidebar",
+          sidebarId: "proofSidebar",
+          // docId: "proofsidebar/overview",
+          position: "left",
+          label: "TACEO:Proof", 
+        },
+        {
+          type: "search",
+          position: "right",
+        },
+        {
+          href: "https://core.taceo.io",
+          label: "Core",
           position: "right",
         },
         {
@@ -102,6 +115,10 @@ const config: Config = {
             {
               label: "Collaborative SNARKs",
               to: "/docs/overview",
+            },
+            {
+              label: "TACEO:Proof",
+              to: "/docs/proofsidebar/overview",
             },
           ],
         },

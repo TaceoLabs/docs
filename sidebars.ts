@@ -132,6 +132,27 @@ const sidebars: SidebarsConfig = {
       ],
     },
   ],
+  proofSidebar: [
+    "taceo-proof/overview",
+    {
+      type: "category",
+      label: "Building Applications",
+      items: [
+        "taceo-proof/dev/quickstart",
+        "taceo-proof/dev/blueprints",
+        "taceo-proof/dev/bestpractice",
+      ],
+    },
+    {
+      type: "category",
+      label: "Running Nodes",
+      items: [
+        "taceo-proof/ops/onboarding",
+        "taceo-proof/ops/ops-scaling",
+        "taceo-proof/ops/security",
+      ],
+    },
+  ],
 };
 
 export default sidebars;
