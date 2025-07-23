@@ -23,11 +23,7 @@ Currently we support `nodejs` and `bundler` with their respective npm packages `
 
   ```ts
   const configParams: ConfigurationParameters = {
-<<<<<<< HEAD
-    basePath: "https://taceo.proof.network",
-=======
     basePath: "https://proof.taceo.network",
->>>>>>> 1c856d3c3b112efafb0758f0929e584cfc2d2580
   }
   const configuration = new Configuration(configParams)
   const jobInstance = new JobApi(configuration );
@@ -71,14 +67,6 @@ Currently we support `nodejs` and `bundler` with their respective npm packages `
 - Fetch the job Results
 
   ```ts
-<<<<<<< HEAD
-  const jobResult = await fetchJobResult("wss://taceo.proof.network/api/v1/reports/subs", jobId);
-  fs.writeFileSync(outPath, jobResult.proof);
-  console.log("wrote proof to {%s}", "proof.json");
-  fs.writeFileSync(outPublicInputsPath, jobResult.public_inputs);
-  console.log("wrote public inputs to {%s}", "public.json");
-  ```
-=======
   const jobResult = await fetchJobResult("wss://proof.taceo.network/api/v1/reports/subs", jobId);
   fs.writeFileSync("proof.json", jobResult.proof);
   fs.writeFileSync("public.json", jobResult.public_inputs);
@@ -281,7 +269,6 @@ taceo-proof-client prove \
 </TabItem>
 </Tabs>
 
->>>>>>> 1c856d3c3b112efafb0758f0929e584cfc2d2580
 After following these steps, you should have 2 files called `proof.json` and `public.json` which contain the **Circom Groth16** proof and public inputs.
 > Assuming that the provided blueprint type was for Circom + Groth16, other blueprint type results are encoded differently.
 
@@ -289,20 +276,3 @@ You can now use [snarkjs](https://github.com/iden3/snarkjs) to verify the proof
 ```bash
 snarkjs groth16 verify verification_key.json public.json proof.json
 ```
-<<<<<<< HEAD
-
-</TabItem>
-<TabItem value="rust" label="Rust">
-
-Rust client library quickstart goes here
-
-</TabItem>
-<TabItem value="cli" label="CLI tool">
-
-CLI tool documentation goes here.
-
-</TabItem>
-</Tabs>
-
-=======
->>>>>>> 1c856d3c3b112efafb0758f0929e584cfc2d2580
