@@ -195,6 +195,29 @@
   }
 }
 
+@media screen and (max-width: 996px) and (min-width: 769px) {
+  .networkCardInner {
+    grid-template-columns: auto 1fr;
+    gap: 1rem;
+  }
+  
+  .networkIcon {
+    grid-column: 1;
+    display: flex;
+    align-items: flex-start;
+    padding-top: 1rem;
+    width: 3rem;
+  }
+  
+  .networkContent {
+    grid-column: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .networkTitle {
     font-size: 2.2rem !important;
@@ -207,19 +230,25 @@
   }
   
   .networkCardInner {
-    grid-template-columns: 1fr;
-    text-align: center;
+    grid-template-columns: auto 1fr;
+    text-align: left;
     padding: 1.2rem 1rem;
+    gap: 1rem;
   }
   
   .networkIcon {
     grid-column: 1;
-    justify-content: center;
-    padding-top: 0;
-    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: flex-start;
+    padding-top: 1rem;
+    width: 3rem;
   }
   
   .networkContent {
-    grid-column: 1;
+    grid-column: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
   }
 }
