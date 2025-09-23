@@ -18,8 +18,8 @@
     "@algolia/autocomplete-preset-algolia": "^1.19.2",
     "@algolia/autocomplete-shared": "^1.19.2",
     "@algolia/client-search": "^5.34.1",
-    "@docusaurus/core": "3.5.2",
-    "@docusaurus/preset-classic": "3.5.2",
+    "@docusaurus/core": "3.8.1",
+    "@docusaurus/preset-classic": "3.8.1",
     "@mdx-js/react": "^3.1.0",
     "algoliasearch": "^5.34.1",
     "clsx": "^2.0.0",
@@ -32,9 +32,9 @@
     "search-insights": "^2.17.3"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "3.5.2",
-    "@docusaurus/tsconfig": "3.5.2",
-    "@docusaurus/types": "3.5.2",
+    "@docusaurus/module-type-aliases": "3.8.1",
+    "@docusaurus/tsconfig": "3.8.1",
+    "@docusaurus/types": "3.8.1",
     "typescript": "~5.6.2"
   },
   "browserslist": {
