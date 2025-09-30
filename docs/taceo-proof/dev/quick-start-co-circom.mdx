@@ -1,0 +1,331 @@
+# TACEO:Proof CoCircom
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+To make it easy to seamlessly integrate **TACEO:Proof** into your applications, we implemented client libraries for different languages.
+You can find the client libraries and example clients in the [proof-client](https://github.com/TaceoLabs/proof-client) repository.
+There you will find installation instructions and example circuits.
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript/TypeScript" default>
+
+The JavaScript clients use WebAssembly generated with [wasm-pack](https://github.com/rustwasm/wasm-pack) and therefore need different packages for different [targets](https://rustwasm.github.io/docs/wasm-pack/commands/build.html#target).
+Currently we support `nodejs` and `bundler` with their respective npm packages `@taceo/proof-client-node` and `@taceo/proof-client-bundler`.
+
+- **Installation**: Install the package for your target using your favorite package manager 
+
+  ```bash
+  npm install @taceo/proof-client-node
+  ```
+
+- **Setup**: Create the API client configuration
+
+  ```ts
+  const configParams: ConfigurationParameters = {
+    basePath: "https://proof.taceo.network",
+  }
+  const configuration = new Configuration(configParams)
+  const jobInstance = new JobApi(configuration );
+  const nodeInstance = new NodeApi(configuration );
+  ```
+  
+- **Witness Extension + Prove Job**:
+
+  With a full prove job, the input is secret-shared, encrypted, and distributed to the designated nodes for processing.
+  The workflow does not require a precomputed extended witness; instead, the witness extension is generated during the job execution, which is then followed by proof generation.
+  This approach eliminates the need to upload potentially large witnesses.
+
+  ```ts
+  const nodes = await nodeInstance.randomNodeProviders();
+  const blueprintId = "54f9ee38-0160-44e2-a1d8-08d1b6771cbf";
+  const voucher = null; // only required for Restricted blueprints
+  const publicInputs = ["public_input_1", "public_input_2"];
+  const input = JSON.parse(fs.readFileSync("input.json").toString());
+  const jobId = await CoCircom.scheduleFullJob(
+    jobInstance,
+    nodes,
+    blueprintId,
+    voucher,
+    "Bn254",
+    publicInputs,
+    input
+  );
+  ```
+
+- **Multiple Inputs Witness Extension + Prove Job**:
+
+  This job supports multiple inputs from different users without revealing inputs to each other.
+  Once all inputs for the job are present, it is sent to designated nodes, which then execute the job.
+  Additionally, an optional deadline can be set to limit the amount of time that can pass before all inputs must be present.
+  Inputs can be dynamically added to an already created job. The input data is secret-shared, encrypted, and collected until the job gets scheduled.
+  This approach enables more flexible workflows and computational processes.
+
+  ```ts
+  const nodes = await nodeInstance.randomNodeProviders();
+  const blueprintId = "54f9ee38-0160-44e2-a1d8-08d1b6771cbf";
+  const voucher = null; // only required for Restricted blueprints
+  const deadline = new Date(Date.now() + 3600 * 1000); // 1 hour from now
+  const jobId = await CoCircom.scheduleFullMultipleInputsJob(
+    jobInstance,
+    nodes,
+    blueprintId,
+    voucher,
+    deadline
+  );
+  // multiple users can now add inputs to this job given the jobId and the selected nodes
+  const publicInputs = ["public_input_1", "public_input_2"];
+  const input = JSON.parse(fs.readFileSync("input.json").toString());
+  await CoCircom.addJobInputs(jobInstance, nodes, jobId, "Bn254", publicInputs, input);
+  ```
+
+- **Prove Job**:
+
+  A proof job can be scheduled using either the Rep3 or Shamir Secret Sharing scheme.
+  The process involves taking a witness, secret-sharing it, encrypting these shares, and distributing them to the designated nodes for execution.
+
+  ```ts
+  const nodes = await nodeInstance.randomNodeProviders();
+  const blueprintId = "54f9ee38-0160-44e2-a1d8-08d1b6771cbf";
+  const mpcProtocol = "Rep3"; // specify the MPC protocol to use (Rep3 or Shamir)
+  const voucher = null; // only required for restricted blueprints
+  const numPubInputs = 2;
+  const witness = new Uint8Array(fs.readFileSync(inputPath));
+  const jobId = await CoCircom.scheduleProveJob(
+    jobInstance,
+    nodes,
+    blueprintId,
+    mpcProtocol, 
+    voucher,
+    "Bn254",
+    numPubInputs,
+    witness
+  );
+  ```
+
+- **Fetch the job Results**:
+
+  The results of a job execution can be retrieved via a WebSocket connection.
+  Once the results are ready, the server sends a message containing the proof, public inputs, and signatures of the computing nodes.
+  If any party encounters an error, an error message is returned instead.
+  The received proof and public inputs are deserialized into `Groth16Proof` and `PublicSignal` types as defined by [snarkjs](https://github.com/iden3/snarkjs).
+
+  ```ts
+  const wsUrl = "wss://proof.taceo.network/api/v1/reports/subs";
+  const jobId = "9c2814d7-25d3-4de5-b61f-0a6e3bacbe99";
+  const { proof, public_inputs, signatures } = await CoCircom.fetchJobResult(wsUrl, jobId);
+  fs.writeFileSync("proof.json", JSON.stringify(proof));
+  fs.writeFileSync("public.json", JSON.stringify(public_inputs));
+  ```
+
+</TabItem>
+<TabItem value="rust" label="Rust">
+
+The Rust client library is not currently published on [crates.io](https://crates.io/); instead, you can add it as a git dependency in your `Cargo.toml` file.
+
+- **Installation**: Add the following line to your `Cargo.toml`
+
+  ```toml
+  taceo-proof-client = { git = "https://github.com/TaceoLabs/proof-client" }
+  ```
+
+- **Setup**: Create the API client configuration
+
+  ```rust
+  let config = Configuration {
+      base_path: "https://proof.taceo.network".to_string(),
+      ..Default::default()
+  };
+  ```
+
+- **Witness Extension + Prove Job**:
+
+  With a full prove job, the input is secret-shared, encrypted, and distributed to the designated nodes for processing.
+  The workflow does not require a precomputed extended witness; instead, the witness extension is generated during the job execution, which is then followed by proof generation.
+  This approach eliminates the need to upload potentially large witnesses.
+
+  ```rust
+  let nodes = taceo_proof_client::get_random_node_providers(&config).await?;
+  let blueprint_id = Uuid::parse_str("54f9ee38-0160-44e2-a1d8-08d1b6771cbf")?;
+  let voucher = None; // only required for Restricted blueprints
+  let public_inputs = ["public_input_1".to_string(), "public_input_2".to_string()];
+  let input = serde_json::from_reader(std::fs::File::open("input.json")?)?;
+  let job_id = taceo_proof_client::co_circom::schedule_full_job::<ark_bn254::Fr>(
+      &config,
+      &nodes,
+      blueprint_id,
+      voucher,
+      &public_inputs,
+      input,
+  )
+  .await?;
+  ```
+
+- **Multiple Inputs Witness Extension + Prove Job**:
+
+  This job allows multiple users to provide inputs independently, ensuring that each user's inputs remain private from the others.
+  Once all required inputs have been provided, the job is dispatched to the designated nodes for execution.
+  Additionally, you can optionally set a deadline to restrict how much time is allowed for all inputs to be submitted.
+  Inputs can be dynamically added to an already created job. The input data is secret-shared, encrypted, and collected until the job gets scheduled.
+  This approach enables more flexible workflows and computational processes.
+
+  ```rust
+  let nodes = taceo_proof_client::get_random_node_providers(&config).await?;
+  let blueprint_id = Uuid::parse_str("54f9ee38-0160-44e2-a1d8-08d1b6771cbf")?;
+  let voucher = None; // only required for Restricted blueprints
+  let deadline = Some(Local::now() + Duration::days(1)); // Set a deadline 1 day from now
+  let job_id = taceo_proof_client::co_circom::schedule_full_multiple_inputs_job(
+      &config,
+      &nodes,
+      blueprint_id,
+      voucher,
+      deadline,
+  )
+  .await?;
+  // multiple users can now add inputs to this job given the jobId and the selected nodes
+  let public_inputs = ["public_input_1".to_string(), "public_input_2".to_string()];
+  let input = serde_json::from_reader(std::fs::File::open("input.json")?)?;
+  taceo_proof_client::co_circom::add_job_inputs::<ark_bn254::Fr>(
+      &config,
+      &nodes,
+      job_id,
+      &public_inputs,
+      input,
+  )
+  .await?;
+  ```
+
+- **Prove Job**:
+
+  A proof job can be scheduled using either the Rep3 or Shamir Secret Sharing scheme.
+  The process involves taking a witness, secret-sharing it, encrypting these shares, and distributing them to the designated nodes for execution.
+
+  ```rust
+  let nodes = taceo_proof_client::get_random_node_providers(&config).await?;
+  let blueprint_id = uuid::Uuid::parse_str("54f9ee38-0160-44e2-a1d8-08d1b6771cbf")?;
+  let mpc_protocol = MpcProtocol::Rep3; // specify the MPC protocol to use (Rep3 or Shamir)
+  let voucher = None; // only required for Restricted blueprints
+  let num_pub_inputs = 2;
+  let witness = circom_types::Witness::from_reader(std::fs::File::open("witness.wtns")?)?;
+  let job_id = taceo_proof_client::co_circom::schedule_prove_job::<ark_bn254::Fr>(
+      &config,
+      &nodes,
+      blueprint_id,
+      mpc_protocol,
+      voucher,
+      num_pub_inputs,
+      witness,
+  )
+  .await?;
+  ```
+
+- **Fetch the job Results**:
+
+  The results of a job execution can be retrieved via a WebSocket connection.
+  Once the results are ready, the server sends a message containing the proof, public inputs, and signatures of the computing nodes.
+  If any party encounters an error, an error message is returned instead.
+  The received proof and public inputs are deserialized into `CircomGroth16Proof<P>` and `Vec<P::ScalarField>` types as defined by [circom-types](https://github.com/TaceoLabs/co-snarks/tree/main/co-circom/circom-types).
+
+  ```rust
+  let ws_url = "wss://proof.taceo.network/api/v1/reports/subs".to_string();
+  let job_id = Uuid::parse_str("9c2814d7-25d3-4de5-b61f-0a6e3bacbe99")?;
+  let (proof, public_inputs, signatures) = taceo_proof_client::co_circom::fetch_job_result::<Bn254>(
+      &ws_url,
+      job_id,
+      StopStrategy::default(),
+  ).await?;
+  // serialize proof and public_inputs
+  let proof_bytes = serde_json::to_vec(proof)?;
+  let public_inputs_strings = public_inputs
+      .iter()
+      .map(|f| {
+          if f.is_zero() {
+              "0".to_string()
+          } else {
+              f.to_string()
+          }
+      })
+      .collect::<Vec<String>>();
+  let public_inputs_bytes = serde_json::to_vec(&public_inputs_strings)?;
+  std::fs::write("proof.json", proof_bytes)?;
+  std::fs::write("public.json", public_inputs_bytes)?;
+  ```
+
+</TabItem>
+<TabItem value="cli" label="CLI tool">
+
+The [proof-client](https://github.com/TaceoLabs/proof-client) repository also provides a Rust CLI tool that you can install and use to schedule coSNARK jobs.
+After installing the CLI, you can run it with the `--help` flag to get more information.
+
+```bash
+Usage: taceo-proof-client co-circom <COMMAND>
+
+Commands:
+  full                  Schedule a full coCircom job including witness extension
+  full-multiple-inputs  Schedule a full multiple input coCircom job including witness extension
+  add-inputs            Add inputs to a coCircom job
+  prove                 Schedule a prove coCircom job
+  get-result            Fetch proof result
+  help                  Print this message or the help of the given subcommand(s)
+
+Options:
+  -h, --help  Print help
+```
+
+- **Witness Extension + Prove Job**:
+
+  With a full prove job, the input is secret-shared, encrypted, and distributed to the designated nodes for processing.
+  The workflow does not require a precomputed extended witness; instead, the witness extension is generated during the job execution, which is then followed by proof generation.
+  This approach eliminates the need to upload potentially large witnesses.
+
+  ```bash
+  taceo-proof-client co-circom full \
+    --blueprint a1ce14e7-628e-4dfc-be2e-8f44ccdf8b29 \
+    --curve bn254 \
+    --input input.json \
+    --public-inputs public_input_1,public_input_2
+  ```
+
+- **Multiple Inputs Witness Extension + Prove Job**:
+
+  This job allows multiple users to provide inputs independently, ensuring that each user's inputs remain private from the others.
+  Once all required inputs have been provided, the job is dispatched to the designated nodes for execution.
+  Additionally, you can optionally set a deadline to restrict how much time is allowed for all inputs to be submitted.
+  Inputs can be dynamically added to an already created job. The input data is secret-shared, encrypted, and collected until the job gets scheduled.
+  This approach enables more flexible workflows and computational processes.
+
+  ```bash
+  taceo-proof-client co-circom full-multiple-inputs \
+    --blueprint a1ce14e7-628e-4dfc-be2e-8f44ccdf8b29
+  # multiple users can now add inputs to this job given the jobId and the selected nodes
+  taceo-proof-client co-circom add-inputs \
+    --job 9c2814d7-25d3-4de5-b61f-0a6e3bacbe99 \
+    --nodes 1,2,3 \
+    --curve bn254 \
+    --input input.json \
+    --public-inputs public_input_1,public_input_2
+  ```
+
+- **Prove Job**:
+
+  A proof job can be scheduled using either the Rep3 or Shamir Secret Sharing scheme.
+  The process involves taking a witness, secret-sharing it, encrypting these shares, and distributing them to the designated nodes for execution.
+
+  ```bash
+  taceo-proof-client co-circom prove \
+    --blueprint a1ce14e7-628e-4dfc-be2e-8f44ccdf8b29 \
+    --curve bn254 \
+    --protocol rep3 \
+    --witness witness.wtns \
+    --num-inputs 2
+  ```
+
+</TabItem>
+</Tabs>
+
+After completing these steps, you will have two files named `proof.json` and `public.json`, containing the **Circom Groth16** proof and public inputs.
+
+You can now use [snarkjs](https://github.com/iden3/snarkjs) to verify the proof
+```bash
+snarkjs groth16 verify verification_key.json public.json proof.json
+```

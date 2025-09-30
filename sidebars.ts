@@ -138,7 +138,14 @@ const sidebars: SidebarsConfig = {
       type: "category",
       label: "Building Applications",
       items: [
-        "taceo-proof/dev/quickstart",
+        {
+          type: "category",
+          label: "Getting Started",
+          items: [
+            "taceo-proof/dev/quick-start-co-circom",
+            "taceo-proof/dev/quick-start-co-noir",
+          ],
+        },
         "taceo-proof/dev/blueprints",
         "taceo-proof/dev/bestpractice",
       ],
