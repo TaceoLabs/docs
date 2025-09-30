@@ -5,7 +5,7 @@ import TabItem from '@theme/TabItem';
 
 To make it easy to seamlessly integrate **TACEO:Proof** into your applications, we implemented client libraries for different languages.
 You can find the client libraries and example clients in the [proof-client](https://github.com/TaceoLabs/proof-client) repository.
-There you will find installations instructions and example circuits.
+There you will find installation instructions and example circuits.
 
 <Tabs>
 <TabItem value="javascript" label="JavaScript/TypeScript" default>
@@ -34,7 +34,7 @@ Currently we support `nodejs` and `bundler` with their respective npm packages `
 
   With a full prove job, the input is secret-shared, encrypted, and distributed to the designated nodes for processing.
   The workflow does not require a precomputed extended witness; instead, the witness extension is generated during the job execution, which is then followed by proof generation.
-  This has the advantage, that we do not need to upload the potentially large witnesses.
+  This approach eliminates the need to upload potentially large witnesses.
 
   ```ts
   const nodes = await nodeInstance.randomNodeProviders();
@@ -83,7 +83,7 @@ Currently we support `nodejs` and `bundler` with their respective npm packages `
 
 - **Prove Job**:
 
-  A proof job can be scheduled utilizing either the Rep3 or Shamir Secret Sharing scheme.
+  A proof job can be scheduled using either the Rep3 or Shamir Secret Sharing scheme.
   The process involves taking a witness, secret-sharing it, encrypting these shares, and distributing them to the designated nodes for execution.
 
   ```ts
@@ -107,8 +107,8 @@ Currently we support `nodejs` and `bundler` with their respective npm packages `
 - **Fetch the job Results**:
 
   The results of a job execution can be retrieved via a WebSocket connection.
-  Once the results are ready, the server sends message containing the proof, public inputs, and signatures of computing nodes.
-  In case of a error on any party, a error message is returned instead.
+  Once the results are ready, the server sends a message containing the proof, public inputs, and signatures of the computing nodes.
+  If any party encounters an error, an error message is returned instead.
   The received proof and public inputs are serialized `HonkProof<ark_bn254::Fr>` and `Vec<ark_bn254::Fr>` types as defined by [noir-types](https://github.com/TaceoLabs/co-snarks/tree/main/co-noir/noir-types).
 
   ```ts
@@ -122,7 +122,7 @@ Currently we support `nodejs` and `bundler` with their respective npm packages `
 </TabItem>
 <TabItem value="rust" label="Rust">
 
-Currently we don't publish the Rust client lib to [crates.io](https://crates.io/), instead you can add it as a git dependency to your `Cargo.toml` file.
+The Rust client library is not currently published on [crates.io](https://crates.io/); instead, you can add it as a git dependency in your `Cargo.toml` file.
 
 - **Installation**: Add the following line to your `Cargo.toml`
 
@@ -143,7 +143,7 @@ Currently we don't publish the Rust client lib to [crates.io](https://crates.io/
 
   With a full prove job, the input is secret-shared, encrypted, and distributed to the designated nodes for processing.
   The workflow does not require a precomputed extended witness; instead, the witness extension is generated during the job execution, which is then followed by proof generation.
-  This has the advantage, that we do not need to upload the potentially large witnesses.
+  This approach eliminates the need to upload potentially large witnesses.
 
   ```rust
   let nodes = taceo_proof_client::get_random_node_providers(&config).await?;
@@ -166,9 +166,9 @@ Currently we don't publish the Rust client lib to [crates.io](https://crates.io/
 
 - **Multiple Inputs Witness Extension + Prove Job**:
 
-  This job supports multiple inputs from different users without revealing inputs to each other.
-  Once all inputs for the job are present, it is sent to designated nodes, which then execute the job.
-  Additionally, an optional deadline can be set to limit the amount of time that can pass before all inputs must be present.
+  This job allows multiple users to provide inputs independently, ensuring that each user's inputs remain private from the others.
+  Once all required inputs have been provided, the job is dispatched to the designated nodes for execution.
+  Additionally, you can optionally set a deadline to restrict how much time is allowed for all inputs to be submitted.
   Inputs can be dynamically added to an already created job. The input data is secret-shared, encrypted, and collected until the job gets scheduled.
   This approach enables more flexible workflows and computational processes.
 
@@ -202,7 +202,7 @@ Currently we don't publish the Rust client lib to [crates.io](https://crates.io/
 
 - **Prove Job**:
 
-  A proof job can be scheduled utilizing either the Rep3 or Shamir Secret Sharing scheme.
+  A proof job can be scheduled using either the Rep3 or Shamir Secret Sharing scheme.
   The process involves taking a witness, secret-sharing it, encrypting these shares, and distributing them to the designated nodes for execution.
 
   ```rust
@@ -227,8 +227,8 @@ Currently we don't publish the Rust client lib to [crates.io](https://crates.io/
 - **Fetch the job Results**:
 
   The results of a job execution can be retrieved via a WebSocket connection.
-  Once the results are ready, the server sends message containing the proof, public inputs, and signatures of computing nodes.
-  In case of a error on any party, a error message is returned instead.
+  Once the results are ready, the server sends a message containing the proof, public inputs, and signatures of the computing nodes.
+  If any party encounters an error, an error message is returned instead.
   The received proof and public inputs are deserialized into `HonkProof<ark_bn254::Fr>` and `Vec<ark_bn254::Fr>` types as defined by [noir-types](https://github.com/TaceoLabs/co-snarks/tree/main/co-noir/noir-types).
 
   ```rust
@@ -249,7 +249,7 @@ Currently we don't publish the Rust client lib to [crates.io](https://crates.io/
 </TabItem>
 <TabItem value="cli" label="CLI tool">
 
-In the [proof-client](https://github.com/TaceoLabs/proof-client) you can also find a Rust CLI example that you can install and use to schedule coSNARK jobs.
+The [proof-client](https://github.com/TaceoLabs/proof-client) repository also provides a Rust CLI tool that you can install and use to schedule coSNARK jobs.
 After installing the CLI, you can run it with the `--help` flag to get more information.
 
 ```bash
@@ -270,7 +270,7 @@ Options:
 
   With a full prove job, the input is secret-shared, encrypted, and distributed to the designated nodes for processing.
   The workflow does not require a precomputed extended witness; instead, the witness extension is generated during the job execution, which is then followed by proof generation.
-  This has the advantage, that we do not need to upload the potentially large witnesses.
+  This approach eliminates the need to upload potentially large witnesses.
 
   ```bash
   taceo-proof-client co-noir full \
@@ -282,9 +282,9 @@ Options:
 
 - **Multiple Inputs Witness Extension + Prove Job**:
 
-  This job supports multiple inputs from different users without revealing inputs to each other.
-  Once all inputs for the job are present, it is sent to designated nodes, which then execute the job.
-  Additionally, an optional deadline can be set to limit the amount of time that can pass before all inputs must be present.
+  This job allows multiple users to provide inputs independently, ensuring that each user's inputs remain private from the others.
+  Once all required inputs have been provided, the job is dispatched to the designated nodes for execution.
+  Additionally, you can optionally set a deadline to restrict how much time is allowed for all inputs to be submitted.
   Inputs can be dynamically added to an already created job. The input data is secret-shared, encrypted, and collected until the job gets scheduled.
   This approach enables more flexible workflows and computational processes.
 
@@ -302,7 +302,7 @@ Options:
 
 - **Prove Job**:
 
-  A proof job can be scheduled utilizing either the Rep3 or Shamir Secret Sharing scheme.
+  A proof job can be scheduled using either the Rep3 or Shamir Secret Sharing scheme.
   The process involves taking a witness, secret-sharing it, encrypting these shares, and distributing them to the designated nodes for execution.
 
   ```bash
@@ -316,7 +316,7 @@ Options:
 </TabItem>
 </Tabs>
 
-After following these steps, you should have 2 files called `proof` and `public_inputs` which contain the **Noir Ultrahonk** proof and public inputs.
+After following these steps, you will have two files named `proof` and `public_inputs`, containing the **Noir Ultrahonk** proof and public inputs.
 
 You can now use [barretenberg](https://github.com/AztecProtocol/barretenberg) to verify the proof
 ```bash
