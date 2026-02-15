@@ -26,6 +26,10 @@ const config: Config = {
 
   scripts: [
     {
+      src: 'https://cdn.matomo.cloud/taceo.matomo.cloud/container_v2uCJC8k.js',
+      async: true,
+    },
+    {
       src: 'https://cdn.voidanalytics.com/latest.min.js',
       async: false,
     }
