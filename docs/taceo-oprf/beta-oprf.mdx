@@ -1,0 +1,26 @@
+# OPRF Beta Notes
+
+## Operational Notes for the beta OPRF service
+
+When interacting with the hosted development setup, you may experience network latency depending on your location. All nodes are currently deployed in the EU (Frankfurt) region, so RTT will vary accordingly.
+
+A single OPRF invocation takes on the order of 3 seconds including proofs and around 130ms without any proof generation or verification. The most computationally expensive step is the computation of the ZK proof. 
+
+The hosted dev setup is operated entirely by TACEO. As a result, the MPC threshold assumption is not enforced in this environment.
+
+> **Do not send real private data.**
+> 
+> 
+> **Do not use the dev setup in production.**
+> 
+
+There are no guarantees of liveness or stability, and the API may change without notice.
+
+If you are interested in running TACEO:OPRF in a production environment, please contact us at TODO_CONTACT.
+
+If you found a bug or experience other problems, please contact us at TODO_OTHER_CONTACT.
+
+### Access and Feedback
+If you would like to use TACEO:OPRF in production, please contact us at [TODO]
+
+We appreciate your feedback in the Discord [TODO]

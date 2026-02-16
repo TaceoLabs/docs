@@ -162,13 +162,10 @@ const sidebars: SidebarsConfig = {
   ],
   oprfSidebar: [
     "taceo-oprf/overview",
-    {
-      type: "category",
-      label: "Development",
-      items: [
-        "taceo-oprf/dev/quickstart",
-      ],
-    },
+    "taceo-oprf/beta-oprf",
+    "taceo-oprf/quickstart",
+    "taceo-oprf/quicklocal",
+    "taceo-oprf/api"
   ],
 };
 

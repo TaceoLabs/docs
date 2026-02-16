@@ -1,0 +1,40 @@
+# Local Quickstart
+
+If you want to experiment more with TACEO:OPRF, then you can also spin up your own local network. To do that you first need to clone the repository and its submodules.
+
+```bash
+git clone --recursive https://github.com/TaceoLabs/oprf-testnet.git
+```
+
+You also need a couple more dependencies.
+
+- `docker compose` to start localstack, postgres and oprf-key-gen containers (See [https://docs.docker.com/compose/install/](https://docs.docker.com/compose/install/))
+- `anvil` and `forge` from Foundry (See [https://www.getfoundry.sh/introduction/getting-started](https://www.getfoundry.sh/introduction/getting-started))
+- `just` to run command for the local setup (See https://github.com/casey/just)
+
+To start a local setup, we need to do the following steps in order:
+
+1. Start the `anvil`, and the `localstack`, and `postgres` docker containers
+2. Deploy the `OprfKeyRegsitry` contract on `anvil`
+3. Start the 3 `oprf-key-gen` docker containers for the 3 nodes
+4. Start the 3 `oprf-testnet-node` binaries
+5. Create the OPRF keys for both OPRF modules
+
+All of which is done for you by running the following command:
+
+```bash
+just run-setup
+```
+
+Now you can run the the client binary again, but this time point it to you local OPRF nodes with the following command:
+
+```bash
+taceo-oprf-testnet-client \
+	--nodes http://127.0.0.1:10000,http://127.0.0.1:10001,http://127.0.0.1:10002 \
+	--api-key taceo_3ZfE55WkcNWRweh5rcfpUNpi \
+	wallet-ownership
+```
+
+Feel free to play around, e.g., modifying the authentication modules to add your own logic there or even changing the zero knowledge proof to verify different properties of the input such as allowing only vanity addresses that end in `c0ffee`.
+
+---

@@ -64,7 +64,7 @@ bbup -nv 1.0.0-beta.18
 
 We will use `bb` to compute and verify two ZK proofs.
 
-The first (https://github.com/TaceoLabs/oprf-testnet/blob/main/noir/blinded_query_proof/src/main.nr) for proofing ownership of the wallet, which the authorization module verifies together with the API.
+The first (https://github.com/TaceoLabs/oprf-testnet/blob/main/noir/blinded_query_proof/src/main.nr) for proving ownership of the wallet, which the authorization module verifies together with the API.
 
 ```rust
 fn main(
@@ -82,7 +82,7 @@ fn main(
 }
 ```
 
-And the second (https://github.com/TaceoLabs/oprf-testnet/blob/main/noir/verified_oprf_proof/src/main.nr) for proofing that the generated nullifier is associated with the wallet.
+And the second (https://github.com/TaceoLabs/oprf-testnet/blob/main/noir/verified_oprf_proof/src/main.nr) for proving that the generated nullifier is associated with the wallet.
 
 ```rust
 fn main(
@@ -145,7 +145,7 @@ You can then verify the proof using the following command:
 bb verify -p proof -i public_inputs -k verified_oprf_proof.vk
 ```
 
-**Local Setup**
+## Local Setup
 
 If you want to experiment more with TACEO:OPRF, then you can also spin up your own local network. To do that you first need to clone the repository and its submodules.
 
