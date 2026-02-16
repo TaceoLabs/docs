@@ -34,9 +34,9 @@
 .networkGrid {
   position: relative;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   align-items: stretch;
-  max-width: 900px;
+  max-width: 1200px;
   margin: 0 auto;
   gap: 2.5rem;
   padding: 0 1.5rem;

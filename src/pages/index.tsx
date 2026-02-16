@@ -22,6 +22,14 @@ function NetworkTools() {
       linkText: "Learn more",
       highlight: true,
     },
+    {
+      title: "TACEO:OPRF<br/>Oblivious Pseudorandom Function",
+      status: "Status: In beta",
+      description: "Privacy-preserving pseudorandom function for nullifiers and more.",
+      link: "/docs/taceo-oprf/overview",
+      linkText: "Explore",
+      highlight: true,
+    },
   ];
 
   return (
@@ -31,8 +39,8 @@ function NetworkTools() {
           Documentation & Tools
         </h3>
         <p className={styles.networkDescription}>
-          We're building an MPC and coSNARK network for private shared state and proof delegation.<br/>
-          Here you'll find documentation pertaining to those.
+          We're building an encrypted compute layer for private shared state via the TACEO Network.<br/>
+          Here you'll find documentation pertaining to the tools and services currently available.
         </p>
 
         <div className={styles.networkGrid}>

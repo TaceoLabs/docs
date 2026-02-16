@@ -90,6 +90,12 @@ const config: Config = {
           label: "TACEO:Proof", 
         },
         {
+          type: "docSidebar",
+          sidebarId: "oprfSidebar",
+          position: "left",
+          label: "TACEO:OPRF", 
+        },
+        {
           type: "search",
           position: "right",
         },
@@ -118,6 +124,10 @@ const config: Config = {
             {
               label: "TACEO:Proof",
               to: "/docs/taceo-proof/overview",
+            },
+            {
+              label: "TACEO:OPRF",
+              to: "/docs/taceo-oprf/overview",
             },
           ],
         },

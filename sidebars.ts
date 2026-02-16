@@ -160,6 +160,16 @@ const sidebars: SidebarsConfig = {
       ],
     },
   ],
+  oprfSidebar: [
+    "taceo-oprf/overview",
+    {
+      type: "category",
+      label: "Development",
+      items: [
+        "taceo-oprf/dev/quickstart",
+      ],
+    },
+  ],
 };
 
 export default sidebars;
