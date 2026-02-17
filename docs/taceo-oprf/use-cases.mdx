@@ -5,10 +5,10 @@ TACEO:OPRF solves critical privacy problems in Web3 and digital identity. Here a
 ## Nullifiers for Digital Identity
 
 **The Problem**
-ZK identity systems rely on a single secret key. If it leaks, your entire history is exposed. Here's how threshold OPRFs solve this, and why World ID and zkPassport need them.
+ZK identity systems rely on a single secret key. If it leaks, your entire history is exposed. Here's how threshold OPRFs solve this.
 
 ### Current Vulnerability
-Traditional ZK identity systems like World ID, zkPassport, and similar protocols face a fundamental weakness:
+Traditional ZK identity systems like face a fundamental weakness:
 
 ```
 Traditional: nullifier = hash(user_secret, action_id)
@@ -31,23 +31,6 @@ Enhanced: nullifier = OPRF(user_secret, action_id)
 - Past nullifiers remain private even if secret leaks
 - Identity history cannot be reconstructed from single compromise
 - Multiple independent parties must be compromised
-
-### Real-World Applications
-
-**World ID Enhancement**
-- Protect Worldcoin users from identity exposure
-- Maintain anonymity even with biometric data compromise
-- Enable secure identity verification across applications
-
-**zkPassport Systems**  
-- Prevent nationality/travel history exposure
-- Protect sensitive government document verification
-- Enable privacy-preserving border controls
-
-**Professional Credentials**
-- Anonymous degree verification without linking to individual
-- Professional license validation preserving privacy
-- Industry certification without identity exposure
 
 ---
 
