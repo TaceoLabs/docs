@@ -1,0 +1,177 @@
+# Quickstart Guide
+
+Get up and running with TACEO:OPRF in minutes. This guide will walk you through installation and your first OPRF computation.
+
+## Installation
+
+### Option 1: Download Binary (Recommended)
+
+Download the pre-built client from [GitHub Releases](https://github.com/TaceoLabs/oprf-testnet/releases).
+
+**macOS users**: You'll need to allow the binary to execute:
+```bash
+xattr -dr com.apple.quarantine taceo-oprf-testnet-client
+```
+
+### Option 2: Build from Source
+
+If you prefer to build from source:
+
+```bash
+# Clone the repository
+git clone --recursive https://github.com/TaceoLabs/oprf-testnet.git && cd oprf-testnet
+
+# Install dependencies
+# - Rust: https://rust-lang.org/learn/get-started/
+# - On Ubuntu: build-essential (name may vary on other platforms)
+
+# Build the client (this takes some time)
+cargo build --release
+
+# Copy the binary for convenience into the root folder
+mv target/release/taceo-oprf-testnet-client .
+```
+
+Now you'll have a `taceo-oprf-testnet-client` binary to interact with TACEO:OPRF!
+
+## Your First OPRF Computation
+
+We'll demonstrate two different authorization modules that showcase TACEO:OPRF's flexibility.
+
+### Example 1: Simple API Key Authorization
+
+This example uses basic API key validation - perfect for getting started.
+
+**Run the command:**
+```bash
+./taceo-oprf-testnet-client \
+    --api-key taceo_3ZfE55WkcNWRweh5rcfpUNpi \
+    basic \
+    --input 42
+```
+
+**What happens:**
+1. Client sends your input (`42`) and API key to OPRF nodes
+2. Nodes verify the API key is valid  
+3. Nodes cooperatively compute the OPRF output
+4. Client receives and displays the final result
+
+**Expected output:**
+You'll see the deterministic OPRF output in your terminal. Running the same command again produces the same result - this is the deterministic property of OPRFs.
+
+:::info Why deterministic?
+The OPRF secret key is used to derive the output. Without querying the OPRF nodes with the same input, no one can guess or reproduce this output. This is guaranteed by the cryptographic properties of OPRFs.
+:::
+
+### Example 2: Wallet Ownership Proof
+
+This advanced example demonstrates zero-knowledge wallet ownership verification.
+
+**Prerequisites:**
+You'll need [Barretenberg](https://barretenberg.aztec.network/docs/getting_started) `v3.0.0-nightly.20260102`:
+
+```bash
+# Install bbup
+curl -L https://raw.githubusercontent.com/AztecProtocol/aztec-packages/refs/heads/next/barretenberg/bbup/install | bash
+
+# Add to PATH and restart shell, then:
+bbup -nv 1.0.0-beta.18
+```
+
+**Run the command:**
+```bash
+./taceo-oprf-testnet-client \
+    --api-key taceo_3ZfE55WkcNWRweh5rcfpUNpi \
+    wallet-ownership
+```
+
+**What happens:**
+1. Client generates a fresh Ethereum wallet (private key shown in output)
+2. Client creates a zero-knowledge proof of wallet ownership
+3. OPRF nodes verify the proof without learning the wallet address
+4. Nodes compute OPRF output using the verified wallet as input
+5. Client receives the final result and ZK proof files
+
+**Expected output:**
+- Private key of the generated wallet
+- OPRF output (deterministic nullifier)  
+- `proof` and `public_inputs` files for verification
+
+**Verify with existing wallet:**
+You can reuse a previously generated private key:
+```bash
+./taceo-oprf-testnet-client \
+    --api-key taceo_3ZfE55WkcNWRweh5rcfpUNpi \
+    wallet-ownership \
+    --private-key <PREVIOUS_PRIVATE_KEY>
+```
+
+This will produce the same nullifier, demonstrating deterministic output.
+
+## Understanding the Results  
+
+### Proof Verification
+
+Download the verification key:
+```bash
+curl -sSLO https://github.com/TaceoLabs/oprf-testnet/raw/refs/heads/main/oprf-testnet-authentication/verified_oprf_proof.vk
+```
+
+Verify your proof:
+```bash
+bb verify -p proof -i public_inputs -k verified_oprf_proof.vk
+```
+
+### What the Proofs Demonstrate
+
+The wallet ownership example uses **two zero-knowledge proofs**:
+
+**1. Blinded Query Proof** ([source](https://github.com/TaceoLabs/oprf-testnet/blob/main/noir/blinded_query_proof/src/main.nr))
+- Proves you control the wallet without revealing the address
+- Verifies signature against a specific message
+- Generates blinded OPRF query
+
+**2. Verified OPRF Proof** ([source](https://github.com/TaceoLabs/oprf-testnet/blob/main/noir/verified_oprf_proof/src/main.nr))  
+- Proves correct OPRF computation
+- Verifies the nullifier corresponds to your wallet
+- Enables third-party verification without revealing inputs
+
+## Next Steps
+
+### Experiment Locally
+Ready to experiment more? Set up your own [local OPRF network](/docs/taceo-oprf/quicklocal) for development.
+
+### Custom Authorization
+Want to build your own authorization logic? Learn about [Authorization Modules](/docs/taceo-oprf/authorization).
+
+### Integration  
+Ready to integrate into your application? Check the [API Reference](/docs/taceo-oprf/api).
+
+### Use Cases
+Looking for inspiration? Explore our [Use Cases & Examples](/docs/taceo-oprf/use-cases).
+
+## Troubleshooting
+
+### Common Issues
+
+**Binary execution blocked (macOS)**
+```bash
+xattr -dr com.apple.quarantine taceo-oprf-testnet-client
+```
+
+**Binary execution blocked (linux)**
+```bash
+sudo chmod +x taceo-oprf-testnet-client
+```
+
+**Missing dependencies**
+Ensure you have Rust and build tools installed:
+- [Rust installation guide](https://rust-lang.org/learn/get-started/)
+- Ubuntu: `sudo apt install build-essential`
+
+**Network connectivity**
+The development API is hosted in EU (Frankfurt). Network latency may vary by location.
+
+**Need help?**
+- **Troubleshooting & Support**: [Join our Discord](https://discord.com/channels/1250827367736283276/1472599795154550907)
+- **Production Deployment**: [Contact us](mailto:hello@taceo.io) to discuss production use

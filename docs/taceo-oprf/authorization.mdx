@@ -1,0 +1,181 @@
+# Authorization Modules
+
+Authorization is a core component of TACEO:OPRF that determines who can evaluate the OPRF and under what conditions.
+
+## Overview
+
+Unlike the standardized OPRF protocol, authorization is highly use-case specific. Different projects require different notions of eligibility:
+
+- An identity provider might require email verification
+- A voting system might need membership proof  
+- A gaming platform might verify account ownership
+- A financial service might require KYC compliance
+
+## How Authorization Works
+
+### Dedicated Instances Per Project
+For each project, TACEO deploys a dedicated TACEO:OPRF instance with:
+
+- Own OPRF key registry: Separate cryptographic keys
+- Own logical node set: Isolated computation environment  
+- Custom authorization logic: Project-specific access control
+
+The underlying infrastructure remains the same, but each instance enforces different authorization rules.
+
+### Authorization Module Architecture
+
+Developers implement authorization logic in an authorization module:
+
+```
+User Request → Authorization Module → OPRF Nodes
+              ↓
+         ✅ Valid Request        ❌ Reject Request
+              ↓
+         OPRF Computation
+```
+
+Authorization modules:
+- Are plugged into TACEO:OPRF server nodes
+- Validate whether a user is eligible to evaluate the OPRF
+- Authenticate users against project-specific requirements
+- Reject unauthorized requests before OPRF computation
+
+## Custom Authorization Logic
+
+You define the rules, TACEO hosts the enforcement:
+
+1. Developer: Implements custom authorization module
+2. TACEO: Integrates module into TACEO:OPRF instance  
+3. Network: Hosts dedicated instance with your authorization logic
+4. Users: Authenticate against your specific requirements
+
+## Example Authorization Modules
+
+### 1. API Key Authorization
+**Use case**: Simple access control with rate limiting
+
+**Logic**: 
+- Verify API key is valid and active
+- Check rate limits and quota
+- No restrictions on OPRF input
+
+**Implementation**: [Simple auth module](https://github.com/TaceoLabs/oprf-testnet/blob/c143033ee820f46eef8714d472d6c0e9c1e5eab0/oprf-testnet-authentication/src/lib.rs#L222)
+
+---
+
+### 2. Wallet Ownership Proof  
+**Use case**: Prove control of Ethereum address without revealing it
+
+**Logic**:
+- User proves they signed a specific message
+- Verification happens in zero-knowledge
+- OPRF input is the derived wallet address
+- No one learns the actual wallet address
+
+**Implementation**: [Wallet auth module](https://github.com/TaceoLabs/oprf-testnet/blob/c143033ee820f46eef8714d472d6c0e9c1e5eab0/oprf-testnet-authentication/src/lib.rs#L192)
+
+**ZK Proof Components**:
+```rust
+// Prove wallet ownership
+fn prove_ownership(
+    hashed_message: [u8; 32],
+    pub_key_x: [u8; 32], 
+    pub_key_y: [u8; 32],
+    signature: [u8; 64],
+) -> Address
+
+// Prove OPRF correctness  
+fn prove_oprf_correctness(
+    wallet_proof: WalletProof,
+    oprf_response: ORPFResponse,
+) -> Nullifier
+```
+
+---
+
+### 3. Membership Proof
+**Use case**: Prove membership in authorized set without revealing identity
+
+**Logic**:
+- Maintain Merkle tree of authorized members
+- User proves inclusion without revealing which member
+- Support for dynamic membership updates
+- Time-bound access with expiration
+
+---
+
+### 4. Attribute-Based Access
+**Use case**: Fine-grained access control based on user attributes
+
+**Logic**:
+- Age verification (prove age > 18 without revealing exact age)
+- Location verification (prove in allowed country)
+- Credential verification (prove professional license)
+- All verified via zero-knowledge proofs
+
+## Building Custom Authorization
+
+### 1. Define Requirements
+- Who should have access?
+- What conditions must be met?
+- How will users prove eligibility?
+- When should access expire?
+
+### 2. Choose Proof System
+- Simple signatures: For basic ownership proofs
+- Zero-knowledge proofs: For privacy-preserving attribute verification
+- Merkle proofs: For membership verification
+- Time-based tokens: For temporal access control
+
+### 3. Implement Module
+```rust
+pub trait AuthorizationModule {
+    fn validate_request(&self, request: &AuthRequest) -> Result<bool, AuthError>;
+    fn get_authorization_proof(&self) -> AuthProof;
+}
+```
+
+### 4. Test & Deploy
+- Test with local TACEO:OPRF setup
+- Validate authorization logic
+- Deploy to TACEO network
+- Monitor and maintain
+
+## Security Considerations
+
+### Authorization vs OPRF Security
+- Authorization security: Depends on your verification logic
+- OPRF security: Guaranteed by MPC threshold assumptions
+- Combined security: Both layers must be maintained
+
+### Common Pitfalls
+- Replay attacks: Ensure one-time use of authorization proofs
+- Time sensitivity: Implement appropriate expiration
+- Key management: Secure storage of authorization keys
+- Rate limiting: Prevent abuse and DoS attacks
+
+## Development Workflow
+
+### 1. Local Testing
+```bash
+# Start local TACEO:OPRF network
+just run-setup
+
+# Test your authorization module
+taceo-oprf-testnet-client \
+    --nodes http://127.0.0.1:10000,http://127.0.0.1:10001,http://127.0.0.1:10002 \
+    --custom-auth your-auth-module
+```
+
+### 2. Production Deployment
+Contact TACEO to deploy your authorization module:
+- Provide module implementation
+- Define access requirements  
+- Configure network parameters
+- Launch dedicated instance
+
+## Next Steps
+
+- Ready to build? Check out the [Quickstart](/docs/taceo-oprf/quickstart)
+- Need examples? See [Use Cases](/docs/taceo-oprf/use-cases)
+- Technical details? Review the [API Reference](/docs/taceo-oprf/api)

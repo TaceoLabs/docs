@@ -1,0 +1,163 @@
+# API Reference
+
+The whole interaction with a single node is done via websockets. A Rust-based reference implementation of the OPRF client is available on [our Github](https://github.com/TaceoLabs/oprf-service/tree/main/oprf-client)  as well as on [crates.io](https://crates.io/crates/taceo-oprf-client).
+
+## OPRF WebSocket Protocol (v1)
+
+**Endpoint:** `wss://\<host\>/api/<auth_module>/oprf`
+
+**Transport:** WebSocket (GET → upgrade)
+
+**Encoding:** CBOR, JSON
+
+**Additional header:** `x-taceo-oprf-protocol-version` (semver from client)
+
+### Message Flow
+
+| Step | Direction | Message | Description |
+| --- | --- | --- | --- |
+| 1 | Client → Server | `OprfRequest` | Blinded OPRF input + share identifier |
+| 2 | Server → Client | `OprfResponse` | Partial commitments per party |
+| 3 | Client → Server | `DLogEqualityCommitments` | Aggregated commitments |
+| 4 | Server → Client | `DLogEqualityProofShare` | Proof response share |
+| 5 | — | Close | Connection closed with CloseFrame and code set to 1000 (NORMAL) |
+
+The whole flow is split in two parts:
+
+1. Initialize session (send `OprfRequest`)
+2. Challenge (send `DLogEqualityCommitments`)
+
+A client initializes a single session at $n$ MPC-nodes. As soon as the client successfully opened threshold many sessions, the client shall abort the sessions at the remaining MPC-nodes gracefully and continues with the Challenge part of the protocol.
+
+### Errors
+
+Before doing the upgrade handshake, the server will verify the `x-taceo-oprf-protocol-version` header. It will reject clients providing a non-acceptable version with a BAD_REQUEST status-code.
+
+After establishing the web-socket connection, the server will always close the web-socket connection with a dedicated CloseFrame.
+
+| Code | Name | Description |
+| --- | --- | --- |
+| 1003 | Unexpected message | Cannot parse message from user or sends PING/PONG messages. |
+| 1008 | session reuse | If the client reuses an open session-id. |
+| 1008 | authorization error | Implementation dependent authorization failed. |
+| 1011 | INTERNAL_SERVER_ERROR | If the server encounters an internal error |
+| 4001 | timeout | The server will send this error code if the session exceeds its lifetime. |
+| 4002 | bad request | If the client sends invalid data and the server refuses to handle the request. Examples:
+* threshold does not match commitments received in round 2
+* contributing party IDs not sorted in round 2 |
+
+### Messages
+
+**OprfRequest:** OprfRequestAuth is implementation dependent
+
+```rust
+pub struct OprfRequest<OprfRequestAuth> {
+	/// Unique ID of the request (used to correlate responses).
+	pub request_id: Uuid,
+	/// Input point B of the OPRF, serialized as a BabyJubJub affine point.
+	#[serde(serialize_with = "babyjubjub::serialize_affine")]
+	#[serde(deserialize_with = "babyjubjub::deserialize_affine")]
+	pub blinded_query: ark_babyjubjub::EdwardsAffine,
+	/// The additional authorization info for this request
+	pub auth: OprfRequestAuth,
+}
+```
+
+**OprfResonse**
+
+```rust
+pub struct OprfResponse {
+	/// Server’s partial commitments for the discrete log equality proof.
+	pub commitments: PartialDLogCommitmentsShamir,
+	/// The party ID of the node
+	pub party_id: PartyId,
+	/// The `OprfPublicKey` that was used for this OPRF computation.
+  pub oprf_public_key: OprfPublicKey,
+}
+
+pub struct PartyId(pub u16);
+
+#[serde(transparent)]
+pub struct OprfPublicKey(
+    #[serde(serialize_with = "babyjubjub::serialize_affine")]
+    #[serde(deserialize_with = "babyjubjub::deserialize_affine")]
+    ark_babyjubjub::EdwardsAffine,
+);
+
+#[serde(transparent)]
+pub struct PartialDLogCommitmentsShamir(PartialDLogEqualityCommitments);
+
+pub struct PartialDLogEqualityCommitments {
+    #[serde(serialize_with = "babyjubjub::serialize_affine")]
+    #[serde(deserialize_with = "babyjubjub::deserialize_affine")]
+    pub(crate) c: ark_babyjubjub::EdwardsAffine, // The share of the actual result C=B*x
+    #[serde(serialize_with = "babyjubjub::serialize_affine")]
+    #[serde(deserialize_with = "babyjubjub::deserialize_affine")]
+    /// The share of G*d1, the first part of the two-nonce commitment to the randomness r1 = d1 + e1*b
+    pub(crate) d1: ark_babyjubjub::EdwardsAffine,
+    #[serde(serialize_with = "babyjubjub::serialize_affine")]
+    #[serde(deserialize_with = "babyjubjub::deserialize_affine")]
+    /// The share of G*d2, the first part of the two-nonce commitment to the randomness r2 = d2 + e2*b
+    pub(crate) d2: ark_babyjubjub::EdwardsAffine,
+    #[serde(serialize_with = "babyjubjub::serialize_affine")]
+    #[serde(deserialize_with = "babyjubjub::deserialize_affine")]
+    /// The share of G*e1, the second part of the two-nonce commitment to the randomness r1 = d1 + e1*b
+    pub(crate) e1: ark_babyjubjub::EdwardsAffine,
+    #[serde(serialize_with = "babyjubjub::serialize_affine")]
+    #[serde(deserialize_with = "babyjubjub::deserialize_affine")]
+    /// The share of G*e2, the second part of the two-nonce commitment to the randomness r2 = d2 + e2*b
+    pub(crate) e2: ark_babyjubjub::EdwardsAffine,
+}
+
+```
+
+**DLogEqualityCommitments**
+
+```rust
+#[serde(transparent)]
+pub struct DLogCommitmentsShamir(DLogEqualityCommitments);
+
+pub struct DLogEqualityCommitments {
+    #[serde(serialize_with = "babyjubjub::serialize_affine")]
+    #[serde(deserialize_with = "babyjubjub::deserialize_affine")]
+    pub(crate) c: Affine, // The share of the actual result C=B*x
+    #[serde(serialize_with = "babyjubjub::serialize_affine")]
+    #[serde(deserialize_with = "babyjubjub::deserialize_affine")]
+    /// The share of G*d1, the first part of the two-nonce commitment to the randomness r1 = d1 + e1*b
+    pub(crate) d1: Affine,
+    #[serde(serialize_with = "babyjubjub::serialize_affine")]
+    #[serde(deserialize_with = "babyjubjub::deserialize_affine")]
+    /// The share of G*d2, the first part of the two-nonce commitment to the randomness r2 = d2 + e2*b
+    pub(crate) d2: Affine,
+    #[serde(serialize_with = "babyjubjub::serialize_affine")]
+    #[serde(deserialize_with = "babyjubjub::deserialize_affine")]
+    /// The share of G*e1, the second part of the two-nonce commitment to the randomness r1 = d1 + e1*b
+    pub(crate) e1: Affine,
+    #[serde(serialize_with = "babyjubjub::serialize_affine")]
+    #[serde(deserialize_with = "babyjubjub::deserialize_affine")]
+    /// The share of G*e2, the second part of the two-nonce commitment to the randomness r2 = d2 + e2*b
+    pub(crate) e2: Affine,
+}
+```
+
+**DLogEqualityProofShare**
+
+```rust
+#[serde(transparent)]
+pub(crate) struct DLogEqualityProofShare(
+	// The share of the response s
+	#[serde(serialize_with = "babyjubjub::serialize_fr")]
+	#[serde(deserialize_with = "babyjubjub::deserialize_fr")]
+	pub(crate) ScalarField,
+);
+```
+
+## Encoding Notes
+
+- We prefer CBOR as the default wire format, but JSON is also supported.
+    - Server will mirror the user’s format.
+    - CBOR shall be used with Binary web-socket messages.
+    - JSON shall be used with Text web-socket messages.
+- We use [our dedicated library](https://github.com/TaceoLabs/circom-helpers/tree/main/ark-serde-compat) for serialization and deserialization for cryptographic artifacts.
+    - BabyJubJub points are serialized in affine form.
+    - Scalars are encoded as field elements.

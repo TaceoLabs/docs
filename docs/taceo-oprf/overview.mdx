@@ -1,0 +1,99 @@
+# TACEO:OPRF Overview
+
+TACEO:OPRF is a service on the TACEO network for computing threshold Oblivious Pseudo-Random Functions (OPRFs) in a publicly auditable and provable way.
+
+:::info Development Stage
+The TACEO:OPRF Service is currently in beta for public development and testing. For production applications, [contact us](mailto:hello@taceo.io) to discuss deployment options.
+:::
+
+## What Problem Does It Solve?
+
+**The Challenge**: Traditional privacy systems have single points of failure. If your secret key leaks, attackers can trace your entire history.
+
+**The Solution**: TACEO:OPRF distributes trust across multiple independent parties. Even if your secret leaks, attackers need to compromise multiple nodes to trace you.
+
+## How TACEO:OPRF Works
+
+TACEO:OPRF allows users to deterministically *salt* their secrets without ever revealing the secret itself. 
+
+Unlike traditional single-server OPRF protocols, TACEO:OPRF is built on a multi-party computation (MPC) design. No single party can evaluate the OPRF on its own. Instead, a threshold of independent nodes must cooperate, providing the familiar trust guarantees of MPC-based systems.
+
+### Key Features
+
+- Privacy-preserving: Never reveals your secret inputs
+- Threshold security: Requires cooperation of multiple independent nodes  
+- ZK-friendly: Designed using zero-knowledge friendly primitives
+- Flexible authorization: Customizable eligibility requirements
+
+## Who Should Use It?
+
+### Web3 Protocol Teams
+Building identity systems (like World ID), DeFi protocols, or blockchain applications needing enhanced privacy guarantees.
+
+### Privacy Infrastructure Companies  
+Developing wallet recovery services, anonymous authentication systems, or privacy-preserving financial services.
+
+### Enterprise Developers
+Creating compliance systems, secure collaboration tools, or any application requiring distributed trust assumptions.
+
+**Technical Requirements**: Comfort with cryptographic concepts, zero-knowledge proofs, and API integration. Ideal for teams already working with blockchain or privacy-focused technologies.
+
+## Common Use Cases
+
+### Nullifiers for Digital Identity
+Problem: ZK identity systems rely on single secret keys. If leaked, your entire history is exposed.
+
+Solution: TACEO:OPRF adds threshold security. Attackers need both your secret AND to break the MPC threshold to trace your identity.
+
+*Used in: ZK Identity systems, anonymous voting, private credentials*
+
+### Private Revenue Sharing for DeFi  
+Problem: DeFi protocols need referral tracking, but current methods surveille all transactions and destroy financial privacy.
+
+Solution: Private referral identifiers via OPRF enable fee distribution without linking wallets to users or referrers.
+
+*Used in: Decentralized exchanges, DeFi protocols, private trading platforms*
+
+### Private Wallet Recovery
+Problem: Seed phrases are a UX disaster. Custodial backup defeats the point of self-custody.
+
+Solution: TACEO:OPRF enables wallet recovery where no one (not even the recovery service) ever sees your keys.
+
+*Used in: Wallet applications, key management systems, secure backup solutions*
+
+## How It Works
+
+### 1. Authorization First
+Users must prove (ideally via ZK) that they're eligible to evaluate the OPRF. This could be:
+- Controlling an Ethereum private key
+- Being a member of an authorized set  
+- Providing a valid API key
+- Custom authorization logic
+
+### 2. Threshold Computation  
+Multiple independent nodes cooperate to compute the OPRF without revealing:
+- Your secret input and who the user even is
+- The nodes' secret keys  
+- The intermediate computation steps
+
+### 3. Provable Results
+The OPRF evaluation uses ZK-friendly primitives (currently Circom and Noir), so you can prove correct evaluation to third parties without revealing your private inputs.
+
+## What You'll Learn
+
+This documentation will help you:
+
+- Understand the cryptographic foundations and architecture
+- Integrate TACEO:OPRF into your applications  
+- Deploy your own local test environment
+- Implement custom authorization modules
+
+### Developer API Access
+
+We provide a developer API endpoint for experimentation against a live deployment. This consists of three MPC parties operated by TACEO and is intended for development and testing only.
+
+## Next Steps
+
+- New to OPRFs? Start with our [Concepts](/docs/taceo-oprf/concepts) guide
+- Ready to build? Jump to the [Quickstart](/docs/taceo-oprf/quickstart) 
+- Need examples? Check out our [Use Cases](/docs/taceo-oprf/use-cases)
