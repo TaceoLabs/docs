@@ -45,7 +45,7 @@ Problem: ZK identity systems rely on single secret keys. If leaked, your entire 
 
 Solution: TACEO:OPRF adds threshold security. Attackers need both your secret AND to break the MPC threshold to trace your identity.
 
-*Used in: World ID, zkPassport, anonymous voting, private credentials*
+*Used in: ZK Identity systems, anonymous voting, private credentials*
 
 ### Private Orderflow for DeFi  
 Problem: DeFi protocols need referral tracking, but current methods surveille all transactions and destroy financial privacy.
@@ -63,20 +63,20 @@ Solution: TACEO:OPRF enables wallet recovery where no one (not even the recovery
 
 ## How It Works
 
-### Authorization First
+### 1. Authorization First
 Users must prove they're eligible to evaluate the OPRF. This could be:
 - Controlling an Ethereum private key
 - Being a member of an authorized set  
 - Providing a valid API key
 - Custom authorization logic
 
-### Threshold Computation  
+### 2. Threshold Computation  
 Multiple independent nodes cooperate to compute the OPRF without revealing:
 - Your secret input
 - The nodes' secret keys  
 - The intermediate computation steps
 
-### Provable Results
+### 3. Provable Results
 The OPRF evaluation uses ZK-friendly primitives, so you can prove correct evaluation to third parties without revealing your private inputs.
 
 ## What You'll Learn
