@@ -57,12 +57,12 @@ The user generates a blinded OPRF query and produces an authorization proof.
 OPRF nodes:
 - Receive the query
 - Verify the authorization proof
-- Answer using their key share
+- Contribute with their key-share
 
 ### 3. Response Aggregation
 The client:
-- Receives responses from all nodes
-- Recombines answers into the full OPRF output
+- Receives responses from threshold-many nodes
+- Combines answers into the full OPRF output
 
 ### 4. Optional Proof Generation
 The client can prove valid OPRF execution in a ZK proof and submit both the output and proof to a verifier.

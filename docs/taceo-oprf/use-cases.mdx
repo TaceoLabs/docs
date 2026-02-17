@@ -11,7 +11,7 @@ ZK identity systems rely on a single secret key. If it leaks, your entire histor
 Traditional ZK identity systems like face a fundamental weakness:
 
 ```
-Traditional: nullifier = hash(user_secret, action_id)
+Traditional: nullifier = OPRF(user_secret, action_id)
 ```
 
 **If your secret leaks:**
@@ -23,7 +23,7 @@ Traditional: nullifier = hash(user_secret, action_id)
 ### TACEO:OPRF Solution
 
 ```
-Enhanced: nullifier = OPRF(user_secret, action_id)
+Enhanced: nullifier = OPRF(user_secret, action_id, [k])
 ```
 
 **With threshold OPRF:**
@@ -34,7 +34,7 @@ Enhanced: nullifier = OPRF(user_secret, action_id)
 
 ---
 
-## Private Orderflow for DeFi
+## Private Revenue Sharing for DeFi
 
 **The Problem**
 DeFi protocols need to pay referral fees and track user activity, but current methods surveillance all transactions and wallets, destroying financial privacy.
@@ -43,7 +43,6 @@ DeFi protocols need to pay referral fees and track user activity, but current me
 - Referral tracking requires linking wallets to referrers
 - Fee distribution exposes user trading patterns  
 - On-chain analysis reveals complete transaction history
-- MEV and front-running exploit visible orderflow
 
 ### TACEO:OPRF Solution
 

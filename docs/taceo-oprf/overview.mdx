@@ -3,7 +3,7 @@
 TACEO:OPRF is a service on the TACEO network for computing threshold Oblivious Pseudo-Random Functions (OPRFs) in a publicly auditable and provable way.
 
 :::info Development Stage
-TACEO:OPRF is currently in beta for development and testing. For production applications, [contact us](mailto:comms@taceo.io) to discuss deployment options.
+The TACEO:OPRF Service is currently in beta for public development and testing. For production applications, [contact us](mailto:hello@taceo.io) to discuss deployment options.
 :::
 
 ## What Problem Does It Solve?
@@ -47,7 +47,7 @@ Solution: TACEO:OPRF adds threshold security. Attackers need both your secret AN
 
 *Used in: ZK Identity systems, anonymous voting, private credentials*
 
-### Private Orderflow for DeFi  
+### Private Revenue Sharing for DeFi  
 Problem: DeFi protocols need referral tracking, but current methods surveille all transactions and destroy financial privacy.
 
 Solution: Private referral identifiers via OPRF enable fee distribution without linking wallets to users or referrers.
@@ -64,7 +64,7 @@ Solution: TACEO:OPRF enables wallet recovery where no one (not even the recovery
 ## How It Works
 
 ### 1. Authorization First
-Users must prove they're eligible to evaluate the OPRF. This could be:
+Users must prove (ideally via ZK) that they're eligible to evaluate the OPRF. This could be:
 - Controlling an Ethereum private key
 - Being a member of an authorized set  
 - Providing a valid API key
@@ -77,7 +77,7 @@ Multiple independent nodes cooperate to compute the OPRF without revealing:
 - The intermediate computation steps
 
 ### 3. Provable Results
-The OPRF evaluation uses ZK-friendly primitives, so you can prove correct evaluation to third parties without revealing your private inputs.
+The OPRF evaluation uses ZK-friendly primitives (currently Circom and Noir), so you can prove correct evaluation to third parties without revealing your private inputs.
 
 ## What You'll Learn
 
