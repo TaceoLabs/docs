@@ -1,187 +1,169 @@
-# Quickstart
+# Quickstart Guide
 
-Let’s start by installing our client binary for TACEO:OPRF! You can download a ready to use client from the GitHub releases [https://github.com/TaceoLabs/oprf-testnet/releases](https://github.com/TaceoLabs/oprf-testnet/releases). If you are on macOS you might need to allow executing of the binary with:
+Get up and running with TACEO:OPRF in minutes. This guide will walk you through installation and your first OPRF computation.
 
+## Installation
+
+### Option 1: Download Binary (Recommended)
+
+Download the pre-built client from [GitHub Releases](https://github.com/TaceoLabs/oprf-testnet/releases).
+
+**macOS users**: You'll need to allow the binary to execute:
 ```bash
 xattr -dr com.apple.quarantine taceo-oprf-testnet-client
 ```
 
-Or you can clone the repository,
+### Option 2: Build from Source
+
+If you prefer to build from source:
 
 ```bash
+# Clone the repository
 git clone https://github.com/TaceoLabs/oprf-testnet.git
-```
 
-Install the required dependencies:
+# Install dependencies
+# - Rust: https://rust-lang.org/learn/get-started/
+# - On Ubuntu: build-essential (name may vary on other platforms)
 
-- Rust ([https://rust-lang.org/learn/get-started/](https://rust-lang.org/learn/get-started/))
-- On Ubuntu `build-essential` name may vary on other platforms
-
-And build it from source using the following command:
-
-```bash
+# Build the client
 cargo install --path oprf-testnet-client --locked
 ```
 
-You should now have a client binary called `taceo-oprf-testnet-client` that you can run to interact with TACEO:OPRF.
+After installation, you'll have a `taceo-oprf-testnet-client` binary to interact with TACEO:OPRF.
 
-This specific instance of TACEO:OPRF that we are spinning up has two authorization modules and two different OPRF keys, one for each module. Of course it is also possible to have unlimited amount of OPRF keys for one authorization module, but in this example we stick with one per module.
+## Your First OPRF Computation
 
-**Simple Authorization Module**
+We'll demonstrate two different authorization modules that showcase TACEO:OPRF's flexibility.
 
-The first authorization module (https://github.com/TaceoLabs/oprf-testnet/blob/c143033ee820f46eef8714d472d6c0e9c1e5eab0/oprf-testnet-authentication/src/lib.rs#L222) is pretty simple, it just verifies that a given API key is valid and then runs the OPRF flow for the provided action.
+### Example 1: Simple API Key Authorization
 
-[https://github.com/TaceoLabs/oprf-testnet/blob/c143033ee820f46eef8714d472d6c0e9c1e5eab0/oprf-testnet-authentication/src/lib.rs#L192](https://github.com/TaceoLabs/oprf-testnet/blob/c143033ee820f46eef8714d472d6c0e9c1e5eab0/oprf-testnet-authentication/src/lib.rs#L192)
+This example uses basic API key validation - perfect for getting started.
 
-To try it out, simply run the following command:
-
+**Run the command:**
 ```bash
 taceo-oprf-testnet-client \
-	--api-key taceo_3ZfE55WkcNWRweh5rcfpUNpi \
-	basic \
-	--input 42
+    --api-key taceo_3ZfE55WkcNWRweh5rcfpUNpi \
+    basic \
+    --input 42
 ```
 
-If everything worked correctly, you should see the final OPRF output in your terminal. The output is deterministic and based on the provided input, so if you run the same command again, you will get the same OPRF output.
+**What happens:**
+1. Client sends your input (`42`) and API key to OPRF nodes
+2. Nodes verify the API key is valid  
+3. Nodes cooperatively compute the OPRF output
+4. Client receives and displays the final result
 
-Since the OPRF secret is used to derive the output, no one can guess the output without querying the OPRF nodes with the same input, and this is guaranteed by the cryptographic properties of the used OPRF.
+**Expected output:**
+You'll see the deterministic OPRF output in your terminal. Running the same command again produces the same result - this is the deterministic property of OPRFs.
 
-**Wallet Authorization Module**
+:::info Why deterministic?
+The OPRF secret key is used to derive the output. Without querying the OPRF nodes with the same input, no one can guess or reproduce this output. This is guaranteed by the cryptographic properties of OPRFs.
+:::
 
-The second authorization module (https://github.com/TaceoLabs/oprf-testnet/blob/c143033ee820f46eef8714d472d6c0e9c1e5eab0/oprf-testnet-authentication/src/lib.rs#L192) verifies that the user controls a given Etherum wallet (by verifying it signed a specific message) and generates a nullifier associated with this wallet which only the owner of the wallet private key can generate. Per default, the client binary generates a fresh Ethereum wallet for this process and prints the private key and public address, so you do not need to trust a random binary you just downloaded with your real private key.
+### Example 2: Wallet Ownership Proof
 
-For this module you will need [Barretenberg](https://barretenberg.aztec.network/docs/getting_started) `v3.0.0-nightly.20260102`. To get `bb` you can follow the instructions in their docs, or just install it with `bbup` via the following commands:
+This advanced example demonstrates zero-knowledge wallet ownership verification.
+
+**Prerequisites:**
+You'll need [Barretenberg](https://barretenberg.aztec.network/docs/getting_started) `v3.0.0-nightly.20260102`:
 
 ```bash
+# Install bbup
 curl -L https://raw.githubusercontent.com/AztecProtocol/aztec-packages/refs/heads/next/barretenberg/bbup/install | bash
-```
 
-Make sure `bbup` is in you `PATH` by sourcing the appropriate file or restarting your shell
-
-```bash
+# Add to PATH and restart shell, then:
 bbup -nv 1.0.0-beta.18
 ```
 
-We will use `bb` to compute and verify two ZK proofs.
-
-The first (https://github.com/TaceoLabs/oprf-testnet/blob/main/noir/blinded_query_proof/src/main.nr) for proving ownership of the wallet, which the authorization module verifies together with the API.
-
-```rust
-fn main(
-    hashed_message: pub [u8; 32],
-    pub_key_x: [u8; 32],
-    pub_key_y: [u8; 32],
-    signature: [u8; 64],
-    beta: Field,
-) -> pub BabyJubJubPoint {
-    // The function ecrecover takes in a hashed message, a public key (x and y coordinates) and a signature, verifies the signature and returns the recovered ETH address, which is used as the input to the OPRF protocol.
-    let address = ecrecover(pub_key_x, pub_key_y, signature, hashed_message);
-
-    // Generate the query proof point.
-    blinded_query(beta, address)
-}
-```
-
-And the second (https://github.com/TaceoLabs/oprf-testnet/blob/main/noir/verified_oprf_proof/src/main.nr) for proving that the generated nullifier is associated with the wallet.
-
-```rust
-fn main(
-    // These are the inputs needed for the first part of the OPRF protocol, the query proof.
-    hashed_message: pub [u8; 32],
-    pub_key_x: [u8; 32],
-    pub_key_y: [u8; 32],
-    signature: [u8; 64],
-    beta: Field,
-    // These are the inputs needed for the second part of the OPRF protocol, the verified OPRF output.
-    oprf_pk: pub BabyJubJubPoint,
-    dlog_e: Field,
-    dlog_s: Field,
-    oprf_response_blinded: BabyJubJubPoint,
-    oprf_response: BabyJubJubPoint,
-) -> pub Field {
-    // Similar to the blinded query proof, we first recover the user input (address) from the signature.
-    let address = ecrecover(pub_key_x, pub_key_y, signature, hashed_message);
-    // Inside the verified_oprf function, we recompute the blinded query proof to check that the original query was computed correctly, verify the dlog equality proof, verify the unblinding was done correctly, and then generate the final verified OPRF output.
-    verified_oprf(
-        beta,
-        oprf_pk,
-        dlog_e,
-        dlog_s,
-        oprf_response_blinded,
-        oprf_response,
-        address,
-        DS_DLOG,
-        DS_N,
-    )
-}
-```
-
-To try it out, simply run the following command:
-
+**Run the command:**
 ```bash
 taceo-oprf-testnet-client \
-	--api-key taceo_3ZfE55WkcNWRweh5rcfpUNpi \
-	wallet-ownership
+    --api-key taceo_3ZfE55WkcNWRweh5rcfpUNpi \
+    wallet-ownership
 ```
 
-If everything worked correctly, you should see the private key of a randomly generated ETH wallet and the final OPRF output in your terminal. You should also have `proof` and `public_inputs` files the current directory. You can re-use the generated private key and confirm the the generated nullifier is still the same:
+**What happens:**
+1. Client generates a fresh Ethereum wallet (private key shown in output)
+2. Client creates a zero-knowledge proof of wallet ownership
+3. OPRF nodes verify the proof without learning the wallet address
+4. Nodes compute OPRF output using the verified wallet as input
+5. Client receives the final result and ZK proof files
 
-```rust
+**Expected output:**
+- Private key of the generated wallet
+- OPRF output (deterministic nullifier)  
+- `proof` and `public_inputs` files for verification
+
+**Verify with existing wallet:**
+You can reuse a previously generated private key:
+```bash
 taceo-oprf-testnet-client \
-	--api-key taceo_3ZfE55WkcNWRweh5rcfpUNpi \
-	wallet-ownership \
-	--private-key <PREVIOUSLY_GENERATED_PRIVATE_KEY>
+    --api-key taceo_3ZfE55WkcNWRweh5rcfpUNpi \
+    wallet-ownership \
+    --private-key <PREVIOUS_PRIVATE_KEY>
 ```
 
-To get the verifying key, you go to the repository and download it from there, or you can download it with the following command:
+This will produce the same nullifier, demonstrating deterministic output.
 
-```rust
+## Understanding the Results  
+
+### Proof Verification
+
+Download the verification key:
+```bash
 curl -sSLO https://github.com/TaceoLabs/oprf-testnet/raw/refs/heads/main/oprf-testnet-authentication/verified_oprf_proof.vk
 ```
 
-You can then verify the proof using the following command:
-
+Verify your proof:
 ```bash
 bb verify -p proof -i public_inputs -k verified_oprf_proof.vk
 ```
 
-## Local Setup
+### What the Proofs Demonstrate
 
-If you want to experiment more with TACEO:OPRF, then you can also spin up your own local network. To do that you first need to clone the repository and its submodules.
+The wallet ownership example uses **two zero-knowledge proofs**:
 
+**1. Blinded Query Proof** ([source](https://github.com/TaceoLabs/oprf-testnet/blob/main/noir/blinded_query_proof/src/main.nr))
+- Proves you control the wallet without revealing the address
+- Verifies signature against a specific message
+- Generates blinded OPRF query
+
+**2. Verified OPRF Proof** ([source](https://github.com/TaceoLabs/oprf-testnet/blob/main/noir/verified_oprf_proof/src/main.nr))  
+- Proves correct OPRF computation
+- Verifies the nullifier corresponds to your wallet
+- Enables third-party verification without revealing inputs
+
+## Next Steps
+
+### Experiment Locally
+Ready to experiment more? Set up your own [local OPRF network](/docs/taceo-oprf/quicklocal) for development.
+
+### Custom Authorization
+Want to build your own authorization logic? Learn about [Authorization Modules](/docs/taceo-oprf/authorization).
+
+### Integration  
+Ready to integrate into your application? Check the [API Reference](/docs/taceo-oprf/api).
+
+### Use Cases
+Looking for inspiration? Explore our [Use Cases & Examples](/docs/taceo-oprf/use-cases).
+
+## Troubleshooting
+
+### Common Issues
+
+**Binary execution blocked (macOS)**
 ```bash
-git clone --recursive https://github.com/TaceoLabs/oprf-testnet.git
+xattr -dr com.apple.quarantine taceo-oprf-testnet-client
 ```
 
-You also need a couple more dependencies.
+**Missing dependencies**
+Ensure you have Rust and build tools installed:
+- [Rust installation guide](https://rust-lang.org/learn/get-started/)
+- Ubuntu: `sudo apt install build-essential`
 
-- `docker compose` to start localstack, postgres and oprf-key-gen containers (See [https://docs.docker.com/compose/install/](https://docs.docker.com/compose/install/))
-- `anvil` and `forge` from Foundry (See [https://www.getfoundry.sh/introduction/getting-started](https://www.getfoundry.sh/introduction/getting-started))
-- `just` to run command for the local setup (See https://github.com/casey/just)
+**Network connectivity**
+The development API is hosted in EU (Frankfurt). Network latency may vary by location.
 
-To start a local setup, we need to do the following steps in order:
-
-1. Start the `anvil`, and the `localstack`, and `postgres` docker containers
-2. Deploy the `OprfKeyRegsitry` contract on `anvil`
-3. Start the 3 `oprf-key-gen` docker containers for the 3 nodes
-4. Start the 3 `oprf-testnet-node` binaries
-5. Create the OPRF keys for both OPRF modules
-
-All of which is done for you by running the following command:
-
-```bash
-just run-setup
-```
-
-Now you can run the the client binary again, but this time point it to you local OPRF nodes with the following command:
-
-```bash
-taceo-oprf-testnet-client \
-	--nodes http://127.0.0.1:10000,http://127.0.0.1:10001,http://127.0.0.1:10002 \
-	--api-key taceo_3ZfE55WkcNWRweh5rcfpUNpi \
-	wallet-ownership
-```
-
-Feel free to play around, e.g., modifying the authentication modules to add your own logic there or even changing the zero knowledge proof to verify different properties of the input such as allowing only vanity addresses that end in `c0ffee`.
-
----
+**Need help?**
+- Check our [troubleshooting guide](/docs/taceo-oprf/troubleshooting)
+- [Contact us](mailto:hello@taceo.io) for support

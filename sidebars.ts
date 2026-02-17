@@ -162,10 +162,25 @@ const sidebars: SidebarsConfig = {
   ],
   oprfSidebar: [
     "taceo-oprf/overview",
-    "taceo-oprf/beta-oprf",
-    "taceo-oprf/quickstart",
-    "taceo-oprf/quicklocal",
-    "taceo-oprf/api"
+    "taceo-oprf/concepts", 
+    "taceo-oprf/use-cases",
+    "taceo-oprf/authorization",
+    {
+      type: "category", 
+      label: "Getting Started",
+      items: [
+        "taceo-oprf/quickstart",
+        "taceo-oprf/quicklocal",
+      ],
+    },
+    {
+      type: "category",
+      label: "Development",  
+      items: [
+        "taceo-oprf/beta-oprf",
+      ],
+    },
+    "taceo-oprf/api",
   ],
 };
 
