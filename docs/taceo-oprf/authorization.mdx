@@ -74,21 +74,44 @@ You define the rules, TACEO hosts the enforcement:
 
 **Implementation**: [Wallet auth module](https://github.com/TaceoLabs/oprf-testnet/blob/c143033ee820f46eef8714d472d6c0e9c1e5eab0/oprf-testnet-authentication/src/lib.rs#L192)
 
-**ZK Proof Components**:
+**ZK Proof in Noir**:
 ```rust
-// Prove wallet ownership
-fn prove_ownership(
-    hashed_message: [u8; 32],
-    pub_key_x: [u8; 32], 
+fn main(
+    hashed_message: pub [u8; 32],
+    pub_key_x: [u8; 32],
     pub_key_y: [u8; 32],
     signature: [u8; 64],
-) -> Address
-
-// Prove OPRF correctness  
-fn prove_oprf_correctness(
-    wallet_proof: WalletProof,
-    oprf_response: ORPFResponse,
-) -> Nullifier
+    beta: Field,
+    oprf_pk: pub BabyJubJubPoint,
+    dlog_e: Field,
+    dlog_s: Field,
+    oprf_response_blinded: BabyJubJubPoint,
+    oprf_response: BabyJubJubPoint,
+) -> pub Field {
+    // Similar to the blinded query proof, we first recover the
+    // user input (address) from the signature.
+    //
+    // (https://github.com/colinnielsen/ecrecover-noir).
+    let address = ecrecover::ecrecover(pub_key_x, pub_key_y, signature, hashed_message);
+    // Inside the verified_oprf function, we recompute
+    // the blinded query proof to check that the original
+    // query was computed correctly, verify the
+    // dlog equality proof, verify the unblinding was done
+    // correctly, and then generate the final verified OPRF output.
+    // 
+    // Have a look at our Noir library: https://github.com/TaceoLabs/oprf-nr
+    oprf::oprf_output::verified_oprf(
+        beta,
+        oprf_pk,
+        dlog_e,
+        dlog_s,
+        oprf_response_blinded,
+        oprf_response,
+        address,
+        DS_DLOG,
+        DS_N,
+    )
+}
 ```
 
 ---
@@ -129,11 +152,20 @@ fn prove_oprf_correctness(
 
 ### 3. Implement Module
 ```rust
-pub trait AuthorizationModule {
-    fn validate_request(&self, request: &AuthRequest) -> Result<bool, AuthError>;
-    fn get_authorization_proof(&self) -> AuthProof;
+pub trait OprfRequestAuthenticator: Send + Sync {
+    type RequestAuth;
+    type RequestAuthError: Send + 'static + std::error::Error;
+
+    async fn authenticate(
+        &self,
+        req: &OprfRequest<Self::RequestAuth>,
+    ) -> Result<OprfKeyId, Self::RequestAuthError>;
 }
 ```
+
+Have a look at the two example implementations:
+- [Simple auth module](https://github.com/TaceoLabs/oprf-testnet/blob/c143033ee820f46eef8714d472d6c0e9c1e5eab0/oprf-testnet-authentication/src/lib.rs#L222)
+- [Wallet auth module](https://github.com/TaceoLabs/oprf-testnet/blob/c143033ee820f46eef8714d472d6c0e9c1e5eab0/oprf-testnet-authentication/src/lib.rs#L192)
 
 ### 4. Test & Deploy
 - Test with local TACEO:OPRF setup
