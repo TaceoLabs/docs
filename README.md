@@ -1,4 +1,4 @@
-Every commit to main gets deployed to https://docs.taceo.io via cloudflare pages.
+Every commit to main gets deployed to https://docs.taceo.io via Cloudflare Pages.
 
 --- original Docusaurus readme below ---
 
