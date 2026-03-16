@@ -35,7 +35,21 @@ const config: Config = {
     }
   ],
 
-  plugins: [require.resolve('docusaurus-lunr-search')],
+  plugins: [
+    require.resolve('docusaurus-lunr-search'),
+    [
+      require.resolve("@docusaurus/plugin-client-redirects"),
+      {
+        redirects: [
+          { from: "/docs/quick-start", to: "/docs/" },
+          { from: "/docs/resources/circom", to: "/docs/co-circom/" },
+          { from: "/docs/design/known-issues", to: "/docs/" },
+          { from: "/docs/design/roadmap", to: "/docs/" },
+          { from: "/docs/contact", to: "/docs/" },
+        ],
+      },
+    ],
+  ],
 
   // Even if you don't use internationalization, you can use this field to set
   // useful metadata like html lang. For example, if your site is Chinese, you
@@ -83,21 +97,9 @@ const config: Config = {
       items: [
         {
           type: "docSidebar",
-          sidebarId: "coSnarkSidebar",
+          sidebarId: "mainSidebar",
           position: "left",
-          label: "CoSNARKs",
-        },
-        {
-          type: "docSidebar",
-          sidebarId: "proofSidebar",
-          position: "left",
-          label: "TACEO:Proof", 
-        },
-        {
-          type: "docSidebar",
-          sidebarId: "oprfSidebar",
-          position: "left",
-          label: "TACEO:OPRF", 
+          label: "Documentation",
         },
         {
           type: "search",
@@ -119,19 +121,23 @@ const config: Config = {
       style: "dark",
       links: [
         {
-          title: "Docs",
+          title: "Docs", 
           items: [
             {
-              label: "Collaborative SNARKs",
+              label: "TACEO Network",
+              to: "/docs/taceo-network/network",
+            },
+            {
+              label: "Privacy Services",
+              to: "/docs/services/overview", 
+            },
+            {
+              label: "Developer Tools",
               to: "/docs/overview",
             },
             {
-              label: "TACEO:Proof",
-              to: "/docs/taceo-proof/overview",
-            },
-            {
-              label: "TACEO:OPRF",
-              to: "/docs/taceo-oprf/overview",
+              label: "Infrastructure",
+              to: "/docs/taceo-proof/ops/onboarding",
             },
           ],
         },

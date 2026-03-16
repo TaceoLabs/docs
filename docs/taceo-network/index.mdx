@@ -1,0 +1,92 @@
+---
+title: TACEO Network Overview
+description: Understand what the TACEO Network is, who this section is for, and where to go next
+slug: /taceo-network/
+---
+
+import Link from '@docusaurus/Link';
+
+# TACEO Network
+
+The TACEO Network is the coordination and execution layer that enables private computation across independent infrastructure providers.
+
+It is designed for applications that need to compute on sensitive data without exposing the underlying inputs to any single operator. Instead of relying on a centralized trusted party, the network uses threshold cryptographic protocols and distributed execution across committees of nodes.
+
+This section explains how the network is structured, what security assumptions it relies on, and how it relates to TACEO services and developer tooling.
+
+## Who this section is for
+
+This section is most useful for:
+
+- teams evaluating TACEO as infrastructure for privacy-preserving applications
+- researchers and technical stakeholders who want to understand the network model
+- partners who need a high-level explanation of how private execution is coordinated
+- developers who want context before integrating services built on top of the network
+
+If your primary goal is to integrate a production service, you may want to start in [TACEO Services](/docs/services/overview) and then return here for architectural context.
+
+## What this section covers
+
+### Network architecture
+
+How applications interact with privacy services, how service instances are organized, and how committees of MPC nodes execute confidential computations.
+
+### Security model
+
+What the network assumes about node operators, how threshold security works, and why no single operator can access the underlying private data.
+
+### Governance and coordination
+
+How the network is currently coordinated, how upgrades are handled, and how operators and applications participate in operational decisions.
+
+### Real-world application context
+
+Why the TACEO Network exists, what kinds of systems it is intended to support, and how it relates to services such as TACEO:Proof and TACEO:OPRF.
+
+## TACEO Network vs TACEO Services vs Developer Tooling
+
+These parts of the documentation are related, but they serve different purposes:
+
+- **TACEO Network** explains the infrastructure and trust model
+- **TACEO Services** explains the managed privacy-preserving services that applications integrate today
+- **Developer Tooling** explains lower-level tools for collaborative zero-knowledge workflows and experimentation
+
+If you are evaluating TACEO for a product, the usual flow is:
+
+1. understand the TACEO Network at a high level
+2. choose the service that matches your use case
+3. dive into detailed service or implementation docs
+
+## Start here
+
+<div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1rem', marginTop: '1.5rem'}}>
+
+<div style={{padding: '1rem', backgroundColor: 'var(--ifm-color-emphasis-100)', borderRadius: '8px'}}>
+**Understand the system**
+<br/>
+<Link to="/docs/taceo-network/network#how-the-network-works">How the Network Works</Link>
+<br/>
+<Link to="/docs/taceo-network/network#interacting-with-the-network">Interacting with the Network</Link>
+</div>
+
+<div style={{padding: '1rem', backgroundColor: 'var(--ifm-color-emphasis-100)', borderRadius: '8px'}}>
+**Review trust and safety**
+<br/>
+<Link to="/docs/taceo-network/network#security-model">Security Model</Link>
+<br/>
+<Link to="/docs/taceo-network/network#network-governance">Network Governance</Link>
+</div>
+
+<div style={{padding: '1rem', backgroundColor: 'var(--ifm-color-emphasis-100)', borderRadius: '8px'}}>
+**See how it connects to products**
+<br/>
+<Link to="/docs/services/overview">TACEO Services Overview</Link>
+<br/>
+<Link to="/docs/taceo-network/network#privacy-services">Privacy Services on the Network</Link>
+</div>
+
+</div>
+
+---
+
+Ready to continue? Start with the full [TACEO Network reference](/docs/taceo-network/network).

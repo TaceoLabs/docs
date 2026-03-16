@@ -4,75 +4,106 @@ import Layout from '@theme/Layout';
 
 import styles from './index.module.css';
 
-function NetworkTools() {
-  const tools = [
-    {
-      title: "CoSNARKs<br/>for Circom and Noir",
-      status: "Status: coCircom feature complete, coNoir in active development",
-      description: "Developer tooling to run circom and Noir circuits in an MPC environment.",
-      link: "/docs/overview",
-      linkText: "Get started",
-      highlight: true,
-    },
-    {
-      title: "TACEO:Proof<br/>Private Proof Network", 
-      status: "Status: Live in production and ready for use",
-      description: "CoSNARK network to outsource proof generation while maintaining privacy.",
-      link: "/docs/taceo-proof/overview",
-      linkText: "Learn more",
-      highlight: true,
-    },
-    {
-      title: "TACEO:OPRF<br/>Oblivious Pseudorandom Function",
-      status: "Status: In beta",
-      description: "Privacy-preserving pseudorandom function for nullifiers and more.",
-      link: "/docs/taceo-oprf/overview",
-      linkText: "Explore",
-      highlight: true,
-    },
-  ];
-
+function GuidanceSection() {
   return (
-    <section className={styles.network}>
+    <section className={styles.page}>
       <div className="container">
-        <h3 className={styles.networkTitle}>
-          Documentation & Tools
-        </h3>
-        <p className={styles.networkDescription}>
-          We're building an encrypted compute layer for private shared state via the TACEO Network.<br/>
-          Here you'll find documentation pertaining to the tools and services currently available.
-        </p>
 
-        <div className={styles.networkGrid}>
-          {tools.map((tool, idx) => (
-            <div className={styles.networkCard} key={tool.title}>
-              <div className={styles.networkCardInner}>
-                <div className={styles.networkIcon}>
-                  <div className={styles.networkIconBar}></div>
-                </div>
-                <div className={styles.networkContent}>
-                  <h3 
-                    className={styles.networkCardTitle}
-                    dangerouslySetInnerHTML={{ __html: tool.title }}
-                  />
-                  <div className={styles.networkStatus}>
-                    {tool.status}
-                  </div>
-                  <div className={styles.networkCardDescription}>
-                    {tool.description}
-                  </div>
-                  <div className={styles.networkLinkWrapper}>
-                    <Link 
-                      className={styles.networkLink}
-                      to={tool.link}
-                    >
-                      {tool.linkText}
-                    </Link>
-                  </div>
-                </div>
+        {/* ── Hero ── */}
+        <div className={styles.hero}>
+          <h1 className={styles.heroTitle}>TACEO Network</h1>
+          <p className={styles.heroSubtitle}>Private execution layer for digital rails.</p>
+          <p className={styles.heroTagline}>
+            The TACEO Network and services enable computation over sensitive data without exposing inputs.
+          </p>
+          <div className={styles.heroLinks}>
+            <Link className={styles.heroLink} to="/docs">
+              Browse Documentation
+            </Link>
+          </div>
+        </div>
+
+        {/* ── Journey cards ── */}
+        <h2 className={styles.sectionTitle}>What do you want to accomplish?</h2>
+
+        <div className={styles.journeyGrid}>
+          <div className={styles.journeyCard}>
+            <div>
+              <div className={styles.journeyStatus}>Learn the fundamentals</div>
+              <h4 className={styles.journeyCardTitle}>I want to understand TACEO Network</h4>
+              <p className={styles.journeyCardDesc}>
+                Understand how distributed privacy-preserving computation works and why it matters.
+              </p>
+            </div>
+              <Link className={styles.networkLink} to="/docs/taceo-network/">Explore Network</Link>
+          </div>
+
+          <div className={styles.journeyCard}>
+            <div>
+              <div className={styles.journeyStatus}>Production ready</div>
+              <h4 className={styles.journeyCardTitle}>I want to add privacy services to my app</h4>
+              <p className={styles.journeyCardDesc}>
+                Integrate TACEO:Proof for private proof delegation or TACEO:OPRF for privacy-preserving functions.
+              </p>
+            </div>
+            <Link className={styles.networkLink} to="/docs/services/overview">Browse Services</Link>
+          </div>
+
+          <div className={styles.journeyCard}>
+            <div>
+              <div className={styles.journeyStatus}>Developer tools</div>
+              <h4 className={styles.journeyCardTitle}>I want to experiment with CoSNARKs</h4>
+              <p className={styles.journeyCardDesc}>
+                Build collaborative zero-knowledge circuits using Co-Circom and Co-Noir tooling.
+              </p>
+            </div>
+            <Link className={styles.networkLink} to="/docs/co-circom/">Start Building</Link>
+          </div>
+        </div>
+
+        {/* ── Quick Links ── */}
+        <div className={styles.quickLinksSection}>
+          <h2 className={styles.sectionTitle}>Quick Links</h2>
+          <div className={styles.quickLinksGrid}>
+            <div className={styles.quickLinkCard}>
+              <p className={styles.quickLinkTitle}>New to Privacy Tech?</p>
+              <div className={styles.quickLinkList}>
+                <Link className={styles.networkLink} to="/docs/resources/mpc">Secure Multiparty Computation</Link>
+                <Link className={styles.networkLink} to="/docs/primer/collabSNARKs-primer">CoSNARKs Primer</Link>
               </div>
             </div>
-          ))}
+            <div className={styles.quickLinkCard}>
+              <p className={styles.quickLinkTitle}>Real Applications</p>
+              <div className={styles.quickLinkList}>
+                <Link className={styles.networkLink} to="/docs/use-cases/defi">DeFi</Link>
+                <Link className={styles.networkLink} to="/docs/use-cases/ai">AI</Link>
+                <Link className={styles.networkLink} to="/docs/use-cases/gaming">Gaming</Link>
+              </div>
+            </div>
+            <div className={styles.quickLinkCard}>
+              <p className={styles.quickLinkTitle}>Get In Touch</p>
+              <div className={styles.quickLinkList}>
+                <Link className={styles.networkLink} to="https://taceo.io/discord">Discord</Link>
+                <Link className={styles.networkLink} to="mailto:hello@taceo.io">hello@taceo.io</Link>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* ── CTA ── */}
+        <div className={styles.cta}>
+          <h2 className={styles.ctaTitle}>Ready to get started?</h2>
+          <div className={styles.ctaLinks}>
+            <Link className={styles.heroLink} to="/docs">
+              Browse Documentation
+            </Link>
+            <Link className={styles.heroLink} to="/docs/services/overview">
+              Browse Services
+            </Link>
+            <Link className={styles.heroLink} to="https://taceo.io/discord">
+              Ask Questions
+            </Link>
+          </div>
         </div>
       </div>
     </section>
@@ -87,7 +118,7 @@ export default function Home(): JSX.Element {
       description="Privacy-preserving computation with collaborative SNARKs and secure multi-party computation"
       wrapperClassName="homepage-layout">
       <main>
-        <NetworkTools />
+        <GuidanceSection />
       </main>
     </Layout>
   );

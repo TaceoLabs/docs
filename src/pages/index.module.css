@@ -3,7 +3,204 @@
  * and scoped locally.
  */
 
-/* Network Section - Based on website's Network component */
+/* ─── Page wrapper ─────────────────────────────────────────────────────────── */
+
+.page {
+  padding: 4rem 0 6rem;
+}
+
+/* ─── Hero ──────────────────────────────────────────────────────────────────── */
+
+.hero {
+  text-align: center;
+  margin-bottom: 4rem;
+  padding-bottom: 3rem;
+  border-bottom: 0.5px solid var(--ifm-color-emphasis-300);
+}
+
+.heroTitle {
+  font-size: 3.5rem !important;
+  font-weight: 100 !important;
+  line-height: 1.15 !important;
+  margin-bottom: 1.2rem !important;
+  letter-spacing: -0.01em;
+}
+
+.heroSubtitle {
+  font-size: 1.3rem !important;
+  font-weight: 300 !important;
+  color: var(--ifm-color-emphasis-700) !important;
+  margin-bottom: 0.6rem !important;
+  line-height: 1.5 !important;
+}
+
+.heroTagline {
+  font-size: 1rem !important;
+  font-weight: 400 !important;
+  color: var(--ifm-color-emphasis-600) !important;
+  margin-bottom: 2.5rem !important;
+  line-height: 1.6 !important;
+}
+
+.heroLinks {
+  display: flex;
+  gap: 2.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.heroLink {
+  position: relative;
+  font-size: 1.1rem !important;
+  font-weight: 400 !important;
+  text-decoration: none !important;
+  padding: 0.4rem 0;
+  display: inline-block;
+  color: inherit !important;
+}
+
+.heroLink::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 0.5px;
+  bottom: 0;
+  left: 0;
+  background-color: currentColor;
+  transition: height 0.2s ease;
+}
+
+.heroLink:hover {
+  text-decoration: none !important;
+}
+
+.heroLink:hover::after {
+  height: 1.5px;
+}
+
+.heroLinkPrimary {
+  color: #52ffc5 !important;
+}
+
+.heroLinkPrimary::after {
+  background-color: #52ffc5;
+}
+
+/* ─── Section titles ────────────────────────────────────────────────────────── */
+
+.sectionTitle {
+  font-size: 1.8rem !important;
+  font-weight: 100 !important;
+  text-align: center;
+  margin-bottom: 2.5rem !important;
+  letter-spacing: -0.01em;
+}
+
+/* ─── Journey cards ─────────────────────────────────────────────────────────── */
+
+.journeyGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  max-width: 1100px;
+  margin: 0 auto 4rem;
+}
+
+.journeyCard {
+  border: 0.5px solid var(--ifm-color-emphasis-400);
+  padding: 2rem 1.8rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: border-color 0.2s ease;
+}
+
+.journeyCard:hover {
+  border-color: var(--ifm-color-emphasis-700);
+}
+
+.journeyStatus {
+  font-size: 0.9rem !important;
+  color: #52ffc5 !important;
+  font-weight: 400;
+  margin-bottom: 0.8rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.journeyCardTitle {
+  font-size: 1.3rem !important;
+  font-weight: 300 !important;
+  line-height: 1.4 !important;
+  margin-bottom: 1rem !important;
+}
+
+.journeyCardDesc {
+  font-size: 0.95rem !important;
+  font-weight: 400 !important;
+  line-height: 1.6 !important;
+  color: var(--ifm-color-emphasis-700) !important;
+  margin-bottom: 1.5rem !important;
+}
+
+/* ─── Quick links ────────────────────────────────────────────────────────────── */
+
+.quickLinksSection {
+  padding-bottom: 3rem;
+  border-bottom: 0.5px solid var(--ifm-color-emphasis-300);
+  margin-bottom: 3rem;
+}
+
+.quickLinksGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.quickLinkCard {
+  border: 0.5px solid var(--ifm-color-emphasis-400);
+  padding: 1.5rem 1.2rem;
+  text-align: center;
+}
+
+.quickLinkTitle {
+  font-size: 0.85rem !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ifm-color-emphasis-600) !important;
+  margin-bottom: 1rem !important;
+}
+
+.quickLinkList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* ─── CTA ────────────────────────────────────────────────────────────────────── */
+
+.cta {
+  text-align: center;
+}
+
+.ctaTitle {
+  font-size: 1.5rem !important;
+  font-weight: 100 !important;
+  margin-bottom: 2rem !important;
+  letter-spacing: -0.01em;
+}
+
+.ctaLinks {
+  display: flex;
+  gap: 3rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ─── Network card section (legacy classes kept for reference) ──────────────── */
 .network {
   position: relative;
   z-index: 1;
@@ -117,11 +314,11 @@
 
 .networkLink {
   position: relative;
-  color: var(--taceo-background) !important;
+  color: inherit !important;
   font-weight: 400 !important;
-  font-size: 1.1rem !important;
+  font-size: 1rem !important;
   text-decoration: none !important;
-  padding: 0.5rem 0;
+  padding: 0.4rem 0;
   display: inline-block;
 }
 
@@ -132,8 +329,8 @@
   height: 0.5px;
   bottom: 0;
   left: 0;
-  background-color: #000000;
-  transition: all 0.2s ease;
+  background-color: currentColor;
+  transition: height 0.2s ease;
 }
 
 .networkLink:hover {
@@ -141,8 +338,7 @@
 }
 
 .networkLink:hover::after {
-  background-color: #000000;
-  height: 1px;
+  height: 1.5px;
 }
 
 /* Dark mode overrides */
@@ -187,34 +383,17 @@
     font-size: 2.8rem !important;
     line-height: 3.2rem !important;
   }
-  
-  .networkGrid {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-    padding: 0 1rem;
-  }
-}
 
-@media screen and (max-width: 996px) and (min-width: 769px) {
-  .networkCardInner {
-    grid-template-columns: auto 1fr;
-    gap: 1rem;
+  .heroTitle {
+    font-size: 2.6rem !important;
   }
-  
-  .networkIcon {
-    grid-column: 1;
-    display: flex;
-    align-items: flex-start;
-    padding-top: 1rem;
-    width: 3rem;
-  }
-  
-  .networkContent {
-    grid-column: 2;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
+
+  .networkGrid,
+  .journeyGrid,
+  .quickLinksGrid {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem;
+    padding: 0 1rem;
   }
 }
 
@@ -223,19 +402,31 @@
     font-size: 2.2rem !important;
     line-height: 2.6rem !important;
   }
-  
-  .networkGrid {
-    gap: 1.5rem;
-    padding: 0 1rem;
+
+  .heroTitle {
+    font-size: 2rem !important;
   }
-  
+
+  .heroLinks,
+  .ctaLinks {
+    gap: 1.5rem;
+  }
+
+  .networkGrid,
+  .journeyGrid,
+  .quickLinksGrid {
+    grid-template-columns: 1fr !important;
+    gap: 1.2rem;
+    padding: 0;
+  }
+
   .networkCardInner {
     grid-template-columns: auto 1fr;
     text-align: left;
     padding: 1.2rem 1rem;
     gap: 1rem;
   }
-  
+
   .networkIcon {
     grid-column: 1;
     display: flex;
@@ -243,7 +434,7 @@
     padding-top: 1rem;
     width: 3rem;
   }
-  
+
   .networkContent {
     grid-column: 2;
     display: flex;

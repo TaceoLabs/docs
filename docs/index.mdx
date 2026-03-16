@@ -2,100 +2,183 @@
 id: index
 title: Welcome to TACEO
 slug: /
-sidebar_position: 1
+description: Start here to understand TACEO Network, privacy services, and developer tooling
 ---
 
 import Link from '@docusaurus/Link';
 
-# Welcome to TACEO Documentation
+# Welcome to TACEO
 
-TACEO is building the future of privacy-preserving computation through collaborative zero-knowledge proofs and Multi-Party Computation (MPC).
+TACEO provides private execution infrastructure for applications that need to compute on sensitive data without exposing inputs.
 
-## Choose Your Path
+This documentation is organized around three areas: the **TACEO Network**, **production privacy services** such as TACEO:Proof and TACEO:OPRF, and **developer tooling** for collaborative zero-knowledge workflows.
 
-<div style={{display: 'flex', gap: '2rem', marginTop: '2rem', flexWrap: 'wrap'}}>
+If you are new, start by choosing the path that best matches your goal. This page is designed to help you get oriented quickly and then move into the right part of the documentation.
+
+## What you can do with TACEO
+
+### Understand the TACEO Network
+
+Learn how the network enables verifiable collaboration over encrypted data, what security assumptions it relies on, and why private execution matters for real applications.
+
+### Integrate privacy services
+
+Use TACEO services when you want production-ready privacy primitives in your application, such as private proof delegation with TACEO:Proof or privacy-preserving functions with TACEO:OPRF.
+
+### Build with developer tooling
+
+Experiment with coCircom and coNoir to run collaborative zero-knowledge workflows in an MPC setting. These tools are intended for developers exploring custom circuits and coSNARK-based systems.
+
+## Choose your path
+
+<div style={{display: 'grid', gridTemplateColumns: '1fr', gap: '1rem', marginTop: '2rem'}}>
+
+<details style={{
+  padding: '1rem',
+  border: '1px solid var(--ifm-color-primary)',
+  borderRadius: '8px',
+  backgroundColor: 'var(--ifm-color-primary-lightest)'
+}}>
+<summary style={{cursor: 'pointer', fontWeight: 'bold', fontSize: '1.1rem'}}>
+🌐 **Understand how TACEO Network works**
+</summary>
+
+<div style={{marginTop: '1rem'}}>
+
+**Best for:** Researchers, partners, and technical stakeholders
+
+**Start here:**
+1. **[Read Network Overview](/docs/taceo-network/)** - Understand the motivation and system model
+2. **[Review Architecture](/docs/taceo-network/network#how-the-network-works)** - See how the network operates
+3. **[See Real Applications](/docs/taceo-network/network#the-missing-layer)** - Understand where this is used in practice
+
+**Next steps:** Explore the [Security Model](/docs/taceo-network/network#security-model) and [Network Governance](/docs/taceo-network/network#network-governance)
+
+</div>
+</details>
+
+<details style={{
+  padding: '1rem',
+  border: '1px solid var(--ifm-color-success)',
+  borderRadius: '8px',
+  backgroundColor: 'var(--ifm-color-success-lightest)'
+}}>
+<summary style={{cursor: 'pointer', fontWeight: 'bold', fontSize: '1.1rem'}}>
+⚡ **Add privacy services to my application**
+</summary>
+
+<div style={{marginTop: '1rem'}}>
+
+**Best for:** Application developers, product teams, and technical founders
+
+**Start here:**
+1. **[Choose Your Service](/docs/services/overview)** - Compare TACEO:Proof and TACEO:OPRF
+2. **[Review TACEO:Proof](/docs/taceo-proof/overview)** - Understand private proof delegation
+3. **[Review TACEO:OPRF](/docs/taceo-oprf/overview)** - Understand privacy-preserving function workflows
+
+**Next steps:** [Email us for production access](mailto:hello@taceo.io) and [join Discord](https://taceo.io/discord) for technical support
+
+</div>
+</details>
+
+<details style={{
+  padding: '1rem',
+  border: '1px solid var(--ifm-color-warning)',
+  borderRadius: '8px',
+  backgroundColor: 'var(--ifm-color-warning-lightest)'
+}}>
+<summary style={{cursor: 'pointer', fontWeight: 'bold', fontSize: '1.1rem'}}>
+🔧 **Experiment with collaborative SNARKs**
+</summary>
+
+<div style={{marginTop: '1rem'}}>
+
+**Best for:** Crypto developers, researchers, and privacy-tech experimenters
+
+**Start here:**
+1. **[CoSNARKs Overview](/docs/overview)** - Understand collaborative zero-knowledge proofs
+2. **[Install Tools](/docs/getting-started/install)** - Set up coCircom or coNoir locally
+3. **[Run an Example](/docs/getting-started/quick-start-co-circom)** - Try your first collaborative circuit
+
+**Next steps:** Explore [examples](/docs/examples/) and [network configuration](/docs/network-config/)
+
+**Note:** These tools are currently for experimentation and development. They require running your own MPC environment and are not the same as using TACEO’s managed services.
+
+</div>
+</details>
+
+</div>
+
+## What is available today
+
+- **TACEO Network documentation** explains the system architecture, security model, and application context
+- **TACEO:Proof** and **TACEO:OPRF** are the main service entry points for teams integrating privacy features today
+- **Developer tooling** is available for teams exploring collaborative circuits and MPC-based proving workflows
+
+This means some parts of the docs describe production-oriented services, while others describe lower-level or experimental developer workflows. If you are evaluating TACEO for an application, the services section is usually the right place to begin.
+
+## Learning Resources
+
+New to privacy-preserving computation? Start here:
+
+<div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem', marginTop: '1.5rem'}}>
+
+<div style={{padding: '1rem', backgroundColor: 'var(--ifm-color-info-lightest)', borderRadius: '8px'}}>
+**🎓 Understand the Basics**
+<br/>
+<Link to="/docs/resources/mpc">Secure Multiparty Computation</Link>
+<br/>
+<Link to="/docs/primer/collabSNARKs-primer">Collaborative SNARKs Primer</Link>
+</div>
+
+<div style={{padding: '1rem', backgroundColor: 'var(--ifm-color-info-lightest)', borderRadius: '8px'}}>
+**💡 See Use Cases**
+<br/>
+<Link to="/docs/use-cases/defi">DeFi Applications</Link>
+<br/>
+<Link to="/docs/use-cases/ai">AI & Machine Learning</Link>
+<br/>
+<Link to="/docs/use-cases/gaming">Gaming & NFTs</Link>
+</div>
+
+<div style={{padding: '1rem', backgroundColor: 'var(--ifm-color-info-lightest)', borderRadius: '8px'}}>
+**📺 Watch Videos**
+<br/>
+<Link to="https://www.youtube.com/watch?v=tlVFbr3_eEU">TACEO Overview</Link>
+<br/>
+<Link to="https://www.youtube.com/watch?v=4-W5nnsf9-A">MPC-Enabled Proof Markets</Link>
+</div>
+
+</div>
+
+## Get In Touch
 
 <div style={{
-  flex: '1',
-  minWidth: '300px',
   padding: '2rem',
-  border: '1px solid var(--ifm-color-emphasis-300)',
+  backgroundColor: 'var(--ifm-color-emphasis-100)',
   borderRadius: '8px',
+  marginTop: '2rem',
   textAlign: 'center'
 }}>
 
-### 🔧 CoSNARKs Development
+**Questions? We're here to help.**
 
-**Build collaborative zero-knowledge circuits**
-
-Learn how to create circuits where multiple parties can jointly generate zero-knowledge proofs without revealing their private inputs to each other.
-
-**Perfect for:**
-- Building privacy-preserving applications
-- Multi-party computation workflows
-- Collaborative proof generation
-
+<div style={{marginTop: '1rem'}}>
 <Link
-  className="button button--primary button--lg"
-  to="/docs/overview"
-  style={{marginTop: '1rem'}}>
-  Explore CoSNARKs Docs
+  className="button button--primary"
+  to="https://taceo.io/discord"
+  style={{marginRight: '1rem'}}>
+  💬 Join Discord
 </Link>
-
-</div>
-
-<div style={{
-  flex: '1',
-  minWidth: '300px',
-  padding: '2rem',
-  border: '1px solid var(--ifm-color-emphasis-300)',
-  borderRadius: '8px',
-  textAlign: 'center'
-}}>
-
-### ⚡ TACEO:Proof Network
-
-**Offload proof generation to our network**
-
-Use our production-ready MPC network to generate Groth16 proofs without revealing witness data. Scale beyond client-side limitations.
-
-**Perfect for:**
-- Mobile and web applications
-- Scalable proof generation
-- Production deployments
-
 <Link
-  className="button button--primary button--lg"
-  to="/docs/taceo-proof/overview"
-  style={{marginTop: '1rem'}}>
-  Explore TACEO:Proof Docs
+  className="button button--outline button--primary"
+  to="mailto:hello@taceo.io">
+  📧 Email Us
 </Link>
-
 </div>
 
 </div>
-
-## New to Zero-Knowledge Proofs?
-
-<div style={{marginTop: '2rem', padding: '1.5rem', backgroundColor: 'var(--ifm-color-emphasis-100)', borderRadius: '8px'}}>
-
-Start with our primers to understand the fundamentals:
-
-- **[MPC Primer](primer/mpc-primer.md)** - Understanding Multi-Party Computation
-- **[Collaborative SNARKs Primer](primer/collabSNARKs-primer.md)** - How coSNARKs work
-
-Or watch our introductory videos:
-- **[Overview of TACEO](https://www.youtube.com/watch?v=tlVFbr3_eEU)** - High-level introduction
-- **[MPC-Enabled Proof Markets](https://www.youtube.com/watch?v=4-W5nnsf9-A)** - Technical deep dive
-
-</div>
-
-## Need Help?
-
-- 💬 Join our [Discord community](https://taceo.io/discord) for real-time support
-- 📧 [Contact us](contact.md) for enterprise inquiries
-- 🐛 Report issues on our GitHub repositories
 
 ---
 
-*Ready to start building privacy-preserving applications? Choose your path above!*
+**Ready to dive deeper?** Use the sidebar to explore the TACEO Network, Services, and Developer Tools sections.
