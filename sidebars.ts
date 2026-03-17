@@ -18,15 +18,34 @@ const sidebars: SidebarsConfig = {
       type: "category",
       label: "TACEO Network",
       link: { type: "doc", id: "taceo-network/index" },
-      items: [
-        "taceo-network/network",
-      ],
+      items: ["taceo-network/network"],
     },
     {
-      type: "category", 
+      type: "category",
       label: "TACEO Services",
       link: { type: "doc", id: "services/overview" },
       items: [
+        {
+          type: "category",
+          label: "TACEO:OPRF",
+          link: { type: "doc", id: "taceo-oprf/overview" },
+          items: [
+            "taceo-oprf/concepts",
+            "taceo-oprf/use-cases",
+            "taceo-oprf/authorization",
+            {
+              type: "category",
+              label: "Getting Started",
+              items: ["taceo-oprf/quickstart", "taceo-oprf/quicklocal"],
+            },
+            {
+              type: "category",
+              label: "Development",
+              items: ["taceo-oprf/beta-oprf"],
+            },
+            "taceo-oprf/api",
+          ],
+        },
         {
           type: "category",
           label: "TACEO:Proof",
@@ -44,47 +63,20 @@ const sidebars: SidebarsConfig = {
             "taceo-proof/dev/bestpractice",
           ],
         },
-        {
-          type: "category",
-          label: "TACEO:OPRF",
-          link: { type: "doc", id: "taceo-oprf/overview" },
-          items: [
-            "taceo-oprf/concepts",
-            "taceo-oprf/use-cases", 
-            "taceo-oprf/authorization",
-            {
-              type: "category",
-              label: "Getting Started", 
-              items: [
-                "taceo-oprf/quickstart",
-                "taceo-oprf/quicklocal",
-              ],
-            },
-            {
-              type: "category",
-              label: "Development",
-              items: [
-                "taceo-oprf/beta-oprf",
-              ],
-            },
-            "taceo-oprf/api",
-          ],
-        },
       ],
     },
     {
       type: "category",
-      label: "Developer Tools", 
+      label: "Developer Tools",
       link: { type: "doc", id: "overview" },
       items: [
-        "network-config", // Network Configuration
         {
           type: "category",
           label: "Getting Started",
           items: [
             "getting-started/install",
             "getting-started/quick-start-co-circom",
-            "getting-started/quick-start-co-noir", 
+            "getting-started/quick-start-co-noir",
             "getting-started/usage",
           ],
         },
@@ -93,12 +85,13 @@ const sidebars: SidebarsConfig = {
           label: "Examples",
           link: { type: "doc", id: "examples/examples" },
           items: [
-            "examples/poseidon", 
+            "examples/poseidon",
             "examples/poseidon_noir",
             "examples/kyc",
             "examples/multiplier2",
           ],
         },
+        "network-config", // Network Configuration
         {
           type: "category",
           label: "coCircom",
@@ -114,7 +107,7 @@ const sidebars: SidebarsConfig = {
                 "co-circom/cli/split-witness",
                 "co-circom/cli/generate-witness",
                 "co-circom/cli/translate-witness",
-                "co-circom/cli/generate-proof", 
+                "co-circom/cli/generate-proof",
                 "co-circom/cli/verify",
               ],
             },
@@ -133,7 +126,7 @@ const sidebars: SidebarsConfig = {
           items: [
             {
               type: "category",
-              label: "Command-Line Interface", 
+              label: "Command-Line Interface",
               link: { type: "doc", id: "co-noir/cli/cli" },
               items: [
                 "co-noir/cli/split-input",
@@ -146,7 +139,7 @@ const sidebars: SidebarsConfig = {
                 "co-noir/cli/translate-proving-key",
                 "co-noir/cli/generate-proof",
                 "co-noir/cli/build-and-generate-proof",
-                "co-noir/cli/create-vk", 
+                "co-noir/cli/create-vk",
                 "co-noir/cli/verify",
                 "co-noir/cli/download-crs",
               ],
@@ -166,7 +159,7 @@ const sidebars: SidebarsConfig = {
     //   label: "Running Infrastructure",
     //   items: [
     //     "taceo-proof/ops/onboarding", // Running a Node
-    //     "taceo-proof/ops/ops-scaling", // Node Requirements  
+    //     "taceo-proof/ops/ops-scaling", // Node Requirements
     //     "taceo-proof/ops/security", // Node Operations
     //   ],
     // },
@@ -184,7 +177,7 @@ const sidebars: SidebarsConfig = {
         },
         {
           type: "category",
-          label: "Use Cases", 
+          label: "Use Cases",
           items: [
             "use-cases/defi",
             "use-cases/ai",
@@ -195,13 +188,17 @@ const sidebars: SidebarsConfig = {
       ],
     },
     {
-      type: "category", 
+      type: "category",
       label: "Releases",
       items: [
         {
           type: "category",
-          label: "Releases",
-          items: ["releases/co-snarks-april", "releases/co-noir-feb", "releases/co-noir-nov"],
+          label: "coSNARK Releases",
+          items: [
+            "releases/co-snarks-april",
+            "releases/co-noir-feb",
+            "releases/co-noir-nov",
+          ],
         },
       ],
     },
