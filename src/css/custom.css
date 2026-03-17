@@ -178,6 +178,40 @@ html:not([data-theme="dark"]) .main-wrapper {
   border-top-color: var(--ifm-color-emphasis-200);
 }
 
+/* Path cards on index page - theme-aware tinted backgrounds */
+.path-card-network {
+  padding: 1rem;
+  border: 1px solid var(--ifm-color-primary);
+  border-radius: 8px;
+  background-color: rgba(5, 82, 90, 0.13);
+}
+
+[data-theme="dark"] .path-card-network {
+  background-color: rgba(26, 172, 152, 0.25);
+}
+
+.path-card-services {
+  padding: 1rem;
+  border: 1px solid var(--ifm-color-success);
+  border-radius: 8px;
+  background-color: rgba(40, 167, 69, 0.13);
+}
+
+[data-theme="dark"] .path-card-services {
+  background-color: rgba(40, 167, 69, 0.28);
+}
+
+.path-card-tools {
+  padding: 1rem;
+  border: 1px solid var(--ifm-color-warning);
+  border-radius: 8px;
+  background-color: rgba(255, 193, 7, 0.13);
+}
+
+[data-theme="dark"] .path-card-tools {
+  background-color: rgba(255, 193, 7, 0.25);
+}
+
 /* External link arrows in navbar */
 .navbar__item .navbar__link[href^="http"]:not([href*="docs.taceo.io"]) {
   position: relative;
