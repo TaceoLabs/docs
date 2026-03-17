@@ -121,11 +121,14 @@
 
 .journeyStatus {
   font-size: 0.9rem !important;
-  color: #52ffc5 !important;
+  color: #05525a !important;
   font-weight: 400;
   margin-bottom: 0.8rem;
   letter-spacing: 0.03em;
   text-transform: uppercase;
+}
+[data-theme="dark"] .journeyStatus {
+  color: #52ffc5 !important;
 }
 
 .journeyCardTitle {
