@@ -238,6 +238,12 @@ html:not([data-theme="dark"]) .main-wrapper {
   position: relative;
 }
 
+.get-in-touch-btn {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 0.4rem;
+}
+
 .info-card ul li::before {
   content: '→';
   position: absolute;
