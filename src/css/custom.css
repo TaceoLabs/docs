@@ -238,6 +238,55 @@ html:not([data-theme="dark"]) .main-wrapper {
   position: relative;
 }
 
+/* Service cards on services/overview page */
+.service-card-primary {
+  padding: 2rem;
+  border: 2px solid var(--ifm-color-primary);
+  border-radius: 12px;
+  background-color: rgba(5, 82, 90, 0.08);
+}
+
+[data-theme="dark"] .service-card-primary {
+  background-color: rgba(26, 172, 152, 0.18);
+}
+
+.service-card-success {
+  padding: 2rem;
+  border: 2px solid var(--ifm-color-success);
+  border-radius: 12px;
+  background-color: rgba(40, 167, 69, 0.08);
+}
+
+[data-theme="dark"] .service-card-success {
+  background-color: rgba(40, 167, 69, 0.20);
+}
+
+.service-card-muted {
+  padding: 2rem;
+  border: 1px solid var(--ifm-color-emphasis-400);
+  border-radius: 12px;
+  background-color: var(--ifm-color-emphasis-100);
+  opacity: 0.8;
+}
+
+.getting-started-box {
+  padding: 2rem;
+  border-radius: 8px;
+  margin-top: 2rem;
+  background-color: rgba(31, 120, 180, 0.10);
+}
+
+[data-theme="dark"] .getting-started-box {
+  background-color: rgba(31, 120, 180, 0.25);
+}
+
+.getting-started-box .button-row {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
 .get-in-touch-btn {
   display: inline-flex !important;
   align-items: center;

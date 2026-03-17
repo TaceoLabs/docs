@@ -3,7 +3,7 @@ title: Privacy Services Overview
 description: Choose the right privacy service for your application
 ---
 
-import Link from '@docusaurus/Link';
+import Link from "@docusaurus/Link";
 
 # Privacy Services on TACEO Network
 
@@ -13,65 +13,53 @@ The TACEO Network provides production-ready privacy services that your applicati
 
 <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem', marginTop: '2rem'}}>
 
-<div style={{
-  padding: '2rem',
-  border: '2px solid var(--ifm-color-primary)',
-  borderRadius: '12px',
-  backgroundColor: 'var(--ifm-color-primary-lightest)'
-}}>
+<div className="service-card-primary">
 
-### **TACEO:Proof**
-*Private Zero-Knowledge Proof Generation*
+### **TACEO\:Proof**
+
+_Private Zero-Knowledge Proof Generation_
 
 **Use when you need:**
+
 - Generate ZK proofs without revealing witness data
-- Scale proof generation beyond client devices  
+- Scale proof generation beyond client devices
 - Mobile/web app proof generation
 - Production-ready Groth16 proofs
 
 **Perfect for:**
+
 - DeFi applications with private transactions
 - Identity systems requiring proof of credentials
 - Gaming with hidden state verification
 - Any app needing scalable ZK proofs
 
-<Link
-  className="button button--primary"
-  to="/docs/taceo-proof/overview"
-  style={{marginTop: '1rem', width: '100%'}}>
-  Learn More
-</Link>
+{/* prettier-ignore */}
+<Link className="button button--primary get-in-touch-btn" to="/docs/taceo-proof/overview" style={{ marginTop: "1rem", width: "100%" }}>Learn More</Link>
 
 </div>
 
-<div style={{
-  padding: '2rem',
-  border: '2px solid var(--ifm-color-success)',
-  borderRadius: '12px',
-  backgroundColor: 'var(--ifm-color-success-lightest)'
-}}>
+<div className="service-card-success">
 
-### **TACEO:OPRF**
-*Oblivious Pseudorandom Function*
+### **TACEO\:OPRF**
+
+_Oblivious Pseudorandom Function_
 
 **Use when you need:**
+
 - Privacy-preserving uniqueness checks
 - Generate nullifiers without revealing identity
 - Private set membership
 - Threshold signatures
 
 **Perfect for:**
+
 - Biometric identity verification
-- Anonymous credential systems  
+- Anonymous credential systems
 - Privacy-preserving voting
 - Anti-fraud without KYC data
 
-<Link
-  className="button button--success"
-  to="/docs/taceo-oprf/overview"
-  style={{marginTop: '1rem', width: '100%'}}>
-  Learn More
-</Link>
+{/* prettier-ignore */}
+<Link className="button button--success get-in-touch-btn" to="/docs/taceo-oprf/overview" style={{ marginTop: "1rem", width: "100%" }}>Learn More</Link>
 
 </div>
 
@@ -81,16 +69,11 @@ The TACEO Network provides production-ready privacy services that your applicati
 
 <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem', marginTop: '2rem'}}>
 
-<div style={{
-  padding: '2rem',
-  border: '1px solid var(--ifm-color-emphasis-400)',
-  borderRadius: '12px',
-  backgroundColor: 'var(--ifm-color-emphasis-100)',
-  opacity: '0.8'
-}}>
+<div className="service-card-muted">
 
-### **TACEO:OMap**
-*Confidential Shared State*
+### **TACEO\:OMap**
+
+_Confidential Shared State_
 
 **Coming Q2 2026**
 
@@ -106,8 +89,9 @@ Private data structures and confidential shared state management across multiple
   opacity: '0.8'
 }}>
 
-### **TACEO:Match**
-*Distributed Biometric Verification*
+### **TACEO\:Match**
+
+_Distributed Biometric Verification_
 
 **Coming Q3 2026**
 
@@ -120,51 +104,44 @@ Privacy-preserving biometric matching and verification without centralized biome
 ## Integration Patterns
 
 ### **Direct API Integration**
+
 Most applications integrate TACEO services through REST APIs:
+
 - Submit encrypted requests
 - Receive cryptographic proofs or results
 - Verify outputs using provided verification data
 
-### **SDK Integration** 
+### **SDK Integration**
+
 Use our SDKs for easier integration with proper key management:
+
 - JavaScript/TypeScript SDK
 - Python SDK
 - Go SDK (coming soon)
 
 ### **Smart Contract Integration**
+
 Verify results directly in your smart contracts:
+
 - On-chain proof verification
 - Integrate with existing DeFi protocols
 - composable with other privacy tools
 
 ## Getting Started
 
-<div style={{
-  padding: '2rem',
-  backgroundColor: 'var(--ifm-color-info-lightest)',
-  borderRadius: '8px',
-  marginTop: '2rem'
-}}>
+<div className="getting-started-box">
 
 ### 🚀 **Ready to integrate?**
 
 1. **Choose your service** from the options above
 2. **Read the service documentation** for technical details
-3. **Try the quickstart** to see it in action  
+3. **Try the quickstart** to see it in action
 4. **Contact us** for production access and support
 
-<div style={{marginTop: '1rem'}}>
-<Link
-  className="button button--info button--lg"
-  to="mailto:hello@taceo.io"
-  style={{marginRight: '1rem'}}>
-  Get Production Access
-</Link>
-<Link
-  className="button button--outline button--info"
-  to="https://taceo.io/discord">
-  Join Discord Community
-</Link>
+{/* prettier-ignore */}
+<div className="button-row">
+  <Link className="button button--info button--lg get-in-touch-btn" to="mailto:hello@taceo.io">Get Production Access</Link>
+  <Link className="button button--outline button--info get-in-touch-btn" to="https://taceo.io/discord">Join Discord Community</Link>
 </div>
 
 </div>
