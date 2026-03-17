@@ -212,6 +212,42 @@ html:not([data-theme="dark"]) .main-wrapper {
   background-color: rgba(255, 193, 7, 0.25);
 }
 
+.info-card {
+  padding: 1rem 1.25rem;
+  border-radius: 8px;
+  background-color: rgba(31, 120, 180, 0.10);
+}
+
+[data-theme="dark"] .info-card {
+  background-color: rgba(31, 120, 180, 0.25);
+}
+
+.info-card p {
+  margin: 0 0 0.5rem 0;
+}
+
+.info-card ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.info-card ul li {
+  margin: 0.3rem 0;
+  padding-left: 0.9rem;
+  position: relative;
+}
+
+.info-card ul li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.5;
+  font-size: 0.85em;
+}
+
 /* External link arrows in navbar */
 .navbar__item .navbar__link[href^="http"]:not([href*="docs.taceo.io"]) {
   position: relative;
