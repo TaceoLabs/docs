@@ -60,7 +60,7 @@
 }
 
 .heroLink::after {
-  content: '';
+  content: "";
   position: absolute;
   width: 100%;
   height: 0.5px;
@@ -323,10 +323,10 @@
 }
 
 .networkLink::after {
-  content: '';
+  content: "";
   position: absolute;
   width: 100%;
-  height: 0.5px;
+  height: 1px;
   bottom: 0;
   left: 0;
   background-color: currentColor;
@@ -338,35 +338,35 @@
 }
 
 .networkLink:hover::after {
-  height: 1.5px;
+  height: 2px;
 }
 
 /* Dark mode overrides */
-[data-theme='dark'] .network {
+[data-theme="dark"] .network {
   background-color: var(--ifm-background-color);
 }
 
-[data-theme='dark'] .networkCardInner {
+[data-theme="dark"] .networkCardInner {
   border: 1px solid #f1f0ec;
 }
 
-[data-theme='dark'] .networkTitle,
-[data-theme='dark'] .networkDescription,
-[data-theme='dark'] .networkCardTitle,
-[data-theme='dark'] .networkCardDescription,
-[data-theme='dark'] .networkLink {
+[data-theme="dark"] .networkTitle,
+[data-theme="dark"] .networkDescription,
+[data-theme="dark"] .networkCardTitle,
+[data-theme="dark"] .networkCardDescription,
+[data-theme="dark"] .networkLink {
   color: #f1f0ec !important;
 }
 
-[data-theme='dark'] .networkStatus {
+[data-theme="dark"] .networkStatus {
   color: var(--ifm-color-primary) !important;
 }
 
-[data-theme='dark'] .networkLink::after {
+[data-theme="dark"] .networkLink::after {
   background-color: #f1f0ec;
 }
 
-[data-theme='dark'] .networkLink:hover::after {
+[data-theme="dark"] .networkLink:hover::after {
   background-color: #f1f0ec;
 }
 
