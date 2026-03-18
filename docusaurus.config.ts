@@ -135,10 +135,10 @@ const config: Config = {
               label: "Developer Tools",
               to: "/docs/overview",
             },
-            {
-              label: "Infrastructure",
-              to: "/docs/taceo-proof/ops/onboarding",
-            },
+            // {
+            //   label: "Infrastructure",
+            //   to: "/docs/taceo-proof/ops/onboarding",
+            // },
           ],
         },
         {
@@ -149,12 +149,12 @@ const config: Config = {
               href: "https://taceo.io/discord",
             },
             {
-              label: "Twitter",
+              label: "X",
               href: "https://twitter.com/taceo_io",
             },
             {
-              label: "Telegram",
-              href: "https://t.me/collaborativeSNARK",
+              label: "Linkedin",
+              href: "https://www.linkedin.com/company/taceoio/",
             },
           ],
         },

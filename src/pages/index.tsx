@@ -43,7 +43,7 @@ function GuidanceSection() {
               <div className={styles.journeyStatus}>Production ready</div>
               <h4 className={styles.journeyCardTitle}>I want to add privacy services to my app</h4>
               <p className={styles.journeyCardDesc}>
-                Integrate TACEO:Proof for private proof delegation or TACEO:OPRF for privacy-preserving functions.
+                Integrate TACEO:OPRF for privacy-preserving nullifiers or TACEO:Proof for private proof delegation.
               </p>
             </div>
             <Link className={styles.networkLink} to="/docs/services/overview">Browse Services</Link>
@@ -84,7 +84,7 @@ function GuidanceSection() {
               <p className={styles.quickLinkTitle}>Get In Touch</p>
               <div className={styles.quickLinkList}>
                 <Link className={styles.networkLink} to="https://taceo.io/discord">Discord</Link>
-                <Link className={styles.networkLink} to="mailto:hello@taceo.io">hello@taceo.io</Link>
+                <Link className={styles.networkLink} to="mailto:hello@taceo.io">Email</Link>
               </div>
             </div>
           </div>
@@ -92,13 +92,13 @@ function GuidanceSection() {
 
         {/* ── CTA ── */}
         <div className={styles.cta}>
-          <h2 className={styles.ctaTitle}>Ready to get started?</h2>
+          <h2 className={styles.ctaTitle}>Looking for something else?</h2>
           <div className={styles.ctaLinks}>
-            <Link className={styles.heroLink} to="/docs">
-              Browse Documentation
+            <Link className={styles.heroLink} to="https://taceo.io">
+              Visit Website
             </Link>
-            <Link className={styles.heroLink} to="/docs/services/overview">
-              Browse Services
+            <Link className={styles.heroLink} to="https://core.taceo.io">
+              Read our News
             </Link>
             <Link className={styles.heroLink} to="https://taceo.io/discord">
               Ask Questions

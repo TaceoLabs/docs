@@ -4,7 +4,7 @@ The TACEO Network is a private execution layer for digital infrastructure.
 
 It encrypts and distributes sensitive computation across independent node operators so that no single party controls the data, the keys, or the outcome.
 
-The network has already been running production workloads for months, including biometric identity uniqueness verification at global scale through **World**, securing over 18 million users.
+The cryptographic infrastructure behind the network has been deployed in production systems used in World ID, supporting identity verification for more than 18 million users.
 
 Applications integrate privacy services through APIs. Under the hood, those services route confidential requests to MPC node committees that compute over encrypted shares and return verifiable outputs.
 
@@ -28,7 +28,11 @@ Only the requested result is revealed. The underlying inputs remain confidential
 
 ## How the Network Works
 
-The TACEO Network executes requests through privacy services running on committees of independent MPC nodes.
+While developing privacy-preserving MPC protocols for biometric uniqueness, we saw that teams were spending significant effort assembling and operating MPC networks with trusted counterparties.
+
+The TACEO Network removes this burden by providing shared MPC infrastructure.
+
+It executes requests through privacy services running on committees of independent MPC nodes.
 
 Each request follows the same high-level flow:
 

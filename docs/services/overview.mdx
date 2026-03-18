@@ -13,11 +13,36 @@ The TACEO Network provides production-ready privacy services that your applicati
 
 <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem', marginTop: '2rem'}}>
 
+<div className="service-card-success">
+
+### **TACEO\:OPRF**
+
+_Oblivious Pseudorandom Function_
+
+**Use when you need:**
+
+- Privacy-preserving uniqueness checks
+- Generate nullifiers without revealing identity
+- Private set membership checks (e.g. PSI-style protocols)
+- Identity-based rate limiting or eligibility checks
+
+**Perfect for:**
+
+- Biometric identity and uniqueness verification
+- Anonymous credentials and pseudonymous identities
+- Builder codes and private access / eligibility systems
+- Identity-based rate limiting
+
+{/* prettier-ignore */}
+<Link className="button button--success get-in-touch-btn" to="/docs/taceo-oprf/overview" style={{ marginTop: "1rem", width: "100%" }}>Learn More</Link>
+
+</div>
+
 <div className="service-card-primary">
 
 ### **TACEO\:Proof**
 
-_Private Zero-Knowledge Proof Generation_
+_Private Proof Delegation_
 
 **Use when you need:**
 
@@ -38,31 +63,6 @@ _Private Zero-Knowledge Proof Generation_
 
 </div>
 
-<div className="service-card-success">
-
-### **TACEO\:OPRF**
-
-_Oblivious Pseudorandom Function_
-
-**Use when you need:**
-
-- Privacy-preserving uniqueness checks
-- Generate nullifiers without revealing identity
-- Private set membership
-- Threshold signatures
-
-**Perfect for:**
-
-- Biometric identity verification
-- Anonymous credential systems
-- Privacy-preserving voting
-- Anti-fraud without KYC data
-
-{/* prettier-ignore */}
-<Link className="button button--success get-in-touch-btn" to="/docs/taceo-oprf/overview" style={{ marginTop: "1rem", width: "100%" }}>Learn More</Link>
-
-</div>
-
 </div>
 
 ## Coming Soon
@@ -73,9 +73,9 @@ _Oblivious Pseudorandom Function_
 
 ### **TACEO\:OMap**
 
-_Confidential Shared State_
+_Private Reads & Writes_
 
-**Coming Q2 2026**
+**Deployed, onboarding first applications**
 
 Private data structures and confidential shared state management across multiple parties.
 
@@ -91,9 +91,9 @@ Private data structures and confidential shared state management across multiple
 
 ### **TACEO\:Match**
 
-_Distributed Biometric Verification_
+_Distributed Biometric Uniqueness_
 
-**Coming Q3 2026**
+**In active integration**
 
 Privacy-preserving biometric matching and verification without centralized biometric storage.
 
@@ -105,27 +105,11 @@ Privacy-preserving biometric matching and verification without centralized biome
 
 ### **Direct API Integration**
 
-Most applications integrate TACEO services through REST APIs:
-
-- Submit encrypted requests
-- Receive cryptographic proofs or results
-- Verify outputs using provided verification data
-
-### **SDK Integration**
-
-Use our SDKs for easier integration with proper key management:
-
-- JavaScript/TypeScript SDK
-- Python SDK
-- Go SDK (coming soon)
+TODO
 
 ### **Smart Contract Integration**
 
-Verify results directly in your smart contracts:
-
-- On-chain proof verification
-- Integrate with existing DeFi protocols
-- composable with other privacy tools
+TODO
 
 ## Getting Started
 
