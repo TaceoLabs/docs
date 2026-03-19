@@ -1,14 +1,15 @@
 # TACEO Network: How It Works
 
-The TACEO Network is a private execution layer for digital infrastructure.
+While developing privacy-preserving MPC protocols for biometric uniqueness, we saw that teams were spending significant effort assembling and operating MPC networks with trusted counterparties.
 
-It encrypts and distributes sensitive computation across independent node operators so that no single node can reconstruct private data or unilaterally influence the outcome.
+The TACEO Network removes this burden by providing shared MPC infrastructure through a set of privacy services, acting as a private execution layer for digital infrastructure.
+Each service running on the network coordinates execution across committees of independent MPC nodes, depending on its performance and integration requirements.
 
-The cryptographic infrastructure behind the network has been deployed in production systems used in World ID, supporting identity checks for almost 18 million people.
+The cryptographic infrastructure behind the network has been deployed in production systems used in World ID, supporting privacy-preserving identity checks for almost 18 million people.
 
 Applications integrate privacy services through APIs. Under the hood, those services coordinate confidential requests across MPC node committees that compute over encrypted shares and return verifiable outputs.
 
-## The Missing Layer
+## The Missing Layer the TACEO Network provides
 
 Digital systems increasingly depend on shared infrastructure, but sensitive execution is still often centralized.
 
@@ -26,13 +27,7 @@ Examples include:
 
 Only the requested result is revealed. The underlying inputs remain confidential throughout execution.
 
-## How the Network Works
-
-While developing privacy-preserving MPC protocols for biometric uniqueness, we saw that teams were spending significant effort assembling and operating MPC networks with trusted counterparties.
-
-The TACEO Network removes this burden by providing shared MPC infrastructure through a set of privacy services.
-
-Each service coordinates execution across committees of independent MPC nodes, depending on its performance and integration requirements.
+## Interacting with a Service on the Network
 
 Requests generally follow the same high-level flow:
 
@@ -40,7 +35,7 @@ Requests generally follow the same high-level flow:
    An application sends a request through a TACEO service API, for example proof generation, OPRF evaluation, or private state updates.
 
 2. **Service coordination**  
-   The request is handled by a specific service instance. Each instance has its own cryptographic keys, committee configuration, and operational policy.
+   The request is handled by a specific service instance. Each instance has its own cryptographic keys, committee configuration, and operational policy, which can be handled by traditional off-chain processes or an on-chain smart contract.
 
 3. **Distributed MPC execution**  
    A committee of MPC nodes executes the protocol over encrypted or secret-shared inputs.
@@ -51,56 +46,6 @@ Requests generally follow the same high-level flow:
 5. **Verifiable response**  
    The service returns the result to the application, optionally including cryptographic artifacts that allow downstream verification.
 
-A simplified architecture is shown below.
-
-```
-Application
-     ↓
-Service API
-     ↓
-Service Instance
-     ↓
-MPC Node Committee
-     ↓
-Result (+ optional proof material)
-```
-
-This model allows many applications to share the same privacy infrastructure while keeping execution logically isolated at the service-instance level.
+This model allows many applications to share the same privacy infrastructure (the multiparty computation nodes) while keeping execution logically isolated at the service-instance level.
 
 Depending on the service, coordination may be handled by service-level infrastructure or protocol-level mechanisms.
-
-## Interacting with the Network
-
-Applications integrate with TACEO services through APIs.
-
-From an integration perspective, each request has three parts: input preparation, service execution, and result handling.
-
-### 1) Input preparation
-
-Applications prepare service-specific inputs before submission. Depending on the service, this can include:
-
-- encrypted payloads
-- blinded identifiers
-- proof generation parameters
-- confidential state transition requests
-
-Inputs are scoped to the service instance the application is configured to use.
-
-### 2) Service execution
-
-After request validation, the service instance coordinates execution across its assigned MPC committee.
-
-Nodes execute the protocol over encrypted or secret-shared data and produce partial outputs. A final output is produced only when the configured threshold is met.
-
-Applications do not need to orchestrate node-level communication themselves; this is handled by the service and protocol stack.
-
-### 3) Result handling
-
-The application receives a service response that may include:
-
-- a verification decision or policy outcome
-- a derived private identifier
-- an updated private-state commitment
-- proof or verification artifacts, where applicable
-
-Integrators should treat service outputs as scoped answers to the submitted request, and should verify returned artifacts wherever verification is available.
