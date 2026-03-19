@@ -307,6 +307,13 @@ html:not([data-theme="dark"]) .main-wrapper {
   font-size: 0.85em;
 }
 
+/* Images with white backgrounds in dark mode */
+[data-theme="dark"] .markdown img {
+  background-color: #ffffff;
+  border-radius: 4px;
+  padding: 0.5rem;
+}
+
 /* External link arrows in navbar */
 .navbar__item .navbar__link[href^="http"]:not([href*="docs.taceo.io"]) {
   position: relative;
