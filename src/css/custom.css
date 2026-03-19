@@ -194,6 +194,10 @@ html:not([data-theme="dark"]) .main-wrapper {
   background-color: rgba(26, 172, 152, 0.17);
 }
 
+[data-theme="dark"] .path-card-network a {
+  color: #f1f0ec;
+}
+
 .path-card-services {
   padding: 1rem;
   border: 1px solid var(--ifm-color-success);
@@ -203,6 +207,10 @@ html:not([data-theme="dark"]) .main-wrapper {
 
 [data-theme="dark"] .path-card-services {
   background-color: rgba(40, 167, 69, 0.17);
+}
+
+[data-theme="dark"] .path-card-services a {
+  color: #f1f0ec;
 }
 
 .path-card-tools {
@@ -216,6 +224,10 @@ html:not([data-theme="dark"]) .main-wrapper {
   background-color: rgba(255, 193, 7, 0.17);
 }
 
+[data-theme="dark"] .path-card-tools a {
+  color: #f1f0ec;
+}
+
 .info-card {
   padding: 1rem 1.25rem;
   border-radius: 8px;
@@ -224,6 +236,14 @@ html:not([data-theme="dark"]) .main-wrapper {
 
 [data-theme="dark"] .info-card {
   background-color: rgba(31, 120, 180, 0.25);
+}
+
+[data-theme="dark"] .info-card a {
+  color: #f1f0ec;
+}
+
+[data-theme="dark"] .info-card a:hover {
+  color: #f1f0ec;
 }
 
 .info-card p {
