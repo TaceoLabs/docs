@@ -1,0 +1,30 @@
+# Node Operators
+
+The network is operated by independent node operators running MPC infrastructure.
+Node operators are currently permissioned to ensure reliability and security for production workloads.
+
+For each service instance, computation is assigned to a committee of nodes rather than a single operator.
+
+This committee model is what enforces distributed trust:
+
+- no single operator can unilaterally access full private inputs
+- no single operator can produce a valid result alone
+- threshold participation is required for successful execution
+
+Node operators are currently permissioned and curated for operational reliability and security.
+
+As the network expands, participation is expected to broaden while preserving threshold-based security guarantees.
+
+## Security Model
+
+The TACEO Network is built on threshold MPC protocols designed to protect data during computation.
+
+At a high level, the security model assumes:
+
+- fewer than the configured threshold of nodes collude in a given committee
+- node operators run approved protocol implementations correctly
+- service and governance controls are operated according to network policy
+
+Under these assumptions, private inputs remain confidential and outputs are produced through protocol-level distributed execution.
+
+In practical terms, security combines cryptographic guarantees with operational controls, including committee diversity, controlled service deployment, and active infrastructure monitoring.

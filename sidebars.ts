@@ -18,7 +18,13 @@ const sidebars: SidebarsConfig = {
       type: "category",
       label: "TACEO Network",
       link: { type: "doc", id: "taceo-network/index" },
-      items: ["taceo-network/network"],
+      items: [
+        "taceo-network/network",
+        "taceo-network/services",
+        "taceo-network/node-operators",
+        "taceo-network/governance",
+        "taceo-network/roadmap",
+      ],
     },
     {
       type: "category",
