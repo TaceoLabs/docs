@@ -1,0 +1,35 @@
+# Private Attribution and Revenue Sharing (Builder Codes)
+
+Modern crypto applications route significant transaction volume across protocols. Wallets, aggregators, and frontends bring users, while AMMs and other protocols monetize that activity. Aligning incentives between these participants requires verifiable attribution of transaction flow.
+
+However, existing approaches introduce a fundamental trade-off between transparency and privacy.
+
+For example, proposals such as public transaction tagging (e.g. builder codes) allow wallets to prove which transactions they referred. But because these tags are visible onchain, they expose highly sensitive information, including user behavior, trading patterns, and routing strategies. This data can be exploited by competitors or used to reverse-engineer business relationships.
+
+We need systems where participants can prove *“I generated this volume”* without revealing which transactions, which users, or how value flows across the system.
+
+TACEO enables this through TACEO:OPRF, using a threshold Oblivious Pseudorandom Function to support privacy-preserving attribution.
+
+The flow works as follows:
+
+- Wallets attach blinded referral tags to transactions
+- Protocols commit these tags and associated fees into a public Merkle tree
+- During redemption, the wallet uses TACEO:OPRF to derive unlinkable nullifiers from its tags
+- A zero-knowledge proof demonstrates that the wallet is entitled to a payout, without revealing which transactions are being claimed
+
+Because the OPRF evaluation is performed across the MPC network, no single party can link tags to nullifiers or reconstruct the underlying data.
+
+This allows:
+
+- wallets to receive verifiable compensation for transaction flow
+- protocols to audit payouts against committed data
+- users to remain fully private and unlinkable
+
+At the same time, competitive information, such as routing strategies, volumes, and pricing agreements, remains hidden.
+
+This model extends existing approaches to transaction attribution by removing the need for public tagging, enabling privacy-preserving revenue sharing between applications and protocols.
+
+Next steps:
+- [Check out the Builder Codes article on Core](https://core.taceo.io/articles/privacy-preserving-builder-codes/)
+- [TACEO:OPRF Concepts](/docs/taceo-oprf/concepts)
+- [Get started with TACEO:OPRF](/docs/taceo-oprf/quickstart)

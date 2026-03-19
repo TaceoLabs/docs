@@ -1,0 +1,22 @@
+# Agent-native private payments for APIs, compute, and data access
+
+As AI agents become more autonomous, they increasingly interact with external services, paying for APIs, accessing data, or using compute resources. This creates a new class of machine-to-machine economic activity, where payments are made continuously and programmatically.
+
+Standards such as x402 define how payments can be embedded directly into HTTP requests, enabling agents to pay per request for services like model inference, storage, or premium data access.
+
+However, executing these payments on public infrastructure exposes sensitive information about the agent’s behavior. Payment flows can reveal strategies, intent, and internal decision-making processes, creating both security risks and competitive disadvantages.
+
+We need systems where agents can transact programmatically, without exposing their financial activity or operational logic.
+
+TACEO enables this by combining **x402-style payment flows** with **private execution via TACEO’s onchain finance service (e.g. TACEO:OMap)**. Agents can attach payments directly to requests, while the underlying transaction details (balances, amounts, counterparties) remain encrypted and are processed across the MPC network.
+
+Combined with programmable accounts enabled by standards such as ERC-4337, agents can autonomously initiate, manage, and optimize their payment flows as part of their execution logic.
+
+In addition, **TACEO:OPRF** can provide agents with privacy-preserving identities or usage constraints (e.g. per-agent quotas or uniqueness), without linking activity across services.
+
+This enables agent-native economies, where autonomous systems can interact, transact, and coordinate without leaking sensitive information about their behavior.
+
+Learn more:
+- [TACEO:OPRF for agent identity](/docs/taceo-oprf/overview)
+- [Private finance flows](/docs/use-cases/finance)
+- [TACEO Services Overview](/docs/services/overview)

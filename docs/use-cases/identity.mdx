@@ -1,0 +1,20 @@
+# Privacy-preserving identity and uniqueness checks
+
+Digital identity systems increasingly require users to prove properties about themselves (uniqueness, eligibility, credentials...) without exposing the underlying personal data. However, most existing systems either rely on trusted intermediaries or require users to reveal sensitive information to the verifier.
+
+For example, proving that a user is unique within a system typically requires comparing their biometric or identity-derived data against a global dataset. In traditional architectures, this means either storing sensitive data centrally or exposing it during the verification process.
+
+We need systems where sensitive identity data (e.g. biometric hashes, credentials, or identifiers) remains private, while still allowing global checks such as *“is this user already registered?”* or *“does this credential belong to an authorized set?”*
+
+TACEO enables this through **TACEO:OPRF**, a privacy-preserving service built on threshold Oblivious Pseudorandom Functions. Users submit inputs that are transformed into deterministic outputs (e.g. nullifiers or identifiers) without revealing the original secret. These outputs can be used for uniqueness checks, rate limiting, or access control across applications.
+
+This model can be combined with standards such as W3C Verifiable Credentials, enabling applications to verify credential-derived properties (e.g. age, residency, membership) without revealing the underlying data. The computation is performed across the TACEO Network by independent MPC node providers, ensuring that no single party has access to the full input.
+
+This makes it possible to build identity systems that are globally verifiable, composable across applications, and privacy-preserving by default.
+
+Examples of this use case can be found in World ID 4.0, ZK Passport, and our [Voting Demo](https://oprf-demo.taceo.io/).
+
+Learn more:
+- [TACEO:OPRF Concepts](/docs/taceo-oprf/concepts)
+- [TACEO:OPRF Quickstart](/docs/taceo-oprf/quickstart)
+- [OPRF Article on Core](https://core.taceo.io/articles/taceo-oprf/)

@@ -26,16 +26,30 @@ const config: Config = {
 
   scripts: [
     {
-      src: 'https://cdn.matomo.cloud/taceo.matomo.cloud/container_v2uCJC8k.js',
+      src: "https://cdn.matomo.cloud/taceo.matomo.cloud/container_v2uCJC8k.js",
       async: true,
     },
     {
-      src: 'https://cdn.voidanalytics.com/latest.min.js',
+      src: "https://cdn.voidanalytics.com/latest.min.js",
       async: false,
-    }
+    },
   ],
 
-  plugins: [require.resolve('docusaurus-lunr-search')],
+  plugins: [
+    require.resolve("docusaurus-lunr-search"),
+    [
+      require.resolve("@docusaurus/plugin-client-redirects"),
+      {
+        redirects: [
+          { from: "/docs/quick-start", to: "/docs/" },
+          { from: "/docs/resources/circom", to: "/docs/co-circom/" },
+          { from: "/docs/design/known-issues", to: "/docs/" },
+          { from: "/docs/design/roadmap", to: "/docs/" },
+          { from: "/docs/contact", to: "/docs/" },
+        ],
+      },
+    ],
+  ],
 
   // Even if you don't use internationalization, you can use this field to set
   // useful metadata like html lang. For example, if your site is Chinese, you
@@ -83,21 +97,9 @@ const config: Config = {
       items: [
         {
           type: "docSidebar",
-          sidebarId: "coSnarkSidebar",
+          sidebarId: "mainSidebar",
           position: "left",
-          label: "CoSNARKs",
-        },
-        {
-          type: "docSidebar",
-          sidebarId: "proofSidebar",
-          position: "left",
-          label: "TACEO:Proof", 
-        },
-        {
-          type: "docSidebar",
-          sidebarId: "oprfSidebar",
-          position: "left",
-          label: "TACEO:OPRF", 
+          label: "Documentation",
         },
         {
           type: "search",
@@ -109,7 +111,7 @@ const config: Config = {
           position: "right",
         },
         {
-          href: "https://github.com/TaceoLabs/collaborative-circom",
+          href: "https://github.com/TaceoLabs",
           label: "GitHub",
           position: "right",
         },
@@ -122,17 +124,21 @@ const config: Config = {
           title: "Docs",
           items: [
             {
-              label: "Collaborative SNARKs",
+              label: "TACEO Network",
+              to: "/docs/taceo-network/",
+            },
+            {
+              label: "Privacy Services",
+              to: "/docs/services/overview",
+            },
+            {
+              label: "Developer Tools",
               to: "/docs/overview",
             },
-            {
-              label: "TACEO:Proof",
-              to: "/docs/taceo-proof/overview",
-            },
-            {
-              label: "TACEO:OPRF",
-              to: "/docs/taceo-oprf/overview",
-            },
+            // {
+            //   label: "Infrastructure",
+            //   to: "/docs/taceo-proof/ops/onboarding",
+            // },
           ],
         },
         {
@@ -143,12 +149,12 @@ const config: Config = {
               href: "https://taceo.io/discord",
             },
             {
-              label: "Twitter",
+              label: "X",
               href: "https://twitter.com/taceo_io",
             },
             {
-              label: "Telegram",
-              href: "https://t.me/collaborativeSNARK",
+              label: "Linkedin",
+              href: "https://www.linkedin.com/company/taceoio/",
             },
           ],
         },
@@ -165,7 +171,7 @@ const config: Config = {
             },
             {
               label: "GitHub",
-              href: "https://github.com/TaceoLabs/collaborative-circom",
+              href: "https://github.com/TaceoLabs/",
             },
           ],
         },

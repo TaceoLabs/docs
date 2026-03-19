@@ -1,0 +1,40 @@
+# Privacy-Preserving KYC and Compliance (MPKYC)
+
+As crypto systems move into mainstream financial infrastructure, they are increasingly subject to global regulatory requirements including AML, CFT, and KYC obligations. Frameworks such as Markets in Crypto-Assets Regulation (MiCA), the Financial Action Task Force Travel Rule, and U.S. Treasury guidance are extending compliance expectations to wallets, DeFi protocols, and infrastructure providers.
+
+This creates a fundamental tension: how can systems built on decentralisation and privacy meet requirements for identity verification, data retention, and lawful access?
+
+Today’s approach relies on centralised KYC providers. Users repeatedly submit sensitive identity data across platforms, creating fragmented silos and high-value targets for breaches. At the same time, companies are forced to store personally identifiable information despite not being data-centric businesses, increasing both liability and operational overhead.
+
+Zero-knowledge proofs offer a partial solution by enabling selective disclosure, for example, proving that a user is over 18 or not on a sanctions list. However, ZK-only systems are not sufficient for full compliance. Regulatory frameworks require persistent identity state, auditability, and the ability to disclose data under lawful conditions.
+
+We need a new architecture that supports both **privacy and compliance by design**.
+
+TACEO enables this through a combination of **private shared state (e.g. TACEO:OMap)** and **privacy-preserving computation across MPC nodes**, forming the basis of an MPC-based KYC (MPKYC) system.
+
+In this model:
+
+- Users could submit identity data once, which is encrypted and secret-shared across the TACEO Network
+- Identity verification (e.g. document checks, sanctions screening) would be performed collaboratively across MPC nodes
+- The system can produce a **cryptographic attestation** (e.g. “KYC Level 2”, “not on sanctions list”)
+- This attestation can be reused across applications without exposing the underlying data
+
+Services can verify compliance status by querying the network, without ever accessing raw personal data.
+
+At the same time, TACEO supports controlled and auditable disclosure mechanisms:
+
+- **User-authorised access** to specific data
+- **Threshold-based disclosure**, requiring multiple independent parties
+- **Warrant-based access**, triggered by verifiable legal processes
+
+All disclosures are cryptographically auditable and limited in scope, ensuring accountability while preserving privacy.
+
+This model is particularly important for emerging financial systems such as private stablecoins, where transaction privacy alone is not sufficient. In addition to hiding transaction data, systems must be able to attest that participants are verified and compliant.
+
+By linking private financial activity to verifiable identity attestations, TACEO enables compliant, privacy-preserving financial infrastructure without relying on centralised data silos.
+
+This represents a shift from “trust-based compliance” to **cryptographically enforced compliance**, aligning user privacy, regulatory requirements, and decentralised system design.
+Next steps:
+- [See our MPKYC article on Core](https://core.taceo.io/articles/mpc-kyc/)
+- [Learn more about the TACEO Network](/docs/taceo-network)
+- [TACEO Services Overview](/docs/services/overview)

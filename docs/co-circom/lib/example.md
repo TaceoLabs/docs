@@ -18,7 +18,7 @@ input.insert("a".to_string(), Value::String("2".to_string()));
 input.insert("b".to_string(), Value::String("3".to_string()));
 let [share0, share1, share2] = co_circom::split_input::<Bn254>(input, circuit.public_inputs())?;
 
-// parse zkey, without performing extra checks (only advised for zkeys knwon to be valid)
+// parse zkey, without performing extra checks (only advised for zkeys known to be valid)
 let zkey = Arc::new(Groth16ZKey::<Bn254>::from_reader(
     std::fs::read(dir.join("multiplier2.zkey"))?.as_slice(),
     CheckElement::No,
@@ -38,4 +38,3 @@ let vk = Groth16JsonVerificationKey::<Bn254>::from_reader(
 )?;
 Groth16::verify(&vk, &proof, &public_inputs)?;
 ```
-

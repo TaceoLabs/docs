@@ -9,7 +9,7 @@ One of the most important architectural choices is whether to perform **witness 
 
 #### Why MPC witness extension is expensive
 
-When witness extension happens inside the MPC, every step of the circuit execution must be run collaboratively across multiple parties. This creates significant communication overhead. In contrast, Groth16 proof generation itself has constant communication cost and is highly efficient in our MPC setup - as we've shown in our [blog post.](https://core.taceo.io/articles/honest-majority-mpc-for-cosnarks/)
+When witness extension happens inside the MPC, every step of the circuit execution must be run collaboratively across multiple parties. This creates significant communication overhead. In contrast, Groth16 proof generation itself has constant communication cost and is highly efficient in our MPC setup - as we've shown in our [article on Core.](https://core.taceo.io/articles/honest-majority-mpc-for-cosnarks/)
 
 #### Why local witness extension isn’t free either
 
@@ -63,19 +63,19 @@ The choice depends on your use case. Here’s what to consider:
 ### Handling proof latencies & fallbacks
 When scheduling a coSNARK execution, there are a few practical steps and strategies to help reduce latency and improve robustness in case of failures.
 
- - You can **cache** the used **Node Providers** temporarily if you're planning to submit additional proofs soon after. Just be aware that **Node Providers can go offline** — if a cached key is stale, your request will fail at scheduling time.
+ - You can **cache** the used **node operators** temporarily if you're planning to submit additional proofs soon after. Just be aware that **node operators can go offline** — if a cached key is stale, your request will fail at scheduling time.
 This reduces them amount of API calls to schedule a coSNARK job to just 1!
 
 - After encrypting your input shares for the selected providers, you include the corresponding Node Provider IDs and submit the job.
-If one or more of the selected Node Providers is offline or unresponsive, the call may fail. In that case, you’ll need to:
+If one or more of the selected node operators is offline or unresponsive, the call may fail. In that case, you’ll need to:
 
-  1) Fetch a new set of Node Providers.
+  1) Fetch a new set of node operators.
   2) Encrypt the shares again using the new keys.
   3) Retry scheduling the job.
 
 ### Redundancy & resilience strategies
 To improve reliability or reduce tail latency, you can **schedule multiple coSNARK executions in parallel** and accept the one that completes first. This is especially useful in latency-sensitive applications.
-> ⚠️ Important: If you schedule redundant jobs, you **must perform secret-sharing separately for each**. Even if some Node Providers overlap across jobs, this prevents any leakage and maintains security. If you are using our client libraries, this is done for you.
+> ⚠️ Important: If you schedule redundant jobs, you **must perform secret-sharing separately for each**. Even if some node operators overlap across jobs, this prevents any leakage and maintains security. If you are using our client libraries, this is done for you.
 
 At the moment, redundancy handling needs to be implemented at the **call site**. We're exploring the possibility of **native support for redundant job scheduling** in the future.
 

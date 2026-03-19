@@ -1,0 +1,53 @@
+# TACEO Network: How It Works
+
+While developing privacy-preserving MPC protocols for biometric uniqueness, we saw that teams were spending significant effort assembling and operating MPC networks with trusted counterparties.
+
+The TACEO Network removes this burden by providing shared MPC infrastructure through a set of privacy services, acting as a private execution layer for digital infrastructure.
+Each service running on the network coordinates execution across committees of independent MPC nodes, depending on its performance and integration requirements.
+
+Applications integrate privacy services through APIs. Under the hood, those services coordinate confidential requests across MPC node committees that compute over encrypted shares and return verifiable outputs.
+
+The cryptographic infrastructure behind the network has been deployed in production systems used in World ID, supporting privacy-preserving identity checks for almost 18 million people.
+
+## The Missing Layer the TACEO Network provides
+
+Digital systems increasingly depend on shared infrastructure, but sensitive execution is still often centralized.
+
+Consensus layers and settlement rails exist. What is usually missing is an execution layer that can coordinate on private data without introducing a single trusted intermediary.
+
+The TACEO Network introduces this missing layer through **private shared state**, which is realized using secret-shared data and multiparty computation protocols.
+
+In practice, this means applications can ask scoped questions over sensitive data and receive verifiable answers without any single party seeing the underlying raw inputs or intermediate computation results.
+
+Examples include:
+
+- checking eligibility or policy conditions without disclosing full identity records
+- verifying uniqueness without exposing biometric templates
+- evaluating private risk or account conditions without revealing complete user data
+
+Only the requested result is revealed. The underlying inputs remain confidential throughout execution.
+
+## Interacting with a Service on the Network
+
+Requests generally follow the same high-level flow:
+
+1. **Application request**  
+   An application sends a request through a TACEO service API, for example proof generation, OPRF evaluation, or private state updates.
+
+2. **Service coordination**  
+   The request is handled by a specific service instance. Each instance has its own cryptographic keys, committee configuration, and operational policy, which can be handled by traditional off-chain processes or an on-chain smart contract.
+
+3. **Distributed MPC execution**  
+   A committee of MPC nodes executes the protocol over encrypted or secret-shared inputs. It also optionally generates a coSNARK of the correct execution of the protocol.
+
+4. **Threshold completion**  
+   Once the required threshold of nodes completes the protocol, partial outputs are combined into a final result. This can happen in the application or at the end user device, depending on the concrete use-case.
+
+5. **Verifiable response**  
+   The service returns the result to the application, optionally including cryptographic artifacts that allow downstream verification.
+
+This model allows many applications to share the same privacy infrastructure (the multiparty computation nodes) while keeping execution logically isolated at the service-instance level.
+
+Depending on the service, coordination may be handled by service-level infrastructure or protocol-level mechanisms.
+
+For an overview of the current services running on the TACEO network, see [TACEO Services](/docs/services/overview).

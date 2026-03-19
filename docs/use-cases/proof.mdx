@@ -1,0 +1,20 @@
+# Outsourced proof generation for mobile users and agent workflows
+
+Many modern applications require verifiable computation, from generating zero-knowledge proofs to validating offchain execution. However, these computations are often resource-intensive and require access to sensitive inputs such as user data or proprietary models.
+
+For example, generating a ZK proof on a mobile device may be infeasible due to memory and latency constraints. Outsourcing this computation to a centralized prover requires sharing sensitive inputs, which can expose private data or intellectual property.
+
+We need systems that allow computation to be outsourced, while keeping inputs private and ensuring correctness.
+
+TACEO enables this through **TACEO:Proof**, a private proof delegation service. Users or applications generate witness data locally and delegate proof generation to the TACEO Network, where MPC nodes collaboratively compute the proof without any single node accessing the full input.
+
+Sensitive data (such as user inputs or model weights) is secret-shared across the network, ensuring strong privacy guarantees. The resulting proof can then be verified onchain or by external systems.
+
+This MPC-based approach can also be combined with other trust models such as Trusted Execution Environments, enabling flexible trade-offs between performance, cost, and trust assumptions depending on the application.
+
+This allows applications to scale beyond the limitations of local devices and centralized services, enabling private proof generation for mobile users, browsers, and automated systems such as AI agents.
+
+Get started:
+- [TACEO:Proof Overview](/docs/taceo-proof/overview)
+- [Quick Start: Co-Noir](/docs/taceo-proof/dev/quick-start-co-noir)
+- [Quick Start: Co-Circom](/docs/taceo-proof/dev/quick-start-co-circom)

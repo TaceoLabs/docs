@@ -1,0 +1,152 @@
+---
+title: Privacy Services Overview
+description: Choose the right privacy service for your application
+---
+
+import Link from "@docusaurus/Link";
+
+# Privacy Services on TACEO Network
+
+The TACEO Network provides privacy services that applications can integrate today, with production deployments across key use cases.
+Each service is designed for a specific class of privacy-preserving computation.
+
+## Services on the TACEO Network
+
+<div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem', marginTop: '2rem'}}>
+
+<div className="service-card-success">
+
+### **TACEO\:OPRF**
+
+_Oblivious Pseudorandom Function_
+
+**Use when you need:**
+
+- Generate nullifiers on low-entropy data
+- Privacy-preserving uniqueness checks
+- Private set membership primitives (e.g. PSI-style protocols)
+- Identity-based rate limiting or eligibility checks
+
+**Perfect for:**
+
+- Anonymous credentials and pseudonymous identities
+- Working with low entropy identifiers
+- <Link to="/docs/use-cases/attribution">Builder codes</Link> and private access
+  / eligibility systems
+- Identity-based rate limiting
+
+{/* prettier-ignore */}
+<Link className="button button--success get-in-touch-btn" to="/docs/taceo-oprf/overview" style={{ marginTop: "1rem", width: "100%" }}>Learn More</Link>
+
+</div>
+
+<div className="service-card-primary">
+
+### **TACEO\:Proof**
+
+_Private Proof Delegation_
+
+**Use when you need:**
+
+- Generate ZK proofs without exposing witness data to a single party
+- Scale proof generation beyond client devices
+- Mobile/web app proof generation
+- Outsourced Groth16-based proof generation
+
+**Perfect for:**
+
+- DeFi applications with private transactions
+- Identity systems requiring proof of credentials
+- Gaming with hidden state verification
+- Scalable ZK proofs
+
+{/* prettier-ignore */}
+<Link className="button button--primary get-in-touch-btn" to="/docs/taceo-proof/overview" style={{ marginTop: "1rem", width: "100%" }}>Learn More</Link>
+
+</div>
+
+</div>
+
+## Coming Soon
+
+<div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem', marginTop: '2rem'}}>
+
+<div className="service-card-muted">
+
+### **TACEO\:OMap**
+
+_Private Reads & Writes_
+
+**Deployed, onboarding first applications**
+
+Private data structures and confidential shared state management across multiple parties, with verifiable state updates. (currently onboarding initial applications).
+
+</div>
+
+<div style={{
+  padding: '2rem',
+  border: '1px solid var(--ifm-color-emphasis-400)',
+  borderRadius: '12px', 
+  backgroundColor: 'var(--ifm-color-emphasis-100)',
+  opacity: '0.8'
+}}>
+
+### **TACEO\:Match**
+
+_Distributed Biometric Uniqueness_
+
+**In active integration**
+
+Privacy-preserving uniqueness matching and verification without requiring a single party to hold sensitive data such as biometric templates.
+
+</div>
+
+</div>
+
+<br />
+**Your own service?** If you are investigating workloads that require a set of
+multiparty computation nodes, reach out! We would love to support running your
+service on the TACEO Network.
+
+## Integration Patterns
+
+### **Direct API Integration**
+
+Integrate TACEO services through service-specific APIs to add privacy-preserving computation directly into your application flow.
+This is the most common pattern for proof delegation, uniqueness checks, eligibility checks, and related offchain privacy workflows.
+
+### **Smart Contract Integration**
+
+Use TACEO services alongside smart contracts when private computation needs to produce outputs that are verified, committed, or enforced onchain.
+In this model, confidential execution happens offchain, while contracts handle job sequencing, result verification and other application logic.
+
+## Getting Started
+
+<div className="getting-started-box">
+
+### **Ready to integrate?**
+
+1. **Choose your service** from the options above
+2. **Read the service documentation** for technical details
+3. **Try the quickstart** to see it in action
+4. **Contact us** for production access and support
+
+{/* prettier-ignore */}
+<div className="button-row">
+  <Link className="button button--info button--lg get-in-touch-btn" to="mailto:hello@taceo.io">Get Production Access</Link>
+  <Link className="button button--outline button--info get-in-touch-btn" to="https://taceo.io/discord">Join Discord Community</Link>
+</div>
+
+</div>
+
+## Production Applications
+
+The TACEO Network powers privacy infrastructure for applications such as:
+
+- **World** - Proof of human at global scale
+- **zkPassport** - Privacy-preserving identity verification
+- A growing ecosystem of privacy-focused applications
+
+---
+
+Need help choosing the right service? [Join our Discord](https://taceo.io/discord) or [email our team](mailto:hello@taceo.io).

@@ -1,0 +1,80 @@
+---
+title: TACEO Network Overview
+description: Understand what the TACEO Network is, who this section is for, and where to go next
+slug: /taceo-network/
+---
+
+import Link from "@docusaurus/Link";
+
+# TACEO Network
+
+The TACEO Network is the execution layer that enables private computation using multiparty computation protocols across distributed infrastructure providers.
+
+It is designed for applications that need to compute on sensitive data without exposing the underlying inputs to any single operator. Instead of relying on a single party to process sensitive data, the network uses multiparty, threshold cryptographic protocols which are executed across committees of nodes.
+
+This section explains how the network is structured, what security assumptions it relies on, and how it relates to TACEO services and developer tooling.
+
+## Who this section is for
+
+This section is most useful for:
+
+- teams evaluating TACEO as infrastructure for privacy-preserving applications
+- researchers and technical stakeholders who want to understand the network model
+- partners who need a high-level explanation of how private execution is coordinated across the network
+- developers who want context before integrating services built on top of the network
+
+If your primary goal is to integrate a production service, you may want to start in [TACEO Services](/docs/services/overview) and then return here for architectural context.
+
+## Start here
+
+<div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1rem', marginTop: '1.5rem'}}>
+
+<div className="info-card">
+
+**Understand the system**
+
+<ul>
+  <li>
+    <Link to="/docs/taceo-network/network#how-the-network-works">
+      How the Network Works
+    </Link>
+  </li>
+  <li>
+    <Link to="/docs/taceo-network/network#interacting-with-the-network">
+      Interacting with the Network
+    </Link>
+  </li>
+</ul>
+
+</div>
+
+<div className="info-card">
+
+**Review trust and safety**
+
+<ul>
+  <li>
+    <Link to="/docs/taceo-network/node-operators#security-model">Security Model</Link>
+  </li>
+  <li>
+    <Link to="/docs/taceo-network/governance">
+      Network Governance
+    </Link>
+  </li>
+</ul>
+
+</div>
+
+<div className="info-card">
+
+**See how it connects to products**
+
+<ul>
+  <li>
+    <Link to="/docs/services/overview">TACEO Services Overview</Link>
+  </li>
+</ul>
+
+</div>
+
+</div>
