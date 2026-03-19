@@ -22,15 +22,15 @@ _Oblivious Pseudorandom Function_
 
 **Use when you need:**
 
+- Generate nullifiers on low-entropy data
 - Privacy-preserving uniqueness checks
-- Generate nullifiers without revealing identity
 - Private set membership primitives (e.g. PSI-style protocols)
 - Identity-based rate limiting or eligibility checks
 
 **Perfect for:**
 
-- Biometric identity and uniqueness verification
 - Anonymous credentials and pseudonymous identities
+- Working with low entropy indentifiers
 - Builder codes and private access / eligibility systems
 - Identity-based rate limiting
 
@@ -50,7 +50,7 @@ _Private Proof Delegation_
 - Generate ZK proofs without exposing witness data to a single party
 - Scale proof generation beyond client devices
 - Mobile/web app proof generation
-- Production-grade Groth16-based proof generation
+- Outsourced Groth16-based proof generation
 
 **Perfect for:**
 
@@ -96,7 +96,7 @@ _Distributed Biometric Uniqueness_
 
 **In active integration**
 
-Privacy-preserving biometric matching and verification without requiring a single party to hold complete biometric data.
+Privacy-preserving uniqueness matching and verification without requiring a single party to hold sensitive data such as biometric templates.
 
 </div>
 
@@ -106,19 +106,19 @@ Privacy-preserving biometric matching and verification without requiring a singl
 
 ### **Direct API Integration**
 
-Integrate TACEO services through service-specific APIs to add privacy-preserving computation directly into your application flow. 
+Integrate TACEO services through service-specific APIs to add privacy-preserving computation directly into your application flow.
 This is the most common pattern for proof delegation, uniqueness checks, eligibility checks, and related offchain privacy workflows.
 
 ### **Smart Contract Integration**
 
-Use TACEO services alongside smart contracts when private computation needs to produce outputs that are verified, committed, or enforced onchain. 
+Use TACEO services alongside smart contracts when private computation needs to produce outputs that are verified, committed, or enforced onchain.
 In this model, confidential execution happens offchain, while contracts handle verification and application logic.
 
 ## Getting Started
 
 <div className="getting-started-box">
 
-### 🚀 **Ready to integrate?**
+### **Ready to integrate?**
 
 1. **Choose your service** from the options above
 2. **Read the service documentation** for technical details
