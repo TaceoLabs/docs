@@ -29,12 +29,12 @@ In the last weeks we worked hard to also implement a **first version of the Bril
 
 The Brillig VM in general requires a fully functional MPC-VM, so don’t expect that everything works out of the box at the moment. But what works is already very powerful:
 
-- **Comparisons** (see, e.g., <https://github.com/TaceoLabs/co-snarks/blob/main/co-noir/co-noir/examples/test_vectors/approx_sigmoid/src/main.nr>)
+- **Comparisons** (see, e.g., [approx_simoid](https://github.com/TaceoLabs/co-snarks/blob/main/co-noir/co-noir/examples/test_vectors/approx_sigmoid/src/main.nr))
 - **Simple if-statements** (same example)
-- **Byte decomposition** (see, e.g., <https://github.com/TaceoLabs/co-snarks/blob/main/co-noir/co-noir/examples/test_vectors/get_bytes/src/main.nr>)
+- **Byte decomposition** (see, e.g., [get_bytes](https://github.com/TaceoLabs/co-snarks/blob/main/co-noir/co-noir/examples/test_vectors/get_bytes/src/main.nr))
 - **Casts between fields and rings of different types** (used, e.g., by the byte decomposition example above)
 - **Simple integer divisions** (divisions where the result is rounded down) where we divide private values by public powers-of-two)
-- **Simple forward jumps as used in branching** (required, e.g., by is_zero gadgets, which is used, e.g., in not-equal comparison: <https://github.com/TaceoLabs/co-snarks/blob/main/co-noir/co-noir/examples/test_vectors/poseidon_assert/src/main.nr>)
+- **Simple forward jumps as used in branching** (required, e.g., by is_zero gadgets, which is used, e.g., in [not-equal comparison](https://github.com/TaceoLabs/co-snarks/blob/main/co-noir/co-noir/examples/test_vectors/poseidon_assert/src/main.nr))
 
 ## Compatibility
 
