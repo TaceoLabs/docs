@@ -26,17 +26,17 @@ const config: Config = {
 
   scripts: [
     {
-      src: 'https://cdn.matomo.cloud/taceo.matomo.cloud/container_v2uCJC8k.js',
+      src: "https://cdn.matomo.cloud/taceo.matomo.cloud/container_v2uCJC8k.js",
       async: true,
     },
     {
-      src: 'https://cdn.voidanalytics.com/latest.min.js',
+      src: "https://cdn.voidanalytics.com/latest.min.js",
       async: false,
-    }
+    },
   ],
 
   plugins: [
-    require.resolve('docusaurus-lunr-search'),
+    require.resolve("docusaurus-lunr-search"),
     [
       require.resolve("@docusaurus/plugin-client-redirects"),
       {
@@ -111,7 +111,7 @@ const config: Config = {
           position: "right",
         },
         {
-          href: "https://github.com/TaceoLabs/collaborative-circom",
+          href: "https://github.com/TaceoLabs",
           label: "GitHub",
           position: "right",
         },
@@ -121,7 +121,7 @@ const config: Config = {
       style: "dark",
       links: [
         {
-          title: "Docs", 
+          title: "Docs",
           items: [
             {
               label: "TACEO Network",
@@ -129,7 +129,7 @@ const config: Config = {
             },
             {
               label: "Privacy Services",
-              to: "/docs/services/overview", 
+              to: "/docs/services/overview",
             },
             {
               label: "Developer Tools",
@@ -171,7 +171,7 @@ const config: Config = {
             },
             {
               label: "GitHub",
-              href: "https://github.com/TaceoLabs/collaborative-circom",
+              href: "https://github.com/TaceoLabs/",
             },
           ],
         },
