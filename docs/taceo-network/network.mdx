@@ -38,7 +38,7 @@ Requests generally follow the same high-level flow:
    The request is handled by a specific service instance. Each instance has its own cryptographic keys, committee configuration, and operational policy, which can be handled by traditional off-chain processes or an on-chain smart contract.
 
 3. **Distributed MPC execution**  
-   A committee of MPC nodes executes the protocol over encrypted or secret-shared inputs.
+   A committee of MPC nodes executes the protocol over encrypted or secret-shared inputs. It also optionally generates a coSNARK of the correct execution of the protocol.
 
 4. **Threshold completion**  
    Once the required threshold of nodes completes the protocol, partial outputs are combined into a final result.
