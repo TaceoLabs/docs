@@ -75,9 +75,9 @@ function GuidanceSection() {
             <div className={styles.quickLinkCard}>
               <p className={styles.quickLinkTitle}>Real Applications</p>
               <div className={styles.quickLinkList}>
-                <Link className={styles.networkLink} to="/docs/use-cases/defi">DeFi</Link>
-                <Link className={styles.networkLink} to="/docs/use-cases/ai">AI</Link>
-                <Link className={styles.networkLink} to="/docs/use-cases/gaming">Gaming</Link>
+                <Link className={styles.networkLink} to="/docs/use-cases/identity">Identity</Link>
+                <Link className={styles.networkLink} to="/docs/use-cases/finance">Finance</Link>
+                <Link className={styles.networkLink} to="/docs/use-cases/">More Use Cases</Link>
               </div>
             </div>
             <div className={styles.quickLinkCard}>
@@ -110,7 +110,7 @@ function GuidanceSection() {
   );
 }
 
-export default function Home(): JSX.Element {
+export default function Home() {
   const {siteConfig} = useDocusaurusContext();
   return (
     <Layout

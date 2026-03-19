@@ -178,11 +178,14 @@ const sidebars: SidebarsConfig = {
         {
           type: "category",
           label: "Use Cases",
+          link: { type: "doc", id: "use-cases/index" },
           items: [
-            "use-cases/defi",
-            "use-cases/ai",
-            "use-cases/data-ownership",
-            "use-cases/gaming",
+            { type: "doc", id: "use-cases/identity", label: "Identity" },
+            { type: "doc", id: "use-cases/proof", label: "Proof" },
+            { type: "doc", id: "use-cases/finance", label: "Finance" },
+            { type: "doc", id: "use-cases/compliance", label: "Compliance" },
+            { type: "doc", id: "use-cases/attribution", label: "Attribution" },
+            { type: "doc", id: "use-cases/agents", label: "Agents" },
           ],
         },
       ],

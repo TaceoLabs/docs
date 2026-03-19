@@ -1,0 +1,24 @@
+# Private onchain accounts for payroll, treasury, and B2B payments
+
+Onchain financial systems offer transparency and programmability, but this transparency comes at a cost. Public transaction data exposes balances, counterparties, and intent, which can be exploited or make systems unusable for real-world financial operations.
+
+For instance, executing payroll, treasury transfers, or large trades on public infrastructure reveals sensitive financial information. This creates risks ranging from front-running to operational exposure, and prevents many institutions from adopting onchain rails.
+
+Traditional finance solves this through private accounts and restricted data access, but relies on centralized intermediaries.
+
+We need onchain financial infrastructure where balances, transactions, and counterparties remain private by default, while still enabling verifiable execution and settlement.
+
+TACEO enables this through **private shared state services (e.g. TACEO:OMap)**, which allow encrypted balances and financial data to be updated and queried without being revealed. Transactions are executed across the MPC network, ensuring correctness while keeping all sensitive inputs hidden.
+
+This model is particularly relevant for stablecoin-based financial flows (USDC), where confidentiality of balances and transfers is required for real-world usage. It also aligns with emerging standards such as x402, where payments are embedded directly into application-layer interactions (e.g. HTTP requests), enabling programmable financial flows across services.
+
+Selective disclosure can be added when required, enabling compliance or auditing without compromising baseline privacy.
+
+This allows financial applications to combine the programmability and settlement guarantees of blockchains with the privacy properties of traditional financial systems.
+
+Examples of this can be found in [Merces](https://merces-dashboard.taceo.io/arc).
+
+Next steps:
+- [TACEO Services Overview](/docs/services/overview)
+- [TACEO:OPRF for identity controls](/docs/use-cases/identity)
+- [Learn more about OMAP](https://core.taceo.io/articles/taceo-omap/)
