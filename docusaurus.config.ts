@@ -125,7 +125,7 @@ const config: Config = {
           items: [
             {
               label: "TACEO Network",
-              to: "/docs/taceo-network/network",
+              to: "/docs/taceo-network/",
             },
             {
               label: "Privacy Services",
