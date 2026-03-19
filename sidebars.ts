@@ -20,7 +20,6 @@ const sidebars: SidebarsConfig = {
       link: { type: "doc", id: "taceo-network/index" },
       items: [
         "taceo-network/network",
-        "taceo-network/services",
         "taceo-network/node-operators",
         "taceo-network/governance",
         "taceo-network/roadmap",
