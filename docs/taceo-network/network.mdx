@@ -2,11 +2,11 @@
 
 The TACEO Network is a private execution layer for digital infrastructure.
 
-It encrypts and distributes sensitive computation across independent node operators so that no single party controls the data, the keys, or the outcome.
+It encrypts and distributes sensitive computation across independent node operators so that no single node can reconstruct private data or unilaterally influence the outcome.
 
 The cryptographic infrastructure behind the network has been deployed in production systems used in World ID, supporting identity verification for more than 18 million users.
 
-Applications integrate privacy services through APIs. Under the hood, those services route confidential requests to MPC node committees that compute over encrypted shares and return verifiable outputs.
+Applications integrate privacy services through APIs. Under the hood, those services coordinate confidential requests across MPC node committees that compute over encrypted shares and return verifiable outputs.
 
 ## The Missing Layer
 
@@ -16,7 +16,7 @@ Consensus layers and settlement rails exist. What is usually missing is an execu
 
 The TACEO Network introduces this missing layer through **private shared state**.
 
-In practice, this means applications can ask narrowly scoped questions over sensitive data and receive verifiable answers without seeing the underlying raw inputs.
+In practice, this means applications can ask scoped questions over sensitive data and receive verifiable answers without seeing the underlying raw inputs.
 
 Examples include:
 
@@ -30,20 +30,20 @@ Only the requested result is revealed. The underlying inputs remain confidential
 
 While developing privacy-preserving MPC protocols for biometric uniqueness, we saw that teams were spending significant effort assembling and operating MPC networks with trusted counterparties.
 
-The TACEO Network removes this burden by providing shared MPC infrastructure.
+The TACEO Network removes this burden by providing shared MPC infrastructure through a set of privacy services.
 
-It executes requests through privacy services running on committees of independent MPC nodes.
+Each service coordinates execution across committees of independent MPC nodes, depending on its performance and integration requirements.
 
-Each request follows the same high-level flow:
+Requests generally follow the same high-level flow:
 
 1. **Application request**  
-   An application sends a request through a TACEO service API, for example proof generation, private verification, or private state updates.
+   An application sends a request through a TACEO service API, for example proof generation, OPRF evaluation, or private state updates.
 
-2. **Service instance routing**  
-   The request is routed to a specific service instance. Each instance has its own cryptographic keys, committee configuration, and operational policy.
+2. **Service coordination**  
+   The request is handled by a specific service instance. Each instance has its own cryptographic keys, committee configuration, and operational policy.
 
 3. **Distributed MPC execution**  
-   The selected committee executes the protocol over encrypted or secret-shared inputs. No single node can reconstruct the full private input by itself.
+   A committee of MPC nodes executes the protocol over encrypted or secret-shared inputs.
 
 4. **Threshold completion**  
    Once the required threshold of nodes completes the protocol, partial outputs are combined into a final result.
@@ -65,7 +65,9 @@ MPC Node Committee
 Result (+ optional proof material)
 ```
 
-This model allows many applications to share the same privacy infrastructure while keeping execution isolated at the service-instance level.
+This model allows many applications to share the same privacy infrastructure while keeping execution logically isolated at the service-instance level.
+
+Depending on the service, coordination may be handled by service-level infrastructure or protocol-level mechanisms.
 
 ## Interacting with the Network
 
@@ -86,7 +88,7 @@ Inputs are scoped to the service instance the application is configured to use.
 
 ### 2) Service execution
 
-After request validation, the service instance routes the job to its assigned MPC committee.
+After request validation, the service instance coordinates execution across its assigned MPC committee.
 
 Nodes execute the protocol over encrypted or secret-shared data and produce partial outputs. A final output is produced only when the configured threshold is met.
 
@@ -101,7 +103,7 @@ The application receives a service response that may include:
 - an updated private-state commitment
 - proof or verification artifacts, where applicable
 
-Integrators should treat service outputs as narrowly scoped answers to the submitted request, and should verify returned artifacts wherever verification is available.
+Integrators should treat service outputs as scoped answers to the submitted request, and should verify returned artifacts wherever verification is available.
 
 ## Privacy Services
 
@@ -111,25 +113,25 @@ Each service provides a specific cryptographic capability that applications can 
 
 ### TACEO\:OPRF
 
-Enables private credential and uniqueness verification using oblivious pseudorandom function protocols.
+Enables private credential and uniqueness verification using oblivious pseudorandom function protocols, supporting interaction patterns optimized for high-throughput use cases.
 
 **Status:** Live in production.
 
 ### TACEO\:Proof
 
-Generates verifiable zero-knowledge proofs for applications and protocols that need outsourced proving.
+Generates verifiable zero-knowledge proofs for applications and protocols that need outsourced proving, using a coordination layer to manage job execution across MPC clusters.
 
 **Status:** Live in production.
 
 ### TACEO\:OMap
 
-Enables verifiable private storage and retrieval for shared confidential state, supporting use cases such as private ledgers and registries.
+Designed to enable verifiable private storage and retrieval for shared confidential state.
 
 **Status:** Deployed and onboarding initial applications.
 
 ### TACEO\:Match
 
-Distributes identity matching across MPC node committees so no single party holds complete raw biometric data.
+Distributes identity matching across MPC node committees so no single party holds complete raw personal data.
 
 **Status:** In active integration.
 
@@ -137,7 +139,8 @@ Multiple applications can run separate service instances with isolated keys, pol
 
 ## Node Operators
 
-The network is operated by independent node operators running MPC infrastructure.
+The network is operated by independent node operators running MPC infrastructure. 
+Node operators are currently permissioned to ensure reliability and security for production workloads.
 
 For each service instance, computation is assigned to a committee of nodes rather than a single operator.
 
@@ -149,7 +152,7 @@ This committee model is what enforces distributed trust:
 
 Node operators are currently permissioned and curated for operational reliability and security.
 
-As the network expands, node participation is expected to broaden while preserving threshold-based security guarantees.
+As the network expands, participation is expected to broaden while preserving threshold-based security guarantees.
 
 ## Security Model
 
@@ -163,13 +166,13 @@ At a high level, the security model assumes:
 
 Under these assumptions, private inputs remain confidential and outputs are produced through protocol-level distributed execution.
 
-In practical terms, security combines cryptographic guarantees with operational controls, including committee diversity, controlled service rollout, and active infrastructure monitoring.
+In practical terms, security combines cryptographic guarantees with operational controls, including committee diversity, controlled service deployment, and active infrastructure monitoring.
 
 ## Network Governance
 
-The TACEO Network is currently operationally coordinated by TACEO.
+The TACEO Network is currently coordinated by TACEO, in collaboration with independent node operators.
 
-This launch-phase governance model prioritizes safety and reliability for privacy-critical production workloads.
+This early governance model prioritizes safety, reliability, and controlled rollout for privacy-critical production workloads.
 
 Current governance responsibilities include:
 
@@ -192,7 +195,7 @@ Node operators are currently curated to ensure reliability and security. Organiz
 
 ### Evolution
 
-Governance is expected to broaden as service adoption and operator participation grow.
+Governance is expected to broaden over time as service adoption and operator participation grow.
 
 Future iterations may introduce additional shared-control mechanisms for service approvals, registry management, and network standards.
 
@@ -212,6 +215,6 @@ Exploring the use of confidential computing technologies such as AMD SEV-SNP and
 
 **Improved developer integrations**
 
-Expanding APIs, SDKs, and tooling to simplify integration of privacy services into applications.
+Expanding APIs and tooling to simplify integration of privacy services into applications.
 
 These developments aim to make confidential computation infrastructure more robust, accessible, and scalable for real-world applications.

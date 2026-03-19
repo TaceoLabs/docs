@@ -8,9 +8,11 @@ import Link from '@docusaurus/Link';
 
 # TACEO Network
 
-The TACEO Network is the coordination and execution layer that enables private computation across independent infrastructure providers.
+The TACEO Network is the execution layer that enables private computation across distributed infrastructure providers.
 
-It is designed for applications that need to compute on sensitive data without exposing the underlying inputs to any single operator. Instead of relying on a centralized trusted party, the network uses threshold cryptographic protocols and distributed execution across committees of nodes.
+It is designed for applications that need to compute on sensitive data without exposing the underlying inputs to any single operator. 
+
+Instead of relying on a single party to process sensitive data, the network uses threshold cryptographic protocols and distributed execution across committees of nodes.
 
 This section explains how the network is structured, what security assumptions it relies on, and how it relates to TACEO services and developer tooling.
 
@@ -20,7 +22,7 @@ This section is most useful for:
 
 - teams evaluating TACEO as infrastructure for privacy-preserving applications
 - researchers and technical stakeholders who want to understand the network model
-- partners who need a high-level explanation of how private execution is coordinated
+- partners who need a high-level explanation of how private execution is coordinated across the network
 - developers who want context before integrating services built on top of the network
 
 If your primary goal is to integrate a production service, you may want to start in [TACEO Services](/docs/services/overview) and then return here for architectural context.
@@ -29,15 +31,15 @@ If your primary goal is to integrate a production service, you may want to start
 
 ### Network architecture
 
-How applications interact with privacy services, how service instances are organized, and how committees of MPC nodes execute confidential computations.
+How applications interact with privacy services, how services are structured, and how committees of MPC nodes execute confidential computations.
 
 ### Security model
 
-What the network assumes about node operators, how threshold security works, and why no single operator can access the underlying private data.
+What the network assumes about node operators, how threshold security works, and why no single operator can access underlying private data.
 
 ### Governance and coordination
 
-How the network is currently coordinated, how upgrades are handled, and how operators and applications participate in operational decisions.
+How the network is currently coordinated, how upgrades are handled, and how operators and applications interact with the network’s operational model.
 
 ### Real-world application context
 
@@ -49,7 +51,7 @@ These parts of the documentation are related, but they serve different purposes:
 
 - **TACEO Network** explains the infrastructure and trust model
 - **TACEO Services** explains the managed privacy-preserving services that applications integrate today
-- **Developer Tooling** explains lower-level tools for collaborative zero-knowledge workflows and experimentation
+- **Developer Tooling** explains lower-level tools for collaborative zero-knowledge proof generation and experimentation
 
 If you are evaluating TACEO for a product, the usual flow is:
 
@@ -98,4 +100,4 @@ If you are evaluating TACEO for a product, the usual flow is:
 
 ---
 
-Ready to continue? Start with the full [TACEO Network reference](/docs/taceo-network/network).
+Ready to continue? Start with the full [TACEO Network reference documentation](/docs/taceo-network/network).

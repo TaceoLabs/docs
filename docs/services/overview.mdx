@@ -7,7 +7,8 @@ import Link from "@docusaurus/Link";
 
 # Privacy Services on TACEO Network
 
-The TACEO Network provides production-ready privacy services that your application can integrate today. Each service handles different privacy-preserving computation needs.
+The TACEO Network provides privacy services that applications can integrate today, with production deployments across key use cases.
+Each service is designed for a specific class of privacy-preserving computation.
 
 ## Which Service Do I Need?
 
@@ -23,7 +24,7 @@ _Oblivious Pseudorandom Function_
 
 - Privacy-preserving uniqueness checks
 - Generate nullifiers without revealing identity
-- Private set membership checks (e.g. PSI-style protocols)
+- Private set membership primitives (e.g. PSI-style protocols)
 - Identity-based rate limiting or eligibility checks
 
 **Perfect for:**
@@ -46,10 +47,10 @@ _Private Proof Delegation_
 
 **Use when you need:**
 
-- Generate ZK proofs without revealing witness data
+- Generate ZK proofs without exposing witness data to a single party
 - Scale proof generation beyond client devices
 - Mobile/web app proof generation
-- Production-ready Groth16 proofs
+- Production-grade Groth16-based proof generation
 
 **Perfect for:**
 
@@ -77,7 +78,7 @@ _Private Reads & Writes_
 
 **Deployed, onboarding first applications**
 
-Private data structures and confidential shared state management across multiple parties.
+Private data structures and confidential shared state management across multiple parties (currently onboarding initial applications).
 
 </div>
 
@@ -95,7 +96,7 @@ _Distributed Biometric Uniqueness_
 
 **In active integration**
 
-Privacy-preserving biometric matching and verification without centralized biometric storage.
+Privacy-preserving biometric matching and verification without requiring a single party to hold complete biometric data.
 
 </div>
 
@@ -105,11 +106,13 @@ Privacy-preserving biometric matching and verification without centralized biome
 
 ### **Direct API Integration**
 
-TODO
+Integrate TACEO services through service-specific APIs to add privacy-preserving computation directly into your application flow. 
+This is the most common pattern for proof delegation, uniqueness checks, eligibility checks, and related offchain privacy workflows.
 
 ### **Smart Contract Integration**
 
-TODO
+Use TACEO services alongside smart contracts when private computation needs to produce outputs that are verified, committed, or enforced onchain. 
+In this model, confidential execution happens offchain, while contracts handle verification and application logic.
 
 ## Getting Started
 
@@ -132,11 +135,11 @@ TODO
 
 ## Production Applications
 
-The TACEO Network already powers privacy infrastructure for:
+The TACEO Network powers privacy infrastructure for applications such as:
 
-- **World** - Biometric identity verification at global scale
+- **World** - Proof of human at global scale
 - **zkPassport** - Privacy-preserving identity verification
-- And growing ecosystem of privacy-focused applications
+- A growing ecosystem of privacy-focused applications
 
 ---
 
