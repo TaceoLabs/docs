@@ -41,7 +41,7 @@ Requests generally follow the same high-level flow:
    A committee of MPC nodes executes the protocol over encrypted or secret-shared inputs. It also optionally generates a coSNARK of the correct execution of the protocol.
 
 4. **Threshold completion**  
-   Once the required threshold of nodes completes the protocol, partial outputs are combined into a final result.
+   Once the required threshold of nodes completes the protocol, partial outputs are combined into a final result. This can happen in the application or at the end user device, depending on the concrete use-case.
 
 5. **Verifiable response**  
    The service returns the result to the application, optionally including cryptographic artifacts that allow downstream verification.
