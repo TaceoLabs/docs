@@ -68,6 +68,20 @@ const sidebars: SidebarsConfig = {
             "taceo-proof/dev/bestpractice",
           ],
         },
+        ["solutions/finance/x402"],
+      ],
+    },
+        {
+      type: "category",
+      label: "TACEO Solutions",
+      link: { type: "doc", id: "solutions/overview" },
+      items: [
+        {
+          type: "category",
+          label: "Finance",
+          link: { type: "doc", id: "solutions/finance/index" },
+          items: ["solutions/finance/x402"],
+        },
       ],
     },
     {
