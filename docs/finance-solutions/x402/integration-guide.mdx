@@ -1,0 +1,404 @@
+---
+sidebar_position: 4
+title: Integration guide
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Integration guide
+
+This page covers integrating the confidential payment scheme into your own client application and
+API server. If you just want to run a quick end-to-end test using TACEO's hosted infrastructure,
+start with the [Quickstart](../quickstart) instead.
+
+## Install
+
+<Tabs>
+<TabItem value="typescript" label="TypeScript" default>
+
+```bash
+npm install @taceolabs/taceo-merces1-x402-js @x402/fetch viem
+```
+
+</TabItem>
+<TabItem value="rust" label="Rust">
+
+```toml
+[dependencies]
+taceo-merces1-x402 = "1.0"
+x402-reqwest = "1.4"
+x402-axum = "1.4"
+reqwest = { version = "0.13", default-features = false, features = ["json", "rustls"] }
+alloy = { version = "2", default-features = false, features = ["signers", "primitives"] }
+axum = "0.8"
+tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
+```
+
+</TabItem>
+</Tabs>
+
+---
+
+## Client
+
+The client library intercepts any `402 Payment Required` response, constructs the ZK proof and
+signed payment payload, and retries the request automatically. Your application code makes a
+normal HTTP request — the payment is invisible to it.
+
+### Register the scheme
+
+<Tabs>
+<TabItem value="typescript" label="TypeScript" default>
+
+```typescript
+import { privateKeyToAccount } from 'viem/accounts';
+import { x402Client, wrapFetchWithPayment } from '@x402/fetch';
+import { ConfidentialEvmScheme } from '@taceolabs/taceo-merces1-x402-js/client';
+
+const signer = privateKeyToAccount(process.env.PRIVATE_KEY as `0x${string}`);
+
+const client = new x402Client();
+client.register('eip155:*', new ConfidentialEvmScheme(signer));
+
+export const fetchWithPayment = wrapFetchWithPayment(fetch, client);
+```
+
+`fetchWithPayment` is a drop-in replacement for `fetch`. Use it anywhere you would normally
+call `fetch`.
+
+</TabItem>
+<TabItem value="rust" label="Rust">
+
+```rust
+use alloy::signers::local::PrivateKeySigner;
+use reqwest::Client;
+use taceo_merces1_x402::V2Eip155ConfidentialClient;
+use x402_reqwest::{ReqwestWithPayments, ReqwestWithPaymentsBuild, X402Client};
+
+let signer: PrivateKeySigner = std::env::var("PRIVATE_KEY")?.parse()?;
+
+let x402_client = X402Client::new()
+    .register(V2Eip155ConfidentialClient::new(signer));
+
+let http_client = Client::new()
+    .with_payments(x402_client)
+    .build();
+```
+
+`http_client` is a drop-in replacement for `reqwest::Client`.
+
+</TabItem>
+</Tabs>
+
+### Make a payment-gated request
+
+<Tabs>
+<TabItem value="typescript" label="TypeScript" default>
+
+```typescript
+const response = await fetchWithPayment(
+  'https://api.example.com/api/premium-data',
+  { method: 'GET' }
+);
+
+if (response.ok) {
+  const data = await response.json();
+  console.log(data);
+}
+```
+
+</TabItem>
+<TabItem value="rust" label="Rust">
+
+```rust
+let response = http_client
+    .get("https://api.example.com/api/premium-data")
+    .send()
+    .await?;
+
+println!("Status: {}", response.status());
+println!("Body: {}", response.text().await?);
+```
+
+</TabItem>
+</Tabs>
+
+When the server responds with `402`, the client handles it invisibly: parses the `PaymentRequired`
+payload, generates the Groth16 ZK proof (~800ms), retries the request with a `PAYMENT-SIGNATURE`
+header, and returns the final `200 OK` to your code.
+
+### Restrict to specific networks
+
+By default, the scheme registers for all EIP-155 chains (`eip155:*`). To restrict to a specific
+chain:
+
+<Tabs>
+<TabItem value="typescript" label="TypeScript" default>
+
+```typescript
+import { registerConfidentialEvmScheme } from '@taceolabs/taceo-merces1-x402-js/client';
+
+registerConfidentialEvmScheme(client, {
+  signer,
+  networks: ['eip155:84532'], // Base Sepolia only
+});
+```
+
+</TabItem>
+<TabItem value="rust" label="Rust">
+
+The Rust client selects the scheme based on the `network` field in the server's `PaymentRequired`
+response. No additional configuration is needed to restrict by chain.
+
+</TabItem>
+</Tabs>
+
+### Check your private balance
+
+Your Merces balance is secret-shared across three MPC nodes and never appears on-chain in
+plaintext. The client queries all three nodes and reconstructs the balance locally.
+
+<Tabs>
+<TabItem value="typescript" label="TypeScript" default>
+
+```typescript
+import { Client } from '@taceolabs/taceo-merces1-client-js';
+import { createWalletClient, createPublicClient, http } from 'viem';
+import { baseSepolia } from 'viem/chains';
+import { privateKeyToAccount } from 'viem/accounts';
+
+const account = privateKeyToAccount(process.env.PRIVATE_KEY as `0x${string}`);
+
+const merces = new Client({
+  nodeUrls: [
+    'https://node0.merces.taceo.io',
+    'https://node1.merces.taceo.io',
+    'https://node2.merces.taceo.io',
+  ],
+  contractAddress: '0xTODO',
+  token: { type: 'ERC20', address: '0xTODO' },
+  walletClient: createWalletClient({ account, chain: baseSepolia, transport: http() }),
+  publicClient: createPublicClient({ chain: baseSepolia, transport: http() }),
+});
+
+const balance = await merces.getPrivateBalance();
+console.log('Private balance:', balance.toString());
+```
+
+</TabItem>
+<TabItem value="rust" label="Rust">
+
+Balance queries are handled internally by the facilitator during payment verification. Direct
+balance reads are not exposed in the current Rust client — use the TypeScript client or the
+faucet API if you need to inspect balances during development.
+
+</TabItem>
+</Tabs>
+
+:::info Funding your wallet
+Use the [faucet](../quickstart/#step-2--get-test-tokens-from-the-faucet) to top up your Merces balance with test tokens.
+:::
+
+### Error handling
+
+<Tabs>
+<TabItem value="typescript" label="TypeScript" default>
+
+```typescript
+import {
+  InsufficientBalanceError,
+  ProofError,
+} from '@taceolabs/taceo-merces1-client-js';
+
+try {
+  const response = await fetchWithPayment(url, { method: 'GET' });
+} catch (err) {
+  if (err instanceof InsufficientBalanceError) {
+    console.error('Top up your Merces balance via the faucet.');
+  } else if (err instanceof ProofError) {
+    console.error('ZK proof generation failed:', err.message);
+  } else {
+    throw err;
+  }
+}
+```
+
+</TabItem>
+<TabItem value="rust" label="Rust">
+
+```rust
+match http_client.get(url).send().await {
+    Ok(response) => println!("Status: {}", response.status()),
+    Err(e) => eprintln!("Payment or request failed: {e}"),
+}
+```
+
+</TabItem>
+</Tabs>
+
+---
+
+## Server
+
+The server middleware intercepts incoming requests, returns `402 Payment Required` when no valid
+payment is attached, and verifies the payment against the TACEO facilitator before forwarding the
+request to your handler.
+
+### Basic example
+
+The following examples protect a single route at `GET /api/protected` and price it at $1 of
+confidential USDC.
+
+<Tabs>
+<TabItem value="typescript" label="TypeScript" default>
+
+```typescript
+import express from 'express';
+import { paymentMiddleware, x402ResourceServer } from '@x402/express';
+import { HTTPFacilitatorClient } from '@x402/core/server';
+import { ConfidentialEvmScheme } from '@taceolabs/taceo-merces1-x402-js/server';
+
+const app = express();
+
+const facilitatorClient = new HTTPFacilitatorClient({
+  url: 'https://facilitator.merces.taceo.io',
+});
+
+app.use(
+  paymentMiddleware(
+    {
+      'GET /api/protected': {
+        accepts: [
+          {
+            scheme: 'confidential',
+            price: '$1',
+            network: 'eip155:84532',
+            payTo: process.env.WALLET_ADDRESS as `0x${string}`,
+          },
+        ],
+      },
+    },
+    new x402ResourceServer(facilitatorClient).register(
+      'eip155:84532',
+      new ConfidentialEvmScheme({ asset: process.env.TOKEN_ADDRESS as string })
+    )
+  )
+);
+
+app.get('/api/protected', (req, res) => {
+  res.json({ message: 'Payment verified. Here is your data.' });
+});
+
+app.listen(8081, () => console.log('Listening on http://localhost:8081'));
+```
+
+</TabItem>
+<TabItem value="rust" label="Rust">
+
+```rust
+use std::str::FromStr;
+use alloy::primitives::Address;
+use axum::{Router, routing::get, response::IntoResponse, http::StatusCode};
+use taceo_merces1_x402::{ConfidentialUSDC, V2Eip155Confidential};
+use x402_axum::X402Middleware;
+
+#[tokio::main]
+async fn main() -> eyre::Result<()> {
+    let pay_to = Address::from_str(&std::env::var("WALLET_ADDRESS")?)?;
+    let facilitator_url = std::env::var("FACILITATOR_URL")
+        .unwrap_or("https://facilitator.merces.taceo.io".to_string());
+
+    let usdc = ConfidentialUSDC::base_sepolia();
+    let x402 = X402Middleware::new(&facilitator_url);
+
+    let app = Router::new().route(
+        "/api/protected",
+        get(handler).layer(
+            x402.with_price_tag(
+                V2Eip155Confidential::price_tag(pay_to, usdc.parse("$1")?)
+            ),
+        ),
+    );
+
+    let listener = tokio::net::TcpListener::bind("0.0.0.0:8081").await?;
+    println!("Listening on http://0.0.0.0:8081");
+    axum::serve(listener, app).await?;
+
+    Ok(())
+}
+
+async fn handler() -> impl IntoResponse {
+    (StatusCode::OK, "Payment verified. Here is your data.")
+}
+```
+
+</TabItem>
+</Tabs>
+
+### How the middleware works
+
+When a request arrives without a valid `PAYMENT-SIGNATURE` header:
+
+1. The middleware returns `HTTP 402 Payment Required` with a base64-encoded `PaymentRequired`
+   payload containing the scheme, required amount, your wallet address, and the MPC public keys
+   (fetched from the facilitator's `/supported` endpoint).
+2. When the client retries with a payment, the middleware forwards it to the facilitator's
+   `/verify` endpoint.
+3. If verification succeeds, the request is forwarded to your handler.
+4. After your handler responds, the middleware calls `/settle` asynchronously. Your handler is
+   not blocked by settlement.
+
+### Protecting multiple routes
+
+<Tabs>
+<TabItem value="typescript" label="TypeScript" default>
+
+```typescript
+app.use(
+  paymentMiddleware(
+    {
+      'GET /api/basic':   { accepts: [{ scheme: 'confidential', price: '$0.10', network: 'eip155:84532', payTo: address }] },
+      'GET /api/premium': { accepts: [{ scheme: 'confidential', price: '$5.00', network: 'eip155:84532', payTo: address }] },
+      'POST /api/action': { accepts: [{ scheme: 'confidential', price: '$1.00', network: 'eip155:84532', payTo: address }] },
+    },
+    resourceServer
+  )
+);
+```
+
+</TabItem>
+<TabItem value="rust" label="Rust">
+
+```rust
+let app = Router::new()
+    .route("/api/basic",
+        get(basic_handler).layer(
+            x402.with_price_tag(V2Eip155Confidential::price_tag(pay_to, usdc.parse("$0.10")?))
+        )
+    )
+    .route("/api/premium",
+        get(premium_handler).layer(
+            x402.with_price_tag(V2Eip155Confidential::price_tag(pay_to, usdc.parse("$5.00")?))
+        )
+    );
+```
+
+</TabItem>
+</Tabs>
+
+### Configuration reference
+
+| Parameter | Description |
+|---|---|
+| `scheme` | Must be `"confidential"` |
+| `price` | Required payment amount, e.g. `"$1"`, `"$0.50"` |
+| `network` | CAIP-2 chain ID, e.g. `"eip155:84532"` for Base Sepolia |
+| `payTo` | Your wallet address that receives payments |
+| `asset` | Token contract address (provided by the TACEO facilitator automatically) |
+| Facilitator URL | `https://facilitator.merces.taceo.io` for TACEO's hosted facilitator |
+
+:::info Receiving payments
+Payments are credited to your `payTo` address as confidential Merces balance. To withdraw tokens
+back to a regular ERC-20 balance, use the `withdraw` function in the Merces client library.
+:::

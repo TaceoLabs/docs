@@ -1,0 +1,278 @@
+---
+sidebar_position: 5
+title: Protocol reference
+---
+
+# Protocol reference
+
+This page documents the wire format for each message in the Confidential x402 protocol, the ZK
+circuit, and the privacy and trust model.
+
+---
+
+## Payment schemas
+
+### PaymentRequired (402 response)
+
+The resource server encodes this object as base64 and sends it in the body of its `402` response.
+
+```json
+{
+  "x402Version": 2,
+  "resource": {
+    "url": "/api/premium-data",
+    "description": "Premium data endpoint"
+  },
+  "accepts": [
+    {
+      "scheme": "confidential",
+      "network": "eip155:84532",
+      "amount": "1000000",
+      "asset": "0xUSDC...",
+      "payTo": "0xResourceServer...",
+      "maxTimeoutSeconds": 300,
+      "extra": {
+        "confidentialToken": "0xMercesContract...",
+        "eip712Domain": {
+          "name": "Merces",
+          "version": "1"
+        },
+        "mpcPks": [
+          ["<x1>", "<y1>"],
+          ["<x2>", "<y2>"],
+          ["<x3>", "<y3>"]
+        ]
+      }
+    }
+  ]
+}
+```
+
+| Field | Type | Description |
+|---|---|---|
+| `x402Version` | `number` | Always `2` |
+| `scheme` | `string` | Always `"confidential"` |
+| `network` | `string` | CAIP-2 chain identifier, e.g. `"eip155:84532"` |
+| `amount` | `string` | Required payment in token base units (e.g. USDC with 6 decimals) |
+| `asset` | `string` | ERC-20 token contract address |
+| `payTo` | `string` | Resource server's receiving wallet address |
+| `maxTimeoutSeconds` | `number` | Maximum age of a valid payment signature in seconds |
+| `extra.confidentialToken` | `string` | Merces contract address |
+| `extra.eip712Domain` | `object` | EIP-712 domain name and version for signing |
+| `extra.mpcPks` | `[[x,y], ...]` | BabyJubJub public keys of the three MPC operators |
+
+### PaymentPayload (client → server)
+
+The client encodes this object as base64 and sends it in the `PAYMENT-SIGNATURE` header of its
+retried request.
+
+```json
+{
+  "x402Version": 2,
+  "resource": { "url": "/api/premium-data" },
+  "accepted": {
+    "scheme": "confidential",
+    "network": "eip155:84532",
+    "amount": "1000000",
+    "asset": "0xUSDC...",
+    "payTo": "0xResourceServer...",
+    "maxTimeoutSeconds": 300,
+    "extra": { "...": "..." }
+  },
+  "payload": {
+    "signature": "0x<eip712-signature>",
+    "authorization": {
+      "from": "0xClient...",
+      "to": "0xResourceServer...",
+      "amountCommitment": "<poseidon2-commitment>",
+      "beta": "<public-input>",
+      "ciphertexts": ["<c0>", "<c1>", "<c2>", "<c3>", "<c4>", "<c5>"],
+      "senderPk": ["<x>", "<y>"],
+      "nonce": "0x<32-bytes>",
+      "deadline": "<unix-timestamp>",
+      "proof": {
+        "pi_a": ["<x>", "<y>", "1"],
+        "pi_b": [["<x0>", "<x1>"], ["<y0>", "<y1>"], ["1", "0"]],
+        "pi_c": ["<x>", "<y>", "1"]
+      }
+    }
+  }
+}
+```
+
+| Field | Type | Description |
+|---|---|---|
+| `payload.signature` | `0x...` | EIP-712 signature over the authorization struct |
+| `authorization.from` | `address` | Client's wallet address (token owner) |
+| `authorization.to` | `address` | Resource server's wallet address (recipient) |
+| `authorization.amountCommitment` | `Fr` | Poseidon2 commitment to `(amount, blindingFactor)` |
+| `authorization.beta` | `Fr` | Public input derived during proof generation |
+| `authorization.ciphertexts` | `Fr[6]` | Six BN254 field elements: two encrypted shares per MPC operator |
+| `authorization.senderPk` | `[x, y]` | Ephemeral BabyJubJub public key used for ECDH encryption |
+| `authorization.nonce` | `bytes32` | Unique 32-byte nonce for replay protection |
+| `authorization.deadline` | `uint` | Unix timestamp after which the signature is invalid |
+| `authorization.proof` | `Groth16Proof` | Groth16 proof in snarkjs format |
+
+### EIP-712 typed data
+
+The client signs the following typed data. The `verifyingContract` is the Merces contract address
+provided in `extra.confidentialToken`.
+
+```json
+{
+  "domain": {
+    "name": "Merces",
+    "version": "1",
+    "chainId": 84532,
+    "verifyingContract": "0xMercesContract..."
+  },
+  "types": {
+    "TransferFromAuthorization": [
+      { "name": "sender",           "type": "address" },
+      { "name": "receiver",         "type": "address" },
+      { "name": "amountCommitment", "type": "uint256" },
+      { "name": "ciphertextHash",   "type": "bytes32" },
+      { "name": "beta",             "type": "uint256" },
+      { "name": "nonce",            "type": "uint256" },
+      { "name": "deadline",         "type": "uint256" }
+    ]
+  },
+  "primaryType": "TransferFromAuthorization"
+}
+```
+
+`ciphertextHash` is `keccak256(abi.encode(ciphertexts, senderPk))`.
+
+### Facilitator API
+
+#### POST /verify
+
+Called by the resource server before serving content.
+
+**Request:**
+
+```json
+{
+  "x402Version": 2,
+  "paymentPayload": { "...": "..." },
+  "paymentRequirements": { "...": "..." }
+}
+```
+
+**Response (success):**
+
+```json
+{ "isValid": true, "payer": "0xClient..." }
+```
+
+**Response (failure):**
+
+```json
+{ "isValid": false, "invalidReason": "insufficient_funds" }
+```
+
+#### POST /settle
+
+Called by the resource server after content has been served.
+
+**Request:** Same structure as `/verify`.
+
+**Response:**
+
+```json
+{
+  "success": true,
+  "transaction": "0xTxHash...",
+  "network": "eip155:84532"
+}
+```
+
+### ZK circuit
+
+The Groth16 proof is generated over the BN254 curve and proves four simultaneous claims:
+
+| Claim | Description |
+|---|---|
+| Commitment correctness | `amountCommitment = Poseidon2([amount, blindingFactor])` |
+| Share validity | Three additive shares sum to `amount` modulo the BN254 scalar field order |
+| Encryption correctness | Each share is correctly encrypted to the stated MPC operator key via BabyJubJub ECDH |
+| Range | `amount` fits in 80 bits |
+
+**Public inputs (15 elements):**
+
+| Index | Value |
+|---|---|
+| 0 | `beta` |
+| 1–2 | `senderPk.x`, `senderPk.y` |
+| 3 | `amountCommitment` |
+| 4–9 | `ciphertexts[0..5]` |
+| 10–11 | `mpcPk[0].x`, `mpcPk[0].y` |
+| 12–13 | `mpcPk[1].x`, `mpcPk[1].y` |
+| 14–15 | `mpcPk[2].x`, `mpcPk[2].y` |
+
+**Private inputs:** `amount`, `blindingFactor`, three plaintext shares, three blinding shares,
+BabyJubJub ephemeral secret key.
+
+---
+
+## Privacy & trust model
+
+### What is protected
+
+| Data | Standard x402 | Confidential x402 | How |
+|---|---|---|---|
+| Transfer amounts | Plaintext in `transferWithAuthorization` | Poseidon2 commitment on-chain | Real amount secret-shared across MPC network |
+| Account balances | Public via ERC-20 `balanceOf()` | Only a commitment stored on-chain | Actual balances held as secret shares by MPC operators |
+| Spending patterns | Full payment history enables behaviour profiling | Observers can count payments but cannot sum amounts | Amounts hidden; only frequency and counterparties visible |
+| Price discrimination evidence | On-chain proof of what each user paid | No on-chain evidence of negotiated price | Resource server holds client payment data off-chain |
+
+### What is not protected
+
+**On-chain:**
+
+| Leaked data | Source | Impact |
+|---|---|---|
+| Sender address | `ActionQuery.sender` | Anyone can see who sends payments |
+| Receiver address | `ActionQuery.receiver` | Anyone can see who receives payments |
+| Payment frequency and timing | `transferFrom()` call events | Observers can count API calls and when they occur |
+| Nonce consumption | `usedNonces` mapping | Number of nonces reveals payment count per sender |
+| Sender–receiver graph | Aggregated from all transfers | Can map which clients use which APIs |
+
+**HTTP layer:**
+
+| Leaked data | Who can see it |
+|---|---|
+| Required payment amount | Resource server (sets it); transmitted over TLS to client |
+| API endpoint path | Resource server, facilitator |
+| Client wallet address | Resource server, facilitator |
+
+The amount in the `PaymentRequired` response is visible to the client over TLS but is not written
+to the blockchain. A passive observer without TLS access cannot learn the amount.
+
+### Trust model
+
+**MPC network**
+
+Privacy of payment amounts and balances depends on the MPC operators not colluding. The current
+deployment uses **3-of-3 additive secret sharing**: all three operators must cooperate to
+reconstruct any amount or balance. If even one operator is honest, no amount is revealed.
+TACEO operates all three nodes in the current testnet deployment.
+
+**Facilitator**
+
+The facilitator is a **liveness dependency, not a privacy dependency**. It can refuse to verify
+or settle payments, and it can observe which addresses are paying which resource servers. It
+cannot learn payment amounts or balances, forge valid proofs or signatures, or steal funds.
+
+**Merces contract**
+
+The contract is the trust anchor for correctness. It verifies the client's Groth16 proof before
+enqueuing any transfer, verifies the MPC's proof before committing balance updates, and enforces
+nonce uniqueness and deadline expiry.
+
+
+### Roadmap to stronger privacy
+
+The current `confidential` scheme hides amounts and balances. Sender and receiver addresses remain
+visible on-chain. Future versions will include an enhanced variant that additionally hide 
+the sender–receiver relationship, building on Merces' existing support for fully private transactions.
