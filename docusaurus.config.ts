@@ -24,6 +24,10 @@ const config: Config = {
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "throw",
 
+  markdown: {
+    mermaid: true,
+  },
+
   scripts: [
     {
       src: "https://cdn.matomo.cloud/taceo.matomo.cloud/container_v2uCJC8k.js",
@@ -37,6 +41,7 @@ const config: Config = {
 
   plugins: [
     require.resolve("docusaurus-lunr-search"),
+    require.resolve("docusaurus-plugin-image-zoom"),
     [
       require.resolve("@docusaurus/plugin-client-redirects"),
       {
@@ -50,6 +55,8 @@ const config: Config = {
       },
     ],
   ],
+
+  themes: ['@docusaurus/theme-mermaid'],
 
   // Even if you don't use internationalization, you can use this field to set
   // useful metadata like html lang. For example, if your site is Chinese, you
@@ -181,6 +188,13 @@ const config: Config = {
     prism: {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
+    },
+    zoom: {
+      selector: '.markdown img, .docusaurus-mermaid-container svg',
+      background: {
+        light: 'rgb(255, 255, 255)',
+        dark: 'rgb(50, 50, 50)',
+      },
     },
   } satisfies Preset.ThemeConfig,
 };
