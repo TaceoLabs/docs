@@ -20,7 +20,7 @@ payment payloads to the facilitator for verification, and serves content on succ
 advertising `scheme: "confidential"` in its payment requirements, it behaves identically to a
 standard x402 resource server.
 
-**Facilitator** — an off-chain service that verifies payment proofs and routes settlements. It
+**Facilitator** — an off-chain service that verifies payment proofs and triggers settlements. It
 checks the ZK proof, validates the EIP-712 signature, queries the MPC network for balance
 sufficiency, and submits the settlement transaction on-chain. TACEO operates a facilitator that can be
 used directly.
@@ -48,7 +48,7 @@ sequenceDiagram
     C->>R: GET /api/
     R-->>C: 402 + PaymentRequired (scheme: confidential)
 
-    Note over C: Generate commitment, secret shares,<br/>ciphertexts, EIP-712 signature,<br/>Groth16 proof (~800ms)
+    Note over C: Generate commitment, secret shares,<br/>ciphertexts, EIP-712 signature,<br/>Groth16 proof
 
     C->>R: GET /api/ + PAYMENT
 
@@ -60,14 +60,14 @@ sequenceDiagram
     F-->>R: isValid: true
     R->>F: POST /settle
     note over F: do verification (as in /verify route)
-    F-->>R: success: true
-    R-->>C: 200 + content
     F->>X: transferFrom()
     Note over X: verify Groth16 proof on-chain via ClientTransferVerifier
     X-->>F: action_index
     Note over M: read_queue, decrypt, update bal, gen proof
     M->>X: processMPC
     Note over X: verify proof, update comms
+    F-->>R: success: true
+    R-->>C: 200 + content
 ```
 
 
@@ -115,9 +115,6 @@ If all checks pass, the facilitator returns `{ isValid: true }` to the resource 
 
 ### Phase 4 — Content delivery & settlement
 
-On a valid response, the resource server immediately returns `HTTP 200` with the requested content.
-Settlement is asynchronous — the client already has its response.
-
 The resource server then calls the facilitator's `/settle` endpoint. The facilitator calls
 `transferFrom()` on the Merces contract, passing the proof and ciphertexts. The contract verifies
 the proof on-chain and enqueues a transfer action.
@@ -127,12 +124,16 @@ amount, verifies the commitment, updates both parties' balance commitments, and 
 ZK proof that the update is correct. It calls `processMPC()` on the contract, which verifies the
 proof and commits the new balance state.
 
+On a valid response, the resource server returns `HTTP 200` with the requested content.
+
+:::info Asynchronous Settlement
+Alternatively, content delivery can already take places simultaneously to the settlement.
+:::
 
 ## Performance
 
 | Operation | Cost |
 |---|---|
-| Proof generation (client) | ~800ms |
-| Off-chain proof verification (facilitator) | ~13ms |
+| Proof generation (client) | ~800ms (SnarkJS) / ~60ms (Rust) |
 | On-chain proof verification | ~300,000 gas |
 

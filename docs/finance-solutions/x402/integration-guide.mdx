@@ -126,117 +126,8 @@ println!("Body: {}", response.text().await?);
 </Tabs>
 
 When the server responds with `402`, the client handles it invisibly: parses the `PaymentRequired`
-payload, generates the Groth16 ZK proof (~800ms), retries the request with a `PAYMENT-SIGNATURE`
+payload, generates the Groth16 ZK proof, retries the request with a `PAYMENT-SIGNATURE`
 header, and returns the final `200 OK` to your code.
-
-### Restrict to specific networks
-
-By default, the scheme registers for all EIP-155 chains (`eip155:*`). To restrict to a specific
-chain:
-
-<Tabs>
-<TabItem value="typescript" label="TypeScript" default>
-
-```typescript
-import { registerConfidentialEvmScheme } from '@taceolabs/taceo-merces1-x402-js/client';
-
-registerConfidentialEvmScheme(client, {
-  signer,
-  networks: ['eip155:84532'], // Base Sepolia only
-});
-```
-
-</TabItem>
-<TabItem value="rust" label="Rust">
-
-The Rust client selects the scheme based on the `network` field in the server's `PaymentRequired`
-response. No additional configuration is needed to restrict by chain.
-
-</TabItem>
-</Tabs>
-
-### Check your private balance
-
-Your Merces balance is secret-shared across three MPC nodes and never appears on-chain in
-plaintext. The client queries all three nodes and reconstructs the balance locally.
-
-<Tabs>
-<TabItem value="typescript" label="TypeScript" default>
-
-```typescript
-import { Client } from '@taceolabs/taceo-merces1-client-js';
-import { createWalletClient, createPublicClient, http } from 'viem';
-import { baseSepolia } from 'viem/chains';
-import { privateKeyToAccount } from 'viem/accounts';
-
-const account = privateKeyToAccount(process.env.PRIVATE_KEY as `0x${string}`);
-
-const merces = new Client({
-  nodeUrls: [
-    'https://node0.merces.taceo.io',
-    'https://node1.merces.taceo.io',
-    'https://node2.merces.taceo.io',
-  ],
-  contractAddress: '0xTODO',
-  token: { type: 'ERC20', address: '0xTODO' },
-  walletClient: createWalletClient({ account, chain: baseSepolia, transport: http() }),
-  publicClient: createPublicClient({ chain: baseSepolia, transport: http() }),
-});
-
-const balance = await merces.getPrivateBalance();
-console.log('Private balance:', balance.toString());
-```
-
-</TabItem>
-<TabItem value="rust" label="Rust">
-
-Balance queries are handled internally by the facilitator during payment verification. Direct
-balance reads are not exposed in the current Rust client — use the TypeScript client or the
-faucet API if you need to inspect balances during development.
-
-</TabItem>
-</Tabs>
-
-:::info Funding your wallet
-Use the [faucet](../quickstart/#step-2--get-test-tokens-from-the-faucet) to top up your Merces balance with test tokens.
-:::
-
-### Error handling
-
-<Tabs>
-<TabItem value="typescript" label="TypeScript" default>
-
-```typescript
-import {
-  InsufficientBalanceError,
-  ProofError,
-} from '@taceolabs/taceo-merces1-client-js';
-
-try {
-  const response = await fetchWithPayment(url, { method: 'GET' });
-} catch (err) {
-  if (err instanceof InsufficientBalanceError) {
-    console.error('Top up your Merces balance via the faucet.');
-  } else if (err instanceof ProofError) {
-    console.error('ZK proof generation failed:', err.message);
-  } else {
-    throw err;
-  }
-}
-```
-
-</TabItem>
-<TabItem value="rust" label="Rust">
-
-```rust
-match http_client.get(url).send().await {
-    Ok(response) => println!("Status: {}", response.status()),
-    Err(e) => eprintln!("Payment or request failed: {e}"),
-}
-```
-
-</TabItem>
-</Tabs>
 
 ---
 
@@ -347,8 +238,7 @@ When a request arrives without a valid `PAYMENT-SIGNATURE` header:
 2. When the client retries with a payment, the middleware forwards it to the facilitator's
    `/verify` endpoint.
 3. If verification succeeds, the request is forwarded to your handler.
-4. After your handler responds, the middleware calls `/settle` asynchronously. Your handler is
-   not blocked by settlement.
+4. After your handler responds, the middleware calls `/settle` asynchronously.
 
 ### Protecting multiple routes
 

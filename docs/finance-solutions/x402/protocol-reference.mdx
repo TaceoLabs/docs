@@ -242,7 +242,7 @@ BabyJubJub ephemeral secret key.
 
 | Leaked data | Who can see it |
 |---|---|
-| Required payment amount | Resource server (sets it); transmitted over TLS to client |
+| Required payment amount | Resource server (sets it), facilitator; transmitted over TLS to client |
 | API endpoint path | Resource server, facilitator |
 | Client wallet address | Resource server, facilitator |
 
@@ -262,7 +262,7 @@ TACEO operates all three nodes in the current testnet deployment.
 
 The facilitator is a **liveness dependency, not a privacy dependency**. It can refuse to verify
 or settle payments, and it can observe which addresses are paying which resource servers. It
-cannot learn payment amounts or balances, forge valid proofs or signatures, or steal funds.
+cannot learn balances, forge valid proofs or signatures, or steal funds.
 
 **Merces contract**
 

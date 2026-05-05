@@ -57,35 +57,7 @@ Each new wallet needs to be funded before it can make confidential payments. The
 curl -X POST https://faucet.merces.taceo.io/claim/<YOUR_WALLET_ADDRESS>
 ```
 
-Replace `<YOUR_WALLET_ADDRESS>` with your Ethereum wallet address. If you don't have one yet,
-generate a throwaway key:
 
-<Tabs>
-<TabItem value="typescript" label="TypeScript" default>
-
-```typescript
-import { privateKeyToAccount, generatePrivateKey } from 'viem/accounts';
-
-const privateKey = generatePrivateKey();
-const account = privateKeyToAccount(privateKey);
-
-console.log('Private key:', privateKey);
-console.log('Address:', account.address);
-```
-
-</TabItem>
-<TabItem value="rust" label="Rust">
-
-```rust
-use alloy::{hex, signers::local::PrivateKeySigner};
-
-let signer = PrivateKeySigner::random();
-println!("Private key: {}", hex::encode(signer.credential().to_bytes()));
-println!("Address: {}", signer.address());
-```
-
-</TabItem>
-</Tabs>
 
 :::warning Keep your private key safe
 Even on testnet, never commit private keys to source control. Use environment variables or a
@@ -170,7 +142,7 @@ async fn main() -> eyre::Result<()> {
 When `fetchWithPayment` (or the wrapped `reqwest` client) receives a `402` response:
 
 1. It reads the `PaymentRequired` payload from the response body.
-2. The `ConfidentialEvmScheme` generates a Groth16 ZK proof (~800ms) and constructs the signed
+2. The `ConfidentialEvmScheme` generates a Groth16 ZK proof (~800ms in Rust / ~60ms in SnarkJS) and constructs the signed
    payment payload.
 3. The original request is retried with a `PAYMENT-SIGNATURE` header.
 4. The TACEO resource server forwards the payment to the TACEO facilitator for verification.
