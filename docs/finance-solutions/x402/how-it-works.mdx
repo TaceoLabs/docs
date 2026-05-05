@@ -111,7 +111,7 @@ endpoint. The facilitator runs a series of checks:
 - **ZK proof** — the Groth16 proof is valid against 15 public signals (sender key, commitment, ciphertexts, MPC keys).
 - **Balance** — the facilitator queries all three MPC nodes; they collectively confirm the sender holds sufficient funds without revealing the balance to anyone.
 
-If all checks pass, the facilitator returns `{ valid: true }` to the resource server.
+If all checks pass, the facilitator returns `{ isValid: true }` to the resource server.
 
 ### Phase 4 — Content delivery & settlement
 
