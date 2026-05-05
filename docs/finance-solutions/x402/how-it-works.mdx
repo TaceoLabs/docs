@@ -95,7 +95,7 @@ The client builds the payment payload locally. No network calls are required for
    - Each share is correctly encrypted to the stated operator key.
    - The amount fits in 80 bits.
 6. Sign the full payload with **EIP-712** — binding sender, receiver, commitment, ciphertexts, nonce, and deadline.
-7. Re-send the original request with a `PAYMENT` header containing the encoded payload.
+7. Re-send the original request with a `PAYMENT-SIGNATURE` header containing the encoded payload.
 
 ### Phase 3 — Verification
 
