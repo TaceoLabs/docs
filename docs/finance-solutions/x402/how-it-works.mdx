@@ -77,7 +77,7 @@ sequenceDiagram
 
 The client sends an unauthenticated HTTP request to a protected endpoint. The resource server
 checks its configuration, finds no valid payment attached, and responds with `HTTP 402 Payment
-Required`. The response body contains a base64-encoded `PaymentRequired` payload advertising the
+Required`. The response has a `PAYMENT-REQUIRED` header, containing the  base64-encoded `PaymentRequired` payload advertising the
 `confidential` scheme, the required token and amount, the recipient address, and the MPC network's
 current public keys.
 
