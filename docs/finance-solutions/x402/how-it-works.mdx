@@ -106,6 +106,7 @@ endpoint. The facilitator runs a series of checks:
 - **Recipient match** — `payload.to` equals the resource server's address.
 - **Deadline** — the payment has not expired.
 - **Nonce** — not already used on-chain.
+- **Amount commitment match** — random blinding factor `r` and `amount` produce the provided commitment
 - **Signature** — the EIP-712 signature recovers to the claimed sender.
 - **ZK proof** — the Groth16 proof is valid against 15 public signals (sender key, commitment, ciphertexts, MPC keys).
 - **Balance** — the facilitator queries all three MPC nodes; they collectively confirm the sender holds sufficient funds without revealing the balance to anyone.
