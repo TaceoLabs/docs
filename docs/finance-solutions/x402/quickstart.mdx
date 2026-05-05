@@ -27,7 +27,7 @@ You will:
 <TabItem value="typescript" label="TypeScript" default>
 
 ```bash
-npm install @taceolabs/taceo-merces1-x402-js
+npm install @taceolabs/taceo-merces1-x402-js @x402/fetch viem
 ```
 
 </TabItem>
@@ -37,9 +37,12 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-taceo-merces1-x402 = "1.0"
+alloy = "2"
+eyre = "0.6"
+reqwest = "0.13"
+taceo-merces1-x402 = "0.1"
 tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
-alloy = { version = "2", default-features = false, features = ["signers"] }
+x402-reqwest = "1"
 ```
 
 </TabItem>
@@ -74,10 +77,10 @@ console.log('Address:', account.address);
 <TabItem value="rust" label="Rust">
 
 ```rust
-use alloy::signers::local::PrivateKeySigner;
+use alloy::{hex, signers::local::PrivateKeySigner};
 
 let signer = PrivateKeySigner::random();
-println!("Private key: {}", signer.credential().to_bytes().to_string());
+println!("Private key: {}", hex::encode(signer.credential().to_bytes()));
 println!("Address: {}", signer.address());
 ```
 

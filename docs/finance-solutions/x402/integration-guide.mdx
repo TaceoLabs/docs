@@ -26,13 +26,14 @@ npm install @taceolabs/taceo-merces1-x402-js @x402/fetch viem
 
 ```toml
 [dependencies]
-taceo-merces1-x402 = "1.0"
-x402-reqwest = "1.4"
-x402-axum = "1.4"
-reqwest = { version = "0.13", default-features = false, features = ["json", "rustls"] }
-alloy = { version = "2", default-features = false, features = ["signers", "primitives"] }
+alloy = "2"
+eyre = "0.6"
 axum = "0.8"
+reqwest = { version = "0.13", features = ["json", "rustls"] }
+taceo-merces1-x402 = "0.1"
 tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
+x402-axum = "1"
+x402-reqwest = "1"
 ```
 
 </TabItem>
