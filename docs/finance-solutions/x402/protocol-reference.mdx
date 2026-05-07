@@ -85,6 +85,7 @@ retried request.
       "from": "0xClient...",
       "to": "0xResourceServer...",
       "amountCommitment": "<poseidon2-commitment>",
+      "amountR": "<r>",
       "beta": "<public-input>",
       "ciphertexts": ["<c0>", "<c1>", "<c2>", "<c3>", "<c4>", "<c5>"],
       "senderPk": ["<x>", "<y>"],
@@ -93,7 +94,9 @@ retried request.
       "proof": {
         "pi_a": ["<x>", "<y>", "1"],
         "pi_b": [["<x0>", "<x1>"], ["<y0>", "<y1>"], ["1", "0"]],
-        "pi_c": ["<x>", "<y>", "1"]
+        "pi_c": ["<x>", "<y>", "1"],
+        "protocol": "groth16",
+        "curve": "bn254"
       }
     }
   }
@@ -106,6 +109,7 @@ retried request.
 | `authorization.from` | `address` | Client's wallet address (token owner) |
 | `authorization.to` | `address` | Resource server's wallet address (recipient) |
 | `authorization.amountCommitment` | `Fr` | Poseidon2 commitment to `(amount, blindingFactor)` |
+| `authorization.amountR` | `Fr` | `blindingFactor` for amount commitment |
 | `authorization.beta` | `Fr` | Public input derived during proof generation |
 | `authorization.ciphertexts` | `Fr[6]` | Six BN254 field elements: two encrypted shares per MPC operator |
 | `authorization.senderPk` | `[x, y]` | Ephemeral BabyJubJub public key used for ECDH encryption |
