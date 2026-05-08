@@ -1,0 +1,54 @@
+# TACEO Documentation
+
+> Private execution layer on the chains you already use. Merces ships private onchain finance with two privacy modes (confidential and fully private, selectable per transaction), plus integrable privacy services (OPRF, Proof) and the production MPC network beneath. TACEO co-architected the protocol behind World's iris-code system at global scale, and is now bringing the same foundation to onchain payments.
+
+TACEO is best known for the privacy-preserving identity infrastructure used by World and zkPassport. The same MPC and coSNARK stack now underpins Merces, our confidential token transfer protocol live on Arc, Base, and Plasma testnets.
+
+## Finance Solutions
+
+- [Finance Solutions Overview](https://docs.taceo.io/docs/finance-solutions/overview): Private onchain finance powered by Merces. Two privacy modes selectable per transaction, plus compliance and integrations.
+- [Private Payments](https://docs.taceo.io/docs/finance-solutions/payments/introduction): Shielded ERC-20 transfers on the EVM chain you already use. Confidential mode (amounts hidden, addresses visible) live on Arc and Base; fully private mode (addresses also hidden) live on Plasma.
+- [Confidential x402](https://docs.taceo.io/docs/finance-solutions/x402/introduction): HTTP-embedded confidential payments using the x402 protocol with hidden amounts. Live on Base testnet.
+- [Confidential x402 Quickstart](https://docs.taceo.io/docs/finance-solutions/x402/quickstart): Make a confidential x402 payment in under five minutes using TACEO's hosted infrastructure. TypeScript and Rust examples.
+- [Confidential x402 How it works](https://docs.taceo.io/docs/finance-solutions/x402/how-it-works): Component-by-component walkthrough of a confidential x402 payment with sequence diagram and performance numbers.
+- [Confidential x402 Integration guide](https://docs.taceo.io/docs/finance-solutions/x402/integration-guide): Add the confidential payment scheme to your own client and server (TypeScript and Rust).
+- [Confidential x402 Protocol reference](https://docs.taceo.io/docs/finance-solutions/x402/protocol-reference): Wire format, EIP-712 typed data, ZK circuit details, privacy and trust model.
+- [Confidential x402 Network and contracts](https://docs.taceo.io/docs/finance-solutions/x402/network-and-contracts): Deployed contract addresses, hosted endpoints, faucet API, MPC public keys.
+- [Compliance](https://docs.taceo.io/docs/finance-solutions/compliance/introduction): Privacy-preserving KYC, AML, sanctions, and Travel Rule via selective disclosure. Compliance dashboard live on Plasma testnet.
+- [Private Yield](https://docs.taceo.io/docs/finance-solutions/yield/introduction): Compliant private yield on Ethereum. In active development.
+
+## Privacy Services
+
+- [Privacy Services Overview](https://docs.taceo.io/docs/services/overview): Compare TACEO:OPRF, TACEO:Proof, and upcoming services.
+- [TACEO:OPRF](https://docs.taceo.io/docs/taceo-oprf/overview): Privacy-preserving nullifiers via oblivious pseudorandom functions. In production via World ID and zkPassport.
+- [TACEO:Proof](https://docs.taceo.io/docs/taceo-proof/overview): Private proof delegation for ZK proofs without exposing witness data to any single party.
+
+## TACEO Network
+
+- [Network Overview](https://docs.taceo.io/docs/taceo-network/): The MPC network underpinning Merces and the privacy services.
+- [Node Operators](https://docs.taceo.io/docs/taceo-network/node-operators): How to run a TACEO node, hardware requirements, security model.
+- [Governance](https://docs.taceo.io/docs/taceo-network/governance): Network governance model and decision-making process.
+- [Roadmap](https://docs.taceo.io/docs/taceo-network/roadmap): TACEO Network development plan.
+
+## Developer Tools (coSNARKs)
+
+- [Collaborative SNARKs Overview](https://docs.taceo.io/docs/overview): coCircom and coNoir, tools for building MPC-based zero-knowledge circuits.
+- [coCircom Quickstart](https://docs.taceo.io/docs/getting-started/quick-start-co-circom): First collaborative Circom circuit.
+- [coNoir Quickstart](https://docs.taceo.io/docs/getting-started/quick-start-co-noir): First collaborative Noir circuit.
+
+## Use Cases
+
+- [Finance](https://docs.taceo.io/docs/use-cases/finance): Confidential payments, treasury, and B2B settlement on public chains.
+- [Identity](https://docs.taceo.io/docs/use-cases/identity): Privacy-preserving identity and uniqueness checks.
+- [Compliance](https://docs.taceo.io/docs/use-cases/compliance): Privacy-preserving compliance for regulated entities.
+
+## Optional
+
+- [Merces: Onchain Finance](https://core.taceo.io/articles/merces-onchain-finance/): Canonical positioning piece for Merces.
+- [Merces deep-dive](https://core.taceo.io/articles/merces-deep-dive/): Technical detail on the two privacy modes, compliance dashboard, and Plasma deployment.
+- [Confidential transfers demo writeup](https://core.taceo.io/articles/confidential-token-transfers-demo/): The original Merces I confidential payments demo on Arc and Base.
+- [IACR ePrint 2026/850](https://eprint.iacr.org/2026/850): Escudero et al., "Merces: Confidential Token Transfers via MPC and CoSNARKs."
+- [TACEO on GitHub](https://github.com/TaceoLabs): All TACEO open source repositories.
+- [Demo: confidential payments (Arc, Base)](https://merces-dashboard.taceo.io/arc): Live demo of Merces confidential mode.
+- [Demo: fully private payments and compliance (Plasma)](https://merces.taceo.io): Live demo of Merces fully private mode and compliance dashboard.
+- [Compliance dashboard](https://merces.taceo.io/compliance): Live selective-disclosure dashboard for authorized auditors on Plasma testnet.

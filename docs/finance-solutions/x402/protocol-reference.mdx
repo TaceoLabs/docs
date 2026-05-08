@@ -225,14 +225,14 @@ BabyJubJub ephemeral secret key.
 
 | Data | Standard x402 | Confidential x402 | How |
 |---|---|---|---|
-| Transfer amounts | Plaintext in `transferWithAuthorization` | Poseidon2 commitment on-chain | Real amount secret-shared across MPC network |
-| Account balances | Public via ERC-20 `balanceOf()` | Only a commitment stored on-chain | Actual balances held as secret shares by MPC operators |
+| Transfer amounts | Plaintext in `transferWithAuthorization` | Poseidon2 commitment onchain | Real amount secret-shared across MPC network |
+| Account balances | Public via ERC-20 `balanceOf()` | Only a commitment stored onchain | Actual balances held as secret shares by MPC operators |
 | Spending patterns | Full payment history enables behaviour profiling | Observers can count payments but cannot sum amounts | Amounts hidden; only frequency and counterparties visible |
-| Price discrimination evidence | On-chain proof of what each user paid | No on-chain evidence of negotiated price | Resource server holds client payment data off-chain |
+| Price discrimination evidence | Onchain proof of what each user paid | No onchain evidence of negotiated price | Resource server holds client payment data offchain |
 
 ### What is not protected
 
-**On-chain:**
+**Onchain:**
 
 | Leaked data | Source | Impact |
 |---|---|---|
@@ -278,5 +278,5 @@ nonce uniqueness and deadline expiry.
 ### Roadmap to stronger privacy
 
 The current `confidential` scheme hides amounts and balances. Sender and receiver addresses remain
-visible on-chain. Future versions will include an enhanced variant that additionally hide 
+visible onchain. Future versions will include an enhanced variant that additionally hide 
 the sender–receiver relationship, building on Merces' existing support for fully private transactions.

@@ -2,99 +2,110 @@
 id: index
 title: Welcome to TACEO
 slug: /
-description: Start here to understand TACEO Network, privacy services, and developer tooling
+description: Private onchain finance, integrable privacy services, and the TACEO Network that powers them
 ---
 
 import Link from "@docusaurus/Link";
 
 # Welcome to TACEO
 
-TACEO provides private execution infrastructure for applications that need to compute on sensitive data without exposing inputs.
+TACEO provides a privacy layer for applications that need to compute on
+sensitive data without exposing inputs. Our **finance solutions** sit on top of **integrable
+privacy services**, all powered by the **TACEO Network**, a production MPC network already
+running at global scale.
 
-This documentation is organized around three areas: the **TACEO Network**, **production privacy services** such as TACEO:OPRF and TACEO:Proof, and **developer tooling** for collaborative zero-knowledge workflows (coSNARKs).
+We're best known for our identity work: TACEO Network is a privacy backbone for
+global-scale identity systems, with services used by **World** and **zkPassport**. We're now bringing
+the same stack to onchain finance through **Merces**.
 
-If you are new, start by choosing the path that best matches your goal. This page is designed to help you get oriented quickly and then move into the right part of the documentation.
+## Build private payments on the chain you already use
 
-## Choose your path
+<div className="service-card-success" style={{padding: '1.5rem 1.8rem', marginTop: '2rem'}}>
 
-<div style={{display: 'grid', gridTemplateColumns: '1fr', gap: '1rem', marginTop: '2rem'}}>
+### **Finance Solutions**
 
-<details className="path-card-network">
-<summary style={{cursor: 'pointer', fontWeight: 'bold', fontSize: '1.1rem'}}>
-**Understand how the TACEO Network works**
-</summary>
+Private payments on the EVM chains you already use, built on Merces. Merces wraps ERC-20s like USDC into shielded balances, with compliance primitives at the protocol layer.
 
-<div style={{marginTop: '1rem'}}>
+**Live on Arc, Base, and Plasma testnets.** ~5M demo transactions, ~300 TPS, single-digit-cents gas on L2. Mainnet deployment in progress. The MPC protocol underneath is the same one TACEO co-architected for World's iris-code system, in production at global scale.
 
-**Best for:** Potential customers, partners, and technical stakeholders
+**Looking for design partners.** Stablecoin issuers, fintechs, and payment infrastructure teams shipping private rails to production. Talk to us.
 
-Learn how the network enables verifiable collaboration over encrypted data, what security assumptions it relies on, and why private execution matters for real applications.
-
-**Start here:**
-
-1. **[Read Network Overview](/docs/taceo-network/)** - Understand the motivation and system model
-2. **[Review Architecture](/docs/taceo-network/network#taceo-network-how-it-works)** - See how the network operates
-
-**Next steps:** Explore the [Security Model](/docs/taceo-network/node-operators#security-model) and [Network Governance](/docs/taceo-network/governance)
-
+{/* prettier-ignore */}
+<div className="button-row" style={{marginTop: '1.25rem', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '1rem'}}>
+  <Link className="button button--success get-in-touch-btn" to="/docs/finance-solutions/overview">Read Finance Solutions</Link>
+  <Link className="button button--outline button--success get-in-touch-btn" to="/docs/finance-solutions/x402/quickstart">Try the Quickstart</Link>
+  <Link className="button button--outline button--success get-in-touch-btn" to="mailto:hello@taceo.io?subject=Merces%20design%20partner">Become a Design Partner</Link>
 </div>
-</details>
-
-<details className="path-card-services">
-<summary style={{cursor: 'pointer', fontWeight: 'bold', fontSize: '1.1rem'}}>
-**Add privacy services to my application**
-</summary>
-
-<div style={{marginTop: '1rem'}}>
-
-**Best for:** Application developers, product teams, and technical founders
-
-Use TACEO services when you want production-ready privacy primitives in your application, such as privacy-preserving nullifiers with TACEO:OPRF or private proof delegation with TACEO:Proof.
-
-**Start here:**
-
-1. **[Get an overview of the TACEO Services](/docs/services/overview)** - Compare TACEO:OPRF, TACEO:Proof and see upcoming services
-2. **[Explore TACEO:OPRF](/docs/taceo-oprf/overview)** - Understand privacy-preserving nullifiers and OPRFs
-3. **[Explore TACEO:Proof](/docs/taceo-proof/overview)** - Understand private proof delegation
-
-**Next steps:** [Email us for production access](mailto:hello@taceo.io) and [join Discord](https://taceo.io/discord) for technical support
-
-</div>
-</details>
-
-<details className="path-card-tools">
-<summary style={{cursor: 'pointer', fontWeight: 'bold', fontSize: '1.1rem'}}>
-**Experiment with collaborative SNARKs**
-</summary>
-
-<div style={{marginTop: '1rem'}}>
-
-**Best for:** Crypto developers, researchers, and privacy-tech experimenters
-
-Experiment with coCircom and coNoir to run collaborative zero-knowledge workflows in an MPC setting. These tools are intended for developers exploring custom circuits and coSNARK-based systems.
-
-**Start here:**
-
-1. **[CoSNARKs Overview](/docs/overview)** - Understand collaborative zero-knowledge proofs
-2. **[Install Tools](/docs/getting-started/install)** - Set up coCircom or coNoir locally
-3. **[Run an Example](/docs/getting-started/quick-start-co-circom)** - Try your first collaborative circuit
-
-**Next steps:** Explore [examples](/docs/examples/) and [network configuration](/docs/network-config/)
-
-**Note:** These tools are currently for experimentation and development. They require running your own MPC environment and are not the same as using TACEO’s managed services.
-
-</div>
-</details>
 
 </div>
 
-## What is available today
+## Other paths
 
-- **TACEO Network documentation** explains the system architecture, security model, and application context
-- **TACEO:OPRF** and **TACEO:Proof** are the main service entry points for teams looking to integrate privacy features
-- **Developer tooling** is available for teams exploring MPC-based proving workflows
+<div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem', marginTop: '2rem'}}>
 
-This means some parts of the docs describe production-oriented services, while others describe lower-level or experimental developer workflows. If you are evaluating TACEO for an application, the services section is usually the right place to begin.
+<div className="service-card-primary">
+
+### **Privacy Services**
+
+_OPRF, Proof, OMap_
+
+Production-ready privacy primitives you can call directly: privacy-preserving nullifiers
+(TACEO:OPRF), private proof delegation (TACEO:Proof), and confidential shared state (TACEO:OMap).
+
+**Use this if you are:** an application developer adding a single privacy feature without taking
+on a full payment system.
+
+{/* prettier-ignore */}
+<Link className="button button--primary get-in-touch-btn" to="/docs/services/overview" style={{ marginTop: "1rem", width: "100%" }}>Explore Services</Link>
+
+</div>
+
+<div className="service-card-muted">
+
+### **TACEO Network**
+
+_The MPC network underneath_
+
+Understand how the network enables verifiable collaboration over encrypted data, the security
+model, and governance. The same MPC foundation TACEO co-architected for World's iris-code
+system runs in production at global scale.
+
+**Use this if you are:** a partner, technical stakeholder, or potential node operator evaluating
+the foundation everything else builds on.
+
+{/* prettier-ignore */}
+<Link className="button button--secondary get-in-touch-btn" to="/docs/taceo-network/" style={{ marginTop: "1rem", width: "100%" }}>Explore the Network</Link>
+
+</div>
+
+<div style={{
+  padding: '2rem',
+  border: '1px solid var(--ifm-color-emphasis-400)',
+  borderRadius: '12px',
+  backgroundColor: 'var(--ifm-color-emphasis-100)'
+}}>
+
+### **Collaborative SNARKs**
+
+_coCircom, coNoir_
+
+Experiment with collaborative zero-knowledge workflows in an MPC setting. Run custom circuits and
+coSNARK-based systems locally. Distinct from TACEO's managed services.
+
+**Use this if you are:** a crypto developer, researcher, or privacy-tech experimenter.
+
+{/* prettier-ignore */}
+<Link className="button button--outline get-in-touch-btn" to="/docs/overview" style={{ marginTop: "1rem", width: "100%" }}>Experiment</Link>
+
+</div>
+
+</div>
+
+## Where TACEO is today
+
+- **Finance Solutions.** Merces is live on Arc, Base, and Plasma testnets with ~5M demo transactions, ~300 TPS, and single-digit-cents gas on L2. Mainnet deployment in progress.
+- **Privacy Services.** TACEO:OPRF and TACEO:Proof are in production for partners including World and zkPassport.
+- **TACEO Network.** The MPC infrastructure underpinning all of the above is built on the same foundation TACEO co-architected for World's iris-code system, in production at global scale.
 
 ## Learning Resources
 
@@ -125,10 +136,10 @@ New to privacy-preserving computation? Start here:
 
 <ul>
   <li>
-    <Link to="/docs/use-cases/identity">Identity & Uniqueness</Link>
+    <Link to="/docs/use-cases/finance">Finance</Link>
   </li>
   <li>
-    <Link to="/docs/use-cases/finance">Finance</Link>
+    <Link to="/docs/use-cases/identity">Identity & Uniqueness</Link>
   </li>
   <li>
     <Link to="/docs/use-cases/">More Use Cases</Link>
@@ -180,4 +191,4 @@ New to privacy-preserving computation? Start here:
 
 ---
 
-**Ready to dive deeper?** Use the sidebar to explore the TACEO Network, Services, and Developer Tools sections.
+**Ready to dive deeper?** Use the sidebar to explore Finance Solutions, Services, the TACEO Network, and Developer Tools.

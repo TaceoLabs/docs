@@ -5,9 +5,9 @@ title: Introduction
 # Confidential x402
 
 Confidential x402 is a privacy extension to the x402 payment protocol that
-hides payment amounts from public view while keeping the full payment flow on-chain and verifiable.
+hides payment amounts from public view while keeping the full payment flow onchain and verifiable.
 
-:::info What is x402?
+:::tip What is x402?
 x402 is an open HTTP payment protocol for machine-to-machine payments. A resource server responds
 with HTTP `402 Payment Required` when a request lacks a valid payment. The client attaches a
 signed payment to its next request, the server verifies it, and access is granted.
@@ -16,7 +16,7 @@ See the [x402 documentation](https://x402.org) for the full protocol specificati
 
 ## The problem with public payments
 
-Standard x402 settles payments as plain ERC-20 token transfers — every amount is visible on-chain.
+Standard x402 settles payments as plain ERC-20 token transfers, every amount is visible onchain.
 This works for flat-rate APIs, but breaks down the moment pricing becomes dynamic:
 
 - **Competitors can read your pricing strategy off the blockchain.** Every `transferWithAuthorization`
@@ -37,12 +37,12 @@ transfer system. Instead of transferring a plaintext amount, the client:
 3. Generates a Groth16 ZK proof that the commitment and ciphertexts are consistent.
 4. Signs the payload with EIP-712 for replay protection.
 
-The on-chain contract verifies the proof and updates balance commitments — without any plaintext
-amount ever appearing on-chain. The MPC network holds balances as secret shares, so no single
+The onchain contract verifies the proof and updates balance commitments, without any plaintext
+amount ever appearing onchain. The MPC network holds balances as secret shares, so no single
 party learns what anyone has or spends.
 
 
-## Get started
+## Components
 
 To run a full x402 confidential payment cycle TACEO operates all required components:
 
@@ -50,8 +50,8 @@ To run a full x402 confidential payment cycle TACEO operates all required compon
 |---|---|
 | **Resource server** | Endpoint that responds with a x402 payment request when called |
 | **MPC network** | 3-party network that holds secret-shared balances and processes transfers |
-| **Facilitator** | Off-chain service that verifies payment proofs and settles transactions |
-| **Merces contract** | Holds balance commitments and verifies ZK proofs on-chain |
+| **Facilitator** | Offchain service that verifies payment proofs and settles transactions |
+| **Merces contract** | Holds balance commitments and verifies ZK proofs onchain |
 
 
 See [Network & Contracts](../network-and-contracts) for addresses and endpoints.
@@ -59,12 +59,14 @@ See [Network & Contracts](../network-and-contracts) for addresses and endpoints.
 ## Privacy assumptions
 
 Confidential x402 hides **payment amounts** and **account balances**. It does not hide sender or
-receiver addresses, payment frequency, or the sender–receiver relationship. For a full privacy
+receiver addresses, payment frequency, or the sender-receiver relationship. For a full privacy
 analysis, see [Privacy & Trust Model](../protocol-reference/#privacy--trust-model).
 
 :::info[Private Payments]
-The current payment model is built on confidential transfers i.e., intentionally leaking the involved wallet addresses.
-An upgrade to **fully private payments** is planned in upcoming versions of the protocol
+Confidential x402 uses Merces' **confidential mode** (amounts hidden, addresses visible).
+Merces also supports a **fully private mode** that hides sender and receiver addresses as well,
+live on Plasma testnet today. Exposing fully private mode through the x402 scheme is planned
+for an upcoming version.
 :::
 
 ## Where to go next

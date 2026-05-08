@@ -1,0 +1,114 @@
+---
+title: Introduction
+sidebar_label: Compliance
+---
+
+# Privacy-Preserving Compliance
+
+Compliance on Merces is a set of primitives that let regulated entities enforce KYC, AML, sanctions
+screening, and Travel Rule obligations **without exposing plaintext user data**, not to the
+application, not to a third-party screening engine, and not to TACEO. Compliance is built into the
+payment flow at the protocol layer, not bolted on as a separate surveillance system.
+
+:::tip Compliance is the wedge, not the tax
+Private payments cannot scale in regulated jurisdictions without compliance. The standard answer
+(run KYC and monitoring on plaintext, ship PII to third-party screening engines, and log everything)
+is fundamentally incompatible with privacy. Privacy-preserving compliance is what makes private
+rails shippable in regulated markets at all.
+:::
+
+## The core mechanism: selective disclosure via MPC
+
+By default, every Merces transaction is encrypted. The TACEO Network maintains the transaction
+graph in encrypted form; only the parties involved in a transfer see its full details. No
+plaintext sits anywhere in the system.
+
+When an authorized party (a regulator, compliance team, or other entity with reveal rights)
+submits a decryption request for a specific account, the MPC network nodes **jointly approve and
+perform the decryption**. The result is the transaction history for that account, returned in
+plaintext. Decryption requests are scoped: they expose the selected data and nothing else.
+
+This same pattern underlies every Merces compliance primitive. An application or policy authority
+queries the TACEO Network about a user, and the network returns a verifiable answer without
+disclosing the underlying data. Sanctions screens, allowlist checks, and AML audits all share
+this shape.
+
+ZK-only approaches give you selective disclosure but struggle with persistent identity state,
+auditability, and lawful disclosure paths. MPC adds the missing pieces: stateful attestations,
+multi-party authorization for reveals, and the ability to enforce policies that depend on data the
+user themselves doesn't hold.
+
+:::note Public testnet vs. production
+On the [public Plasma testnet demo](https://merces.taceo.io/compliance), anyone can try the
+decryption flow. In production deployments, access is restricted to explicitly authorized
+entities by policy and contract configuration.
+:::
+
+## Compliance primitives
+
+| Primitive | What it does | Status |
+|---|---|---|
+| **Selective disclosure (decryption requests)** | Authorized parties submit decryption requests for a specific account. MPC nodes jointly approve and decrypt, returning that account's transaction history in plaintext. Same flow used for AML audits and lawful disclosure. | Live on Plasma testnet ([compliance dashboard](https://merces.taceo.io/compliance)) |
+| **Wallet registration and blocklist** | Wallets must be registered in the Merces contract before transacting. Optional KYC or policy checks can be enforced at registration. Registered wallets can later be restricted or added to a blocklist by the administrator, blocking transfers to or from those accounts. | Live on Plasma testnet |
+| **Programmable reveal rules** | Per-token or per-jurisdiction policies defining who can decrypt what, under which conditions | In active design |
+| **Proof-of-compliance bundles** | Composable attestations a user can present (e.g. "KYC'd by issuer X, not on list Y, under threshold Z") | In active design |
+| **MPKYC** | MPC-based KYC: licensed providers attest to a user once; downstream apps query the attestation without seeing the underlying PII | Design / proposal stage |
+| **Travel Rule selective disclosure** | VASP-to-VASP information exchange that satisfies FATF Travel Rule without putting counterparty data on a public ledger | Design / proposal stage |
+
+## TACEO doesn't replace KYC. It makes KYC privacy-preserving.
+
+The compliance decision still belongs to a licensed provider, a KYC vendor, a screening engine, a
+VASP's compliance team. What changes is **where the plaintext lives** and **who sees it**.
+
+In the standard model, every application that needs a compliance signal pulls the user's full
+identity profile, hands it to a third-party API, and stores the result in a database. Each new
+integration is another copy of the user's data and another surveillance vector.
+
+In the Merces model, the licensed provider attests to a property of the user **once**, into the
+TACEO Network. Downstream applications query the attestation and receive a verifiable yes/no, no
+data shared, no copies created, no per-integration breach surface.
+
+## The identity proof point
+
+The MPC architecture that powers Merces compliance is built on the same cryptographic foundation
+TACEO co-architected for [World](https://world.org/)'s iris-code system, deployed in production
+at global scale as a GDPR regulatory remediation for biometric data. The protocol underneath
+Merces compliance is the same kind of system, applied to financial flows.
+
+## Who it's for
+
+| Audience | How they use it |
+|---|---|
+| **Fintechs and stablecoin issuers integrating Merces** | Compliance is built into the payment flow they're already shipping |
+| **VASPs and regulated entities** | Satisfy AML, KYC, sanctions, and Travel Rule obligations on private rails without standing up surveillance infrastructure |
+| **Licensed KYC and screening providers** | Issue privacy-preserving attestations on top of existing diligence work, expanding their reach without expanding their data exposure |
+| **Compliance and policy teams** | Auditable, scoped lawful disclosure paths that don't require the application to hold plaintext |
+
+## Status
+
+Compliance primitives sit at mixed maturity:
+
+- **Selective disclosure** is live on Plasma testnet, exposed through the
+  [compliance dashboard at merces.taceo.io/compliance](https://merces.taceo.io/compliance). MPC
+  nodes jointly approve and perform the decryption when an authorized party submits a request.
+  AML audits run through this same flow.
+- **Wallet registration and blocklisting** are live on Plasma. Wallets must be registered in the
+  Merces contract before transacting; the administrator can restrict or blocklist registered
+  wallets. Optional KYC or policy checks can be wired in at the registration step.
+- **Programmable reveal rules and proof-of-compliance bundles** are in active design, shaped by
+  ongoing work with regulated partners.
+- **MPKYC and Travel Rule selective disclosure** are at design / proposal stage. The use cases
+  are defined; the implementations are being worked through.
+- **The cryptographic foundation TACEO co-architected** is in production at global scale via
+  World's iris-code deployment.
+
+The product framing, *privacy and compliance can coexist with no trade-off needed*, is the
+position we are taking publicly and shipping toward.
+
+## Going deeper
+
+| Goal | Start here |
+|---|---|
+| Try the compliance dashboard | [merces.taceo.io/compliance](https://merces.taceo.io/compliance) |
+| Understand the underlying transfer protocol | [How it works](../x402/how-it-works) |
+| Talk through a regulated deployment | [Email the team](mailto:hello@taceo.io) |

@@ -9,7 +9,7 @@ import TabItem from '@theme/TabItem';
 # Quickstart
 
 This guide gets you making a confidential payment in under five minutes using TACEO's hosted
-infrastructure — no contract deployment, no facilitator setup required.
+infrastructure, no contract deployment, no facilitator setup required.
 
 You will:
 1. Fund a new wallet with test tokens from the faucet.
@@ -19,9 +19,9 @@ You will:
 ## Prerequisites
 
 - Node.js 18+ (TypeScript) or Rust 1.90+ (Rust)
-- A wallet private key (or generate one — instructions below)
+- A wallet private key (or generate one, instructions below)
 
-## Step 1 — Install the package
+## Step 1: Install the package
 
 <Tabs>
 <TabItem value="typescript" label="TypeScript" default>
@@ -48,7 +48,7 @@ x402-reqwest = "1"
 </TabItem>
 </Tabs>
 
-## Step 2 — Get test tokens from the faucet
+## Step 2: Get test tokens from the faucet
 
 Each new wallet needs to be funded before it can make confidential payments. The faucet deposits
 1,000 test tokens and enforces a 24-hour cooldown per address.
@@ -64,10 +64,10 @@ Even on testnet, never commit private keys to source control. Use environment va
 secrets manager.
 :::
 
-## Step 3 — Send a confidential payment
+## Step 3: Send a confidential payment
 
 The client library intercepts the `402 Payment Required` response, constructs the proof, and
-retries the request automatically. Your application code makes a normal HTTP GET — the payment
+retries the request automatically. Your application code makes a normal HTTP GET, the payment
 is invisible to it.
 
 <Tabs>
@@ -85,7 +85,7 @@ const signer = privateKeyToAccount(privateKey);
 const client = new x402Client();
 client.register('eip155:*', new ConfidentialEvmScheme(signer));
 
-// Wrap fetch — payments are handled automatically
+// Wrap fetch, payments are handled automatically
 const fetchWithPayment = wrapFetchWithPayment(fetch, client);
 
 // Make the request as normal
@@ -116,7 +116,7 @@ async fn main() -> eyre::Result<()> {
     let x402_client = X402Client::new()
         .register(V2Eip155ConfidentialClient::new(signer));
 
-    // Wrap reqwest — payments are handled automatically
+    // Wrap reqwest, payments are handled automatically
     let http_client = Client::new()
         .with_payments(x402_client)
         .build();

@@ -1,0 +1,59 @@
+---
+title: Introduction
+sidebar_label: Private Yield
+---
+
+# Private Yield
+
+Private Yield brings compliant, confidential yield to Ethereum, built on top of
+[Merces](../payments/introduction). Users earn on shielded balances without exposing positions,
+counterparty relationships, or strategy onchain, and without giving up the regulatory posture
+required to operate in real markets.
+
+:::info Coming soon
+Private Yield is in active development. The capability extends Merces from a confidential transfer
+system into a confidential earning system, while keeping the same integration model and the same
+compliance primitives.
+:::
+
+## Why this is hard today
+
+Public DeFi yield broadcasts every position. Anyone can read a wallet's allocations, infer
+strategy, copy or front-run trades, and reconstruct counterparty graphs. For institutions,
+treasuries, and any user that values strategic privacy, that exposure is the reason they aren't
+onchain at all.
+
+The two existing paths each fail in their own way:
+
+- **Move to a private chain.** Forces migration off Ethereum and away from the assets, liquidity,
+  and integrations that matter.
+- **Use a privacy mixer.** Obscures flows but doesn't compose with regulated counterparties or
+  give institutions a defensible compliance story.
+
+## What we're building
+
+Private Yield uses the same Merces shielded-balance model as
+[Private Payments](../payments/introduction) and [Confidential x402](../x402/introduction):
+balances held as secret shares across the TACEO Network, state transitions verified onchain via
+CoSNARKs, compliance primitives built into the protocol layer.
+
+The yield layer adds the ability for shielded balances to participate in earning strategies, 
+without revealing positions, without leaving Ethereum, and without compromising the compliance
+guarantees that make these rails deployable in regulated markets.
+
+## What's planned
+
+- Yield on shielded ERC-20 balances (starting with USDC)
+- Allowlists and reveal rules carried through from Merces' [Compliance](../compliance/introduction)
+  layer
+- The same SDK integration model as Private Payments, issuers and fintechs can offer yield
+  inside their existing product surface
+
+## Stay in the loop
+
+Private Yield is shipping toward public testnet. To get early access, integration support, or to
+discuss a specific use case, [email the team](mailto:hello@taceo.io) or
+[join Discord](https://taceo.io/discord).
+
+In the meantime, the foundation is already live, see [Private Payments](../payments/introduction)
+to understand the transfer system this builds on.

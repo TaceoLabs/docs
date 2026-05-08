@@ -1,24 +1,55 @@
-# Private onchain accounts for payroll, treasury, and B2B payments
+---
+title: Finance
+description: Confidential payments, treasury, and B2B settlement on the chains you already use
+---
 
-Onchain financial systems offer transparency and programmability, but this transparency comes at a cost. Public transaction data exposes balances, counterparties, and intent, which can be exploited or make systems unusable for real-world financial operations.
+# Confidential payments, treasury, and B2B settlement on public chains
 
-For instance, executing payroll, treasury transfers, or large trades on public infrastructure reveals sensitive financial information. This creates risks ranging from front-running to operational exposure, and prevents many institutions from adopting onchain rails.
+Onchain financial systems offer transparency and programmability, but that transparency comes at
+a cost. Public transaction data exposes balances, counterparties, and intent, which can be
+exploited, and which makes onchain rails unusable for most real-world financial operations.
 
-Traditional finance solves this through private accounts and restricted data access, but relies on centralized intermediaries.
+Executing payroll, treasury transfers, vendor payments, or large trades on a public ledger reveals
+sensitive financial information by default. This creates risks that range from front-running and
+copy-trading to operational exposure of business relationships, deal sizes, and pricing strategy.
+For most institutions, it's the reason they aren't on public rails at all.
 
-We need onchain financial infrastructure where balances, transactions, and counterparties remain private by default, while still enabling verifiable execution and settlement.
+Traditional finance solves this through private accounts and restricted data access, but relies
+on centralized intermediaries. The challenge is to get the same confidentiality guarantees on a
+public, programmable chain, without giving up settlement guarantees or compliance posture.
 
-TACEO enables this through **private shared state services (e.g. TACEO:OMap)**, which allow encrypted balances and financial data to be updated and queried without being revealed. Transactions are executed across the MPC network, ensuring correctness while keeping all sensitive inputs hidden.
+## TACEO's answer: Merces
 
-This model is particularly relevant for stablecoin-based financial flows (USDC), where confidentiality of balances and transfers is required for real-world usage. It also aligns with emerging standards such as x402, where payments are embedded directly into application-layer interactions (e.g. HTTP requests), enabling programmable financial flows across services.
+TACEO addresses this through **[Merces](/docs/finance-solutions/payments/introduction)**, a
+confidential token transfer protocol that wraps existing ERC-20 tokens (e.g. USDC) into shielded
+balances on the EVM chain you already use. Balances are held as secret shares across the
+[TACEO Network](/docs/taceo-network/), state transitions are verified onchain via CoSNARKs, and
+no single party, including TACEO, sees what anyone holds or sends.
 
-Selective disclosure can be added when required, enabling compliance or auditing without compromising baseline privacy.
+Merces is a complete, integrable privacy layer rather than a new chain or a raw cryptographic
+toolkit. Stablecoin issuers, fintechs, and payment infrastructure builders white-label it into
+their products; end users never see TACEO.
 
-This allows financial applications to combine the programmability and settlement guarantees of blockchains with the privacy properties of traditional financial systems.
+This model is particularly relevant for stablecoin-based financial flows, where confidentiality
+of balances and transfers is required for real-world usage. It also aligns with emerging standards
+such as **[x402](/docs/finance-solutions/x402/introduction)**, which embeds payments directly into
+HTTP request flows and enables confidential machine-to-machine and AI-agent payments.
 
-Examples of this can be found in [Merces](https://merces-dashboard.taceo.io/arc).
+**[Compliance](/docs/finance-solutions/compliance/introduction)** is built into the protocol, not
+bolted on top: allowlists, AML hooks, programmable reveal rules, and selective-disclosure
+attestations let regulated entities meet KYC, sanctions, and Travel Rule obligations without
+running surveillance infrastructure.
 
-Next steps:
-- [TACEO Services Overview](/docs/services/overview)
-- [TACEO:OPRF for identity controls](/docs/use-cases/identity)
-- [Learn more about OMAP](https://core.taceo.io/articles/taceo-omap/)
+This lets financial applications combine the programmability and settlement guarantees of public
+blockchains with the privacy properties of traditional financial systems.
+
+A live demo runs at [merces.taceo.io](https://merces.taceo.io).
+
+## Where to go next
+
+- **[Finance Solutions overview](/docs/finance-solutions/overview).** The full product section
+- **[Private Payments](/docs/finance-solutions/payments/introduction).** Merces in depth
+- **[Confidential x402](/docs/finance-solutions/x402/introduction).** Payments over HTTP
+- **[Privacy-preserving Compliance](/docs/finance-solutions/compliance/introduction).** KYC, AML, and selective disclosure
+- **[TACEO:OPRF for identity controls](/docs/use-cases/identity).** Companion identity primitive
+- **[Merces: Onchain Finance](https://core.taceo.io/articles/merces-onchain-finance/).** Long-form write-up

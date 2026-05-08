@@ -8,6 +8,58 @@
   --ifm-color-primary-lightest: #066b75;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
   --ifm-background-color: #f1f0ec;
+  --taceo-green: #52ffc5;
+  --taceo-cream: #f1f0ec;
+  --font-ppneue: "ppneue", sans-serif;
+}
+
+/* TACEO brand font (ppneue), loaded globally, applied only on the marketing
+   landing page (src/pages/index.tsx → .homepage-layout). */
+@font-face {
+  font-family: "ppneue";
+  src: url("/fonts/neue-100.woff2") format("woff2");
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "ppneue";
+  src: url("/fonts/neue-300.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "ppneue";
+  src: url("/fonts/neue-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "ppneue";
+  src: url("/fonts/neue-500.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "ppneue";
+  src: url("/fonts/neue-700.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Apply ppneue across the marketing landing page only. */
+.homepage-layout,
+.homepage-layout h1,
+.homepage-layout h2,
+.homepage-layout h3,
+.homepage-layout h4,
+.homepage-layout p,
+.homepage-layout a {
+  font-family: var(--font-ppneue);
 }
 
 /* Light mode styling */
@@ -283,6 +335,17 @@ html:not([data-theme="dark"]) .main-wrapper {
 
 [data-theme="dark"] .service-card-success {
   background-color: rgba(40, 167, 69, 0.1);
+}
+
+.service-card-warning {
+  padding: 2rem;
+  border: 2px solid var(--ifm-color-warning);
+  border-radius: 12px;
+  background-color: rgba(255, 193, 7, 0.08);
+}
+
+[data-theme="dark"] .service-card-warning {
+  background-color: rgba(255, 193, 7, 0.1);
 }
 
 .service-card-muted {

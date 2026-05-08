@@ -6,7 +6,8 @@ import rehypeKatex from "rehype-katex";
 
 const config: Config = {
   title: "TACEO Documentation",
-  tagline: "MPC and coSNARKs for Proof Delegation and Private Shared State",
+  tagline:
+    "Private onchain finance, integrable privacy services, and the network underneath.",
   favicon: "img/favicon.png",
 
   // Set the production url of your site here
@@ -131,21 +132,21 @@ const config: Config = {
           title: "Docs",
           items: [
             {
-              label: "TACEO Network",
-              to: "/docs/taceo-network/",
+              label: "Finance Solutions",
+              to: "/docs/finance-solutions/overview",
             },
             {
               label: "Privacy Services",
               to: "/docs/services/overview",
             },
             {
+              label: "TACEO Network",
+              to: "/docs/taceo-network/",
+            },
+            {
               label: "Developer Tools",
               to: "/docs/overview",
             },
-            // {
-            //   label: "Infrastructure",
-            //   to: "/docs/taceo-proof/ops/onboarding",
-            // },
           ],
         },
         {
