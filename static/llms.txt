@@ -1,6 +1,6 @@
 # TACEO Documentation
 
-> Private execution layer on the chains you already use. Merces ships private onchain finance with two privacy modes (confidential and fully private, selectable per transaction), plus integrable privacy services (OPRF, Proof) and the production MPC network beneath. TACEO co-architected the protocol behind World's iris-code system at global scale, and is now bringing the same foundation to onchain payments.
+> Privacy layer on the chains you already use. Merces ships private onchain finance with two privacy modes (confidential and fully private, selectable per transaction), plus integrable privacy services (OPRF, Proof) and the production MPC network beneath. TACEO co-architected the protocol behind World's iris-code system at global scale, and is now bringing the same foundation to onchain payments.
 
 TACEO is best known for the privacy-preserving identity infrastructure used by World and zkPassport. The same MPC and coSNARK stack now underpins Merces, our confidential token transfer protocol live on Arc, Base, and Plasma testnets.
 
