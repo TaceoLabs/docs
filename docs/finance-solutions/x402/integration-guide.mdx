@@ -154,7 +154,7 @@ import { ConfidentialEvmScheme } from '@taceo/confidential-x402/server';
 const app = express();
 
 const facilitatorClient = new HTTPFacilitatorClient({
-  url: 'https://facilitator.merces.taceo.io',
+  url: 'https://x402-facilitator.merces1.taceo.io',
 });
 
 app.use(
@@ -199,7 +199,7 @@ use x402_axum::X402Middleware;
 async fn main() -> eyre::Result<()> {
     let pay_to = Address::from_str(&std::env::var("WALLET_ADDRESS")?)?;
     let facilitator_url = std::env::var("FACILITATOR_URL")
-        .unwrap_or("https://facilitator.merces.taceo.io".to_string());
+        .unwrap_or("https://x402-facilitator.merces1.taceo.io".to_string());
 
     let usdc = ConfidentialUSDC::base_sepolia();
     let x402 = X402Middleware::new(&facilitator_url);
@@ -287,7 +287,7 @@ let app = Router::new()
 | `network` | CAIP-2 chain ID, e.g. `"eip155:84532"` for Base Sepolia |
 | `payTo` | Your wallet address that receives payments |
 | `asset` | Token contract address (provided by the TACEO facilitator automatically) |
-| Facilitator URL | `https://facilitator.merces.taceo.io` for TACEO's hosted facilitator |
+| Facilitator URL | `https://x402-facilitator.merces1.taceo.io` for TACEO's hosted facilitator |
 
 :::info Receiving payments
 Payments are credited to your `payTo` address as confidential Merces balance. To withdraw tokens
