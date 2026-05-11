@@ -18,8 +18,8 @@ You will:
 
 ## Prerequisites
 
-- Node.js 18+ (TypeScript) or Rust 1.90+ (Rust)
-- A wallet private key (or generate one, instructions below)
+- Node.js 20+ (TypeScript) or Rust 1.91+ (Rust)
+- A wallet private key
 
 ## Step 1: Install the package
 
@@ -27,7 +27,7 @@ You will:
 <TabItem value="typescript" label="TypeScript" default>
 
 ```bash
-npm install @taceolabs/taceo-merces1-x402-js @x402/fetch viem
+npm install @taceo/confidential-x402 @x402/fetch viem
 ```
 
 </TabItem>
@@ -40,7 +40,7 @@ Add the following to your `Cargo.toml`:
 alloy = "2"
 eyre = "0.6"
 reqwest = "0.13"
-taceo-merces1-x402 = "0.1"
+taceo-merces1-x402 = { git = "https://github.com/TaceoLabs/merces1-x402.git", version = "0.1", features = ["server", "client"] }
 tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
 x402-reqwest = "1"
 ```
@@ -76,7 +76,7 @@ is invisible to it.
 ```typescript
 import { privateKeyToAccount } from 'viem/accounts';
 import { x402Client, wrapFetchWithPayment } from '@x402/fetch';
-import { ConfidentialEvmScheme } from '@taceolabs/taceo-merces1-x402-js/client';
+import { ConfidentialEvmScheme } from '@taceo/confidential-x402/client';
 
 const privateKey = process.env.PRIVATE_KEY as `0x${string}`;
 const signer = privateKeyToAccount(privateKey);

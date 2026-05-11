@@ -18,7 +18,7 @@ start with the [Quickstart](../quickstart) instead.
 <TabItem value="typescript" label="TypeScript" default>
 
 ```bash
-npm install @taceolabs/taceo-merces1-x402-js @x402/fetch viem
+npm install @taceo/confidential-x402 @x402/fetch viem
 ```
 
 </TabItem>
@@ -30,7 +30,7 @@ alloy = "2"
 eyre = "0.6"
 axum = "0.8"
 reqwest = { version = "0.13", features = ["json", "rustls"] }
-taceo-merces1-x402 = "0.1"
+taceo-merces1-x402 = { git = "https://github.com/TaceoLabs/merces1-x402.git", version = "0.1", features = ["server", "client"] }
 tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
 x402-axum = "1"
 x402-reqwest = "1"
@@ -55,7 +55,7 @@ normal HTTP request, the payment is invisible to it.
 ```typescript
 import { privateKeyToAccount } from 'viem/accounts';
 import { x402Client, wrapFetchWithPayment } from '@x402/fetch';
-import { ConfidentialEvmScheme } from '@taceolabs/taceo-merces1-x402-js/client';
+import { ConfidentialEvmScheme } from '@taceo/confidential-x402/client';
 
 const signer = privateKeyToAccount(process.env.PRIVATE_KEY as `0x${string}`);
 
@@ -149,7 +149,7 @@ confidential USDC.
 import express from 'express';
 import { paymentMiddleware, x402ResourceServer } from '@x402/express';
 import { HTTPFacilitatorClient } from '@x402/core/server';
-import { ConfidentialEvmScheme } from '@taceolabs/taceo-merces1-x402-js/server';
+import { ConfidentialEvmScheme } from '@taceo/confidential-x402/server';
 
 const app = express();
 
@@ -182,7 +182,7 @@ app.get('/api/protected', (req, res) => {
   res.json({ message: 'Payment verified. Here is your data.' });
 });
 
-app.listen(8081, () => console.log('Listening on http://localhost:8081'));
+app.listen(8080, () => console.log('Listening on http://localhost:8080'));
 ```
 
 </TabItem>
@@ -213,8 +213,8 @@ async fn main() -> eyre::Result<()> {
         ),
     );
 
-    let listener = tokio::net::TcpListener::bind("0.0.0.0:8081").await?;
-    println!("Listening on http://0.0.0.0:8081");
+    let listener = tokio::net::TcpListener::bind("0.0.0.0:8080").await?;
+    println!("Listening on http://0.0.0.0:8080");
     axum::serve(listener, app).await?;
 
     Ok(())
