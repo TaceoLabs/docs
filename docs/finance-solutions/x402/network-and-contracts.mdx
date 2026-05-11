@@ -17,8 +17,8 @@ or real funds.
 
 | Contract | Address |
 |---|---|
-| Merces Contract | `0xTODO` |
-| Confidential USDC token | `0xTODO` |
+| Merces Contract | `0x7F73402cB6AF7Ffa446e2D463701e3eA89C95f8f` |
+| Confidential USDC token | `0x6AA4dd47444154A1E4424D08622EF6e96bf66de6` |
 
 Contract source code is available in the
 [merces1-x402 GitHub repository](https://github.com/TaceoLabs/merces1-x402).
@@ -27,12 +27,12 @@ Contract source code is available in the
 
 | Service | URL |
 |---|---|
-| Faucet | `https://faucet.merces.taceo.io` |
-| Facilitator | `https://facilitator.merces.taceo.io` |
-| Resource server (test) | `https://resource.merces.taceo.io` |
-| MPC node 0 | `https://node0.merces.taceo.io` |
-| MPC node 1 | `https://node1.merces.taceo.io` |
-| MPC node 2 | `https://node2.merces.taceo.io` |
+| Faucet | `https://faucet.merces1.taceo.io` |
+| Facilitator | `https://x402-facilitator.merces1.taceo.io` |
+| Resource server (test) | `https://x402-server.merces1.taceo.io` |
+| MPC node 0 | `https://node0.merces1.taceo.io` |
+| MPC node 1 | `https://node1.merces1.taceo.io` |
+| MPC node 2 | `https://node2.merces1.taceo.io` |
 
 ## Chain details
 
@@ -52,7 +52,7 @@ claim per 24 hours.
 **Endpoint:** `POST /claim/{address}`
 
 ```bash
-curl -X POST https://faucet.merces.taceo.io/claim/0xYourWalletAddress
+curl -X POST https://faucet.merces1.taceo.io/claim/0xYourWalletAddress
 ```
 
 **Responses:**
@@ -72,7 +72,7 @@ not need to configure them manually.
 To fetch them directly:
 
 ```bash
-curl https://facilitator.merces.taceo.io/supported
+curl https://x402-facilitator.merces1.taceo.io/supported
 ```
 
 The response includes the current MPC public keys alongside the supported scheme, network, and
