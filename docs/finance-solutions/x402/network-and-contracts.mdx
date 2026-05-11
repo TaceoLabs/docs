@@ -1,0 +1,87 @@
+---
+sidebar_position: 6
+title: Network & contracts
+---
+
+# Network & contracts
+
+All Confidential x402 infrastructure is currently deployed on **Base Sepolia** (chain ID 84532).
+This is a testnet environment intended for development and integration testing.
+
+:::warning Testnet only
+The current deployment uses test tokens with no real-world value. Do not use mainnet private keys
+or real funds.
+:::
+
+## Deployed contracts
+
+| Contract | Address |
+|---|---|
+| Merces Contract | `0x7F73402cB6AF7Ffa446e2D463701e3eA89C95f8f` |
+| Confidential USDC token | `0x6AA4dd47444154A1E4424D08622EF6e96bf66de6` |
+
+Contract source code is available in the
+[merces1-x402 GitHub repository](https://github.com/TaceoLabs/merces1-x402).
+
+## TACEO-hosted endpoints
+
+| Service | URL |
+|---|---|
+| Faucet | `https://faucet.merces1.taceo.io` |
+| Facilitator | `https://x402-facilitator.merces1.taceo.io` |
+| Resource server (test) | `https://x402-server.merces1.taceo.io` |
+| MPC node 0 | `https://node0.merces1.taceo.io` |
+| MPC node 1 | `https://node1.merces1.taceo.io` |
+| MPC node 2 | `https://node2.merces1.taceo.io` |
+
+## Chain details
+
+| Parameter | Value |
+|---|---|
+| Network name | Base Sepolia |
+| Chain ID | `84532` |
+| CAIP-2 identifier | `eip155:84532` |
+| Block explorer | [https://sepolia.basescan.org](https://sepolia.basescan.org) |
+| Public RPC | `https://sepolia.base.org` |
+
+## Faucet API
+
+The faucet funds a new Merces wallet with 1,000 test tokens. Each address is limited to one
+claim per 24 hours.
+
+**Endpoint:** `POST /claim/{address}`
+
+```bash
+curl -X POST https://faucet.merces1.taceo.io/claim/0xYourWalletAddress
+```
+
+**Responses:**
+
+| Status | Meaning |
+|---|---|
+| `200 OK` | Tokens deposited successfully |
+| `429 Too Many Requests` | Address already claimed within the last 24 hours |
+| `500 Internal Server Error` | Faucet encountered an error, try again shortly |
+
+## MPC public keys
+
+The BabyJubJub public keys of the three MPC operators are published by the facilitator's
+`/supported` endpoint and injected into every `PaymentRequired` response automatically. You do
+not need to configure them manually.
+
+To fetch them directly:
+
+```bash
+curl https://x402-facilitator.merces1.taceo.io/supported
+```
+
+The response includes the current MPC public keys alongside the supported scheme, network, and
+contract address.
+
+## Support
+
+For questions, issues, or integration help:
+
+- **Discord:** [taceo.io/discord](https://taceo.io/discord)
+- **GitHub:** [github.com/TaceoLabs/merces1-x402](https://github.com/TaceoLabs/merces1-x402)
+- **Email:** [hello@taceo.io](mailto:hello@taceo.io)

@@ -57,13 +57,13 @@ The choice depends on your use case. Here’s what to consider:
 
 **Use Shamir when...**
 * You’ve already **computed the extended witness** locally and can take the increased upload.
-* You want **stronger security guarantees**—the protocol still falls under the assumptions in the referenced paper, resulting in a notion of active security.
+* You want **stronger security guarantees**, the protocol still falls under the assumptions in the referenced paper, resulting in a notion of active security.
 * You’re okay with slightly larger uploads and minimal performance gains in return for stricter protocol guarantees.
 
 ### Handling proof latencies & fallbacks
 When scheduling a coSNARK execution, there are a few practical steps and strategies to help reduce latency and improve robustness in case of failures.
 
- - You can **cache** the used **node operators** temporarily if you're planning to submit additional proofs soon after. Just be aware that **node operators can go offline** — if a cached key is stale, your request will fail at scheduling time.
+ - You can **cache** the used **node operators** temporarily if you're planning to submit additional proofs soon after. Just be aware that **node operators can go offline.** If a cached key is stale, your request will fail at scheduling time.
 This reduces them amount of API calls to schedule a coSNARK job to just 1!
 
 - After encrypting your input shares for the selected providers, you include the corresponding Node Provider IDs and submit the job.

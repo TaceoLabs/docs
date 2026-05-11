@@ -23,7 +23,7 @@ While we don’t ingest logs or metrics, your CSE _does_ send minimal runtime me
 These are used solely for **job-level tracing and auditing**, not continuous telemetry.
 
 ## Auto-Recovery & Failover
-Each CSE instance is **stateless** and identified by your secret key phrase. From TACEO:Proof’s perspective, **restarting your CSE creates a fresh logical instance**—there’s no persistent session management required.
+Each CSE instance is **stateless** and identified by your secret key phrase. From TACEO:Proof’s perspective, **restarting your CSE creates a fresh logical instance**, there’s no persistent session management required.
 
 If you’re using our official Docker image, it comes preconfigured with:
 ```yaml

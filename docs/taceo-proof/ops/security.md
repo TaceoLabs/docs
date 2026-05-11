@@ -8,7 +8,7 @@ Every Node Provider is assigned a unique **key phrase**, which serves as the see
 * A **signing key** (used to authenticate messages and proofs)
 
 The public parts of these keys are uploaded during initial registration with the TACEO:Proof network.
-> ⚠️  TACEO will never ask for your key phrase.  Do not share your key phrase with _anyone_—not even someone claiming to represent TACEO.
+> ⚠️  TACEO will never ask for your key phrase.  Do not share your key phrase with _anyone_, not even someone claiming to represent TACEO.
 
 The CSE binary enforces a minimum entropy requirement for key phrases to help prevent weak seeds. However, it is your responsibility to:
 * Keep the key phrase **strictly local** to your machine.

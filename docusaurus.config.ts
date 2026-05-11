@@ -6,7 +6,8 @@ import rehypeKatex from "rehype-katex";
 
 const config: Config = {
   title: "TACEO Documentation",
-  tagline: "MPC and coSNARKs for Proof Delegation and Private Shared State",
+  tagline:
+    "Private onchain finance, integrable privacy services, and the network underneath.",
   favicon: "img/favicon.png",
 
   // Set the production url of your site here
@@ -24,6 +25,10 @@ const config: Config = {
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "throw",
 
+  markdown: {
+    mermaid: true,
+  },
+
   scripts: [
     {
       src: "https://cdn.matomo.cloud/taceo.matomo.cloud/container_v2uCJC8k.js",
@@ -37,6 +42,7 @@ const config: Config = {
 
   plugins: [
     require.resolve("docusaurus-lunr-search"),
+    require.resolve("docusaurus-plugin-image-zoom"),
     [
       require.resolve("@docusaurus/plugin-client-redirects"),
       {
@@ -50,6 +56,8 @@ const config: Config = {
       },
     ],
   ],
+
+  themes: ['@docusaurus/theme-mermaid'],
 
   // Even if you don't use internationalization, you can use this field to set
   // useful metadata like html lang. For example, if your site is Chinese, you
@@ -124,21 +132,21 @@ const config: Config = {
           title: "Docs",
           items: [
             {
-              label: "TACEO Network",
-              to: "/docs/taceo-network/",
+              label: "Finance Solutions",
+              to: "/docs/finance-solutions/overview",
             },
             {
               label: "Privacy Services",
               to: "/docs/services/overview",
             },
             {
+              label: "TACEO Network",
+              to: "/docs/taceo-network/",
+            },
+            {
               label: "Developer Tools",
               to: "/docs/overview",
             },
-            // {
-            //   label: "Infrastructure",
-            //   to: "/docs/taceo-proof/ops/onboarding",
-            // },
           ],
         },
         {
@@ -181,6 +189,13 @@ const config: Config = {
     prism: {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
+    },
+    zoom: {
+      selector: '.markdown img, .docusaurus-mermaid-container svg',
+      background: {
+        light: 'rgb(255, 255, 255)',
+        dark: 'rgb(50, 50, 50)',
+      },
     },
   } satisfies Preset.ThemeConfig,
 };

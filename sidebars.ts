@@ -16,13 +16,26 @@ const sidebars: SidebarsConfig = {
     "index",
     {
       type: "category",
-      label: "TACEO Network",
-      link: { type: "doc", id: "taceo-network/index" },
+      label: "Finance Solutions",
+      collapsed: false,
+      link: { type: "doc", id: "finance-solutions/overview" },
       items: [
-        "taceo-network/network",
-        "taceo-network/node-operators",
-        "taceo-network/governance",
-        "taceo-network/roadmap",
+        "finance-solutions/payments/introduction",
+        {
+          type: "category",
+          label: "Confidential x402",
+          link: { type: "generated-index", title:"Confidential x402", slug: "finance-solutions/x402/", description: "Confidential x402 is a privacy extension to the x402 payment protocol that hides payment amounts and balances onchain using ZK proofs and MPC, without changing how you write HTTP clients or servers." },
+          items: [
+            "finance-solutions/x402/introduction",
+            "finance-solutions/x402/quickstart",
+            "finance-solutions/x402/how-it-works",
+            "finance-solutions/x402/integration-guide",
+            "finance-solutions/x402/protocol-reference",
+            "finance-solutions/x402/network-and-contracts",
+          ],
+        },
+        "finance-solutions/compliance/introduction",
+        "finance-solutions/yield/introduction",
       ],
     },
     {
@@ -68,6 +81,17 @@ const sidebars: SidebarsConfig = {
             "taceo-proof/dev/bestpractice",
           ],
         },
+      ],
+    },
+    {
+      type: "category",
+      label: "TACEO Network",
+      link: { type: "doc", id: "taceo-network/index" },
+      items: [
+        "taceo-network/network",
+        "taceo-network/node-operators",
+        "taceo-network/governance",
+        "taceo-network/roadmap",
       ],
     },
     {

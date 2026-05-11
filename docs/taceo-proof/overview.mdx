@@ -40,7 +40,7 @@ Clients submit encrypted input shares and a short-lived voucher, and receive bac
    You receive the node operators with their ids, encryption keys and verification keys.
    You should request a new set of node operators for each coSNARK job to decrease waiting times.
    We do not recommend to use the same node operators over a longer period of time.
-   But you may **cache** them temporarily if you're planning to submit additional proofs soon after. Just be aware that **node operators can go offline** — if a cached key is stale, your request will fail at scheduling time.
+   But you may **cache** them temporarily if you're planning to submit additional proofs soon after. Just be aware that **node operators can go offline.** If a cached key is stale, your request will fail at scheduling time.
 
    > 💡 If you're submitting multiple proofs at once, you can reuse the same set of node operators across jobs. This reduces the number of HTTP calls and enables you to encrypt in parallel.
 

@@ -1,0 +1,156 @@
+---
+sidebar_position: 3
+title: Quickstart
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Quickstart
+
+This guide gets you making a confidential payment in under five minutes using TACEO's hosted
+infrastructure, no contract deployment, no facilitator setup required.
+
+You will:
+1. Fund a new wallet with test tokens from the faucet.
+2. Send a request to the TACEO resource server.
+3. Watch the payment go through automatically.
+
+## Prerequisites
+
+- Node.js 20+ (TypeScript) or Rust 1.91+ (Rust)
+- A wallet private key
+
+## Step 1: Install the package
+
+<Tabs>
+<TabItem value="typescript" label="TypeScript" default>
+
+```bash
+npm install @taceo/confidential-x402 @x402/fetch viem
+```
+
+</TabItem>
+<TabItem value="rust" label="Rust">
+
+Add the following to your `Cargo.toml`:
+
+```toml
+[dependencies]
+alloy = "2"
+eyre = "0.6"
+reqwest = "0.13"
+taceo-merces1-x402 = { git = "https://github.com/TaceoLabs/merces1-x402.git", version = "0.1", features = ["server", "client"] }
+tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
+x402-reqwest = "1"
+```
+
+</TabItem>
+</Tabs>
+
+## Step 2: Get test tokens from the faucet
+
+Each new wallet needs to be funded before it can make confidential payments. The faucet deposits
+1,000 test tokens and enforces a 24-hour cooldown per address.
+
+```bash
+curl -X POST https://faucet.merces.taceo.io/claim/<YOUR_WALLET_ADDRESS>
+```
+
+
+
+:::warning Keep your private key safe
+Even on testnet, never commit private keys to source control. Use environment variables or a
+secrets manager.
+:::
+
+## Step 3: Send a confidential payment
+
+The client library intercepts the `402 Payment Required` response, constructs the proof, and
+retries the request automatically. Your application code makes a normal HTTP GET, the payment
+is invisible to it.
+
+<Tabs>
+<TabItem value="typescript" label="TypeScript" default>
+
+```typescript
+import { privateKeyToAccount } from 'viem/accounts';
+import { x402Client, wrapFetchWithPayment } from '@x402/fetch';
+import { ConfidentialEvmScheme } from '@taceo/confidential-x402/client';
+
+const privateKey = process.env.PRIVATE_KEY as `0x${string}`;
+const signer = privateKeyToAccount(privateKey);
+
+// Register the confidential scheme
+const client = new x402Client();
+client.register('eip155:*', new ConfidentialEvmScheme(signer));
+
+// Wrap fetch, payments are handled automatically
+const fetchWithPayment = wrapFetchWithPayment(fetch, client);
+
+// Make the request as normal
+const response = await fetchWithPayment(
+  'https://resource.merces.taceo.io/api/protected',
+  { method: 'GET' }
+);
+
+console.log('Status:', response.status);
+console.log('Body:', await response.text());
+```
+
+</TabItem>
+<TabItem value="rust" label="Rust">
+
+```rust
+use alloy::signers::local::PrivateKeySigner;
+use reqwest::Client;
+use taceo_merces1_x402::V2Eip155ConfidentialClient;
+use x402_reqwest::{ReqwestWithPayments, ReqwestWithPaymentsBuild, X402Client};
+
+#[tokio::main]
+async fn main() -> eyre::Result<()> {
+    let private_key = std::env::var("PRIVATE_KEY")?;
+    let signer: PrivateKeySigner = private_key.parse()?;
+
+    // Register the confidential scheme
+    let x402_client = X402Client::new()
+        .register(V2Eip155ConfidentialClient::new(signer));
+
+    // Wrap reqwest, payments are handled automatically
+    let http_client = Client::new()
+        .with_payments(x402_client)
+        .build();
+
+    // Make the request as normal
+    let response = http_client
+        .get("https://resource.merces.taceo.io/api/protected")
+        .send()
+        .await?;
+
+    println!("Status: {}", response.status());
+    println!("Body: {}", response.text().await?);
+
+    Ok(())
+}
+```
+
+</TabItem>
+</Tabs>
+
+## What happens under the hood
+
+When `fetchWithPayment` (or the wrapped `reqwest` client) receives a `402` response:
+
+1. It reads the `PaymentRequired` payload from the response body.
+2. The `ConfidentialEvmScheme` generates a Groth16 ZK proof (~60ms in Rust / ~400ms in SnarkJS) and constructs the signed
+   payment payload.
+3. The original request is retried with a `PAYMENT-SIGNATURE` header.
+4. The TACEO resource server forwards the payment to the TACEO facilitator for verification.
+5. On success, the server returns `200 OK` with the response body.
+6. Settlement happens asynchronously in the background.
+
+## Next steps
+
+- **Understand the full protocol in detail** → [How it works](../how-it-works)
+- **Add confidential x402 payments to your own API** → [Integration guide](../integration-guide)
+

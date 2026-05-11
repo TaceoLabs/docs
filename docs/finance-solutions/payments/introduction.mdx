@@ -1,0 +1,123 @@
+---
+title: Introduction
+sidebar_label: Private Payments
+---
+
+# Private Payments
+
+Private Payments is the core capability of [Merces](https://core.taceo.io/articles/merces-onchain-finance/),
+TACEO's confidential token transfer protocol. It lets users send and receive ERC-20 tokens on a
+public EVM chain, with two privacy modes that callers select per transaction.
+
+The integration model is API/SDK: stablecoin issuers, fintechs, and payment infrastructure builders
+white-label Merces into their products. End users never see TACEO.
+
+:::tip Live infrastructure
+Merces is live across multiple testnets today.
+
+- **Confidential mode** on Arc and Base testnets. Reference Implementation: [merces-dashboard.taceo.io/arc](https://merces-dashboard.taceo.io/arc).
+- **Fully private mode and the compliance dashboard** on Plasma testnet. Referenece App: [merces.taceo.io](https://merces.taceo.io).
+
+The confidential network has processed ~5M demo transactions sustaining ~300 TPS, with single-digit-cents gas per transfer on L2.
+:::
+
+## The problem with public rails
+
+Public blockchains expose everything by default: balances, counterparties, amounts, transaction
+flows. For real financial operations this is a non-starter.
+
+- **Payroll** broadcasts every employee's salary to the world.
+- **Treasury** moves reveal cash position, runway, and operational tempo.
+- **B2B settlement** exposes customer relationships, deal sizes, and pricing structure.
+- **Consumer payments** turn every wallet into a public spending diary.
+
+Existing privacy approaches force a trade-off. Privacy-first L1s require migrating off the chain
+you've already chosen. Cryptographic toolkits hand you raw primitives and leave assembly to you.
+Neither is a path most issuers, fintechs, or institutions can take to production.
+
+## Two privacy modes
+
+Merces supports two modes for transfers, selectable per transaction:
+
+| Mode | What's hidden | What's visible | Use when |
+|---|---|---|---|
+| **Confidential** | Amounts, balances, transfer history | Sender and receiver wallet addresses | You want to hide pricing or amounts but settle to known counterparty wallets. The basis for [Confidential x402](/docs/finance-solutions/x402/introduction). |
+| **Fully private** | Amounts, balances, sender, and receiver | Nothing identifying about the transfer | You need full transaction-graph privacy: consumer payments, sensitive treasury moves, regulated user flows. |
+
+Both modes share the same Merces protocol, the same secret-shared balance model, and the same
+compliance primitives. Callers pick the mode for each transfer.
+
+## How Merces works
+
+Merces wraps existing ERC-20 tokens (such as USDC) into a private form that lives alongside the
+public token on the same chain. Users gain a **private virtual account** without leaving their
+existing wallet, RPC, or chain.
+
+Three properties make this work:
+
+1. **Balances are held as secret shares** across the TACEO Network's MPC operators. No single
+   party, including TACEO, ever sees a plaintext balance or amount.
+2. **State transitions are verified onchain via CoSNARKs.** Both the client's spending proof and
+   the MPC network's balance update proof are checked by the Merces contract before any commitment
+   moves.
+3. **The chain stays the chain.** Merces deploys as a contract on the EVM you already use. There's
+   no bridge, no new consensus, no migration.
+
+For a step-by-step walk through the cryptographic flow (commitments, secret shares, Groth16
+proofs, EIP-712 signing, and the MPC settlement loop), see
+[How it works](/docs/finance-solutions/x402/how-it-works), which uses the x402 payment as the worked example but
+documents the underlying Merces protocol.
+
+## What you get
+
+| Capability | Status |
+|---|---|
+| Confidential transfers (amounts hidden, addresses visible) | Live on Arc and Base testnets |
+| Fully private transfers (amounts and addresses hidden) | Live on Plasma testnet |
+| Per-transaction mode selection | Live on Plasma testnet |
+| Compliance dashboard with selective disclosure | Live on Plasma testnet (see [Compliance](/docs/finance-solutions/compliance/introduction)) |
+| `transferWithAuthorization` (basis for [Confidential x402](/docs/finance-solutions/x402/introduction)) | Live on Base testnet |
+| Allowlists at the contract layer | Live on testnet |
+| Private yield | In development (see [Private Yield](/docs/finance-solutions/yield/introduction)) |
+| Private DeFi (swaps, dark pools, approvals) | On the roadmap |
+| Mainnet deployment | Shipping toward production |
+
+## Privacy assumptions
+
+In **confidential mode**, Merces hides balances, transfer amounts, and the state of the virtual
+account. Sender and receiver wallet addresses remain visible onchain.
+
+In **fully private mode**, Merces additionally hides sender and receiver. A gateway service
+abstracts gas payment and submitter identity so the transaction graph itself stays opaque.
+
+In both modes, no single party (including TACEO) ever sees a plaintext balance or amount.
+Balances are held as MPC secret shares; reveals require explicit authorization through the
+compliance flow.
+
+For a full privacy analysis at the protocol level, see the x402
+[Protocol reference](/docs/finance-solutions/x402/protocol-reference#privacy--trust-model).
+
+## Who it's for
+
+| Audience | What Merces gives them |
+|---|---|
+| **Stablecoin issuers** | Privacy as a feature for issued tokens, without forking the asset |
+| **Fintechs and neobanks** | A confidential rail under existing user accounts |
+| **Payment infrastructure builders** | An SDK-integrable private ledger on the EVM they already target |
+| **Institutions and treasuries** | Confidential settlement on public rails for payroll, vendor payments, and intra-org transfers |
+| **AI agents and agent platforms** | Spending that doesn't broadcast strategy across paid endpoints |
+
+## Get started
+
+| Goal | Start here |
+|---|---|
+| Try confidential payments in a browser | [merces-dashboard.taceo.io/arc](https://merces-dashboard.taceo.io/arc) |
+| Try fully private payments and the compliance dashboard | [merces.taceo.io](https://merces.taceo.io) |
+| See it run end-to-end with a real (test) payment via x402 | [Confidential x402 Quickstart](/docs/finance-solutions/x402/quickstart) |
+| Understand the protocol architecture | [How it works](/docs/finance-solutions/x402/how-it-works) |
+| Look up addresses and endpoints | [Network & Contracts](/docs/finance-solutions/x402/network-and-contracts) |
+| Read the underlying paper | [Escudero et al., IACR ePrint 2026/850](https://eprint.iacr.org/2026/850) |
+| Browse source | [github.com/TaceoLabs](https://github.com/TaceoLabs) |
+
+For production access, integration support, or a deeper conversation about a specific use case,
+[email the team](mailto:hello@taceo.io).

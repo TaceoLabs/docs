@@ -1,6 +1,9 @@
 /**
  * CSS files with the .module.css suffix will be treated as CSS modules
  * and scoped locally.
+ *
+ * Brand source: aligned with /Users/ais/Documents/www.taceo.io
+ * (ppneue font, mint #52ffc5, cream #f1f0ec, 0.5px borders, ultra-thin headings)
  */
 
 /* ─── Page wrapper ─────────────────────────────────────────────────────────── */
@@ -9,57 +12,55 @@
   padding: 4rem 0 6rem;
 }
 
-/* ─── Hero ──────────────────────────────────────────────────────────────────── */
+/* ─── Hero (docs-style page header) ─────────────────────────────────────────── */
 
 .hero {
   text-align: center;
-  margin-bottom: 4rem;
-  padding-bottom: 3rem;
+  margin-bottom: 3rem;
+  padding: 1.5rem 0 2rem;
   border-bottom: 0.5px solid var(--ifm-color-emphasis-300);
 }
 
 .heroTitle {
-  font-size: 3.5rem !important;
-  font-weight: 100 !important;
-  line-height: 1.15 !important;
-  margin-bottom: 1.2rem !important;
+  font-size: 2.4rem !important;
+  font-weight: 300 !important;
+  line-height: 1.25 !important;
+  margin-bottom: 0.6rem !important;
   letter-spacing: -0.01em;
 }
 
 .heroSubtitle {
-  font-size: 1.3rem !important;
-  font-weight: 300 !important;
-  color: var(--ifm-color-emphasis-700) !important;
-  margin-bottom: 0.6rem !important;
-  line-height: 1.5 !important;
-}
-
-.heroTagline {
   font-size: 1rem !important;
   font-weight: 400 !important;
-  color: var(--ifm-color-emphasis-600) !important;
-  margin-bottom: 2.5rem !important;
-  line-height: 1.6 !important;
+  color: var(--ifm-color-emphasis-700) !important;
+  margin-bottom: 1.5rem !important;
+  line-height: 1.5 !important;
+  max-width: 42rem;
+  margin-left: auto !important;
+  margin-right: auto !important;
 }
 
 .heroLinks {
   display: flex;
-  gap: 2.5rem;
+  gap: 2rem;
   justify-content: center;
   flex-wrap: wrap;
 }
 
-.heroLink {
+/* ─── Animated arrow link (marketing-site signature) ────────────────────────── */
+
+.arrowLink {
   position: relative;
-  font-size: 1.1rem !important;
+  display: inline-block;
+  font-size: 1rem !important;
   font-weight: 400 !important;
+  color: inherit !important;
   text-decoration: none !important;
   padding: 0.4rem 0;
-  display: inline-block;
-  color: inherit !important;
+  white-space: nowrap;
 }
 
-.heroLink::after {
+.arrowLink::after {
   content: "";
   position: absolute;
   width: 100%;
@@ -70,20 +71,54 @@
   transition: height 0.2s ease;
 }
 
-.heroLink:hover {
+.arrowLink:hover {
   text-decoration: none !important;
 }
 
-.heroLink:hover::after {
+.arrowLink:hover::after {
   height: 1.5px;
 }
 
-.heroLinkPrimary {
-  color: #52ffc5 !important;
+.arrowLink .arrowLeft,
+.arrowLink .arrowRight {
+  display: inline-block;
+  transition: margin 0.25s ease, max-width 0.25s ease, opacity 0.2s ease;
+  overflow: hidden;
+  vertical-align: middle;
 }
 
-.heroLinkPrimary::after {
-  background-color: #52ffc5;
+/* Default: right arrow visible, left arrow collapsed */
+.arrowLink .arrowLeft {
+  max-width: 0;
+  margin-right: 0;
+  opacity: 0;
+}
+
+.arrowLink .arrowRight {
+  max-width: 1.5em;
+  margin-left: 0.5rem;
+  opacity: 1;
+}
+
+/* Hover: arrows swap sides */
+.arrowLink:hover .arrowLeft {
+  max-width: 1.5em;
+  margin-right: 0.5rem;
+  opacity: 1;
+}
+
+.arrowLink:hover .arrowRight {
+  max-width: 0;
+  margin-left: 0;
+  opacity: 0;
+}
+
+.arrowLinkPrimary {
+  color: var(--ifm-color-primary) !important;
+}
+
+[data-theme="dark"] .arrowLinkPrimary {
+  color: var(--taceo-green) !important;
 }
 
 /* ─── Section titles ────────────────────────────────────────────────────────── */
@@ -107,8 +142,9 @@
 }
 
 .journeyCard {
+  position: relative;
   border: 0.5px solid var(--ifm-color-emphasis-400);
-  padding: 2rem 1.8rem;
+  padding: 2rem 1.8rem 2rem 2.6rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -119,23 +155,48 @@
   border-color: var(--ifm-color-emphasis-700);
 }
 
+/* Rotated mint bar, accent motif from the marketing site's network cards */
+.journeyCard::before {
+  content: "";
+  position: absolute;
+  top: 1.8rem;
+  left: 0.6rem;
+  width: 1.2rem;
+  height: 0.5rem;
+  background-color: var(--taceo-green);
+  transform: rotate(-45deg);
+  transform-origin: center;
+}
+
+.journeyCardLead {
+  border: 0.5px solid var(--ifm-color-primary);
+  background-color: rgba(82, 255, 197, 0.04);
+}
+
+[data-theme="dark"] .journeyCardLead {
+  border-color: var(--taceo-green);
+  background-color: rgba(82, 255, 197, 0.06);
+}
+
 .journeyStatus {
-  font-size: 0.9rem !important;
-  color: #05525a !important;
+  font-size: 0.85rem !important;
+  color: var(--ifm-color-primary) !important;
   font-weight: 400;
   margin-bottom: 0.8rem;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
 }
+
 [data-theme="dark"] .journeyStatus {
-  color: #52ffc5 !important;
+  color: var(--taceo-green) !important;
 }
 
 .journeyCardTitle {
-  font-size: 1.3rem !important;
+  font-size: 1.4rem !important;
   font-weight: 300 !important;
-  line-height: 1.4 !important;
+  line-height: 1.35 !important;
   margin-bottom: 1rem !important;
+  letter-spacing: -0.01em;
 }
 
 .journeyCardDesc {
@@ -144,6 +205,13 @@
   line-height: 1.6 !important;
   color: var(--ifm-color-emphasis-700) !important;
   margin-bottom: 1.5rem !important;
+}
+
+.journeyCardCtas {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: auto;
 }
 
 /* ─── Quick links ────────────────────────────────────────────────────────────── */
@@ -156,9 +224,9 @@
 
 .quickLinksGrid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 1.5rem;
-  max-width: 800px;
+  max-width: 1100px;
   margin: 0 auto;
 }
 
@@ -203,195 +271,9 @@
   flex-wrap: wrap;
 }
 
-/* ─── Network card section (legacy classes kept for reference) ──────────────── */
-.network {
-  position: relative;
-  z-index: 1;
-  background-color: var(--taceo-foreground);
-  padding: 3rem 0 6rem 0;
-}
-
-.networkTitle {
-  font-weight: 100 !important;
-  color: var(--taceo-background) !important;
-  font-size: 3.5rem !important;
-  line-height: 4rem !important;
-  text-align: center;
-  margin-bottom: 2rem !important;
-}
-
-.networkDescription {
-  font-size: 1.2rem !important;
-  color: var(--taceo-background) !important;
-  font-weight: 400 !important;
-  line-height: 1.4rem !important;
-  max-width: 50rem;
-  margin: 0 auto;
-  text-align: center;
-  padding-bottom: 4rem;
-}
-
-.networkGrid {
-  position: relative;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  align-items: stretch;
-  max-width: 1200px;
-  margin: 0 auto;
-  gap: 2.5rem;
-  padding: 0 1.5rem;
-}
-
-.networkCard {
-  height: 100%;
-  position: relative;
-}
-
-.networkCard::after {
-  display: none;
-}
-
-.networkCard:first-child::after {
-  display: none;
-}
-
-.networkCardInner {
-  position: relative;
-  border: 1px solid #000000;
-  padding: 1.5rem 1.2rem;
-  height: 100%;
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: 1.5rem;
-  align-items: flex-start;
-}
-
-.networkIcon {
-  grid-column: span 2;
-  display: flex;
-  align-items: flex-start;
-  padding-top: 1rem;
-}
-
-.networkIconBar {
-  width: 100%;
-  height: 0.8rem;
-  background-color: #52ffc5;
-  transform: rotate(-45deg);
-}
-
-.networkContent {
-  grid-column: span 10;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
-}
-
-.networkCardTitle {
-  color: var(--taceo-background) !important;
-  font-weight: 300 !important;
-  font-size: 1.8rem !important;
-  line-height: 1.2 !important;
-  margin-bottom: 1.5rem !important;
-}
-
-.networkStatus {
-  font-size: 1.1rem !important;
-  color: var(--taceo-green) !important;
-  font-weight: 400;
-  margin-bottom: 1.2rem;
-}
-
-.networkCardDescription {
-  font-size: 1.1rem !important;
-  color: var(--taceo-background) !important;
-  font-weight: 400 !important;
-  line-height: 1.4rem !important;
-  margin-bottom: 1.5rem;
-}
-
-.networkLinkWrapper {
-  margin-top: auto;
-}
-
-.networkLink {
-  position: relative;
-  color: inherit !important;
-  font-weight: 400 !important;
-  font-size: 1rem !important;
-  text-decoration: none !important;
-  padding: 0.4rem 0;
-  display: inline-block;
-}
-
-.networkLink::after {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 1px;
-  bottom: 0;
-  left: 0;
-  background-color: currentColor;
-  transition: height 0.2s ease;
-}
-
-.networkLink:hover {
-  text-decoration: none !important;
-}
-
-.networkLink:hover::after {
-  height: 2px;
-}
-
-/* Dark mode overrides */
-[data-theme="dark"] .network {
-  background-color: var(--ifm-background-color);
-}
-
-[data-theme="dark"] .networkCardInner {
-  border: 1px solid #f1f0ec;
-}
-
-[data-theme="dark"] .networkTitle,
-[data-theme="dark"] .networkDescription,
-[data-theme="dark"] .networkCardTitle,
-[data-theme="dark"] .networkCardDescription,
-[data-theme="dark"] .networkLink {
-  color: #f1f0ec !important;
-}
-
-[data-theme="dark"] .networkStatus {
-  color: var(--ifm-color-primary) !important;
-}
-
-[data-theme="dark"] .networkLink::after {
-  background-color: #f1f0ec;
-}
-
-[data-theme="dark"] .networkLink:hover::after {
-  background-color: #f1f0ec;
-}
-
-/* Responsive Design */
-@media screen and (max-width: 1200px) {
-  .networkGrid {
-    padding: 0 1rem;
-    gap: 2rem;
-  }
-}
+/* ─── Responsive ─────────────────────────────────────────────────────────────── */
 
 @media screen and (max-width: 996px) {
-  .networkTitle {
-    font-size: 2.8rem !important;
-    line-height: 3.2rem !important;
-  }
-
-  .heroTitle {
-    font-size: 2.6rem !important;
-  }
-
-  .networkGrid,
   .journeyGrid,
   .quickLinksGrid {
     grid-template-columns: 1fr !important;
@@ -401,48 +283,15 @@
 }
 
 @media screen and (max-width: 768px) {
-  .networkTitle {
-    font-size: 2.2rem !important;
-    line-height: 2.6rem !important;
-  }
-
-  .heroTitle {
-    font-size: 2rem !important;
-  }
-
   .heroLinks,
   .ctaLinks {
     gap: 1.5rem;
   }
 
-  .networkGrid,
   .journeyGrid,
   .quickLinksGrid {
     grid-template-columns: 1fr !important;
     gap: 1.2rem;
     padding: 0;
-  }
-
-  .networkCardInner {
-    grid-template-columns: auto 1fr;
-    text-align: left;
-    padding: 1.2rem 1rem;
-    gap: 1rem;
-  }
-
-  .networkIcon {
-    grid-column: 1;
-    display: flex;
-    align-items: flex-start;
-    padding-top: 1rem;
-    width: 3rem;
-  }
-
-  .networkContent {
-    grid-column: 2;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
   }
 }
