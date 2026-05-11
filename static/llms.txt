@@ -46,9 +46,9 @@ TACEO is best known for the privacy-preserving identity infrastructure used by W
 
 - [Merces: Onchain Finance](https://core.taceo.io/articles/merces-onchain-finance/): Canonical positioning piece for Merces.
 - [Merces deep-dive](https://core.taceo.io/articles/merces-deep-dive/): Technical detail on the two privacy modes, compliance dashboard, and Plasma deployment.
-- [Confidential transfers demo writeup](https://core.taceo.io/articles/confidential-token-transfers-demo/): The original Merces I confidential payments demo on Arc and Base.
+- [Confidential transfers writeup](https://core.taceo.io/articles/confidential-token-transfers-demo/): The original Merces I confidential payments demo on Arc and Base.
 - [IACR ePrint 2026/850](https://eprint.iacr.org/2026/850): Escudero et al., "Merces: Confidential Token Transfers via MPC and CoSNARKs."
 - [TACEO on GitHub](https://github.com/TaceoLabs): All TACEO open source repositories.
-- [Demo: confidential payments (Arc, Base)](https://merces-dashboard.taceo.io/arc): Live demo of Merces confidential mode.
-- [Demo: fully private payments and compliance (Plasma)](https://merces.taceo.io): Live demo of Merces fully private mode and compliance dashboard.
+- [Confidential payments (Arc, Base)](https://merces-dashboard.taceo.io/arc): Live demo of Merces confidential mode.
+- [Fully private payments and compliance (Plasma)](https://merces.taceo.io): Live demo of Merces fully private mode and compliance dashboard.
 - [Compliance dashboard](https://merces.taceo.io/compliance): Live selective-disclosure dashboard for authorized auditors on Plasma testnet.
