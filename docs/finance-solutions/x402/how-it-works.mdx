@@ -38,36 +38,26 @@ network, and verifies the MPC's proof when the balance update is finalised.
 
 ```mermaid
 sequenceDiagram
-    participant C as Client
-    participant R as Resource Server
-    participant F as Facilitator
-    participant X as Merces Contract
-    participant M as MPC Network
-    
-
-    C->>R: GET /api/
-    R-->>C: 402 + PaymentRequired (scheme: confidential)
-
-    Note over C: Generate commitment, secret shares,<br/>ciphertexts, EIP-712 signature,<br/>Groth16 proof
-
-    C->>R: GET /api/ + PAYMENT
-
-    R->>F: POST /verify
-    X-->>F: commitment
-    Note over F: verify commitment, signature and client proof
-    F->>M: enough balance? + Signature
-    M-->>F: yes/no
-    F-->>R: isValid: true
-    R->>F: POST /settle
-    note over F: do verification (as in /verify route)
-    F->>X: transferFrom()
-    Note over X: verify Groth16 proof onchain via ClientTransferVerifier
-    X-->>F: action_index
-    Note over M: read_queue, decrypt, update bal, gen proof
-    M->>X: processMPC
-    Note over X: verify proof, update comms
-    F-->>R: success: true
-    R-->>C: 200 + content
+      Client->>Resource Server: GET /api
+      Resource Server-->>Client: 402 + PayReq
+      Note over Client: compute commitment, create ciphertext, create typed 712 data and sign
+      Note over Client: generate Groth16 ZK proof (~800ms), compute commitment, create ciphertext, sign EIP-712
+      Client->>Resource Server: GET + PAYMENT
+      Resource Server->>Facilitator: POST /verify
+      Note over Facilitator: verify client proof
+      Facilitator->>MPC Network: validBalance?
+      MPC Network-->>Facilitator: yes/no
+      Facilitator-->>Resource Server: isValid: true
+      Resource Server->>Facilitator: POST /settle
+      Facilitator->>Contract: transferFrom()
+      Note over Contract: verify Groth16 proof onchain via ClientTransferVerifier
+      Contract-->>MPC Network: action_index
+      Note over MPC Network: read_queue, decrypt, update bal, gen proof
+      MPC Network->>Contract: processMPC
+      Note over Contract: verify proof, update comms
+      Contract-->>Facilitator: tx_hash, isValid?
+      Facilitator-->>Resource Server: success: true
+      Resource Server-->>Client: 200 + content
 ```
 
 
