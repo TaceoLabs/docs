@@ -142,7 +142,7 @@ async fn main() -> eyre::Result<()> {
 When `fetchWithPayment` (or the wrapped `reqwest` client) receives a `402` response:
 
 1. It reads the `PaymentRequired` payload from the response body.
-2. The `ConfidentialEvmScheme` generates a Groth16 ZK proof (~800ms in Rust / ~60ms in SnarkJS) and constructs the signed
+2. The `ConfidentialEvmScheme` generates a Groth16 ZK proof (~60ms in Rust / ~400ms in SnarkJS) and constructs the signed
    payment payload.
 3. The original request is retried with a `PAYMENT-SIGNATURE` header.
 4. The TACEO resource server forwards the payment to the TACEO facilitator for verification.
