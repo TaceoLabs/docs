@@ -7,7 +7,7 @@ TACEO is best known for the privacy-preserving identity infrastructure used by W
 ## Finance Solutions
 
 - [Finance Solutions Overview](https://docs.taceo.io/docs/finance-solutions/overview): Private onchain finance powered by Merces. Two privacy modes selectable per transaction, plus compliance and integrations.
-- [Private Payments](https://docs.taceo.io/docs/finance-solutions/payments/introduction): Shielded ERC-20 transfers on the EVM chain you already use. Confidential mode (amounts hidden, addresses visible) live on Arc and Base; fully private mode (addresses also hidden) live on Plasma.
+- [Private Payments](https://docs.taceo.io/docs/finance-solutions/payments/introduction): Private ERC-20 transfers on the EVM chain you already use. Confidential mode (amounts hidden, addresses visible) live on Arc and Base; fully private mode (addresses also hidden) live on Plasma.
 - [Confidential x402](https://docs.taceo.io/docs/finance-solutions/x402/introduction): HTTP-embedded confidential payments using the x402 protocol with hidden amounts. Live on Base testnet.
 - [Confidential x402 Quickstart](https://docs.taceo.io/docs/finance-solutions/x402/quickstart): Make a confidential x402 payment in under five minutes using TACEO's hosted infrastructure. TypeScript and Rust examples.
 - [Confidential x402 How it works](https://docs.taceo.io/docs/finance-solutions/x402/how-it-works): Component-by-component walkthrough of a confidential x402 payment with sequence diagram and performance numbers.

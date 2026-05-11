@@ -82,7 +82,7 @@ function GuidanceSection() {
             lead
             status="Private onchain finance"
             title="Build private payments on the chain you already use"
-            description="Merces wraps existing ERC-20 tokens (USDC and others) into shielded balances. Private payments, x402, and compliance primitives are live on testnet. Private yield is in active development."
+            description="Merces wraps existing ERC-20 tokens (USDC and others) into private balances. Private payments, x402, and compliance primitives are live on testnet. Private yield is in active development."
             ctas={[
               {
                 to: "/docs/finance-solutions/overview",
