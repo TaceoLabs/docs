@@ -258,8 +258,8 @@ to the blockchain. A passive observer without TLS access cannot learn the amount
 **MPC network**
 
 Privacy of payment amounts and balances depends on the MPC operators not colluding. The current
-deployment uses **3-of-3 additive secret sharing**: all three operators must cooperate to
-reconstruct any amount or balance. If even one operator is honest, no amount is revealed.
+deployment uses **REP3 secret sharing**: where a majority of operators must cooperate to
+reconstruct any amount or balance. If two operators are honest, no amount is revealed.
 TACEO operates all three nodes in the current testnet deployment.
 
 **Facilitator**
