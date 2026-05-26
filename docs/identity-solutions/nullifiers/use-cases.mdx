@@ -1,0 +1,204 @@
+---
+title: Use Cases & Examples
+description: Where threshold OPRFs provide essential privacy guarantees
+---
+
+# Use Cases & Examples
+
+TACEO:OPRF solves critical privacy problems in Web3 and digital identity. Here are the key
+use cases where threshold OPRFs provide essential security guarantees.
+
+---
+
+## Nullifiers for Digital Identity
+
+**The Problem:** ZK identity systems rely on a single secret key. If it leaks, your entire history is exposed.
+
+### Current Vulnerability
+
+Traditional ZK identity systems face a fundamental weakness:
+
+```
+Traditional: nullifier = H(user_secret, action_id)
+```
+
+**If your secret leaks:**
+- Attacker can compute ALL your past nullifiers
+- Attacker can trace your complete transaction history
+- Your entire identity becomes linkable
+- No way to revoke or rotate a compromised identity
+
+### Solution
+
+```
+Enhanced: nullifier = OPRF(user_secret, action_id, [k])
+```
+
+**With threshold OPRF:**
+- Attacker needs BOTH your secret AND to break the MPC threshold
+- Past nullifiers remain private even if the secret leaks
+- Identity history cannot be reconstructed from a single compromise
+- Multiple independent parties must be compromised simultaneously
+
+---
+
+## Private Revenue Sharing for DeFi
+
+**The Problem:** DeFi protocols need to pay referral fees and track user activity, but current
+methods surveil all transactions and wallets, destroying financial privacy.
+
+### Current Surveillance Model
+
+- Referral tracking requires linking wallets to referrers
+- Fee distribution exposes user trading patterns
+- Onchain analysis reveals a complete transaction history
+
+### Solution
+
+**Private Referral Tracking**
+```
+referral_id = OPRF(user_wallet + referrer_code, protocol_id, [k])
+```
+
+**Privacy-Preserving Fee Distribution**
+1. User generates a private referral identifier via OPRF
+2. Protocol pays fees to the identifier without knowing the wallet
+3. Referrer claims fees using the OPRF output
+4. No link between user wallet and referrer is exposed
+
+### Benefits
+
+**For Users**
+- Private trading without referral surveillance
+- Protection from MEV and front-running
+- Cannot be profiled by trading patterns
+- Referral participation without privacy loss
+
+**For Protocols**
+- Maintain referral incentive programs
+- Distribute fees fairly and transparently
+- Attract privacy-conscious users
+- Comply with emerging privacy regulations
+
+**For Referrers**
+- Earn referral fees without user surveillance
+- Build privacy-respecting referral networks
+- Cannot be gamed by fake referrals
+- Preserve user trust and loyalty
+
+### Implementation Example
+
+```bash
+# User generates private referral ID
+taceo-oprf-testnet-client \
+    --input "0x742d35Cc6639C85a6d3C28f06b6DB03f2134d7F6:REFERRER123" \
+    --authorization defi-protocol
+```
+
+---
+
+## Private Wallet Recovery
+
+**The Problem:** Seed phrases are a UX disaster. Custodial backup defeats the point. TACEO:OPRF
+enables wallet recovery where no one -- not even the recovery service -- ever sees your keys.
+
+### Current Recovery Solutions Fall Short
+
+**Seed Phrases**
+- Difficult to remember and store securely
+- Single point of failure
+- No recovery if lost or destroyed
+- Vulnerable to theft and duplication
+
+**Custodial Solutions**
+- Defeats self-custody purpose
+- Provider can access your funds
+- Single point of failure and censorship
+- Regulatory and trust risks
+
+**Social Recovery**
+- Friends/family become attack targets
+- Social engineering vulnerabilities
+- Privacy loss (guardians know your identity)
+- Coordination challenges during recovery
+
+### Solution
+
+**How It Works**
+1. **Setup:** Derive a recovery key using OPRF with personal information
+2. **Storage:** Recovery key posted publicly (encrypted/blinded)
+3. **Recovery:** Prove identity to the OPRF network via multiple factors
+4. **Restoration:** Regenerate wallet keys without anyone else seeing them
+
+```
+Original Setup:
+wallet_seed = OPRF(biometric + email + phone + additional_factors)
+
+Recovery Process:
+1. Prove identity factors to the OPRF network
+2. OPRF nodes verify proofs independently
+3. User reconstructs wallet_seed from the OPRF output
+4. Wallet restored without revealing the seed to anyone
+```
+
+### Key Properties
+
+**True Privacy**
+- Recovery service never sees your wallet keys
+- Personal data is never fully reconstructed by any single party
+- MPC threshold provides strong security guarantees
+
+**Better UX**
+- No seed phrases to manage
+- Recover using familiar identity factors
+- Works across devices and platforms
+- Gradual recovery factor updates possible
+
+**Practical Security**
+- Multiple independent verification sources
+- Resistant to social engineering
+- No single point of compromise
+- Auditability without privacy loss
+
+### Authorization Module Design
+
+**Multi-Factor Identity Proof**
+- Biometric verification (FaceID, fingerprint)
+- Email + phone number verification
+- Knowledge-based questions
+- Time-delayed verification for security
+
+**Implementation Example**
+```bash
+# Recovery initialization
+taceo-oprf-testnet-client \
+    --authorization wallet-recovery \
+    --biometric-proof face_hash.proof \
+    --email-verification email.proof \
+    --phone-verification sms.proof
+```
+
+---
+
+## Getting Started
+
+**Identity Systems:** Enhance existing ZK identity with nullifier protection
+- Start with [Authorization Modules](/docs/taceo-oprf/authorization)
+- Learn how TACEO:OPRF works in the [TACEO:OPRF Overview](/docs/taceo-oprf/overview)
+
+**DeFi Protocols:** Implement private referral tracking
+- Begin with the [Quickstart](/docs/identity-solutions/nullifiers/getting-started/quickstart)
+- Review the [API Reference](/docs/taceo-oprf/api) for integration
+
+**Wallet Recovery:** Build privacy-preserving recovery systems
+- Check [Local Setup](/docs/identity-solutions/nullifiers/getting-started/quicklocal) for development
+- [Contact us](mailto:hello@taceo.io) to discuss production deployment
+
+### Ready to Build?
+
+Each use case requires different authorization modules and integration approaches. Start with the
+[Quickstart Guide](/docs/identity-solutions/nullifiers/getting-started/quickstart) to experiment,
+then move to [local development](/docs/identity-solutions/nullifiers/getting-started/quicklocal)
+for custom implementation.
+
+**Need help choosing?** [Contact us](mailto:hello@taceo.io) to discuss your specific requirements.

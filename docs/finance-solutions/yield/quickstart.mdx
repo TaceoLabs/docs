@@ -1,0 +1,144 @@
+---
+title: Quickstart
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Quickstart
+
+This guide gets you depositing into the private yield vault and withdrawing with accrued yield,
+using TACEO's hosted infrastructure — no contract deployment required. <br/>
+In parallel, you can walk through the flow in the reference app [Merces Yield](https://merces.taceo.io/accounts/vault)
+
+:::info Testnet only
+The current deployment uses test tokens with no real-world value. Do not use mainnet private keys
+or real funds.
+:::
+
+## Prerequisites
+
+Complete the [Private Payments Quickstart](../../payments/quickstart) first — it covers installing
+the client, creating a `Client` instance, and funding your private balance. Come back here once
+your client is set up and you hold a private USDT balance.
+
+## Step 1: Deposit private USDT into the vault
+
+The client must already hold a private USDT balance. If starting from an ERC-20 balance, first
+call `confidentialDeposit` (or `privateDeposit`) as shown in the
+[Payments Quickstart](../../payments/quickstart#step-3-deposit-erc-20-tokens-into-your-private-account).
+
+<Tabs>
+<TabItem value="typescript" label="TypeScript" default>
+
+```typescript
+import { parseUnits } from 'viem';
+
+const decimals = await client.getDecimals();
+const txHash = await client.vaultDeposit(parseUnits('100', decimals));
+
+console.log('Vault deposit confirmed:', txHash);
+```
+
+</TabItem>
+<TabItem value="rust" label="Rust">
+
+```rust
+use alloy::primitives::utils::parse_units;
+use rand::rngs::OsRng;
+
+let decimals = client.decimals().await?;
+let amount = parse_units("100", decimals)?.into();
+let tx_hash = client.vault_deposit(amount, &mut OsRng).await?;
+
+println!("Vault deposit confirmed: {tx_hash}");
+```
+
+</TabItem>
+</Tabs>
+
+## Step 2: Check your vault balance
+
+<Tabs>
+<TabItem value="typescript" label="TypeScript" default>
+
+```typescript
+import { formatUnits } from 'viem';
+
+const decimals = await client.getDecimals();
+const vaultShares = await client.getVaultBalance();
+const privateBalance = await client.getPrivateBalance();
+
+// Convert shares back to the current USDT value
+const vaultValueUsdt = await client.convertToAssets(vaultShares);
+
+console.log('Private USDT balance:', formatUnits(privateBalance, decimals));
+console.log('Vault shares (vUSDT):', formatUnits(vaultShares, decimals));
+console.log('Vault value in USDT: ', formatUnits(vaultValueUsdt, decimals));
+```
+
+</TabItem>
+<TabItem value="rust" label="Rust">
+
+```rust
+use alloy::primitives::utils::format_units;
+
+let address = client.address();
+let decimals = client.decimals().await?;
+let vault_shares = client.get_vault_balance(address).await?;
+let private_balance = client.get_balance(address).await?;
+
+println!("Private USDT balance: {}", format_units(private_balance, decimals)?);
+println!("Vault shares (vUSDT): {}", format_units(vault_shares, decimals)?);
+```
+
+</TabItem>
+</Tabs>
+
+## Step 3: Withdraw back to your private balance
+
+Specify how many vault **shares** to redeem. The corresponding USDT amount — including any accrued
+yield — is credited to your private balance.
+
+<Tabs>
+<TabItem value="typescript" label="TypeScript" default>
+
+```typescript
+import { formatUnits } from 'viem';
+
+const decimals = await client.getDecimals();
+
+// Withdraw all vault shares
+const shares = await client.getVaultBalance();
+const txHash = await client.vaultWithdraw(shares);
+
+console.log('Vault withdrawal confirmed:', txHash);
+
+const newPrivateBalance = await client.getPrivateBalance();
+console.log('New private USDT balance:', formatUnits(newPrivateBalance, decimals));
+```
+
+</TabItem>
+<TabItem value="rust" label="Rust">
+
+```rust
+use alloy::primitives::utils::format_units;
+use rand::rngs::OsRng;
+
+let decimals = client.decimals().await?;
+let shares = client.get_vault_balance(client.address()).await?;
+let tx_hash = client.vault_withdraw(shares, &mut OsRng).await?;
+
+println!("Vault withdrawal confirmed: {tx_hash}");
+
+let new_private_balance = client.get_balance(client.address()).await?;
+println!("New private USDT balance: {}", format_units(new_private_balance, decimals)?);
+```
+
+</TabItem>
+</Tabs>
+
+## Next steps
+
+- **Understand the full deposit and withdrawal flow** → [How it works](../how-it-works)
+- **Send private payments** → [Private Payments Quickstart](../../payments/quickstart)

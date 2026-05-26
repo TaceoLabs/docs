@@ -1,0 +1,31 @@
+# Technical Concepts
+
+## What is a Biometric Template?
+
+A biometric template is a compact mathematical representation of a biometric measurement. An iris code, for example, might encode the texture pattern of an iris as a bit vector of 11k bits. The actual bit length depends on the feature extraction, whether it is iris, face or palm scans. All share that they are fixed-length vectors designed to make comparison cheap and reliable.
+
+The challenge is that these vectors are **sensitive and irrevocable**. Unlike a password hash, a leaked biometric template cannot be rotated. Any system that stores or transmits raw templates creates a permanent liability.
+
+## Secret Sharing
+
+Secret sharing splits a value into $n$ shares such that any subset of size $< t$ reveals nothing about the original value, while any subset of size $\geq t$ can reconstruct it. In TACEO:Match, each enrolled template is split into shares distributed across independent MPC nodes on the TACEO Network. No node holds a full template.
+
+For a deeper treatment of MPC and the secret-sharing primitives TACEO uses, see the [MPC Resources](/docs/resources/mpc) page.
+
+## The Matching Function
+
+Biometric matching reduces to computing a distance metric between two templates and checking whether it falls below a threshold:
+
+```
+match = distance(probe, enrolled) < τ
+```
+
+For iris codes, this is **Hamming distance** - the fraction of bit positions that differ. Is the Hamming distance below a certain threshold $τ$ we can deduce that two scans belong to the same person.
+
+TACEO:Match evaluates this distance function directly on the secret shares of the enrolled template, without reconstructing the template at any node. The same approach extends to other distance-based biometric representations (e.g. cosine similarity for face embeddings) by implementing the corresponding comparison circuit.
+
+## Composition with Nullifiers
+
+TACEO:Match and [Distributed Nullifiers](/docs/identity-solutions/nullifiers/introduction) are complementary primitives built on the same threshold MPC stack. Nullifiers derive a deterministic, unlinkable identifier from a secret input via OPRF; Match verifies that a biometric probe corresponds to an enrolled identity via MPC matching.
+
+A common composition: use Match to verify biometric uniqueness, then issue a nullifier tied to the verified identity. The user gets both sybil resistance (from Match) and unlinkability across interactions (from the nullifier).

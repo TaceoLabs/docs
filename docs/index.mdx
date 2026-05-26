@@ -18,32 +18,55 @@ We're best known for our identity work: TACEO Network is a privacy backbone for
 global-scale identity systems, with services used by **World** and **zkPassport**. We're now bringing
 the same stack to onchain finance through **Merces**.
 
-## Build private payments on the chain you already use
+## TACEO Solutions
 
-<div className="service-card-success" style={{padding: '1.5rem 1.8rem', marginTop: '2rem'}}>
+<div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2rem', marginTop: '2rem'}}>
+
+<div className="service-card-primary" style={{padding: '1.5rem 1.8rem'}}>
 
 ### **Finance Solutions**
 
 Private payments on the EVM chains you already use, built on Merces. Merces wraps ERC-20s like USDC into private balances, with compliance primitives at the protocol layer.
 
-**Live on Arc, Base, and Plasma testnets.** ~5M demo transactions, ~300 TPS, sub-cent gas on L2. Mainnet deployment in progress. The MPC protocol underneath is the same one TACEO co-architected for World's iris-code system, in production at global scale.
-
-**Looking for design partners.** Stablecoin issuers, fintechs, and payment infrastructure teams shipping private rails to production. Talk to us.
+**Live on Arc, Base, and Plasma testnets.** ~5M demo transactions, ~300 TPS, sub-cent gas on L2. Mainnet deployment in progress.
+<br />
+**Get in touch.** Stablecoin issuers, fintechs, and payment infrastructure teams shipping private rails to production. Talk to us.
 
 {/* prettier-ignore */}
 <div className="button-row" style={{marginTop: '1.25rem', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '1rem'}}>
-  <Link className="button button--success get-in-touch-btn" to="/docs/finance-solutions/overview">Read Finance Solutions</Link>
-  <Link className="button button--outline button--success get-in-touch-btn" to="/docs/finance-solutions/x402/quickstart">Try the Quickstart</Link>
-  <Link className="button button--outline button--success get-in-touch-btn" to="mailto:hello@taceo.io?subject=Merces%20design%20partner">Become a Design Partner</Link>
+  <Link className="button button--primary get-in-touch-btn" to="/docs/finance-solutions/overview">Read Finance Solutions</Link>
+  <Link className="button button--outline button--primary get-in-touch-btn" to="/docs/finance-solutions/x402/quickstart">Try the Quickstart</Link>
 </div>
 
 </div>
+
+<div className="service-card-primary" style={{padding: '1.5rem 1.8rem'}}>
+
+### **Identity Solutions**
+
+Privacy-preserving identity at global scale. TACEO:OPRF is in production for **World** and **zkPassport** - the same MPC backbone that powers iris-code uniqueness and private credential matching is available for your identity system.
+
+**In production.** Distributed nullifiers, threshold passport identification, and confidential biometrics, backed by a threshold MPC network with no single point of failure.
+
+**Get in touch.** Identity protocol teams and credential issuers building privacy-first systems. Talk to us.
+
+
+{/* prettier-ignore */}
+<div className="button-row" style={{marginTop: '1.25rem', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '1rem'}}>
+  <Link className="button button--primary get-in-touch-btn" to="/docs/identity-solutions/overview">Read Identity Solutions</Link>
+  <Link className="button button--outline button--primary get-in-touch-btn" to="/docs/identity-solutions/nullifiers/getting-started/quickstart">Try the Quickstart</Link>
+</div>
+
+</div>
+
+</div>
+
 
 ## Other paths
 
 <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem', marginTop: '2rem'}}>
 
-<div className="service-card-primary">
+<div className="service-card-muted">
 
 ### **Privacy Services**
 
@@ -53,10 +76,12 @@ Production-ready privacy primitives you can call directly: privacy-preserving nu
 (TACEO:OPRF), private proof delegation (TACEO:Proof), and confidential shared state (TACEO:OMap).
 
 **Use this if you are:** an application developer adding a single privacy feature without taking
-on a full payment system.
+on a full system.
+<br />
+<br />
 
 {/* prettier-ignore */}
-<Link className="button button--primary get-in-touch-btn" to="/docs/services/overview" style={{ marginTop: "1rem", width: "100%" }}>Explore Services</Link>
+<Link className="button button--primary get-in-touch-btn" to="/docs/services/overview" style={{ marginTop: "1rem", display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '1rem'}}>Explore Services</Link>
 
 </div>
 
@@ -74,100 +99,12 @@ system runs in production at global scale.
 the foundation everything else builds on.
 
 {/* prettier-ignore */}
-<Link className="button button--secondary get-in-touch-btn" to="/docs/taceo-network/" style={{ marginTop: "1rem", width: "100%" }}>Explore the Network</Link>
-
-</div>
-
-<div style={{
-  padding: '2rem',
-  border: '1px solid var(--ifm-color-emphasis-400)',
-  borderRadius: '12px',
-  backgroundColor: 'var(--ifm-color-emphasis-100)'
-}}>
-
-### **Collaborative SNARKs**
-
-_coCircom, coNoir_
-
-Experiment with collaborative zero-knowledge workflows in an MPC setting. Run custom circuits and
-coSNARK-based systems locally. Distinct from TACEO's managed services.
-
-**Use this if you are:** a crypto developer, researcher, or privacy-tech experimenter.
-
-{/* prettier-ignore */}
-<Link className="button button--outline get-in-touch-btn" to="/docs/overview" style={{ marginTop: "1rem", width: "100%" }}>Experiment</Link>
-
+<Link className="button button--primary get-in-touch-btn" to="/docs/taceo-network" style={{ marginTop: "1rem", display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '1rem'}}>Explore Network</Link>
 </div>
 
 </div>
 
-## Where TACEO is today
 
-- **Finance Solutions.** Merces is live on Arc, Base, and Plasma testnets with ~5M demo transactions, ~300 TPS, and single-digit-cents gas on L2. Mainnet deployment in progress.
-- **Privacy Services.** TACEO:OPRF and TACEO:Proof are in production for partners including World and zkPassport.
-- **TACEO Network.** The MPC infrastructure underpinning all of the above is built on the same foundation TACEO co-architected for World's iris-code system, in production at global scale.
-
-## Learning Resources
-
-New to privacy-preserving computation? Start here:
-
-<div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem', marginTop: '1.5rem'}}>
-
-<div className="info-card">
-
-**🎓 Understand the Basics**
-
-<ul>
-  <li>
-    <Link to="/docs/resources/mpc">Secure Multiparty Computation</Link>
-  </li>
-  <li>
-    <Link to="/docs/primer/collabSNARKs-primer">
-      Collaborative SNARKs Primer
-    </Link>
-  </li>
-</ul>
-
-</div>
-
-<div className="info-card">
-
-**💡 See Use Cases**
-
-<ul>
-  <li>
-    <Link to="/docs/use-cases/finance">Finance</Link>
-  </li>
-  <li>
-    <Link to="/docs/use-cases/identity">Identity & Uniqueness</Link>
-  </li>
-  <li>
-    <Link to="/docs/use-cases/">More Use Cases</Link>
-  </li>
-</ul>
-
-</div>
-
-<div className="info-card">
-
-**📺 Watch Videos**
-
-<ul>
-  <li>
-    <Link to="https://www.youtube.com/watch?v=tlVFbr3_eEU">
-      CoSNARKs Overview
-    </Link>
-  </li>
-  <li>
-    <Link to="https://www.youtube.com/watch?v=4-W5nnsf9-A">
-      MPC-Enabled Proof Markets
-    </Link>
-  </li>
-</ul>
-
-</div>
-
-</div>
 
 ## Get In Touch
 
@@ -191,4 +128,3 @@ New to privacy-preserving computation? Start here:
 
 ---
 
-**Ready to dive deeper?** Use the sidebar to explore Finance Solutions, Services, the TACEO Network, and Developer Tools.

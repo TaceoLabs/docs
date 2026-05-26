@@ -1,0 +1,38 @@
+# TACEO:Match Overview
+
+TACEO:Match is a service on the TACEO network for biometric feature matching in MPC. It evaluates biometric comparisons directly on secret shares, so no plaintext template is ever reconstructed by any node, any server, or TACEO itself.
+
+Unlike [Threshold Passport Identification](/docs/identity-solutions/passport-identification/introduction), which uses deterministic nullifiers, TACEO:Match is designed for non-deterministic biometric data. A passport nullifier is always the same, but a scanned iris or palm varies with every capture. Rather than comparing hashes bit-by-bit, TACEO:Match evaluates similarity against a configurable threshold.
+
+## How TACEO:Match Works
+
+### Key Features
+
+- **Secret-share enrollment**: Templates are split on the user's device before they leave. No complete template exists outside the device.
+- **Comparison on shares**: Matching functions (e.g. Hamming distance for iris codes) are evaluated directly on shares. No node reconstructs the template.
+- **Threshold security**: Results require cooperation of a threshold of independent nodes. No single party can produce or manipulate a result unilaterally.
+- **Biometric-modality-agnostic**: Iris codes today; extensible to other distance-based biometric representations.
+
+## Architecture
+
+Three independent MPC nodes execute the matching protocol and jointly hold a **secret-shared database** of all enrolled templates. Reconstruction requires at least $t$ shares - no node, and no coalition smaller than $t$, can read the stored data.
+
+A request originates at a sensor: a mobile device or dedicated hardware such as an orb or palm scanner. The sensor performs feature extraction, secret-shares the resulting template, and encrypts each share with the corresponding MPC node's public key, protecting the shares in transit. The choice of sensor does not change the architecture.
+
+Each MPC node decrypts its share and participates in the match protocol against the database. The protocol is parameterised by the distance function - for example, **Hamming distance** for iris codes (see [The Matching Function](/docs/taceo-match/concepts#the-matching-function)). Only the final verdict is revealed: match or no match.
+
+<img src="/img/taceo_match.svg" alt="TACEO:Match architecture" width="100%" />
+
+An **orchestration server** may optionally relay requests between the sensor and the MPC nodes. It only ever observes encrypted shares, so user confidentiality is preserved end-to-end.
+
+
+## Next Steps
+
+- Understand the cryptographic foundations? Read the [Concepts](/docs/taceo-match/concepts) guide.
+- Evaluating for an identity use case? Start with [Confidential Biometrics](/docs/identity-solutions/biometrics/introduction).
+
+:::tip Customer-facing framing
+The [Identity Solutions → Confidential Biometrics](/docs/identity-solutions/biometrics/introduction)
+section presents this service in a product context - start there if you are evaluating TACEO for
+a biometric verification use case.
+:::

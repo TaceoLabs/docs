@@ -1,0 +1,109 @@
+---
+title: Confidential Biometrics
+description: Biometric matching and verification in MPC - no plaintext biometric data exposed
+---
+
+# Confidential Biometrics
+
+Confidential Biometrics is enabled by [TACEO:Match](/docs/taceo-match/overview), TACEO's service for biometric feature matching in MPC. No plaintext biometric data leaves the user's
+device or passes through a single party. TACEO's threshold MPC stack evaluates biometric
+comparisons directly on secret shares, so the underlying templates are never reconstructed by
+any node, any server, or TACEO itself.
+
+:::tip Proven at global scale
+TACEO co-architected the MPC protocol now running **World**'s [iris-code uniqueness system](https://world.org/blog/announcements/worldcoin-foundation-unveils-new-smpc-system-deletes-iris-codes) in
+production at global scale. The same threshold computation model - secret-share the sensitive
+data, compute on shares, verify the result - is the foundation Confidential Biometrics is built
+on.
+:::
+
+## Why biometrics are different
+
+Biometric data is unlike a password or a private key. You can rotate a key; you cannot rotate
+your iris or your palm.
+
+- **Irrevocable.** A leaked biometric template exposes a user forever. There is no recovery
+  path equivalent to "change your password."
+- **Population-scale damage.** Centralized biometric databases are prime target for attacks.
+- **Device-only matching is limiting.** Keeping templates on device protects privacy but
+  blocks the cross-organization checks that matter most: uniqueness across a system, sybil
+  detection, sanctions screening.
+- **Central servers break the trust model.** Sending raw templates to a verification server
+  requires trusting that server completely - with data that can never be changed if trust is
+  violated.
+
+Any architecture that solves these problems needs to run the comparison without ever
+centralizing the template in plaintext. That is exactly what MPC enables.
+
+## How MPC solves it
+
+The core mechanic: a biometric template is split into cryptographic secret shares and
+distributed across independent MPC nodes on the [TACEO Network](/docs/taceo-network/index.mdx). No single node holds a
+meaningful fragment of the template. Comparison, matching, and uniqueness checks are then
+computed *on the shares directly*.
+
+**Step by step:**
+
+1. **Template enrollment.** The biometric template (e.g. an iris code) is secret-shared on
+   the user's device or dedicated hardware before it is sent. The shares are distributed to the MPC network.
+   No complete template exists outside the device.
+
+2. **Matching in MPC.** When verification is requested, the MPC nodes cooperate to evaluate
+   the comparison function (e.g. Hamming distance for iris codes) on their respective shares. Each node only ever sees its own share; the
+   comparison result is the only output.
+
+3. **Threshold security.** Templates are protected by the threshold assumption we know from MPC protocols.
+
+## What this enables
+
+| Use case | Why MPC makes it possible |
+|---|---|
+| **Population-scale uniqueness / sybil resistance** | Compare against an enrolled set without centralizing templates or revealing which record matched |
+| **Cross-org deduplication** | Organizations contribute to a joint check without sharing their underlying biometric data with each other |
+| **Anonymous identity verification** | Prove a biometric matches an enrolled identity without revealing *which* identity |
+
+
+## Who Should Use It?
+
+### Identity Protocol Teams
+Building uniqueness systems, sybil-resistance infrastructure, or anonymous identity verification where biometric templates cannot be centralized.
+
+### Biometric Verification Providers
+Offering cross-organization deduplication or uniqueness checks without requiring any party to hold the underlying templates.
+
+### Enterprise Developers
+Running population-scale matching or compliance screening across organizational boundaries, where centralizing sensitive biometric data is not acceptable.
+
+## Common Use Cases
+
+### Population-Scale Uniqueness / Sybil Resistance
+Problem: Checking uniqueness across a large enrolled set requires comparing against stored templates - centralizing them creates an unacceptable breach risk.
+
+Solution: TACEO:Match compares against the enrolled set without centralizing templates or revealing which record matched.
+
+*Used in: Proof-of-uniqueness systems, anonymous credential issuance, sybil-resistant voting*
+
+### Cross-Organization Deduplication
+Problem: Multiple organizations want to detect shared or duplicate identities, but cannot legally or practically share their biometric databases with each other.
+
+Solution: Organizations contribute to a joint MPC computation. The check runs on secret shares; no party sees another's templates or learns individual match results beyond the joint output.
+
+*Used in: Cross-border identity verification, financial compliance, fraud detection consortiums*
+
+### Anonymous Identity Verification
+Problem: Verifying that a biometric matches an enrolled identity requires revealing which identity it is - breaking anonymity.
+
+Solution: The MPC nodes verify a match against an enrolled set and return only a boolean result. The verifier learns that a match exists, not which identity matched.
+
+*Used in: Anonymous credential systems, private age/eligibility verification, privacy-preserving KYC*
+
+## Underlying service
+
+The low-level concepts and service documentation live under
+[TACEO:Match](/docs/taceo-match/overview) in the TACEO Services section.
+
+For adjacent reading:
+- [Identity Solutions overview](/docs/identity-solutions/overview)
+- [Distributed Nullifiers](/docs/identity-solutions/nullifiers/introduction) - TACEO's
+  production OPRF-based nullifier service, same threshold MPC foundation
+- [Identity & Uniqueness use cases](/docs/use-cases/identity)

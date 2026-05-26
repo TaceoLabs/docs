@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 780" font-family="'Inter', 'Helvetica Neue', Arial, sans-serif">
+  <!-- Background -->
+  <rect width="1400" height="780" fill="#F4F1EA"/>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#111111"/>
+    </marker>
+    <marker id="arrow-accent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#111111"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="700" y="50" text-anchor="middle" fill="#111111" font-size="22" font-weight="600" letter-spacing="-0.3">Privacy-Preserving Biometric Matching via Secure Multi-Party Computation</text>
+  <text x="700" y="74" text-anchor="middle" fill="#5C5C5C" font-size="13" font-weight="400" letter-spacing="-0.1">Reference architecture · client-side secret sharing with N-party threshold matching</text>
+
+  <!-- ============================== -->
+  <!-- TIER 1: CLIENT -->
+  <!-- ============================== -->
+
+  <!-- Biometric sensor -->
+  <g>
+    <rect x="240" y="130" width="240" height="100" rx="4" fill="#FFFFFF" stroke="#111111" stroke-width="1.25"/>
+    <text x="360" y="172" text-anchor="middle" fill="#111111" font-size="15" font-weight="600">Biometric Sensor</text>
+    <text x="360" y="195" text-anchor="middle" fill="#5C5C5C" font-size="11">face · iris · fingerprint</text>
+    <text x="360" y="213" text-anchor="middle" fill="#888888" font-size="10" font-style="italic">on-device capture</text>
+  </g>
+
+  <!-- Feature extraction -->
+  <g>
+    <rect x="540" y="130" width="220" height="100" rx="4" fill="#FFFFFF" stroke="#111111" stroke-width="1.25"/>
+    <text x="650" y="172" text-anchor="middle" fill="#111111" font-size="15" font-weight="600">Feature Extraction</text>
+    <text x="650" y="195" text-anchor="middle" fill="#5C5C5C" font-size="11">template / embedding</text>
+    <text x="650" y="213" text-anchor="middle" fill="#888888" font-size="10" font-style="italic">on-device</text>
+  </g>
+
+  <!-- Secret sharing + encryption (key step → emphasized) -->
+  <g>
+    <rect x="820" y="130" width="320" height="100" rx="4" fill="#111111" stroke="#111111" stroke-width="1.25"/>
+    <text x="980" y="172" text-anchor="middle" fill="#FFFFFF" font-size="15" font-weight="600">Secret Sharing + Encryption</text>
+    <text x="980" y="195" text-anchor="middle" fill="#C9C5BC" font-size="11">split into N shares · encrypt per party</text>
+    <text x="980" y="213" text-anchor="middle" fill="#9A968D" font-size="10" font-style="italic">no plaintext leaves the device</text>
+  </g>
+
+  <!-- Inter-stage arrows in client tier -->
+  <line x1="480" y1="180" x2="540" y2="180" stroke="#111111" stroke-width="1.25" marker-end="url(#arrow)"/>
+  <line x1="760" y1="180" x2="820" y2="180" stroke="#111111" stroke-width="1.25" marker-end="url(#arrow)"/>
+
+  <!-- ============================== -->
+  <!-- DISTRIBUTION -->
+  <!-- ============================== -->
+
+  <!-- Three branches from Secret Sharing box down to each party -->
+  <path d="M 980 230 L 980 295 L 330 295 L 330 378" fill="none" stroke="#111111" stroke-width="1.25" stroke-dasharray="5,4" marker-end="url(#arrow-accent)"/>
+  <path d="M 980 295 L 700 295 L 700 378" fill="none" stroke="#111111" stroke-width="1.25" stroke-dasharray="5,4" marker-end="url(#arrow-accent)"/>
+  <path d="M 980 295 L 1070 295 L 1070 378" fill="none" stroke="#111111" stroke-width="1.25" stroke-dasharray="5,4" marker-end="url(#arrow-accent)"/>
+
+  <!-- Distribution label -->
+  <g>
+    <rect x="455" y="259" width="230" height="22" rx="2" fill="#F4F1EA" stroke="#111111" stroke-width="1"/>
+    <text x="570" y="275" text-anchor="middle" fill="#111111" font-size="11" font-weight="500" letter-spacing="0.2">encrypted share · per party</text>
+  </g>
+
+  <!-- ============================== -->
+  <!-- TIER 2: MPC PARTIES -->
+  <!-- ============================== -->
+
+  <!-- Party 1 -->
+  <g>
+    <rect x="240" y="380" width="180" height="120" rx="4" fill="#FFFFFF" stroke="#111111" stroke-width="1.5"/>
+    <text x="330" y="448" text-anchor="middle" fill="#111111" font-size="20" font-weight="600" letter-spacing="-0.3">Party 1</text>
+  </g>
+
+  <!-- Party 2 -->
+  <g>
+    <rect x="610" y="380" width="180" height="120" rx="4" fill="#FFFFFF" stroke="#111111" stroke-width="1.5"/>
+    <text x="700" y="448" text-anchor="middle" fill="#111111" font-size="20" font-weight="600" letter-spacing="-0.3">Party 2</text>
+  </g>
+
+  <!-- Party 3 -->
+  <g>
+    <rect x="980" y="380" width="180" height="120" rx="4" fill="#FFFFFF" stroke="#111111" stroke-width="1.5"/>
+    <text x="1070" y="448" text-anchor="middle" fill="#111111" font-size="20" font-weight="600" letter-spacing="-0.3">Party 3</text>
+  </g>
+
+  <!-- SMPC threshold check edges -->
+  <line x1="420" y1="440" x2="610" y2="440" stroke="#111111" stroke-width="1.25"/>
+  <line x1="790" y1="440" x2="980" y2="440" stroke="#111111" stroke-width="1.25"/>
+  <path d="M 240 500 Q 700 590 1160 500" fill="none" stroke="#111111" stroke-width="1.25"/>
+
+  <!-- SMPC threshold check pills -->
+  <g>
+    <rect x="430" y="424" width="170" height="32" rx="2" fill="#F4F1EA" stroke="#111111" stroke-width="1"/>
+    <text x="515" y="444" text-anchor="middle" fill="#111111" font-size="12" font-weight="500">SMPC threshold check</text>
+  </g>
+  <g>
+    <rect x="800" y="424" width="170" height="32" rx="2" fill="#F4F1EA" stroke="#111111" stroke-width="1"/>
+    <text x="885" y="444" text-anchor="middle" fill="#111111" font-size="12" font-weight="500">SMPC threshold check</text>
+  </g>
+  <g>
+    <rect x="615" y="552" width="170" height="32" rx="2" fill="#F4F1EA" stroke="#111111" stroke-width="1"/>
+    <text x="700" y="572" text-anchor="middle" fill="#111111" font-size="12" font-weight="500">SMPC threshold check</text>
+  </g>
+
+  <!-- ============================== -->
+  <!-- OUTPUT: SINGLE BINARY RESULT -->
+  <!-- ============================== -->
+
+  <!-- Output arrows routed around the P1↔P3 arc -->
+  <path d="M 400 500 Q 400 640 620 700" fill="none" stroke="#111111" stroke-width="1.25" marker-end="url(#arrow)"/>
+  <path d="M 640 500 Q 640 640 690 700" fill="none" stroke="#111111" stroke-width="1.25" marker-end="url(#arrow)"/>
+  <path d="M 1000 500 Q 1000 640 780 700" fill="none" stroke="#111111" stroke-width="1.25" marker-end="url(#arrow)"/>
+
+  <!-- Binary Result box -->
+  <g>
+    <rect x="540" y="700" width="320" height="60" rx="4" fill="#111111" stroke="#111111" stroke-width="1.25"/>
+    <text x="700" y="728" text-anchor="middle" fill="#FFFFFF" font-size="16" font-weight="600">Binary Result</text>
+    <text x="700" y="748" text-anchor="middle" fill="#C9C5BC" font-size="12">match / no-match</text>
+  </g>
+</svg>

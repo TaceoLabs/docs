@@ -1,0 +1,27 @@
+---
+title: Threshold Passport Identification
+description: Match passport attributes without exposing document data
+---
+
+# Threshold Passport Identification
+
+Match passports or any identification document (e.g. national IDs) across parties without revealing the underlying document data.
+
+## The tracability problem of digital identities
+
+Identity documents like passports or national identity cards are the defacto standard to authenticate an individual in the physical world. This property makes them a natural
+anchor for digital identity systems as well. But operating on these data digitally requires
+careful handling: the **underlying attributes are sensitive**, tied to a real person, and cannot
+be rotated if compromised.
+
+A common mitigation is to avoid publishing the plain data in the first place. Instead the data is hashed before being posted and used for identity comparison.
+The raw document data is never transmitted. This limits casual observers - but not the issuers or anyone else with access to the raw data.
+Issuing authorities might hold the original data and can compute the same hashes, making users traceable to
+any party that issued their document.
+
+## Unique and unlinkable identities
+
+[TACEO:OPRF](/docs/taceo-oprf/overview.mdx) computes a nullifier over the document hash using a threshold of independent MPC
+nodes. The resulting nullifier is deterministic - it uniquely identifies the user - but no
+single party, including TACEO or the document issuer, can compute it unilaterally. Knowledge
+of the document's pre-image is no longer sufficient to derive or link the identifier.

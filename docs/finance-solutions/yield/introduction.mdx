@@ -1,59 +1,71 @@
 ---
 title: Introduction
-sidebar_label: Private Yield
 ---
 
 # Private Yield
 
-Private Yield brings compliant, confidential yield to Ethereum, built on top of
-[Merces](/docs/finance-solutions/payments/introduction). Users earn on private balances without exposing positions,
-counterparty relationships, or strategy onchain, and without giving up the regulatory posture
-required to operate in real markets.
+Private Yield lets users put their assets in private balances to work to generate yield. Funds move from a user's private Merces account
+into a vault that accrues yield over time — without exposing positions, amounts, or
+counterparty relationships onchain.
 
-:::info Coming soon
-Private Yield is in active development. The capability extends Merces from a confidential transfer
-system into a confidential earning system, while keeping the same integration model and the same
-compliance primitives.
+:::tip What is Merces?
+Merces is TACEO's confidential token transfer system. Balances are held as secret shares across a
+network of MPC operators, with state transitions verified onchain via CoSNARKs. See
+[Private Payments](/docs/finance-solutions/payments/introduction) for the full picture.
 :::
 
 ## Why this is hard today
 
 Public DeFi yield broadcasts every position. Anyone can read a wallet's allocations, infer
 strategy, copy or front-run trades, and reconstruct counterparty graphs. For institutions,
-treasuries, and any user that values strategic privacy, that exposure is the reason they aren't
+treasuries, and any user that values strategic privacy, that exposure is one of the reasons they aren't
 onchain at all.
 
 The two existing paths each fail in their own way:
 
-- **Move to a private chain.** Forces migration off Ethereum and away from the assets, liquidity,
+- **Move to a private chain.** Forces migration off to a new chain and away from the assets, liquidity,
   and integrations that matter.
 - **Use a privacy mixer.** Obscures flows but doesn't compose with regulated counterparties or
   give institutions a defensible compliance story.
 
-## What we're building
+## How Private Yield addresses this
 
-Private Yield uses the same Merces private-balance model as
-[Private Payments](/docs/finance-solutions/payments/introduction) and [Confidential x402](/docs/finance-solutions/x402/introduction):
-balances held as secret shares across the TACEO Network, state transitions verified onchain via
-CoSNARKs, compliance primitives built into the protocol layer.
+Private Yield adds a vault layer on top of Merces private balances. The vault is an ERC-4626
+contract whose internal balances are held as secret shares across the TACEO MPC network, exactly
+like private transfer balances. No balance and yield accrual is ever written in plaintext to the chain.
 
-The yield layer adds the ability for private balances to participate in earning strategies, 
-without revealing positions, without leaving Ethereum, and without compromising the compliance
-guarantees that make these rails deployable in regulated markets.
+A user's position is represented as vault shares (vUSDT). Those shares increase in value over time
+as yield is added to the vault, but the share count and its underlying value remain private.
 
-## What's planned
+## What it looks like in practice
 
-- Yield on private ERC-20 balances (starting with USDC)
-- Allowlists and reveal rules carried through from Merces' [Compliance](/docs/finance-solutions/compliance/introduction)
-  layer
-- The same SDK integration model as Private Payments, issuers and fintechs can offer yield
-  inside their existing product surface
+1. A user holds private USDT in their Merces account.
+2. They deposit into the private vault: their private USDT balance decreases, their private vUSDT
+   share balance increases.
+3. Over time, the vault accumulates yield. The redemption value of each vUSDT share grows.
+4. When the user redeems, their vUSDT shares are burned and USDT is credited back to their
+   private Merces balance — including any accrued yield.
 
-## Stay in the loop
+At no point is a plaintext balance or share count visible onchain or to any single party.
 
-Private Yield is shipping toward public testnet. To get early access, integration support, or to
-discuss a specific use case, [email the team](mailto:hello@taceo.io) or
-[join Discord](https://taceo.io/discord).
+## Current yield model
 
-In the meantime, the foundation is already live, see [Private Payments](/docs/finance-solutions/payments/introduction)
-to understand the transfer system this builds on.
+The vault currently simulates yield by periodically adding assets to the vault pool, resulting in
+a fixed **7.5% APY** for all depositors. Share value grows uniformly — users earn proportionally
+to their private share of the total vault.
+
+## Components
+
+| Component | Description |
+|---|---|
+| **Private balance** | Standard Merces private account — funds before and after yield |
+| **Vault contract** | ERC-4626 contract that issues vUSDT shares and holds the yield pool |
+| **MPC network** | Holds vault balances as secret shares across three operators |
+| **Gateway** | Accepts vault deposit/withdraw requests and coordinates the MPC network |
+
+## Where to go next
+
+| Goal | Start here |
+|---|---|
+| Integration and usage of Private Yield | [Quickstart](../quickstart) |
+| Understand the deposit and withdrawal flow | [How it works](../how-it-works) |

@@ -1,0 +1,397 @@
+---
+title: Quickstart
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Quickstart
+
+This guide walks through all client operations for the Merces private payments system using
+TACEO's hosted infrastructure — no contract deployment required.
+
+:::info Testnet only
+The current deployment uses test tokens with no real-world value. Do not use mainnet private keys
+or real funds.
+:::
+
+You will:
+1. Install the Merces2 client.
+2. Create a client and register your wallet.
+3. Deposit ERC-20 tokens into your private account.
+4. Check your balances.
+5. Send private and confidential payments.
+6. Withdraw back to ERC-20.
+7. Retrieve transaction history.
+
+## Prerequisites
+
+- Node.js 20+ (TypeScript) or Rust 1.91+ (Rust)
+
+## Step 1: Install the package
+
+<Tabs>
+<TabItem value="typescript" label="TypeScript" default>
+
+```bash
+npm install @taceo/merces2-client viem
+```
+
+</TabItem>
+<TabItem value="rust" label="Rust">
+
+:::info
+The Merces implementation, along with the Rust client are not yet published.
+The Rust client examples below are intended to show how the Rust client can be used once released.
+:::
+
+</TabItem>
+</Tabs>
+
+## Step 2: Create a client
+
+<Tabs>
+<TabItem value="typescript" label="TypeScript" default>
+
+```typescript
+import { createWalletClient, createPublicClient, http } from 'viem';
+import { privateKeyToAccount } from 'viem/accounts';
+import { plasmaTestnet } from 'viem/chains';
+import { Client } from '@taceo/merces2-client';
+
+const account = privateKeyToAccount(process.env.PRIVATE_KEY as `0x${string}`);
+
+const walletClient = createWalletClient({
+  account,
+  chain: plasmaTestnet,
+  transport: http("https://testnet-rpc.plasma.to"),
+});
+
+const publicClient = createPublicClient({
+  chain: plasmaTestnet,
+  transport: http("https://testnet-rpc.plasma.to"),
+});
+
+const client = new Client({
+  idRegistryUrl:  'https://id-registry.merces2.taceo.io',
+  gatewayUrl:     'wss://gateway.merces2.taceo.io',
+  nodeUrls: [
+    'https://node0.merces2.taceo.io',
+    'https://node1.merces2.taceo.io',
+    'https://node2.merces2.taceo.io',
+  ],
+  contractAddress: '0x<MERCES_CONTRACT>',
+  tokenAddress:    '0x<USDT_ADDRESS>',
+  vaultAddress:    '0x<VAULT_ADDRESS>',
+  token: 'EIP3009',
+  walletClient,
+  publicClient,
+});
+
+// Register the wallet with the id registry (idempotent)
+await client.register();
+```
+
+</TabItem>
+<TabItem value="rust" label="Rust">
+
+```rust
+use std::time::Duration;
+use taceo_merces2_client::{Client, config::Merces2ClientConfig};
+use taceo_nodes_common::Environment;
+use alloy::signers::local::PrivateKeySigner;
+
+#[tokio::main]
+async fn main() -> eyre::Result<()> {
+    let private_key = std::env::var("PRIVATE_KEY")?;
+    let signer: PrivateKeySigner = private_key.parse()?;
+
+    let config = Merces2ClientConfig {
+        environment:                  Environment::Prod,
+        gateway_url:                  "wss://gateway.merces2.taceo.io".to_string(),
+        id_registry_url:              "https://id-registry.merces2.taceo.io".to_string(),
+        orchestrator_url:             "https://orchestrator.merces2.taceo.io".to_string(),
+        node_urls: vec![
+            "https://node0.merces2.taceo.io".to_string(),
+            "https://node1.merces2.taceo.io".to_string(),
+            "https://node2.merces2.taceo.io".to_string(),
+        ],
+        contract_address:             "<MERCES_CONTRACT>".parse()?,
+        token_address:                "<USDT_ADDRESS>".parse()?,
+        token:                        taceo_merces2_types::Token::EIP3009,
+        http_rpc_url:                 "https://testnet-rpc.plasma.to".to_string().into(),
+        private_key:                  private_key.into(),
+        confirmations_poll_interval:  Duration::from_secs(1),
+        processed_mpc_timeout:        Duration::from_secs(300),
+    };
+
+    let api_client = reqwest::Client::new();
+    let groth16_material = /* load from files */;
+    let client = Client::new(config, api_client, groth16_material, signer).await?;
+
+    Ok(())
+}
+```
+
+</TabItem>
+</Tabs>
+
+## Step 3: Deposit ERC-20 tokens into your private account
+
+Merces supports two privacy modes. Choose one per deposit:
+
+| Mode | What's hidden |
+|---|---|
+| **Confidential** | Amounts and balances; sender/receiver addresses remain visible |
+| **Fully private** | Amounts, balances, sender, and receiver |
+
+<Tabs>
+<TabItem value="typescript" label="TypeScript" default>
+
+```typescript
+import { parseUnits } from 'viem';
+
+const decimals = await client.getDecimals();
+const amount = parseUnits('100', decimals);
+
+// Confidential mode: amounts hidden, addresses visible
+const txHash = await client.confidentialDeposit(amount);
+console.log('Confidential deposit confirmed:', txHash);
+
+// Fully private mode: amounts and addresses hidden
+// const txHash = await client.privateDeposit(amount);
+// console.log('Private deposit confirmed:', txHash);
+```
+
+</TabItem>
+<TabItem value="rust" label="Rust">
+
+```rust
+use alloy::primitives::utils::parse_units;
+use rand::rngs::OsRng;
+
+let decimals = client.decimals().await?;
+let amount = parse_units("100", decimals)?.into();
+
+// Confidential mode: amounts hidden, addresses visible
+let tx_hash = client.confidential_deposit(amount, &mut OsRng).await?;
+println!("Confidential deposit confirmed: {tx_hash}");
+
+// Fully private mode: amounts and addresses hidden
+// let tx_hash = client.private_deposit(amount, &mut OsRng).await?;
+// println!("Private deposit confirmed: {tx_hash}");
+```
+
+</TabItem>
+</Tabs>
+
+## Step 4: Check balances
+
+<Tabs>
+<TabItem value="typescript" label="TypeScript" default>
+
+```typescript
+import { formatUnits } from 'viem';
+
+const decimals = await client.getDecimals();
+
+// ERC-20 balance (public, on-chain)
+const erc20Balance = await client.getErc20Balance();
+console.log('ERC-20 balance:  ', formatUnits(erc20Balance, decimals));
+
+// Private balance (secret-shared across MPC nodes)
+const privateBalance = await client.getPrivateBalance();
+console.log('Private balance: ', formatUnits(privateBalance, decimals));
+```
+
+</TabItem>
+<TabItem value="rust" label="Rust">
+
+```rust
+use alloy::primitives::utils::format_units;
+
+let address = client.address();
+let decimals = client.decimals().await?;
+
+// ERC-20 balance (public, on-chain)
+let erc20_balance = client.get_erc20_balance(address).await?;
+println!("ERC-20 balance:  {}", format_units(erc20_balance, decimals)?);
+
+// Private balance (secret-shared across MPC nodes)
+let private_balance = client.get_balance(address).await?;
+println!("Private balance: {}", format_units(private_balance, decimals)?);
+```
+
+</TabItem>
+</Tabs>
+
+## Step 5: Send payments
+
+### Confidential transfer
+
+Amounts and balances are hidden; sender and receiver wallet addresses remain visible on-chain.
+Use this mode when settling to a known counterparty wallet while keeping amounts private.
+
+<Tabs>
+<TabItem value="typescript" label="TypeScript" default>
+
+```typescript
+import { parseUnits } from 'viem';
+
+const decimals = await client.getDecimals();
+const receiver = '0x<RECEIVER_ADDRESS>';
+
+const txHash = await client.confidentialTransfer(receiver, parseUnits('50', decimals));
+console.log('Confidential transfer confirmed:', txHash);
+```
+
+</TabItem>
+<TabItem value="rust" label="Rust">
+
+```rust
+use alloy::primitives::{Address, utils::parse_units};
+use rand::rngs::OsRng;
+
+let receiver: Address = "0x<RECEIVER_ADDRESS>".parse()?;
+let decimals = client.decimals().await?;
+let amount = parse_units("50", decimals)?.into();
+
+let tx_hash = client.confidential_transfer(receiver, amount, &mut OsRng).await?;
+println!("Confidential transfer confirmed: {tx_hash}");
+```
+
+</TabItem>
+</Tabs>
+
+### Fully private transfer
+
+Amounts, balances, sender, and receiver are all hidden. Use this for consumer payments,
+sensitive treasury moves, or any flow requiring full transaction-graph privacy.
+
+<Tabs>
+<TabItem value="typescript" label="TypeScript" default>
+
+```typescript
+import { parseUnits } from 'viem';
+
+const decimals = await client.getDecimals();
+const receiver = '0x<RECEIVER_ADDRESS>';
+
+const txHash = await client.privateTransfer(receiver, parseUnits('50', decimals));
+console.log('Private transfer confirmed:', txHash);
+```
+
+</TabItem>
+<TabItem value="rust" label="Rust">
+
+```rust
+use alloy::primitives::{Address, utils::parse_units};
+use rand::rngs::OsRng;
+
+let receiver: Address = "0x<RECEIVER_ADDRESS>".parse()?;
+let decimals = client.decimals().await?;
+let amount = parse_units("50", decimals)?.into();
+
+let tx_hash = client.private_transfer(receiver, amount, &mut OsRng).await?;
+println!("Private transfer confirmed: {tx_hash}");
+```
+
+</TabItem>
+</Tabs>
+
+## Step 6: Withdraw back to ERC-20
+
+Exit the private system and return funds to a standard on-chain ERC-20 balance.
+
+<Tabs>
+<TabItem value="typescript" label="TypeScript" default>
+
+```typescript
+import { parseUnits, formatUnits } from 'viem';
+
+const decimals = await client.getDecimals();
+const amount = parseUnits('50', decimals);
+
+// Confidential withdraw (matching confidential deposit/transfer)
+const txHash = await client.confidentialWithdraw(amount);
+console.log('Confidential withdraw confirmed:', txHash);
+
+// Fully private withdraw (matching private deposit/transfer)
+// const txHash = await client.privateWithdraw(amount);
+// console.log('Private withdraw confirmed:', txHash);
+
+const newErc20Balance = await client.getErc20Balance();
+console.log('New ERC-20 balance:', formatUnits(newErc20Balance, decimals));
+```
+
+</TabItem>
+<TabItem value="rust" label="Rust">
+
+```rust
+use alloy::primitives::utils::{parse_units, format_units};
+use rand::rngs::OsRng;
+
+let decimals = client.decimals().await?;
+let amount = parse_units("50", decimals)?.into();
+
+// Confidential withdraw (matching confidential deposit/transfer)
+let tx_hash = client.confidential_withdraw(amount, &mut OsRng).await?;
+println!("Confidential withdraw confirmed: {tx_hash}");
+
+// Fully private withdraw (matching private deposit/transfer)
+// let tx_hash = client.private_withdraw(amount, &mut OsRng).await?;
+// println!("Private withdraw confirmed: {tx_hash}");
+
+let new_erc20_balance = client.get_erc20_balance(client.address()).await?;
+println!("New ERC-20 balance: {}", format_units(new_erc20_balance, decimals)?);
+```
+
+</TabItem>
+</Tabs>
+
+## Step 7: Retrieve transaction history
+
+Fetch and decrypt the transaction history for an address.
+
+<Tabs>
+<TabItem value="typescript" label="TypeScript" default>
+
+```typescript
+// Full history
+const history = await getTxHistory(
+  'https://id-registry.merces2.taceo.io',
+  'https://orchestrator.merces2.taceo.io',
+  client.address(),
+);
+
+console.log(`${history.length} transactions`);
+for (const tx of history) {
+  console.log(tx);
+}
+```
+
+</TabItem>
+<TabItem value="rust" label="Rust">
+
+```rust
+use rand::rngs::OsRng;
+use taceo_merces2_client::TxListRequest;
+
+// Full history for an address
+let history = client
+    .get_transaction_history(client.address(), None, None, &mut OsRng)
+    .await?;
+
+println!("{} transactions", history.len());
+for tx in &history {
+    println!("{tx:?}");
+}
+```
+
+</TabItem>
+</Tabs>
+
+## Next steps
+
+- **Understand the protocol architecture** → [How it works](../how-it-works)
+- **Earn yield on private balances** → [Private Yield Quickstart](../../yield/quickstart)
