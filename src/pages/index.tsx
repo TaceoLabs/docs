@@ -98,11 +98,13 @@ function GuidanceSection() {
           <JourneyCard
             status="Privacy primitives"
             title="Add a privacy service to my application"
-            description="Production-ready privacy primitives you can call directly: privacy-preserving nullifiers (TACEO:OPRF), private proof delegation (TACEO:Proof), and confidential shared state (TACEO:OMap)."
+            description="Production-ready privacy primitives you can call directly: privacy-preserving nullifiers (TACEO:OPRF), private proof delegation (TACEO:Proof), confidential shared state (TACEO:OMap) and unique feature matching (TACEO:Match)."
             ctas={[
               { to: "/docs/services/overview", label: "Browse services" },
               { to: "/docs/taceo-oprf/overview", label: "TACEO:OPRF" },
               { to: "/docs/taceo-proof/overview", label: "TACEO:Proof" },
+              // { to: "/docs/taceo-omap/overview", label: "TACEO:OMap" },
+              { to: "/docs/taceo-match/overview", label: "TACEO:Match" },
             ]}
           />
 
@@ -134,14 +136,7 @@ function GuidanceSection() {
                 />
               </div>
             </div>
-            <div className={styles.quickLinkCard}>
-              <p className={styles.quickLinkTitle}>Real Applications</p>
-              <div className={styles.quickLinkList}>
-                <ArrowLink to="/docs/use-cases/finance" label="Finance" />
-                <ArrowLink to="/docs/use-cases/identity" label="Identity" />
-                <ArrowLink to="/docs/use-cases/" label="More use cases" />
-              </div>
-            </div>
+        
             <div className={styles.quickLinkCard}>
               <p className={styles.quickLinkTitle}>Developer Tools</p>
               <div className={styles.quickLinkList}>

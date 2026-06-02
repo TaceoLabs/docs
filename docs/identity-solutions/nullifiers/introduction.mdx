@@ -1,0 +1,67 @@
+---
+title: Distributed Nullifiers
+description: Threshold-secured deterministic nullifiers via TACEO:OPRF
+---
+
+# Distributed Nullifiers
+
+Distributed Nullifiers is enabled by [TACEO:OPRF](/docs/taceo-oprf/overview). TACEO's production service for computing threshold Oblivious Pseudo-Random Functions (OPRFs).
+
+A nullifier derived from a single secret is only as safe as that secret. TACEO's distributed
+approach requires a threshold of independent MPC nodes to cooperate before any nullifier can be
+evaluated, so no single party - including TACEO - can link or deanonymize your users even if
+secrets are partially compromised. Beyond nullifiers, TACEO:OPRF can serve any use case requiring
+distributed, verifiable pseudorandomness.
+
+In production for [**World**](https://world.org/blog/announcements/world-id-full-stack-proof-of-human) and **zkPassport**.
+
+
+## What Problem Does It Solve?
+
+**The Challenge**: Traditional privacy systems have single points of failure. If your secret key leaks, attackers can trace your entire history.
+
+**The Solution**: TACEO:OPRF distributes trust across multiple independent parties. Even if your secret leaks, attackers need to compromise multiple nodes to trace you.
+
+## How TACEO:OPRF Works
+
+TACEO:OPRF allows users to deterministically *salt* their secrets without ever revealing the secret itself. 
+
+Unlike traditional single-server OPRF protocols, TACEO:OPRF is built on a multi-party computation (MPC) design. No single party can evaluate the OPRF on its own. Instead, a threshold of independent nodes must cooperate, providing the familiar trust guarantees of MPC-based systems.
+
+### Key Features
+
+- Privacy-preserving: Never reveals your secret inputs
+- Threshold security: Requires cooperation of multiple independent nodes  
+- ZK-friendly: Designed using zero-knowledge friendly primitives
+- Flexible authorization: Customizable eligibility requirements
+
+## Who Should Use It?
+
+### Web3 Protocol Teams
+Building identity systems (like World ID), DeFi protocols, or blockchain applications needing enhanced privacy guarantees.
+
+### Privacy Infrastructure Companies  
+Developing wallet recovery services, anonymous authentication systems, or privacy-preserving financial services.
+
+### Enterprise Developers
+Creating compliance systems, secure collaboration tools, or any application requiring distributed trust assumptions.
+
+**Technical Requirements**: Comfort with cryptographic concepts, zero-knowledge proofs, and API integration. Ideal for teams already working with blockchain or privacy-focused technologies.
+
+## Common Use Cases
+
+- **Nullifiers for Digital Identity** -- threshold security means attackers must compromise both your secret and the MPC threshold before they can trace your identity. Used in ZK identity systems, anonymous voting, and private credentials.
+- **Private Revenue Sharing for DeFi** -- private referral identifiers let protocols distribute fees without linking wallets to users or referrers. Used in decentralized exchanges and private trading platforms.
+- **Private Wallet Recovery** -- recover a wallet using familiar identity factors without the recovery service ever seeing your keys. Used in wallet applications and key management systems.
+
+See [Use Cases & Examples](/docs/identity-solutions/nullifiers/use-cases) for detailed walkthroughs of each scenario.
+
+## Getting started
+
+Follow the [Quickstart](/docs/identity-solutions/nullifiers/getting-started/quickstart) to run
+your first OPRF computation against the live testnet in minutes.
+
+## Underlying service
+
+The low-level API, authorization modules, and concepts documentation live under
+[TACEO:OPRF](/docs/taceo-oprf/overview) in the TACEO Services section.

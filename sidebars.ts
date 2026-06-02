@@ -20,13 +20,20 @@ const sidebars: SidebarsConfig = {
       collapsed: false,
       link: { type: "doc", id: "finance-solutions/overview" },
       items: [
-        "finance-solutions/payments/introduction",
+        {
+          type: "category",
+          label: "Private Payments",
+          link: { type: "doc", id: "finance-solutions/payments/introduction" },
+          items: [
+            "finance-solutions/payments/quickstart",
+            "finance-solutions/payments/how-it-works",
+          ],
+        },
         {
           type: "category",
           label: "Confidential x402",
-          link: { type: "generated-index", title:"Confidential x402", slug: "finance-solutions/x402/", description: "Confidential x402 is a privacy extension to the x402 payment protocol that hides payment amounts and balances onchain using ZK proofs and MPC, without changing how you write HTTP clients or servers." },
+          link: { type: "doc", id: "finance-solutions/x402/introduction" },
           items: [
-            "finance-solutions/x402/introduction",
             "finance-solutions/x402/quickstart",
             "finance-solutions/x402/how-it-works",
             "finance-solutions/x402/integration-guide",
@@ -35,7 +42,41 @@ const sidebars: SidebarsConfig = {
           ],
         },
         "finance-solutions/compliance/introduction",
-        "finance-solutions/yield/introduction",
+        {
+          type: "category",
+          label: "Private Yield",
+          link: { type: "doc", id: "finance-solutions/yield/introduction" },
+          items: [
+            "finance-solutions/yield/quickstart",
+            "finance-solutions/yield/how-it-works",
+          ],
+        },
+      ],
+    },
+    {
+      type: "category",
+      label: "Identity Solutions",
+      collapsed: false,
+      link: { type: "doc", id: "identity-solutions/overview" },
+      items: [
+        {
+          type: "category",
+          label: "Distributed Nullifiers",
+          link: { type: "doc", id: "identity-solutions/nullifiers/introduction" },
+          items: [
+            "identity-solutions/nullifiers/use-cases",
+            {
+              type: "category",
+              label: "Getting Started",
+              items: [
+                "identity-solutions/nullifiers/getting-started/quickstart",
+                "identity-solutions/nullifiers/getting-started/quicklocal",
+              ],
+            },
+          ],
+        },
+        "identity-solutions/passport-identification/introduction",
+        "identity-solutions/biometrics/introduction",
       ],
     },
     {
@@ -48,14 +89,7 @@ const sidebars: SidebarsConfig = {
           label: "TACEO:OPRF",
           link: { type: "doc", id: "taceo-oprf/overview" },
           items: [
-            "taceo-oprf/concepts",
-            "taceo-oprf/use-cases",
             "taceo-oprf/authorization",
-            {
-              type: "category",
-              label: "Getting Started",
-              items: ["taceo-oprf/quickstart", "taceo-oprf/quicklocal"],
-            },
             {
               type: "category",
               label: "Development",
@@ -81,6 +115,12 @@ const sidebars: SidebarsConfig = {
             "taceo-proof/dev/bestpractice",
           ],
         },
+        {
+          type: "category",
+          label: "TACEO:Match",
+          link: { type: "doc", id: "taceo-match/overview" },
+          items: ["taceo-match/concepts"],
+        }
       ],
     },
     {
@@ -203,34 +243,6 @@ const sidebars: SidebarsConfig = {
           type: "doc",
           id: "resources/collsnarks",
           label: "coSNARKs Further Reading",
-        },
-        {
-          type: "category",
-          label: "Use Cases",
-          link: { type: "doc", id: "use-cases/index" },
-          items: [
-            { type: "doc", id: "use-cases/identity", label: "Identity" },
-            { type: "doc", id: "use-cases/proof", label: "Proof" },
-            { type: "doc", id: "use-cases/finance", label: "Finance" },
-            { type: "doc", id: "use-cases/compliance", label: "Compliance" },
-            { type: "doc", id: "use-cases/attribution", label: "Attribution" },
-            { type: "doc", id: "use-cases/agents", label: "Agents" },
-          ],
-        },
-      ],
-    },
-    {
-      type: "category",
-      label: "Releases",
-      items: [
-        {
-          type: "category",
-          label: "coSNARK Releases",
-          items: [
-            "releases/co-snarks-april",
-            "releases/co-noir-feb",
-            "releases/co-noir-nov",
-          ],
         },
       ],
     },

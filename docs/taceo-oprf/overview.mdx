@@ -2,87 +2,87 @@
 
 TACEO:OPRF is a production-ready service on the TACEO network for computing threshold Oblivious Pseudo-Random Functions (OPRFs) in a publicly auditable and provable way.
 
-## What Problem Does It Solve?
+## What is a Pseudo-Random Function (PRF)?
 
-**The Challenge**: Traditional privacy systems have single points of failure. If your secret key leaks, attackers can trace your entire history.
+A Pseudo-Random Function (PRF) is a deterministic function that produces outputs that look random to anyone who doesn't know the secret key.
 
-**The Solution**: TACEO:OPRF distributes trust across multiple independent parties. Even if your secret leaks, attackers need to compromise multiple nodes to trace you.
+In practice, PRFs are implemented using:
+- Block ciphers (like ChaCha or AES)
+- Hash-based constructions (such as HMAC)
 
-## How TACEO:OPRF Works
+Given a secret key `k` and an input `x`, a PRF deterministically computes:
 
-TACEO:OPRF allows users to deterministically *salt* their secrets without ever revealing the secret itself. 
+```
+F(k, x) → random-looking value
+```
 
-Unlike traditional single-server OPRF protocols, TACEO:OPRF is built on a multi-party computation (MPC) design. No single party can evaluate the OPRF on its own. Instead, a threshold of independent nodes must cooperate, providing the familiar trust guarantees of MPC-based systems.
+## What is an Oblivious PRF (OPRF)?
 
-### Key Features
+An Oblivious PRF (OPRF) is a special kind of PRF computed jointly by two parties:
 
-- Privacy-preserving: Never reveals your secret inputs
-- Threshold security: Requires cooperation of multiple independent nodes  
-- ZK-friendly: Designed using zero-knowledge friendly primitives
-- Flexible authorization: Customizable eligibility requirements
+- Client: Provides the input `x`
+- Server: Holds the secret key `k` and evaluates the function
 
-## Who Should Use It?
+The key property is mutual privacy:
+- Client never learns the key `k`
+- Server never learns the input `x`
 
-### Web3 Protocol Teams
-Building identity systems (like World ID), DeFi protocols, or blockchain applications needing enhanced privacy guarantees.
+## How TACEO:OPRF Extends This
 
-### Privacy Infrastructure Companies  
-Developing wallet recovery services, anonymous authentication systems, or privacy-preserving financial services.
+TACEO:OPRF builds on the OPRF design with threshold security:
 
-### Enterprise Developers
-Creating compliance systems, secure collaboration tools, or any application requiring distributed trust assumptions.
+- The secret key `k` is secret-shared across multiple parties
+- No single party can evaluate the PRF alone
+- A threshold of parties must cooperate
+- Provides MPC trust guarantees while keeping inputs and keys private
 
-**Technical Requirements**: Comfort with cryptographic concepts, zero-knowledge proofs, and API integration. Ideal for teams already working with blockchain or privacy-focused technologies.
+### Architecture Overview
 
-## Common Use Cases
+The TACEO:OPRF architecture consists of:
 
-### Nullifiers for Digital Identity
-Problem: ZK identity systems rely on single secret keys. If leaked, your entire history is exposed.
+1. Independent OPRF nodes that hold shares of the OPRF secret key(s)
+2. Onchain public registry of corresponding OPRF public keys  
+3. Authorized accounts that can trigger secure key generation
 
-Solution: TACEO:OPRF adds threshold security. Attackers need both your secret AND to break the MPC threshold to trace your identity.
+![TACEO_OPRF.png](TACEO_OPRF.png)
 
-*Used in: ZK Identity systems, anonymous voting, private credentials*
+## Standard Protocol Flow
 
-### Private Revenue Sharing for DeFi  
-Problem: DeFi protocols need referral tracking, but current methods surveille all transactions and destroy financial privacy.
+Here's how a user interacts with TACEO:OPRF:
 
-Solution: Private referral identifiers via OPRF enable fee distribution without linking wallets to users or referrers.
+### 1. Query Generation
+The user generates a blinded OPRF query and produces an authorization proof.
 
-*Used in: Decentralized exchanges, DeFi protocols, private trading platforms*
+### 2. Node Processing  
+OPRF nodes:
+- Receive the query
+- Verify the authorization proof
+- Contribute with their key-share
 
-### Private Wallet Recovery
-Problem: Seed phrases are a UX disaster. Custodial backup defeats the point of self-custody.
+### 3. Response Aggregation
+The client:
+- Receives responses from threshold-many nodes
+- Combines answers into the full OPRF output
 
-Solution: TACEO:OPRF enables wallet recovery where no one (not even the recovery service) ever sees your keys.
+### 4. Optional Proof Generation
+The client can prove valid OPRF execution in a ZK proof and submit both the output and proof to a verifier.
 
-*Used in: Wallet applications, key management systems, secure backup solutions*
+## Key Security Properties
 
-## How It Works
+### Privacy
+- Input privacy: Your secrets are never revealed
+- Key privacy: No single node knows the complete key
+- Computational privacy: Intermediate steps remain hidden
 
-### 1. Authorization First
-Users must prove (ideally via ZK) that they're eligible to evaluate the OPRF. This could be:
-- Controlling an Ethereum private key
-- Being a member of an authorized set  
-- Providing a valid API key
-- Custom authorization logic
+### Integrity  
+- Threshold security: Requires cooperation of multiple honest nodes
+- Verifiable computation: Results can be proven without revealing inputs
+- Authorization enforcement: Custom eligibility requirements
 
-### 2. Threshold Computation  
-Multiple independent nodes cooperate to compute the OPRF without revealing:
-- Your secret input and who the user even is
-- The nodes' secret keys  
-- The intermediate computation steps
-
-### 3. Provable Results
-The OPRF evaluation uses ZK-friendly primitives (currently Circom and Noir), so you can prove correct evaluation to third parties without revealing your private inputs.
-
-## What You'll Learn
-
-This documentation will help you:
-
-- Understand the cryptographic foundations and architecture
-- Integrate TACEO:OPRF into your applications  
-- Deploy your own local test environment
-- Implement custom authorization modules
+### Flexibility
+- Custom authorization: Implement project-specific access control
+- ZK-friendly design: Compatible with zero-knowledge proof systems
+- Multi-use keys: Support multiple OPRF instances per authorization module
 
 ### Developer API Access
 
@@ -90,6 +90,17 @@ We provide a developer API endpoint for experimentation against a live deploymen
 
 ## Next Steps
 
-- New to OPRFs? Start with our [Concepts](/docs/taceo-oprf/concepts) guide
-- Ready to build? Jump to the [Quickstart](/docs/taceo-oprf/quickstart) 
-- Need examples? Check out our [Use Cases](/docs/taceo-oprf/use-cases)
+- Ready to build? Jump to the [Quickstart](/docs/identity-solutions/nullifiers/getting-started/quickstart)
+- Need examples? Check out [Use Cases & Examples](/docs/identity-solutions/nullifiers/use-cases)
+
+:::tip Customer-facing framing
+The [Identity Solutions → Distributed Nullifiers](/docs/identity-solutions/nullifiers/introduction)
+section presents this service in a product context - start there if you are evaluating TACEO for
+an identity use case.
+:::
+
+## Further Reading
+
+For deeper technical details:
+- [OPRF Systemization of Knowledge paper](https://eprint.iacr.org/2022/302.pdf)
+- [TACEO technical writeup](https://github.com/TaceoLabs/oprf-service/blob/58c02f7df6e8d3d9721b2597008af12870df4926/docs/oprf.pdf)

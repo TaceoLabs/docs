@@ -16,6 +16,11 @@ You will:
 2. Send a request to the TACEO resource server.
 3. Watch the payment go through automatically.
 
+:::info Testnet only
+The current deployment uses test tokens with no real-world value. Do not use mainnet private keys
+or real funds.
+:::
+
 ## Prerequisites
 
 - Node.js 20+ (TypeScript) or Rust 1.91+ (Rust)
@@ -54,7 +59,7 @@ Each new wallet needs to be funded before it can make confidential payments. The
 1,000 test tokens and enforces a 24-hour cooldown per address.
 
 ```bash
-curl -X POST https://faucet.merces.taceo.io/claim/<YOUR_WALLET_ADDRESS>
+curl -X POST https://faucet.merces1.taceo.io/claim/<YOUR_WALLET_ADDRESS>
 ```
 
 
@@ -90,7 +95,7 @@ const fetchWithPayment = wrapFetchWithPayment(fetch, client);
 
 // Make the request as normal
 const response = await fetchWithPayment(
-  'https://resource.merces.taceo.io/api/protected',
+  'https://x402-server.merces.taceo.io/api/protected',
   { method: 'GET' }
 );
 
@@ -123,7 +128,7 @@ async fn main() -> eyre::Result<()> {
 
     // Make the request as normal
     let response = http_client
-        .get("https://resource.merces.taceo.io/api/protected")
+        .get("https://x402-server.merces.taceo.io/api/protected")
         .send()
         .await?;
 

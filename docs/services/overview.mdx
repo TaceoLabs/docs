@@ -14,7 +14,7 @@ Each service is designed for a specific class of privacy-preserving computation.
 
 <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem', marginTop: '2rem'}}>
 
-<div className="service-card-success">
+<div className="service-card-primary">
 
 ### **TACEO\:OPRF**
 
@@ -36,7 +36,7 @@ _Oblivious Pseudorandom Function_
 - Identity-based rate limiting
 
 {/* prettier-ignore */}
-<Link className="button button--success get-in-touch-btn" to="/docs/taceo-oprf/overview" style={{ marginTop: "1rem", width: "100%" }}>Learn More</Link>
+<Link className="button button--primary get-in-touch-btn" to="/docs/taceo-oprf/overview" style={{ marginTop: "1rem", width: "100%" }}>Learn More</Link>
 
 </div>
 
@@ -65,39 +65,41 @@ _Private Proof Delegation_
 
 </div>
 
-</div>
-
-## Coming Soon
-
-<div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem', marginTop: '2rem'}}>
-
-<div className="service-card-muted">
-
-### **TACEO\:OMap**
-
-_Private Reads & Writes_
-
-**Deployed, onboarding first applications**
-
-Private data structures and confidential shared state management across multiple parties, with verifiable state updates. (currently onboarding initial applications).
-
-</div>
-
-<div style={{
-  padding: '2rem',
-  border: '1px solid var(--ifm-color-emphasis-400)',
-  borderRadius: '12px', 
-  backgroundColor: 'var(--ifm-color-emphasis-100)',
-  opacity: '0.8'
-}}>
+<div className="service-card-primary">
 
 ### **TACEO\:Match**
 
-_Distributed Biometric Uniqueness_
+_Distributed Biometric Matching_
 
-**In active integration**
+**Use when you need:**
 
-Privacy-preserving uniqueness matching and verification without requiring a single party to hold sensitive data such as biometric templates.
+- Population-scale uniqueness checks without centralizing templates
+- Cross-organization deduplication without sharing biometric databases
+- Anonymous identity verification - prove a match without revealing which identity
+- Sybil resistance backed by irrevocable biometric uniqueness
+
+**Perfect for:**
+
+- Proof-of-uniqueness systems and anonymous credential issuance
+- Cross-border or cross-org fraud detection and deduplication
+- Privacy-preserving KYC and biometric verification
+- Any workload where biometric templates cannot be centralized
+
+{/* prettier-ignore */}
+<Link className="button button--primary get-in-touch-btn" to="/docs/taceo-match/overview" style={{ marginTop: "1rem", width: "100%" }}>Learn More</Link>
+
+</div>
+
+<div className="service-card-muted">
+
+### **TACEO\:OMap** <span style={{fontSize: '0.75rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', opacity: 0.6}}>Coming Soon</span>
+
+_Private Reads & Writes_
+
+Private data structures and confidential shared state management across multiple parties, with verifiable state updates.
+
+{/* prettier-ignore */}
+{/* <Link className="button button--secondary get-in-touch-btn" to="/docs/taceo-omap/overview" style={{ marginTop: "1rem", width: "100%" }}>Learn More</Link> */}
 
 </div>
 
