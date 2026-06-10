@@ -1,0 +1,25 @@
+# Technical Concepts
+
+This page describes the cryptographic building blocks that underpin TACEO:OMap. For foundational reading: secret sharing and MPC protocols are covered in [MPC Resources](/docs/resources/mpc), collaborative SNARKs (coSNARKs) in the [coSNARKs primer](/docs/primer/collabSNARKs-primer), and zero-knowledge proofs in [ZKP Resources](/docs/resources/zkp).
+
+## Secret Sharing
+
+Secret sharing splits a value into $n$ shares such that any subset of size $< t$ reveals nothing about the original value, while any subset of size $\geq t$ can reconstruct it. In TACEO:OMap, every entry of the map is held as shares distributed across independent MPC nodes on the TACEO Network. No node holds a full value, and no sub-threshold coalition of nodes can read the stored data.
+
+For a deeper treatment of MPC and the secret-sharing schemes TACEO uses, see the [MPC Resources](/docs/resources/mpc) page.
+
+## Oblivious RAM (ORAM)
+
+Encrypting or secret-sharing values hides *what* is stored, but a node observing which memory locations are accessed can still infer *which key* was touched. An ORAM scheme reshuffles and re-shares memory on every access so that the sequence of locations observed by any party is independent of the actual keys being read or written - only that some valid operation occurred is revealed.
+
+This is the property that makes TACEO:OMap a true oblivious map rather than an encrypted store: neither the contents nor the access pattern leaks to any node.
+
+## The Oblivious Map Structure
+
+The private-shared state in TACEO:OMap is represented as a **secret-shared Merkle tree**. The bit-decomposition of a key defines the path from root to leaf: each bit selects the left or right child at each level, and the leaf at the end of that path holds the value associated with the key.
+
+<img src="/img/taceo_omap.merkle.png" alt="TACEO:OMap Merkle tree structure" width="100%" />
+
+Each layer of the Merkle tree is built as an ORAM. This means traversing a root-to-leaf path does not reveal which path was taken - and therefore does not reveal which key was accessed. Reads and writes both follow this oblivious traversal, so the access pattern of any sequence of operations remains hidden from all nodes.
+
+The Merkle root is a cryptographic commitment to the entire tree. It is exactly the public commitment the on-chain TACEO:OMap contract stores (see the [overview](/docs/taceo-omap/overview)). When the MPC nodes execute a write and update the tree, they produce a coSNARK proving the root was updated correctly. The contract verifies this proof before accepting the new root, so state integrity is publicly verifiable while the contents and access pattern remain private.

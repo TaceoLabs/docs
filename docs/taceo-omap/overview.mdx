@@ -1,0 +1,46 @@
+# TACEO:OMap Overview
+
+TACEO:OMap is the service on the TACEO network for *private-shared state*. It provides private reads and writes over key-value data structures whose contents are held as secret shares across MPC nodes - so no single node ever sees plaintext values, and crucially, no node learns which keys are being accessed. State updates are verifiable, ensuring consistency and integrity without compromising confidentiality.
+
+## Key Features
+
+- **Private reads and writes**: Clients can read and update entries without revealing the access pattern or data to any individual node.
+- **Secret-shared state**: The underlying data structure is split across independent MPC nodes. Reconstruction requires cooperation of a threshold of nodes.
+- **Oblivious access**: The access pattern itself - which key is being looked up or modified - is hidden from all nodes and cannot be inferred from network traffic.
+- **Threshold security**: No single node, and no coalition smaller than the threshold, can learn the plaintext or the access pattern.
+- **Verifiable state updates**: State transitions are verifiable, so clients and third parties can confirm integrity of updates without seeing the underlying data.
+
+## Design Philosophy
+
+The core design idea for building TACEO:OMap is the familiar `mapping` we know from Solidity. Imagine a `mapping` that keeps track of the balances of users:
+
+```javascript
+mapping(address => uint256) public balance;
+```
+
+This creates an on-chain structure that links each user's `address` to their balance represented as `uint256`. We can trust this mapping because it is enforced by the consensus protocol of the underlying chain. The downside is transparency: every balance is publicly readable, and anyone can observe every transfer in and out of any address.
+
+TACEO:OMap can be seen as a private version of this `mapping`. It realizes [private shared state](/docs/taceo-network/network) using secret sharing and MPC, supporting confidential reads and writes where no single node ever sees plaintext values. Crucially, the access pattern is also hidden - no node learns *which* key is being read or written, only that a valid operation occurred.
+
+Instead of broadcasting plaintext transactions to miners or sequencers, users send secret-shared requests to TACEO:OMap. A committee of independent MPC nodes on [the TACEO Network](/docs/taceo-network/network) executes these requests in a distributed protocol. Producing a result requires cooperation of a threshold of nodes - no single node, and no sub-threshold coalition, can read the stored data or infer the access pattern. For a deeper treatment of the secret-sharing primitives underlying this, see the [MPC Resources](/docs/resources/mpc) page.
+
+An on-chain record holds a public commitment to the current state of the private map. On each state transition, the MPC nodes compute a [coSNARK](/docs/primer/collabSNARKs-primer) that attests the update was applied correctly. The on-chain record cannot be altered except with a valid coSNARK - state integrity is publicly verifiable without revealing the state itself. This commit-verify-update loop is the same pattern used by Merces for confidential balance updates; see [how Merces applies it](/docs/finance-solutions/payments/how-it-works) as a concrete instantiation.
+
+The result is a data structure where no single party - not the nodes, not TACEO, not an outside observer - can read the stored values or determine who accessed what, while anyone can verify that every state transition was applied correctly.
+
+## Architecture
+
+TACEO:OMap has two main components which can be seen in the following graphic:
+
+<img src="/img/taceo_omap.svg" alt="TACEO:OMap architecture" width="100%" />
+
+The **private-shared state** is the off-chain component: the key-value contents of the map, held as secret shares across a committee of independent MPC nodes on [the TACEO Network](/docs/taceo-network/network). All reads and writes execute here, in the Private domain, so no plaintext value and no access pattern is ever exposed to any single node.
+
+The **TACEO:OMap contract** is the on-chain component: a public commitment to the current state of the map, living in the Public domain. It is the publicly auditable anchor of integrity - anyone can inspect the current state root, but the contract never holds the underlying private data.
+
+These two components are connected by a single flow: when the MPC network executes a write request against the private-shared state, it pushes a state update to the contract along with a coSNARK that proves the transition was applied correctly. The contract accepts the new commitment only if the proof is valid, and rejects anything else. This means state integrity is enforced publicly and trustlessly, while the contents of the map remain confidential.
+
+## Next Steps
+
+- Explore the other privacy services? Return to the [Privacy Services overview](/docs/services/overview).
+- Questions or want to get access? [Email our team](mailto:hello@taceo.io) or [join our Discord](https://taceo.io/discord).
