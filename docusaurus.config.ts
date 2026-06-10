@@ -189,6 +189,7 @@ const config: Config = {
     prism: {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
+      additionalLanguages: ['solidity'],
     },
     zoom: {
       selector: '.markdown img, .docusaurus-mermaid-container svg',

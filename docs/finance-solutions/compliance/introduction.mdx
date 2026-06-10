@@ -68,6 +68,101 @@ In the Merces model, the licensed provider attests to a property of the user **o
 TACEO Network. Downstream applications query the attestation and receive a verifiable yes/no, no
 data shared, no copies created, no per-integration breach surface.
 
+## On- and off-chain policy enforcement with Predicate
+
+[Predicate](https://docs.predicate.io) is programmable compliance infrastructure that pairs naturally with Merces: Predicate handles **policy evaluation and on-chain enforcement**; TACEO handles **privacy-preserving storage and MPC-gated disclosure**. Together they give regulated applications a full compliance stack without a plaintext data trail.
+
+### How Predicate works
+
+Predicate evaluates transactions against configurable **policies** — declarative rule sets covering AML/CFT screening, KYC/KYB status, sanctions lists, transaction rate limits, collateral thresholds, and jurisdictional restrictions. Each evaluation produces a cryptographically signed **attestation**: a data structure that certifies whether the transaction satisfies the policy without revealing the underlying compliance data to the application.
+
+The attestation contains four fields: a unique `uuid` (consumed on-chain to prevent replay), an `expiration` timestamp, the `attester` address, and a `signature`. The on-chain **Predicate Registry** validates the signature and checks the uuid before allowing the transaction to execute. Policies can be updated without redeploying contracts, keeping enforcement current as regulations change.
+
+### Off-chain integration
+
+When the Gateway receives a confidential transaction request, it submits a compliance request to the Predicate API (`https://api.predicate.io/v2/attestation`) before processing it:
+
+```json
+{
+  "verification_hash": "x-abc123def456",
+  "from": "<wallet address>",
+  "chain": "ethereum",
+}
+```
+
+The response includes an `is_compliant` boolean and, for compliant wallets, the attestation to forward on-chain.
+
+```json
+{
+  "policy_id": "policy_abc123",
+  "policy_name": "Standard AML Policy",
+  "verification_hash": "x-abc123def456",
+  "is_compliant": true,
+  "attestation": {
+    "uuid": "550e8400-e29b-41d4-a716-446655440000",
+    "expiration": 1696640400,
+    "attester": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+    "signature": "0x1b2c3d4e5f..."
+  }
+}
+```
+
+Some policies include a `reason` object on non-compliant responses with details about why the evaluation failed. Both the `code` and `message` values are fully customizable when authoring a policy.
+
+```json
+{
+  "policy_id": "x-dev-trm-risk-abc123",
+  "policy_name": "TRM Risk Score",
+  "verification_hash": "x-abc123def456",
+  "is_compliant": false,
+  "attestation": {
+    "uuid": "550e8400-e29b-41d4-a716-446655440000",
+    "expiration": 0,
+    "attester": "",
+    "signature": ""
+  },
+  "reason": {
+    "code": "trm_high_risk",
+    "message": "TRM risk score for this wallet is 10 which exceeds the maximum allowed of 7"
+  }
+}
+```
+
+If the wallet is non-compliant, the Gateway rejects the transaction and returns the reason to the user. If compliant, the Gateway includes the attestation in the transaction payload for on-chain validation.
+
+### On-chain enforcement
+
+The attestation is embedded in the transaction and validated by the Predicate Registry before the smart contract function executes. The smart contract never executes without a valid, unexpired, policy-bound attestation.
+<!-- TODO: this cant be done on plasma testnet, add this info? -->
+
+```solidity
+import {BasicPredicateClient} from "@predicate/contracts/src/mixins/BasicPredicateClient.sol";
+import {Attestation} from "@predicate/contracts/src/interfaces/IPredicateRegistry.sol";
+
+// Example of how the Merces contract can consume the attestation for a deposit function.
+contract Merces is BasicPredicateClient {
+    constructor(
+        address _registry,
+        string memory _policyID  // Use your verification_hash here
+        ...
+    ) {
+        _initPredicateClient(_registry, _policyID);
+        ...
+    }
+
+    function deposit(Attestation calldata _attestation, ...) external payable {
+        require(_authorizeTransaction(_attestation, msg.sender), "Unauthorized");
+        ...
+    }
+}
+```
+
+### How this fits with Merces
+
+Predicate compliance checks require a wallet address to evaluate a policy. This means Predicate applies to **confidential transactions**, where sender/receiver addresses are visible on-chain, but **not to fully private transactions**, where addresses are hidden by the protocol and the application never sees them.
+
+See [Two privacy modes](/docs/finance-solutions/payments/introduction#two-privacy-modes) for a full breakdown of what each mode hides.
+
 ## The identity proof point
 
 The MPC architecture that powers Merces compliance is built on the same cryptographic foundation
