@@ -20,7 +20,7 @@ mapping(address => uint256) public balance;
 
 This creates an on-chain structure that links each user's `address` to their balance represented as `uint256`. We can trust this mapping because it is enforced by the consensus protocol of the underlying chain. The downside is transparency: every balance is publicly readable, and anyone can observe every transfer in and out of any address.
 
-TACEO:OMap can be seen as a **private version of this** `mapping`. It realizes *private shared state* using secret sharing and MPC, **supporting confidential reads and writes** where no single node ever sees plaintext values. Crucially, the access pattern is also hidden - no node learns *which* key is being read or written, only that a valid operation occurred.
+TACEO:OMap can be seen as a **private version of this** `mapping`. It realizes [private shared state](https://core.taceo.io/articles/private-shared-state/) using secret sharing and MPC, **supporting confidential reads and writes** where no single node ever sees plaintext values. Crucially, the access pattern is also hidden - no node learns *which* key is being read or written, only that a valid operation occurred.
 
 Instead of broadcasting plaintext transactions to miners or sequencers, **users send secret-shared requests to TACEO:OMap**. A committee of independent MPC nodes on [the TACEO Network](/docs/taceo-network/network) executes these requests in a distributed protocol. Producing a result requires cooperation of a threshold of nodes - no single node, and no sub-threshold coalition, can read the stored data or infer the access pattern. For a deeper treatment of the secret-sharing primitives underlying this, see the [MPC Resources](/docs/resources/mpc) page.
 
