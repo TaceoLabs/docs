@@ -120,6 +120,12 @@ const sidebars: SidebarsConfig = {
           label: "TACEO:Match",
           link: { type: "doc", id: "taceo-match/overview" },
           items: ["taceo-match/concepts"],
+        },
+        {
+          type: "category",
+          label: "TACEO:OMap",
+          link: { type: "doc", id: "taceo-omap/overview" },
+          items: ["taceo-omap/concepts"],
         }
       ],
     },

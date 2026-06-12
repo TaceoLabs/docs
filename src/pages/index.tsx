@@ -103,7 +103,7 @@ function GuidanceSection() {
               { to: "/docs/services/overview", label: "Browse services" },
               { to: "/docs/taceo-oprf/overview", label: "TACEO:OPRF" },
               { to: "/docs/taceo-proof/overview", label: "TACEO:Proof" },
-              // { to: "/docs/taceo-omap/overview", label: "TACEO:OMap" },
+              { to: "/docs/taceo-omap/overview", label: "TACEO:OMap" },
               { to: "/docs/taceo-match/overview", label: "TACEO:Match" },
             ]}
           />
