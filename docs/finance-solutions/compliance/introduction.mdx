@@ -25,9 +25,9 @@ Compliance for private payments has two halves, and they sit on opposite sides o
 
 A third concern, identity, sits outside the transaction loop entirely. KYC, sybil resistance, and credential verification are the responsibility of the B2B customer or of TACEO Identity, not of Merces. See [Identity, and what Merces does not do](#identity-and-what-merces-does-not-do).
 
-:::info[Engine and Dashboard are not the same thing]
+:::info[How the Engine and Dashboard relate]
 
-In Merces, we refer to the **Compliance Engine** as the pre-transaction enforcement: it runs inside the protocol, returns a pass or fail before settlement, and its slot is currently filled by Predicate. The **Compliance Dashboard** is post-transaction reveal: a UI in the app where an authorised user requests decryption of specific past transactions. Different timing, different layer, different audience. They are easy to conflate, so the docs keep them apart throughout.
+Another way to see the **Compliance Engine** is as Merces's canonical compliance component. It plugs in external compliance systems like Predicate to enforce policy before a transaction settles, and it offers the **Compliance Dashboard**, a UI where an authorised user requests decryption of specific past transactions, to view and access transaction data after settlement. The two sit at different points in the transaction lifecycle (enforcement before, reveal after) with different audiences, so the docs keep them apart throughout.
 
 :::
 
