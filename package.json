@@ -15,15 +15,15 @@
     "typecheck": "tsc"
   },
   "dependencies": {
-    "@algolia/autocomplete-preset-algolia": "^1.19.2",
-    "@algolia/autocomplete-shared": "^1.19.2",
-    "@algolia/client-search": "^5.34.1",
-    "@docusaurus/core": "3.8.1",
-    "@docusaurus/plugin-client-redirects": "3.8.1",
-    "@docusaurus/preset-classic": "3.8.1",
-    "@docusaurus/theme-mermaid": "3.8.1",
+    "@algolia/autocomplete-preset-algolia": "^1.19.8",
+    "@algolia/autocomplete-shared": "^1.19.8",
+    "@algolia/client-search": "^5.54.1",
+    "@docusaurus/core": "3.10.1",
+    "@docusaurus/plugin-client-redirects": "3.10.1",
+    "@docusaurus/preset-classic": "3.10.1",
+    "@docusaurus/theme-mermaid": "3.10.1",
     "@mdx-js/react": "^3.1.0",
-    "algoliasearch": "^5.34.1",
+    "algoliasearch": "^5.54.1",
     "clsx": "^2.0.0",
     "docusaurus-lunr-search": "^3.6.0",
     "docusaurus-plugin-image-zoom": "^3.0.1",
@@ -35,10 +35,10 @@
     "search-insights": "^2.17.3"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "3.8.1",
-    "@docusaurus/tsconfig": "3.8.1",
-    "@docusaurus/types": "3.8.1",
-    "typescript": "~5.6.2"
+    "@docusaurus/module-type-aliases": "3.10.1",
+    "@docusaurus/tsconfig": "3.10.1",
+    "@docusaurus/types": "3.10.1",
+    "typescript": "~5.9.3"
   },
   "browserslist": {
     "production": [
@@ -54,5 +54,10 @@
   },
   "engines": {
     "node": ">=18.0"
+  },
+  "overrides": {
+    "dompurify": "3.4.10",
+    "es-toolkit": "1.47.1",
+    "nanoid": "3.3.12"
   }
 }
