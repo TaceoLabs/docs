@@ -52,12 +52,16 @@ const config: Config = {
           { from: "/docs/design/known-issues", to: "/docs/" },
           { from: "/docs/design/roadmap", to: "/docs/" },
           { from: "/docs/contact", to: "/docs/" },
+          {
+            from: "/docs/finance-solutions/x402/",
+            to: "/docs/finance-solutions/x402/introduction/",
+          },
         ],
       },
     ],
   ],
 
-  themes: ['@docusaurus/theme-mermaid'],
+  themes: ["@docusaurus/theme-mermaid"],
 
   // Even if you don't use internationalization, you can use this field to set
   // useful metadata like html lang. For example, if your site is Chinese, you
@@ -189,13 +193,13 @@ const config: Config = {
     prism: {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
-      additionalLanguages: ['solidity'],
+      additionalLanguages: ["solidity"],
     },
     zoom: {
-      selector: '.markdown img, .docusaurus-mermaid-container svg',
+      selector: ".markdown img, .docusaurus-mermaid-container svg",
       background: {
-        light: 'rgb(255, 255, 255)',
-        dark: 'rgb(50, 50, 50)',
+        light: "rgb(255, 255, 255)",
+        dark: "rgb(50, 50, 50)",
       },
     },
   } satisfies Preset.ThemeConfig,
