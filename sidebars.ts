@@ -22,6 +22,7 @@ const sidebars: SidebarsConfig = {
       items: [
         "start-here/deployments-and-status",
         "start-here/glossary",
+        "start-here/public-repos",
       ],
     },
     {
