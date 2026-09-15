@@ -29,7 +29,7 @@
     "docusaurus-plugin-image-zoom": "^3.0.1",
     "prism-react-renderer": "^2.3.0",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0",
+    "react-dom": "^19.3.0",
     "rehype-katex": "^7.0.1",
     "remark-math": "^6.0.0",
     "search-insights": "^2.17.3"
