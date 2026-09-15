@@ -16,6 +16,16 @@ const sidebars: SidebarsConfig = {
     "index",
     {
       type: "category",
+      label: "Start here",
+      collapsed: false,
+      link: { type: "doc", id: "start-here/index" },
+      items: [
+        "start-here/deployments-and-status",
+        "start-here/glossary",
+      ],
+    },
+    {
+      type: "category",
       label: "Finance Solutions",
       collapsed: false,
       link: { type: "doc", id: "finance-solutions/overview" },

@@ -1,0 +1,100 @@
+---
+title: Start here
+description: What TACEO is, and which docs to read next.
+---
+
+import Link from "@docusaurus/Link";
+
+# What TACEO is, pick your path
+
+TACEO is a privacy layer for applications that need to compute on sensitive data without
+exposing it. **Finance Solutions**, built on Merces, brings private payments to the EVM chains
+you already use. **Agent Solutions**, built on Confidential x402, brings the same privacy to
+agent-to-agent payments. **Identity Solutions** brings privacy-preserving verification to
+identity systems, in production for **World** and **zkPassport**. All three run on the
+**TACEO Network**, the MPC infrastructure underneath.
+
+For what's live today — chains, frontends etc. — see [Deployments & status](/docs/start-here/deployments-and-status).
+
+## Pick your path
+
+<div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2rem', marginTop: '2rem'}}>
+
+<div className="service-card-primary">
+
+### Finance Solutions
+
+Private payments on the EVM chains you already use, built on Merces. Merces wraps ERC-20s like USDC into private balances, with compliance primitives at the protocol layer.
+
+**Use this if you are:** a stablecoin issuer, fintech, or payments team moving value onchain without putting your business on a public ledger.
+
+<div className="button-row" style={{marginTop: '1.25rem', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '1rem'}}>
+  <Link className="button button--primary get-in-touch-btn" to="/docs/finance-solutions/overview">Read Finance Solutions</Link>
+</div>
+
+</div>
+
+<div className="service-card-primary">
+
+### Agent Solutions
+
+Confidential payments for AI agents, built on x402. Hides the asset and amount of an agent-to-agent transfer; sender and recipient stay onchain.
+
+**Use this if you are:** building agents that need to transact without exposing deal terms.
+
+<div className="button-row" style={{marginTop: '1.25rem', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '1rem'}}>
+  <Link className="button button--primary get-in-touch-btn" to="/docs/finance-solutions/x402/introduction">Read Agent Solutions</Link>
+  <Link className="button button--outline button--primary get-in-touch-btn" to="/docs/finance-solutions/x402/quickstart">Try the Quickstart</Link>
+</div>
+
+</div>
+
+<div className="service-card-primary">
+
+### Identity Solutions
+
+Privacy-preserving identity at global scale. TACEO:OPRF and TACEO:Match are in production for World and zkPassport — the same MPC backbone that powers iris-code uniqueness and private credential matching is available for your identity system.
+
+**Use this if you are:** an identity protocol team or credential issuer building privacy-first verification.
+
+<div className="button-row" style={{marginTop: '1.25rem', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '1rem'}}>
+  <Link className="button button--primary get-in-touch-btn" to="/docs/identity-solutions/overview">Read Identity Solutions</Link>
+</div>
+
+</div>
+
+</div>
+
+## Other paths
+
+<div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem', marginTop: '2rem'}}>
+
+<div className="service-card-muted">
+
+### TACEO Network
+
+_OPRF, Proof, OMap, Match, and the network underneath_
+
+Production-ready privacy primitives you can call directly, and the MPC network that runs them: verifiable collaboration over encrypted data, node operators, and governance.
+
+**Use this if you are:** an application developer adding a single privacy feature, or a partner or node operator evaluating the foundation everything else builds on.
+
+<Link className="button button--primary get-in-touch-btn" to="/docs/taceo-network" style={{ marginTop: "1rem", display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '1rem'}}>Explore TACEO Network</Link>
+
+</div>
+
+<div className="service-card-muted">
+
+### Developer Tools
+
+_coCircom, coNoir_
+
+The underlying MPC tooling for building your own collaborative SNARKs directly.
+
+**Use this if you are:** implementing custom privacy-preserving computation rather than using one of TACEO's own products.
+
+<Link className="button button--primary get-in-touch-btn" to="/docs/overview" style={{ marginTop: "1rem", display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '1rem'}}>Explore Developer Tools</Link>
+
+</div>
+
+</div>
