@@ -1,0 +1,71 @@
+---
+title: "Deployments & status"
+description: "Current chain deployments for TACEO products."
+---
+
+# Deployments & status
+
+## Finance Solutions (Merces)
+
+### Production
+
+| Chain | Status |
+|---|---|
+| Monad | Mainnet, limited users, volume caps |
+| Worldchain | Mainnet, limited users, volume caps |
+
+### Testnets
+
+| Chain | Notes |
+|---|---|
+| Plasma | Merces testnet |
+| Monad Testnet | Cross-chain OFT demo, LayerZero |
+| Sepolia | Cross-chain OFT demo, LayerZero |
+| Base Sepolia | Cross-chain OFT demo, LayerZero |
+
+### Feature availability
+
+| Feature | Monad (prod) | Worldchain (prod) | Plasma (testnet) | OFT (testnet) |
+|---|:---:|:---:|:---:|:---:|
+| Transfer | ✅ (with limits) | ✅ (with limits) | ✅ | ✅ |
+| Deposit / Withdraw | ✅ (with limits) | ✅ (with limits) | ✅ | ✅ |
+| Yield | — | — | ✅ | - |
+| Cross-chain bridging | — | — | - | ✅ |
+
+### Frontends
+
+| Frontend | URL |
+|---|---|
+| Merces test frontend | https://merces.taceo.io/ |
+| Merces OFT test frontend | https://merces-oft.taceo.io/ |
+
+### Node operation
+
+The production deployment is run fully by TACEO.
+
+## Agent Solutions (Confidential x402)
+
+### Testnets
+
+| Chain | Notes |
+|---|---|
+| Base Sepolia | Confidential mode only |
+
+### Node operation
+
+All three nodes in the testnet deployment are currently operated by TACEO.
+
+## Identity Solutions - Live
+
+- **World.** Personhood network, live and distributed across the TACEO Network's operators. Runs on TACEO:OPRF and MPC-based iris code matching. Over 18 million users.
+- **ZKPassport.** Live in production since September 1, 2026 — the second production deployment of TACEO:OPRF, after World. Proves age, nationality, and humanity directly from a passport's NFC chip via a nullifier the network computes under a 2-of-3 secret-shared key; nothing sensitive leaves the user's device.
+
+## TACEO Network - Services
+
+| Service | Status | What it does |
+|---|---|---|
+| TACEO:Proof | Live in production | MPC + coSNARKs generate a verifiable zero-knowledge proof; no single party sees the witness |
+| TACEO:OPRF | Live in production | Derives unique, unlinkable nullifiers from a user's input without anyone seeing the input. In production for World and ZKPassport |
+| TACEO:OMap | Deployed, onboarding first applications | Private key-value state; reads and updates reveal nothing, including the access pattern |
+| TACEO:Match | In active integration | Biometric matching where no party ever holds a template |
+
