@@ -243,13 +243,6 @@ const sidebars: SidebarsConfig = {
       label: "Learning Resources",
       items: [
         "primer/collabSNARKs-primer",
-        "resources/mpc",
-        "resources/zkp",
-        {
-          type: "doc",
-          id: "resources/collsnarks",
-          label: "coSNARKs Further Reading",
-        },
       ],
     },
   ],

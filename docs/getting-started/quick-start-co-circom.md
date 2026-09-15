@@ -1,7 +1,7 @@
 # Quick Start coCircom
 
-coCircom is an implementation of [collaborative SNARKs](../resources/collsnarks.md), with a focus on the [circom](https://circom.io) framework.
-In contrast to traditional SNARKs, which are run by a single prover, collaborative SNARKs are executed using a [multiparty computation protocol](../resources/mpc.md).
+coCircom is an implementation of collaborative SNARKs (TODO reference), with a focus on the [circom](https://circom.io) framework.
+In contrast to traditional SNARKs, which are run by a single prover, collaborative SNARKs are executed using a multiparty computation protocol (TODO reference).
 
 If you just want to get your hands dirty as fast as possible, here is a run-down on how to collaboratively prove the `Multiplier2` example from the [circom documentation](https://docs.circom.io/getting-started/installation/) using Groth16.
 
