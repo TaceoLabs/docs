@@ -1,0 +1,48 @@
+---
+title: "Glossary"
+description: "Technical terms used across the TACEO docs."
+---
+
+# Glossary
+
+**coSNARK (Collaborative SNARK)**
+A zero-knowledge proof system extended into the multi-party computation setting. Multiple parties jointly compute a witness and produce a single succinct, publicly verifiable proof, with no single party ever seeing the whole witness.
+
+**Honest-majority MPC**
+A multi-party computation security model that stays secure as long as fewer than half of the participating parties collude. Contrasts with dishonest-majority MPC, which stays secure even if malicious parties outnumber honest ones.
+
+**MPC (Multi-Party Computation)**
+Cryptographic techniques that let several parties jointly compute over data none of them can see in full. Each party's input stays hidden while the collective computation still produces a valid result.
+
+**Nullifier**
+A deterministic, unpredictable identifier derived from a user's input (a passport hash, a biometric template, a phone number) that proves the same input was used before without revealing or linking the input itself. Produced by TACEO:OPRF.
+
+**ORAM (Oblivious RAM)**
+A technique for reading and writing memory such that the access pattern itself reveals nothing about which location was accessed. Used inside TACEO:OMap.
+
+**PSS (Private Shared State)**
+A state model that lets multiple parties keep their data private while still computing on it collaboratively. Each party's data is secret-shared and distributed across multiple nodes so no single node ever sees it in full, and coSNARKs make the resulting computation publicly verifiable.
+
+**REP3 (3-party replicated secret sharing)**
+A secret-sharing scheme where a value x is split into three shares (x₁, x₂, x₃) such that x = x₁ + x₂ + x₃, and each of three parties holds two of the three shares. It's honest-majority: any two parties can reconstruct the secret, so the scheme stays secure as long as at least one party doesn't collude.
+
+**Secret sharing**
+Splitting a piece of data into multiple shares distributed across separate parties, such that no individual share reveals the underlying data, but a sufficient subset of shares can reconstruct it.
+
+**TACEO Network**
+The distributed MPC infrastructure that runs TACEO's services across independent, curated node operators, with every service output made publicly verifiable onchain via coSNARKs.
+
+**TACEO:Match**
+Matches biometric templates across the network without any single party ever holding a template.
+
+**TACEO:OMap**
+A verifiable oblivious map service — a private-state equivalent of Solidity's mapping primitive. Stores secrets while guaranteeing that all access patterns are hidden and all operations are provable. Built on ORAM.
+
+**TACEO:OPRF (Oblivious Pseudorandom Function)**
+A verifiable threshold OPRF service. A client and the distributed MPC network jointly compute an output from both their secrets; the network learns nothing about the client's input or the resulting output. Used to generate nullifier seeds.
+
+**TACEO:Proof**
+Outsources coSNARK generation to the TACEO Network. An application gets back a succinct, publicly verifiable proof without any single party seeing the underlying witness.
+
+**Witness**
+The private input(s) a proof is generated over. In coSNARK setups (coCircom, coNoir), the witness is split and distributed across parties so no single party ever sees it in full.
