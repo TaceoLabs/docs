@@ -107,18 +107,6 @@ const sidebars: SidebarsConfig = {
         },
         {
           type: "category",
-          label: "Confidential x402",
-          link: { type: "doc", id: "finance-solutions/x402/introduction" },
-          items: [
-            "finance-solutions/x402/quickstart",
-            "finance-solutions/x402/how-it-works",
-            "finance-solutions/x402/integration-guide",
-            "finance-solutions/x402/protocol-reference",
-            "finance-solutions/x402/network-and-contracts",
-          ],
-        },
-        {
-          type: "category",
           label: "Private Payments",
           link: { type: "doc", id: "finance-solutions/payments/introduction" },
           items: [
@@ -126,6 +114,18 @@ const sidebars: SidebarsConfig = {
             "finance-solutions/payments/how-it-works",
           ],
         },
+      ],
+    },
+    {
+      type: "category",
+      label: "Agent Solutions",
+      link: { type: "doc", id: "x402/introduction" },
+      items: [
+        "x402/quickstart",
+        "x402/how-it-works",
+        "x402/integration-guide",
+        "x402/protocol-reference",
+        "x402/network-and-contracts",
       ],
     },
     {
