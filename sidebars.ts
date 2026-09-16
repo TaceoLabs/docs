@@ -213,6 +213,7 @@ const sidebars: SidebarsConfig = {
 
         "taceo-network/node-operators",
         "taceo-network/governance",
+        "taceo-network/data-sovereignty",
         "taceo-network/roadmap",
       ],
     },
