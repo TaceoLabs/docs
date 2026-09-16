@@ -1,5 +1,5 @@
 ---
-title: Deposit & withdraw flows
+title: Deposit & Withdraw
 ---
 
 # Deposit & withdraw flows
@@ -36,14 +36,3 @@ In confidential mode the path is identical; the sender address stays visible onc
 
 A withdrawal follows the same structure in reverse: the client proves entitlement to the amount, the contract verifies and queues the action, the MPC network debits the secret-shared balance and proves the update, and the contract releases the ERC-20 back to the public wallet.
 
-## Components
-
-**Client.** The application or wallet using the Merces SDK. Generates ZK proofs locally and holds the private key — every cryptographic operation happens before any network call.
-
-**Gateway.** The offchain coordinator. Receives client requests over WebSocket, submits transactions to the Merces contract, and returns the transaction hash once the MPC network has finalised the update.
-
-**ID registry.** Maps wallet addresses to indices in the oblivious Merkle tree. A client registers a commitment to its wallet and receives the inclusion proof needed for private transactions.
-
-**MPC network.** Three operators holding balances as additive secret shares. They read queued actions from the contract, run the MPC protocol to update shares, prove correct execution, and call back into the contract. No single operator sees a plaintext balance or amount.
-
-**Merces contract.** Stores balance commitments, verifies the client's Groth16 proof on submission, queues the action, and verifies the network's proof on finalisation.

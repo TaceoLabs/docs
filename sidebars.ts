@@ -33,15 +33,6 @@ const sidebars: SidebarsConfig = {
       items: [
         {
           type: "category",
-          label: "Private Payments",
-          link: { type: "doc", id: "finance-solutions/payments/introduction" },
-          items: [
-            "finance-solutions/payments/quickstart",
-            "finance-solutions/payments/how-it-works",
-          ],
-        },
-        {
-          type: "category",
           label: "Concepts",
           link: { type: "doc", id: "finance-solutions/concepts/privacy-model" },
           items: [
@@ -58,8 +49,8 @@ const sidebars: SidebarsConfig = {
           link: { type: "doc", id: "finance-solutions/private-virtual-account/overview" },
           items: [
             "finance-solutions/private-virtual-account/overview",
-            "finance-solutions/private-virtual-account/transfers",
             "finance-solutions/private-virtual-account/deposit-and-withdraw",
+            "finance-solutions/private-virtual-account/transfers",
             "finance-solutions/private-virtual-account/transaction-history",
           ],
         },
@@ -83,6 +74,15 @@ const sidebars: SidebarsConfig = {
           items: [
             "finance-solutions/yield/quickstart",
             "finance-solutions/yield/how-it-works",
+          ],
+        },
+        {
+          type: "category",
+          label: "Private Payments",
+          link: { type: "doc", id: "finance-solutions/payments/introduction" },
+          items: [
+            "finance-solutions/payments/quickstart",
+            "finance-solutions/payments/how-it-works",
           ],
         },
       ],
