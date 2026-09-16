@@ -95,6 +95,18 @@ const sidebars: SidebarsConfig = {
         },
         {
           type: "category",
+          label: "Use cases",
+          link: { type: "doc", id: "finance-solutions/use-cases/overview" },
+          items: [
+            "finance-solutions/use-cases/overview",
+            "finance-solutions/use-cases/payments-payroll-batch",
+            "finance-solutions/use-cases/treasury",
+            "finance-solutions/use-cases/card-payments",
+            "finance-solutions/use-cases/on-off-ramp",
+          ],
+        },
+        {
+          type: "category",
           label: "Confidential x402",
           link: { type: "doc", id: "finance-solutions/x402/introduction" },
           items: [
