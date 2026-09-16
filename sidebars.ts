@@ -78,15 +78,6 @@ const sidebars: SidebarsConfig = {
         "finance-solutions/compliance/introduction",
         {
           type: "category",
-          label: "Private Yield",
-          link: { type: "doc", id: "finance-solutions/yield/introduction" },
-          items: [
-            "finance-solutions/yield/quickstart",
-            "finance-solutions/yield/how-it-works",
-          ],
-        },
-        {
-          type: "category",
           label: "Private Payments",
           link: { type: "doc", id: "finance-solutions/payments/introduction" },
           items: [
