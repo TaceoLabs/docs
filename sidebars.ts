@@ -85,6 +85,16 @@ const sidebars: SidebarsConfig = {
         },
         {
           type: "category",
+          label: "Compliance",
+          link: { type: "doc", id: "finance-solutions/compliance/overview" },
+          items: [
+            "finance-solutions/compliance/overview",
+            "finance-solutions/compliance/pre-transaction-screening",
+            "finance-solutions/compliance/post-transaction-disclosure",
+          ],
+        },
+        {
+          type: "category",
           label: "Confidential x402",
           link: { type: "doc", id: "finance-solutions/x402/introduction" },
           items: [
@@ -95,7 +105,6 @@ const sidebars: SidebarsConfig = {
             "finance-solutions/x402/network-and-contracts",
           ],
         },
-        "finance-solutions/compliance/introduction",
         {
           type: "category",
           label: "Private Payments",
