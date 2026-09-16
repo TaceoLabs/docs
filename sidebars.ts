@@ -65,6 +65,16 @@ const sidebars: SidebarsConfig = {
         },
         {
           type: "category",
+          label: "Private RWAs",
+          link: { type: "doc", id: "finance-solutions/private-rwas/overview" },
+          items: [
+            "finance-solutions/private-rwas/overview",
+            "finance-solutions/private-rwas/private-holdings",
+            "finance-solutions/private-rwas/disclosure",
+          ],
+        },
+        {
+          type: "category",
           label: "Confidential x402",
           link: { type: "doc", id: "finance-solutions/x402/introduction" },
           items: [

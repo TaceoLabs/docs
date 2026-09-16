@@ -1,0 +1,27 @@
+---
+title: Disclosure & audit views
+---
+
+# Disclosure & audit views
+
+A private register is only workable for a regulated issuer if the right parties can still see inside it. Merces handles this by making disclosure an explicit, scoped operation rather than a property of the ledger.
+
+## How disclosure works
+
+By default every position and transfer is encrypted, and the transaction graph is held by the TACEO Network in encrypted form. When an authorised party submits a decryption request for a specific account, the MPC nodes jointly approve and perform the decryption, returning that account's history in plaintext.
+
+No single node can produce that plaintext alone. The request fans out across all three nodes, each returns an encrypted share to the requester's own key, and the requester recombines them. Requests can be bounded by time range.
+
+A lawful disclosure — a subpoena, a court order — is the same machinery with a different trigger. In both cases the request is scoped: it exposes the selected data and nothing else.
+
+## What an auditor gets
+
+The chain carries a verifiable record of every state change in the asset's history, independent of disclosure. An auditor can confirm that the register is internally consistent and that every transfer was valid without being shown a single position. Disclosure is then used for the specific positions or transactions in scope, rather than as the basis of the audit itself.
+
+The Compliance Dashboard is the user-facing surface for requesting decryption.
+
+:::note Public testnet vs production
+On the public testnet reference app the decryption flow has no access control: anyone can query any account's history. This is for demonstration only. In production deployments, access is restricted to explicitly authorised entities by policy and contract configuration.
+:::
+
+[Compliance](/docs/finance-solutions/compliance/introduction) covers the full picture, including pre-transaction screening.
