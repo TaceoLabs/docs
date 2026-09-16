@@ -75,6 +75,16 @@ const sidebars: SidebarsConfig = {
         },
         {
           type: "category",
+          label: "Cross-chain (LayerZero OFT)",
+          link: { type: "doc", id: "finance-solutions/cross-chain/how-it-works" },
+          items: [
+            "finance-solutions/cross-chain/how-it-works",
+            "finance-solutions/cross-chain/quickstart",
+            "finance-solutions/cross-chain/limitations",
+          ],
+        },
+        {
+          type: "category",
           label: "Confidential x402",
           link: { type: "doc", id: "finance-solutions/x402/introduction" },
           items: [

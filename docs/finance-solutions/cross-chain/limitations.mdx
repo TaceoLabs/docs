@@ -1,0 +1,21 @@
+---
+title: What the demo does not do
+---
+
+# What the demo does not do
+
+The cross-chain demo shows the Merces OFT Adapter working end to end across three testnets. Parts of the surrounding stack are stood in for rather than run, and the privacy and trust properties of the demo are not those of the finished mechanism.
+
+## There is no DVN
+
+The demo runs no real DVN. In its place is a relayer service that watches the chains for sends and posts them on the other chain. That relayer carries no threshold assumptions and performs no ZK verification — it is a transport stand-in, not a verification layer.
+
+This matters for how you read the demo. The onchain privacy properties are real: the client proof, both MPC proofs and the commitment payload all work as described, and no plaintext amount appears anywhere. The message-layer security properties are not being exercised. A message delivered by the stand-in relayer has not been attested by an independent verifier network the way a production LayerZero message would be.
+
+## TACEO runs everything
+
+Each of the three chains runs a three-party MPC network, and TACEO hosts all parties on all three. The threshold assumption behind the privacy guarantee — that privacy holds unless more than the threshold of operators collude — is not independently distributed in this deployment.
+
+## It is an MVP
+
+The work is scoped as an MVP: the smallest coherent product covering the core flow, for internal users and design partners. It is not production software, has not been through the hardening a production deployment gets, and runs on testnets with valueless tokens.
