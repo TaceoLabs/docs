@@ -42,6 +42,18 @@ const sidebars: SidebarsConfig = {
         },
         {
           type: "category",
+          label: "Concepts",
+          link: { type: "doc", id: "finance-solutions/concepts/privacy-model" },
+          items: [
+            "finance-solutions/concepts/privacy-model",
+            "finance-solutions/concepts/what-you-see-onchain",
+            "finance-solutions/concepts/architecture",
+            "finance-solutions/concepts/escape-hatch",
+            "finance-solutions/concepts/private-shared-state",
+          ],
+        },
+        {
+          type: "category",
           label: "Confidential x402",
           link: { type: "doc", id: "finance-solutions/x402/introduction" },
           items: [
