@@ -54,6 +54,17 @@ const sidebars: SidebarsConfig = {
         },
         {
           type: "category",
+          label: "Private virtual account",
+          link: { type: "doc", id: "finance-solutions/private-virtual-account/overview" },
+          items: [
+            "finance-solutions/private-virtual-account/overview",
+            "finance-solutions/private-virtual-account/transfers",
+            "finance-solutions/private-virtual-account/deposit-and-withdraw",
+            "finance-solutions/private-virtual-account/transaction-history",
+          ],
+        },
+        {
+          type: "category",
           label: "Confidential x402",
           link: { type: "doc", id: "finance-solutions/x402/introduction" },
           items: [
