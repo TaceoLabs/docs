@@ -31,8 +31,8 @@ Encrypts everything the private tier does, plus hides the transaction graph from
 
 ## Comparison
 
-| | Private transfer (default) | Confidential transfer | Graph-private transfer |
+| | Confidential transfer | Private transfer (default) | Graph-private transfer |
 |---|---|---|---|
-| Hides | Sender, recipient, asset, amount | Asset, amount | Sender, recipient, asset, amount, transaction graph |
-| Reveals | Transaction graph — to node operators only | Sender, recipient — onchain | Nothing, to any party |
-| Throughput | Up to 1,000 TPS (50 TPS/instance) | ~300 TPS per instance | ~7.5 TPS per instance |
+| Hides | Asset, amount | Sender, recipient, asset, amount | Sender, recipient, asset, amount, transaction graph |
+| Reveals | Sender, recipient — onchain | Transaction graph — to node operators only | Nothing, to any party |
+| Throughput | ~300 TPS per instance | Up to 1,000 TPS (50 TPS/instance) | ~7.5 TPS per instance |

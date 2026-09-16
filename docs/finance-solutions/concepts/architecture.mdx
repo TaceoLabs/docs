@@ -13,6 +13,8 @@ Merces holds account balances as secret shares across the TACEO Network, with a 
 
 **Private transfer (default).** Balances sit in a Merkle tree whose root is a single sparse onchain commitment covering the entire map. Individual per-account commitments aren't used — watching which one changed would reveal sender and recipient. Leaves store balance commitments, and the wallet addresses and tree indices involved in a transfer are revealed to the node operators, so the tree can be computed in plaintext at the operator layer. That is the trade behind this tier's throughput: the transaction stays fully private to an onchain observer, and the operators see the graph.
 
+![Private Transfer Architecture](private-transfer-arch.jpg)
+
 **Graph-private transfer.** The same tree, with every layer implemented as an oblivious RAM (ORAM). Access is oblivious, so the operators don't learn which leaves were touched either.
 
 ## Executing a transfer
