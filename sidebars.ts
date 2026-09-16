@@ -156,60 +156,61 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: "category",
-      label: "TACEO Services",
-      link: { type: "doc", id: "services/overview" },
-      items: [
-        {
-          type: "category",
-          label: "TACEO:OPRF",
-          link: { type: "doc", id: "taceo-oprf/overview" },
-          items: [
-            "taceo-oprf/authorization",
-            {
-              type: "category",
-              label: "Development",
-              items: ["taceo-oprf/beta-oprf"],
-            },
-            "taceo-oprf/api",
-          ],
-        },
-        {
-          type: "category",
-          label: "TACEO:Proof",
-          link: { type: "doc", id: "taceo-proof/overview" },
-          items: [
-            {
-              type: "category",
-              label: "Getting Started",
-              items: [
-                "taceo-proof/dev/quick-start-co-circom",
-                "taceo-proof/dev/quick-start-co-noir",
-              ],
-            },
-            "taceo-proof/dev/blueprints",
-            "taceo-proof/dev/bestpractice",
-          ],
-        },
-        {
-          type: "category",
-          label: "TACEO:Match",
-          link: { type: "doc", id: "taceo-match/overview" },
-          items: ["taceo-match/concepts"],
-        },
-        {
-          type: "category",
-          label: "TACEO:OMap",
-          link: { type: "doc", id: "taceo-omap/overview" },
-          items: ["taceo-omap/concepts"],
-        }
-      ],
-    },
-    {
-      type: "category",
       label: "TACEO Network",
       link: { type: "doc", id: "taceo-network/index" },
       items: [
         "taceo-network/network",
+        {
+          type: "category",
+          label: "TACEO Services",
+          link: { type: "doc", id: "services/overview" },
+          items: [
+            {
+              type: "category",
+              label: "TACEO:OPRF",
+              link: { type: "doc", id: "taceo-oprf/overview" },
+              items: [
+                "taceo-oprf/authorization",
+                {
+                  type: "category",
+                  label: "Development",
+                  items: ["taceo-oprf/beta-oprf"],
+                },
+                "taceo-oprf/api",
+              ],
+            },
+            {
+              type: "category",
+              label: "TACEO:Proof",
+              link: { type: "doc", id: "taceo-proof/overview" },
+              items: [
+                {
+                  type: "category",
+                  label: "Getting Started",
+                  items: [
+                    "taceo-proof/dev/quick-start-co-circom",
+                    "taceo-proof/dev/quick-start-co-noir",
+                  ],
+                },
+                "taceo-proof/dev/blueprints",
+                "taceo-proof/dev/bestpractice",
+              ],
+            },
+            {
+              type: "category",
+              label: "TACEO:Match",
+              link: { type: "doc", id: "taceo-match/overview" },
+              items: ["taceo-match/concepts"],
+            },
+            {
+              type: "category",
+              label: "TACEO:OMap",
+              link: { type: "doc", id: "taceo-omap/overview" },
+              items: ["taceo-omap/concepts"],
+            }
+          ],
+        },
+
         "taceo-network/node-operators",
         "taceo-network/governance",
         "taceo-network/roadmap",
