@@ -56,6 +56,15 @@ const sidebars: SidebarsConfig = {
         },
         {
           type: "category",
+          label: "Private DeFi",
+          link: { type: "doc", id: "finance-solutions/private-defi/overview" },
+          items: [
+            "finance-solutions/private-defi/overview",
+            "finance-solutions/private-defi/private-yield",
+          ],
+        },
+        {
+          type: "category",
           label: "Confidential x402",
           link: { type: "doc", id: "finance-solutions/x402/introduction" },
           items: [
