@@ -10,8 +10,6 @@ The challenge is that these vectors are **sensitive and irrevocable**. Unlike a 
 
 Secret sharing splits a value into $n$ shares such that any subset of size $< t$ reveals nothing about the original value, while any subset of size $\geq t$ can reconstruct it. In TACEO:Match, each enrolled template is split into shares distributed across independent MPC nodes on the TACEO Network. No node holds a full template.
 
-For a deeper treatment of MPC and the secret-sharing primitives TACEO uses, see the [MPC Resources](/docs/resources/mpc) page.
-
 ## The Matching Function
 
 Biometric matching reduces to computing a distance metric between two templates and checking whether it falls below a threshold:

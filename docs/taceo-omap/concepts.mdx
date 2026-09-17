@@ -1,12 +1,10 @@
 # Technical Concepts
 
-This page describes the cryptographic building blocks that underpin TACEO:OMap. For foundational reading: secret sharing and MPC protocols are covered in [MPC Resources](/docs/resources/mpc), collaborative SNARKs (coSNARKs) in the [coSNARKs primer](/docs/primer/collabSNARKs-primer), and zero-knowledge proofs in [ZKP Resources](/docs/resources/zkp).
+This page describes the cryptographic building blocks that underpin TACEO:OMap. For foundational reading: secret sharing, zero-knowledge proofs and MPC protocols are covered in [the glossary](/docs/start-here/glossary) and collaborative SNARKs (coSNARKs) in the [coSNARKs primer](/docs/primer/collabSNARKs-primer).
 
 ## Secret Sharing
 
 Secret sharing splits a value into $n$ shares such that any subset of size $< t$ reveals nothing about the original value, while any subset of size $\geq t$ can reconstruct it. In TACEO:OMap, every entry of the map is held as shares distributed across independent MPC nodes on the TACEO Network. No node holds a full value, and no sub-threshold coalition of nodes can read the stored data.
-
-For a deeper treatment of MPC and the secret-sharing schemes TACEO uses, see the [MPC Resources](/docs/resources/mpc) page.
 
 ## Oblivious RAM (ORAM)
 
