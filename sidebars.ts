@@ -95,15 +95,6 @@ const sidebars: SidebarsConfig = {
         },
         {
           type: "category",
-          label: "Private Payments",
-          link: { type: "doc", id: "finance-solutions/payments/introduction" },
-          items: [
-            "finance-solutions/payments/quickstart",
-            "finance-solutions/payments/how-it-works",
-          ],
-        },
-        {
-          type: "category",
           label: "Use cases",
           link: { type: "doc", id: "finance-solutions/use-cases/overview" },
           items: [
