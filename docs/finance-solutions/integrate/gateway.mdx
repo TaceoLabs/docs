@@ -1,0 +1,41 @@
+---
+title: Gateway
+---
+
+# Gateway
+
+The gateway is a convenience layer, not a required component. Everything it does can be done by interacting with the Merces contract directly. What it gives you is a single request-and-response call over a WebSocket, instead of assembling calldata, submitting transactions and watching the chain for completion yourself.
+
+## What it does for you
+
+Send a request, get back a transaction hash once the operation has settled. Behind that, the gateway submits the transaction to the Merces contract and waits for the MPC network to process the batch and finalise the balance update before it responds.
+
+Without it, your integration does that itself: build and send the contract call, then watch the contract for the `ProcessedMPC` event matching your action index to know the balance update landed.
+
+## The two deposit paths
+
+The client's `token` setting decides how a deposit reaches the contract, and the two paths show the difference well.
+
+**`token: 'ERC20'`** — the client approves the contract and submits the deposit transaction from the user's own wallet, then watches for `ProcessedMPC` itself. This is the direct route: no gateway, user pays gas.
+
+**`token: 'EIP3009'`** — the user signs a `ReceiveWithAuthorization` message rather than sending a transaction, and the gateway submits for them. The signed authorization is bound to the deposit's commitment as its nonce, so it can't be reused for a different deposit. This is the path for onboarding a user who holds no native token for gas.
+
+## Timeouts
+
+When the gateway is in the path, the client waits for its response bounded by `gatewayTimeout`, default 30 seconds. On the direct path, the wait is for the `ProcessedMPC` event instead, bounded by `mpcEventTimeout`.
+
+Either timeout raises `TimeoutError`, meaning the client stopped waiting — not that the transaction failed. It may still settle. Check the balance or transaction history before retrying, or you risk submitting the same movement twice.
+
+## Configuration
+
+The gateway takes a `wss://` base URL; the client appends the WebSocket path itself.
+
+```typescript
+const client = new Client({
+  gatewayUrl: 'wss://gateway.merces2.taceo.io',
+  gatewayTimeout: 60_000, // optional, default 30_000
+  // ...
+});
+```
+
+Note that the published TypeScript client routes transfers, withdrawals and vault operations through the gateway — `gatewayUrl` is a required field, and those methods have no direct-to-contract variant. Going direct for those operations means calling the contract yourself rather than using those client methods. See [Client SDK](/docs/finance-solutions/integrate/client-sdk).

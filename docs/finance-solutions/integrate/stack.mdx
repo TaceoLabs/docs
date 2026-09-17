@@ -1,0 +1,53 @@
+---
+title: Where Merces fits in your stack
+---
+
+# Where Merces fits in your stack
+
+Merces is a layer, not a destination. It deploys as a contract on the chain you already use, integrates over an API, and stays invisible to your end users. What changes is what your chain publishes; everything above and below stays yours.
+
+Which parts you use depends on where you sit.
+
+## You own the end-user account
+
+Neobanks, wallets, fintech apps — anyone whose users hold a balance with them.
+
+Merces gives those users a private balance held as encrypted commitments, alongside their existing public one or in place of it. Transfers between accounts settle on the same chain without publishing amounts, and depending on the mode, without publishing counterparties either. Your brand and your UX throughout; end users never see TACEO.
+
+Start with [Private virtual account](/docs/finance-solutions/private-virtual-account/overview), then [Client SDK](/docs/finance-solutions/integrate/client-sdk).
+
+## You move value between parties
+
+Payment processors, PSPs, payment infrastructure.
+
+Merces adds confidential sender, receiver and amount to the rail you already run, without a migration. The settlement path is unchanged — same chain, same asset — but the commercial detail of each payment stops being public record. Compliance enforcement sits in the flow rather than bolted on after it.
+
+Start with [Transfers](/docs/finance-solutions/private-virtual-account/transfers) and [Compliance](/docs/finance-solutions/compliance/overview).
+
+## You orchestrate multi-step flows
+
+Integrators, orchestrators, treasury and self-custody infrastructure.
+
+Where a sequence of moves is itself the sensitive thing, Merces keeps routing logic, counterparty relationships and settlement sequences off the public ledger. Allocation and settlement logic executes privately, and only its correctness is proven onchain — public verification without public data.
+
+Start with [Architecture](/docs/finance-solutions/concepts/architecture) and [Treasury management](/docs/finance-solutions/use-cases/treasury).
+
+## You get paid by agents, or you are one
+
+Paid APIs, agent platforms.
+
+Confidential x402 is drop-in privacy for the HTTP 402 standard: the amount and asset of an agent payment are encrypted, so per-customer pricing and an agent's spending strategy stay off the ledger. No application changes on either side.
+
+Start with [Agent Solutions](/docs/x402/introduction).
+
+## What stays yours
+
+**Identity.** Knowing who your users are is your responsibility, not Merces's. Screening runs against wallet addresses per transaction; verifying the person behind the address is upstream of that.
+
+**Keys.** Merces does not custody. Users sign with their own keys, or through whatever custody arrangement you already have.
+
+**The chain.** Merces deploys where your asset already lives. There is no new L1, no bridge, and no new token to hold.
+
+## What is the same wherever you sit
+
+One API and one SDK, deployed as a contract on an EVM chain you choose. White-label, so your users experience your product. No migration of assets or liquidity. Compliance enforced in the transaction flow, with disclosure available to authorised parties afterwards.
