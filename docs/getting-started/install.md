@@ -34,7 +34,7 @@ cargo install --git https://github.com/TaceoLabs/co-snarks --branch main co-noir
 ## Download Binary from Release
 
 1. You can find the latest release
-   [here](https://github.com/TaceoLabs/collaborative-circom/releases/latest).
+   [here](https://github.com/TaceoLabs/co-snarks/releases?q=co-circom&expanded=true).
 2. Download the binary for your operating system.
 
 3. Extract the binary from the archive
