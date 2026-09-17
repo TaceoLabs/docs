@@ -89,7 +89,7 @@ function GuidanceSection() {
                 label: "Finance Solutions overview",
               },
               {
-                to: "/docs/finance-solutions/x402/quickstart",
+                to: "/docs/x402/quickstart",
                 label: "Confidential x402 quickstart",
               },
             ]}
@@ -129,7 +129,6 @@ function GuidanceSection() {
             <div className={styles.quickLinkCard}>
               <p className={styles.quickLinkTitle}>New to Privacy Tech?</p>
               <div className={styles.quickLinkList}>
-                <ArrowLink to="/docs/resources/mpc" label="MPC primer" />
                 <ArrowLink
                   to="/docs/primer/collabSNARKs-primer"
                   label="CoSNARKs primer"
