@@ -125,6 +125,7 @@ const sidebars: SidebarsConfig = {
       items: [
         "x402/quickstart",
         "x402/how-it-works",
+        "x402/use-cases",
         "x402/integration-guide",
         "x402/protocol-reference",
         "x402/network-and-contracts",

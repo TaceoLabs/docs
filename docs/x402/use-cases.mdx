@@ -1,0 +1,64 @@
+---
+title: Use cases
+---
+
+# Use cases
+
+Under standard x402, the price of every API call settles as a plain ERC-20 transfer, so the
+amount is a permanent public record. The confidential scheme keeps the amount off the ledger:
+the resource server quotes it to the client over TLS, and what lands onchain is a commitment.
+That single change is what makes the flows below workable on a public chain.
+
+## Dynamic pricing
+
+Charge per client rather than per endpoint — by identity, reputation, volume tier, negotiated
+contract or discount code.
+
+On standard x402, each of those prices is a public transfer, so anyone can reconstruct the full
+rate card by watching the chain and see exactly which customers got which terms. Under the
+confidential scheme the quoted amount reaches the client over TLS and never reaches the
+blockchain, so there is no onchain evidence of what any individual customer paid.
+
+## Auctions and private bidding
+
+Where access to a resource is priced by competitive offer rather than a list price, the amount
+each participant commits to is never written onchain. A clearing price or an individual offer
+cannot be recovered from the ledger afterwards.
+
+Participant addresses stay visible, so this hides what was bid, not who bid.
+
+## Competitor protection
+
+Pricing strategy is commercially sensitive in both directions.
+
+For a provider, public settlement exposes promotional campaigns, enterprise rates and volume
+discounts as they happen — a competitor can price against your book in real time.
+
+For an agent, spending patterns across providers reveal its economic strategy: how much budget
+it allocates to each data source shows which ones it depends on. Under the confidential scheme
+an observer can still count an agent's payments, but cannot sum them or compare them across
+providers.
+
+## Metering and automated settlement
+
+Per-call metering, usage-based billing and automated disbursement to downstream providers all
+run as ordinary x402 payments. The amounts settle confidentially, so a machine-to-machine flow
+can be paid out continuously without publishing the unit economics of the service behind it.
+
+## What stays visible
+
+The confidential scheme hides payment amounts and account balances. It does not hide:
+
+- sender and receiver addresses
+- payment frequency and timing
+- the sender–receiver relationship
+
+A full breakdown is in
+[Protocol reference → Privacy & trust model](/docs/x402/protocol-reference/#privacy--trust-model).
+
+## Where to start
+
+| Goal | Start here |
+|---|---|
+| Run a payment end-to-end | [Quickstart](/docs/x402/quickstart) |
+| Add the scheme to your own client and server | [Integration guide](/docs/x402/integration-guide) |
