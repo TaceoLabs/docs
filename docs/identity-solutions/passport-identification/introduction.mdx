@@ -1,27 +1,111 @@
----
+ ---
 title: Threshold Passport Identification
-description: Match passport attributes without exposing document data
+description: Derive a unique, unlinkable identifier from a passport without exposing the document
 ---
 
 # Threshold Passport Identification
 
-Match passports or any identification document (e.g. national IDs) across parties without revealing the underlying document data.
+Threshold Passport Identification turns a government-issued passport or national ID into a
+unique, unlinkable identifier — without the document data leaving the user's device, and
+without any single party being able to reproduce that identifier or correlate it across
+services. The issuing authority included.
 
-## The tracability problem of digital identities
+It is built on [TACEO:OPRF](/docs/taceo-oprf/overview), the same threshold service behind
+[Distributed Nullifiers](/docs/identity-solutions/nullifiers/introduction).
 
-Identity documents like passports or national identity cards are the defacto standard to authenticate an individual in the physical world. This property makes them a natural
-anchor for digital identity systems as well. But operating on these data digitally requires
-careful handling: the **underlying attributes are sensitive**, tied to a real person, and cannot
-be rotated if compromised.
+:::tip In production
+[ZKPassport](https://zkpassport.id/) runs its identity flow on TACEO:OPRF, covering passports
+and national IDs from 130+ countries, and operates one of the network's nodes itself. Write-up:
+[ZKPassport goes live on the TACEO Network](https://core.taceo.io/articles/partner-zkpassport/).
+:::
 
-A common mitigation is to avoid publishing the plain data in the first place. Instead the data is hashed before being posted and used for identity comparison.
-The raw document data is never transmitted. This limits casual observers - but not the issuers or anyone else with access to the raw data.
-Issuing authorities might hold the original data and can compute the same hashes, making users traceable to
-any party that issued their document.
+## The traceability problem
 
-## Unique and unlinkable identities
+Identity documents are the de facto standard for authenticating a person in the physical world,
+which makes them a natural anchor for digital identity too. But the attributes inside them are
+sensitive, tied to a real person, and cannot be rotated if they are compromised.
 
-[TACEO:OPRF](/docs/taceo-oprf/overview.mdx) computes a nullifier over the document hash using a threshold of independent MPC
-nodes. The resulting nullifier is deterministic - it uniquely identifies the user - but no
-single party, including TACEO or the document issuer, can compute it unilaterally. Knowledge
-of the document's pre-image is no longer sufficient to derive or link the identifier.
+The usual mitigation is to hash the document data before publishing or comparing it, so the raw
+data is never transmitted. That stops a casual observer. It does not stop anyone who already
+holds the underlying data — above all the issuing authority, which can compute the same hash for
+any document it issued and recognise that person wherever the hash appears.
+
+A public salt does not fix this either. If the salt is knowable, the derivation is reproducible
+by anyone who knows it, and the identifier becomes a tracking key.
+
+## How threshold identification solves it
+
+The identifier is derived under a key that is secret-shared across independent nodes and never
+reassembled, so possession of the document data is not sufficient to compute it.
+
+**Step by step:**
+
+1. **Read and verify, on device.** The document's chip is read over NFC — the same technology
+   airport eGates use — and the issuer's signature is verified locally. Nothing is uploaded.
+
+2. **Blind the request.** The inputs to the identifier — the passport signature, together with
+   the requesting application's domain and scope — are blinded on the device before they leave
+   it.
+
+3. **Threshold evaluation.** An independent set of nodes jointly evaluates the OPRF on the
+   blinded input using MPC. Because the input is blinded and the computation is split, no node,
+   and no group of nodes below the threshold, sees the input or the result.
+
+4. **Unblind and verify.** The device unblinds the response into an application-specific
+   identifier, and checks it against the network's public key, which is registered onchain. A
+   wrong answer cannot pass.
+
+Because the key belongs to the network rather than to any participant, the same person maps to
+one stable identifier within an application and to unlinkable identifiers across applications —
+resolving what otherwise looks like a contradiction between *stable* and *unlinkable*.
+
+An evaluation can additionally be gated so that only the genuine holder can invoke it, bound to
+the specific request so it cannot be replayed. Otherwise anyone holding a copy of the document
+data could ask the network to derive that person's identifier.
+
+## What this enables
+
+| Use case | Why threshold derivation makes it possible |
+|---|---|
+| **Unique, unlinkable identifiers** | One identifier per person per application; nothing links them across applications |
+| **Document-based identity** | An existing passport or national ID anchors the identity — no new credential to issue |
+| **Eligibility and sanctions checks** | Prove an attribute holds without revealing the attribute or the document behind it |
+| **Issuer resistance** | The authority that issued the document cannot reproduce or recognise the identifier |
+
+## Who should use it
+
+**Identity protocol teams** building sybil resistance or proof-of-personhood on government
+documents rather than biometrics.
+
+**Applications with a returning-user problem.** Anywhere an application must recognise a user
+across sessions and prevent them from spinning up multiple identities, without acquiring the
+ability to track them elsewhere.
+
+**Regulated flows needing eligibility, not identity.** Age, nationality or residency gates where
+the verifier needs a yes or no, not a document scan on file.
+
+## In production: ZKPassport
+
+ZKPassport generates its zero-knowledge proofs locally on the user's phone, so a person can
+prove they are over 18, a citizen of a given country, or a unique human, without revealing their
+birthdate or their document.
+
+One step benefits from running off the device: the nullifier that lets an application recognise
+a returning user. ZKPassport runs that step on TACEO:OPRF as a three-operator, 2-of-3 threshold
+deployment across separate clouds, with one node operated by ZKPassport themselves. The device
+makes a single blinded round-trip over TACEO's WebSocket API, and ZKPassport's Noir circuits
+verify the returned evaluation directly — from the application's point of view the threshold
+service is indistinguishable from a plain OPRF. Every evaluation is gated by a live face-match
+bound to that request, so possession of someone's passport data is not enough to derive their
+identifier.
+
+## Underlying service
+
+Service documentation, API and authorization model live under
+[TACEO:OPRF](/docs/taceo-oprf/overview).
+
+For adjacent reading:
+
+- [Identity Solutions overview](/docs/identity-solutions/overview)
+- [Distributed Nullifiers](/docs/identity-solutions/nullifiers/introduction)
+- [Confidential Biometrics](/docs/identity-solutions/biometrics/introduction), 
