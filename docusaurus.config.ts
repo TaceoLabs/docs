@@ -52,10 +52,6 @@ const config: Config = {
           { from: "/docs/design/known-issues", to: "/docs/" },
           { from: "/docs/design/roadmap", to: "/docs/" },
           { from: "/docs/contact", to: "/docs/" },
-          {
-            from: "/docs/finance-solutions/x402/",
-            to: "/docs/finance-solutions/x402/introduction/",
-          },
         ],
       },
     ],
