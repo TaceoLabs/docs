@@ -107,6 +107,7 @@ const sidebars: SidebarsConfig = {
             "finance-solutions/integrate/stack",
           ],
         },
+        "finance-solutions/roadmap",
       ],
     },
     {
