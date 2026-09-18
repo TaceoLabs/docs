@@ -13,7 +13,6 @@ import type { SidebarsConfig } from "@docusaurus/plugin-content-docs";
 const sidebars: SidebarsConfig = {
   // Unified sidebar structure for all documentation
   mainSidebar: [
-    "index",
     {
       type: "category",
       label: "Start here",
@@ -29,12 +28,11 @@ const sidebars: SidebarsConfig = {
       type: "category",
       label: "Finance Solutions",
       collapsed: false,
-      link: { type: "doc", id: "finance-solutions/overview" },
       items: [
+        "finance-solutions/overview",
         {
           type: "category",
           label: "Concepts",
-          link: { type: "doc", id: "finance-solutions/concepts/privacy-model" },
           items: [
             "finance-solutions/concepts/privacy-model",
             "finance-solutions/concepts/who-sees-what",
@@ -46,7 +44,6 @@ const sidebars: SidebarsConfig = {
         {
           type: "category",
           label: "Private virtual account",
-          link: { type: "doc", id: "finance-solutions/private-virtual-account/overview" },
           items: [
             "finance-solutions/private-virtual-account/overview",
             "finance-solutions/private-virtual-account/deposit-and-withdraw",
@@ -57,7 +54,6 @@ const sidebars: SidebarsConfig = {
         {
           type: "category",
           label: "Private DeFi",
-          link: { type: "doc", id: "finance-solutions/private-defi/overview" },
           items: [
             "finance-solutions/private-defi/overview",
             "finance-solutions/private-defi/private-yield",
@@ -66,7 +62,6 @@ const sidebars: SidebarsConfig = {
         {
           type: "category",
           label: "Private RWAs",
-          link: { type: "doc", id: "finance-solutions/private-rwas/overview" },
           items: [
             "finance-solutions/private-rwas/overview",
             "finance-solutions/private-rwas/private-holdings",
@@ -76,7 +71,6 @@ const sidebars: SidebarsConfig = {
         {
           type: "category",
           label: "Cross-chain (LayerZero OFT)",
-          link: { type: "doc", id: "finance-solutions/cross-chain/how-it-works" },
           items: [
             "finance-solutions/cross-chain/how-it-works",
             "finance-solutions/cross-chain/quickstart",
@@ -86,7 +80,6 @@ const sidebars: SidebarsConfig = {
         {
           type: "category",
           label: "Compliance",
-          link: { type: "doc", id: "finance-solutions/compliance/overview" },
           items: [
             "finance-solutions/compliance/overview",
             "finance-solutions/compliance/pre-transaction-screening",
@@ -96,7 +89,6 @@ const sidebars: SidebarsConfig = {
         {
           type: "category",
           label: "Use cases",
-          link: { type: "doc", id: "finance-solutions/use-cases/overview" },
           items: [
             "finance-solutions/use-cases/overview",
             "finance-solutions/use-cases/payments-payroll-batch",
@@ -108,7 +100,6 @@ const sidebars: SidebarsConfig = {
         {
           type: "category",
           label: "Integrate",
-          link: { type: "doc", id: "finance-solutions/integrate/client-sdk" },
           items: [
             "finance-solutions/integrate/client-sdk",
             "finance-solutions/integrate/gateway",
@@ -121,8 +112,8 @@ const sidebars: SidebarsConfig = {
     {
       type: "category",
       label: "Agent Solutions",
-      link: { type: "doc", id: "x402/introduction" },
       items: [
+        "x402/introduction",
         "x402/quickstart",
         "x402/how-it-works",
         "x402/use-cases",
@@ -135,8 +126,8 @@ const sidebars: SidebarsConfig = {
       type: "category",
       label: "Identity Solutions",
       collapsed: false,
-      link: { type: "doc", id: "identity-solutions/overview" },
       items: [
+        "identity-solutions/overview",
         {
           type: "category",
           label: "Distributed Nullifiers",
@@ -160,19 +151,19 @@ const sidebars: SidebarsConfig = {
     {
       type: "category",
       label: "TACEO Network",
-      link: { type: "doc", id: "taceo-network/index" },
       items: [
+        "taceo-network/index",
         "taceo-network/network",
         {
           type: "category",
           label: "TACEO Services",
-          link: { type: "doc", id: "services/overview" },
           items: [
+            "services/overview",
             {
               type: "category",
               label: "TACEO:OPRF",
-              link: { type: "doc", id: "taceo-oprf/overview" },
               items: [
+                "taceo-oprf/overview",
                 "taceo-oprf/authorization",
                 {
                   type: "category",
@@ -185,8 +176,8 @@ const sidebars: SidebarsConfig = {
             {
               type: "category",
               label: "TACEO:Proof",
-              link: { type: "doc", id: "taceo-proof/overview" },
               items: [
+                "taceo-proof/overview",
                 {
                   type: "category",
                   label: "Getting Started",
@@ -202,14 +193,12 @@ const sidebars: SidebarsConfig = {
             {
               type: "category",
               label: "TACEO:Match",
-              link: { type: "doc", id: "taceo-match/overview" },
-              items: ["taceo-match/concepts"],
+              items: ["taceo-match/overview", "taceo-match/concepts"],
             },
             {
               type: "category",
               label: "TACEO:OMap",
-              link: { type: "doc", id: "taceo-omap/overview" },
-              items: ["taceo-omap/concepts"],
+              items: ["taceo-omap/overview", "taceo-omap/concepts"],
             }
           ],
         },
@@ -223,12 +212,12 @@ const sidebars: SidebarsConfig = {
     {
       type: "category",
       label: "Developer Tools",
-      link: { type: "doc", id: "overview" },
       items: [
         {
           type: "category",
           label: "Getting Started",
           items: [
+            "overview",
             "getting-started/install",
             "getting-started/quick-start-co-circom",
             "getting-started/quick-start-co-noir",
@@ -238,8 +227,8 @@ const sidebars: SidebarsConfig = {
         {
           type: "category",
           label: "Examples",
-          link: { type: "doc", id: "examples/examples" },
           items: [
+            "examples/examples",
             "examples/poseidon",
             "examples/poseidon_noir",
             "examples/kyc",
@@ -255,8 +244,8 @@ const sidebars: SidebarsConfig = {
             {
               type: "category",
               label: "Command-Line Interface",
-              link: { type: "doc", id: "co-circom/cli/cli" },
               items: [
+                "co-circom/cli/cli",
                 "co-circom/cli/split-input",
                 "co-circom/cli/merge-input-shares",
                 "co-circom/cli/split-witness",
@@ -277,13 +266,13 @@ const sidebars: SidebarsConfig = {
         {
           type: "category",
           label: "coNoir",
-          link: { type: "doc", id: "co-noir/co-noir" },
           items: [
+            "co-noir/co-noir",
             {
               type: "category",
               label: "Command-Line Interface",
-              link: { type: "doc", id: "co-noir/cli/cli" },
               items: [
+                "co-noir/cli/cli",
                 "co-noir/cli/split-input",
                 "co-noir/cli/merge-input-shares",
                 "co-noir/cli/split-witness",
@@ -302,8 +291,7 @@ const sidebars: SidebarsConfig = {
             {
               type: "category",
               label: "Rust Library",
-              link: { type: "doc", id: "co-noir/lib/lib" },
-              items: ["co-noir/lib/example"],
+              items: ["co-noir/lib/lib", "co-noir/lib/example"],
             },
           ],
         },
