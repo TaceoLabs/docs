@@ -42,7 +42,7 @@ dns_name = "127.0.0.1:10002"
 cert_path = "data/cert2.der"
 ```
 
-See the example configuration in the [configs](https://github.com/TaceoLabs/co-snarks/blob/main/co-circom/co-circom/examples/configs) directory, with pre-generated certificates and keys in the [data](https://github.com/TaceoLabs/co-snarks/blob/main/co-circom/co-circom/examples/data) directory.
+See the example configuration in the [configs](https://github.com/TaceoLabs/co-snarks/tree/main/co-circom/co-circom/examples/configs) directory, with pre-generated certificates and keys in the [data](https://github.com/TaceoLabs/co-snarks/tree/main/co-circom/co-circom/examples/data) directory.
 
 ## Env Variables
 
