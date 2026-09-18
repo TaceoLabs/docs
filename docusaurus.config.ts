@@ -53,6 +53,54 @@ const config: Config = {
           { from: "/docs/design/roadmap", to: "/docs/" },
           { from: "/docs/contact", to: "/docs/" },
           { from: "/docs/finance-solutions/x402", to: "/docs/x402/introduction/" },
+          
+          // --- Agent Solutions: x402 moved out of finance-solutions ---
+          { from: "/docs/finance-solutions/x402/introduction", to: "/docs/x402/introduction/" },
+          { from: "/docs/finance-solutions/x402/quickstart", to: "/docs/x402/quickstart/" },
+          { from: "/docs/finance-solutions/x402/how-it-works", to: "/docs/x402/how-it-works/" },
+          { from: "/docs/finance-solutions/x402/integration-guide", to: "/docs/x402/integration-guide/" },
+          { from: "/docs/finance-solutions/x402/network-and-contracts", to: "/docs/x402/network-and-contracts/" },
+          { from: "/docs/finance-solutions/x402/protocol-reference", to: "/docs/x402/protocol-reference/" },
+          
+          // --- payments/* folded into concepts + private virtual account ---
+          { from: "/docs/finance-solutions/payments/introduction", to: "/docs/finance-solutions/overview/" },
+          { from: "/docs/finance-solutions/payments/how-it-works", to: "/docs/finance-solutions/concepts/architecture/" },
+          { from: "/docs/finance-solutions/payments/quickstart", to: "/docs/finance-solutions/integrate/client-sdk/" },
+          
+          // --- yield/* renamed to private-defi ---
+          { from: "/docs/finance-solutions/yield/introduction", to: "/docs/finance-solutions/private-defi/overview/" },
+          { from: "/docs/finance-solutions/yield/how-it-works", to: "/docs/finance-solutions/private-defi/private-yield/" },
+          { from: "/docs/finance-solutions/yield/quickstart", to: "/docs/finance-solutions/private-defi/private-yield/" },
+          
+          // --- compliance renamed ---
+          { from: "/docs/finance-solutions/compliance/introduction", to: "/docs/finance-solutions/compliance/overview/" },
+          
+          // --- legacy use-cases/* retired, mapped by topic ---
+          { from: "/docs/use-cases", to: "/docs/finance-solutions/use-cases/overview/" },
+          { from: "/docs/use-cases/finance", to: "/docs/finance-solutions/overview/" },
+          { from: "/docs/use-cases/defi", to: "/docs/finance-solutions/private-defi/overview/" },
+          { from: "/docs/use-cases/compliance", to: "/docs/finance-solutions/compliance/overview/" },
+          { from: "/docs/use-cases/identity", to: "/docs/identity-solutions/overview/" },
+          { from: "/docs/use-cases/agents", to: "/docs/x402/use-cases/" },
+          { from: "/docs/use-cases/ai", to: "/docs/x402/use-cases/" },
+          { from: "/docs/use-cases/data-ownership", to: "/docs/taceo-network/data-sovereignty/" },
+          { from: "/docs/use-cases/attribution", to: "/docs/taceo-network/data-sovereignty/" },
+          { from: "/docs/use-cases/proof", to: "/docs/taceo-proof/overview/" },
+          { from: "/docs/use-cases/gaming", to: "/docs/taceo-network/" },
+          
+          // --- resources/* and the duplicate primer ---
+          { from: "/docs/resources", to: "/docs/primer/collabSNARKs-primer/" },
+          { from: "/docs/resources/resources", to: "/docs/primer/collabSNARKs-primer/" },
+          { from: "/docs/resources/collsnarks", to: "/docs/primer/collabSNARKs-primer/" },
+          { from: "/docs/resources/mpc", to: "/docs/primer/collabSNARKs-primer/" },
+          { from: "/docs/resources/zkp", to: "/docs/primer/collabSNARKs-primer/" },
+          { from: "/docs/primer/mpc-primer", to: "/docs/primer/collabSNARKs-primer/" },
+          
+          // --- misc retirements ---
+          { from: "/docs/design/mpc-vm", to: "/docs/taceo-network/" },
+          { from: "/docs/releases/co-noir-feb", to: "/docs/start-here/public-repos/" },
+          { from: "/docs/releases/co-noir-nov", to: "/docs/start-here/public-repos/" },
+          { from: "/docs/releases/co-snarks-april", to: "/docs/start-here/public-repos/" },
         ],
       },
     ],
