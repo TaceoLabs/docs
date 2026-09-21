@@ -1,15 +1,19 @@
 ---
-title: Finance Solutions Overview
+title: Introduction to Merces
 description: Private onchain finance, powered by Merces
 ---
 
-# Finance Solutions on the TACEO Network
+# Merces: Private Onchain Finance
 
-Public blockchains expose everything by default: balances, counterparties, amounts, transaction flows. That's a dealbreaker for real financial operations. TACEO's finance solutions let developers, institutions, and AI agents move value on the chains they already use without putting their business on a public ledger.
+Public blockchains expose everything by default: balances, counterparties, amounts, transaction flows.
+That's a dealbreaker for real financial operations.
 
-## Merces — private onchain finance
+TACEO's finance solution, **Merces**, let developers, institutions, and AI agents move value on the chains
+they already use without putting their business on a public ledger.
 
-Our finance offering is one privacy solution, **Merces**, with multiple features on top. Merces is TACEO's confidential token transfer protocol. It wraps existing ERC-20 tokens into a private form. Balances are held as secret shares across the TACEO Network, state transitions are verified onchain via coSNARKs, and no single party — including TACEO — sees what anyone holds or sends. Compliance primitives are built into the protocol, not bolted on top.
+Wallet balances, token transfers, DeFi positions, and much more are no longer publicly accessible information.
+Merces encrypts these values and securely manages them as secret-shares across the TACEO Network.
+Any state transitions are verified onchain via ZK Proofs (coSNARKs), and no single party — including TACEO — sees the underyling data. Compliance primitives are built into the protocol, not bolted on top.
 
 :::tip What is Merces?
 Merces is an integrable privacy layer for the chain you already use. Two things set it apart:
@@ -17,7 +21,6 @@ Merces is an integrable privacy layer for the chain you already use. Two things 
 - **We come to you.** Merces deploys on the chain you already use. No migration, no new asset.
 - **Solutions, not primitives.** A ready-made solution you can plug into a stablecoin or fintech product, not raw cryptographic building blocks you have to assemble.
 
-Canonical write-up: [core.taceo.io/articles/merces-onchain-finance](https://core.taceo.io/articles/merces-onchain-finance/).
 :::
 
 For what is live today — chains, frontends, feature availability — see [Deployments & status](/docs/start-here/deployments-and-status).
@@ -74,21 +77,34 @@ Sanctions and AML screening before a transfer settles, and scoped disclosure of 
 
 </div>
 
+
+{/* TODO(lukas): add RWA section*/}
+
+<div className="service-card-warning">
+
+
+### RWA
+
+add RWA section
+
+**Best fit:**
+
+- ...
+- ...
+- ...
+
+[Learn more →](/docs/finance-solutions/compliance/overview)
+
 </div>
 
+
+
+</div>
+
+<br/>
 Merces also underpins **Confidential x402**, drop-in privacy for agent-to-agent payments over the HTTP 402 standard. See [Agent Solutions](/docs/x402/introduction).
 
-## Going deeper
-
-| Goal | Start here |
-|---|---|
-| Understand the privacy modes and what each reveals | [Privacy model](/docs/finance-solutions/concepts/privacy-model) |
-| See how balances are stored and proven | [Architecture](/docs/finance-solutions/concepts/architecture) |
-| Add private payments to your product | [Private virtual account](/docs/finance-solutions/private-virtual-account/overview) |
-| Understand our compliance capabilities | [Compliance](/docs/finance-solutions/compliance/overview) |
-| Read the protocol paper | [Escudero et al., IACR ePrint 2026/850](https://eprint.iacr.org/2026/850) |
-| Browse the source | [github.com/TaceoLabs](https://github.com/TaceoLabs) |
 
 ---
 
-**Looking for a design partner slot?** We're working with a small group of stablecoin issuers, fintechs, and payment infrastructure teams shipping private rails to production. [Email the team](mailto:hello@taceo.io?subject=Merces%20design%20partner). General questions go in [Discord](https://taceo.io/discord).
+**Looking for a design partner slot?** We're working with a small group of stablecoin issuers, fintechs, and payment infrastructure teams shipping private rails to production. [Get in contact](mailto:hello@taceo.io?subject=Merces%20design%20partner).

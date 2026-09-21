@@ -46,6 +46,7 @@ See the example configuration in the [configs](https://github.com/TaceoLabs/co-s
 
 ## Env Variables
 
+{/* TODO(lukas): check open todo below */}
 <!-- TODO check this and generalize to coNoir and coCircom. -->
 
 Environment variables use the prefix `COCIRCOM_`.

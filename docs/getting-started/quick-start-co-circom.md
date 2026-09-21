@@ -1,5 +1,7 @@
 # Quick Start coCircom
 
+{/* TODO(lukas): check open todos below */}
+
 coCircom is an implementation of collaborative SNARKs (TODO reference), with a focus on the [circom](https://circom.io) framework.
 In contrast to traditional SNARKs, which are run by a single prover, collaborative SNARKs are executed using a multiparty computation protocol (TODO reference).
 

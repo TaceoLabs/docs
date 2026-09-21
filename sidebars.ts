@@ -35,7 +35,6 @@ const sidebars: SidebarsConfig = {
           label: "Concepts",
           items: [
             "finance-solutions/concepts/privacy-model",
-            "finance-solutions/concepts/who-sees-what",
             "finance-solutions/concepts/architecture",
             "finance-solutions/concepts/escape-hatch",
             "finance-solutions/concepts/private-shared-state",
@@ -101,6 +100,7 @@ const sidebars: SidebarsConfig = {
           type: "category",
           label: "Integrate",
           items: [
+            "finance-solutions/integrate/quickstart",
             "finance-solutions/integrate/client-sdk",
             "finance-solutions/integrate/gateway",
             "finance-solutions/integrate/operator-interface",
@@ -164,42 +164,42 @@ const sidebars: SidebarsConfig = {
               type: "category",
               label: "TACEO:OPRF",
               items: [
-                "taceo-oprf/overview",
-                "taceo-oprf/authorization",
+                "services/taceo-oprf/overview",
+                "services/taceo-oprf/authorization",
                 {
                   type: "category",
                   label: "Development",
-                  items: ["taceo-oprf/beta-oprf"],
+                  items: ["services/taceo-oprf/beta-oprf"],
                 },
-                "taceo-oprf/api",
+                "services/taceo-oprf/api",
               ],
             },
             {
               type: "category",
               label: "TACEO:Proof",
               items: [
-                "taceo-proof/overview",
+                "services/taceo-proof/overview",
                 {
                   type: "category",
                   label: "Getting Started",
                   items: [
-                    "taceo-proof/dev/quick-start-co-circom",
-                    "taceo-proof/dev/quick-start-co-noir",
+                    "services/taceo-proof/dev/quick-start-co-circom",
+                    "services/taceo-proof/dev/quick-start-co-noir",
                   ],
                 },
-                "taceo-proof/dev/blueprints",
-                "taceo-proof/dev/bestpractice",
+                "services/taceo-proof/dev/blueprints",
+                "services/taceo-proof/dev/bestpractice",
               ],
             },
             {
               type: "category",
               label: "TACEO:Match",
-              items: ["taceo-match/overview", "taceo-match/concepts"],
+              items: ["services/taceo-match/overview", "services/taceo-match/concepts"],
             },
             {
               type: "category",
               label: "TACEO:OMap",
-              items: ["taceo-omap/overview", "taceo-omap/concepts"],
+              items: ["services/taceo-omap/overview", "services/taceo-omap/concepts"],
             }
           ],
         },

@@ -5,34 +5,40 @@ description: The three transfer modes Merces supports, and which one is the defa
 
 # Privacy model
 
-Merces supports three transfer modes: Confidential transfer, Private transfer, and Graph-private transfer. Private transfer is the default.
+Merces optimizes for maximum privacy with high-performance transaction throughput. The default model (private transfers) 
+guarantee full onchain privacy, while the operating nodes learn only minimal information. 
+
+The protocol is capable to optimize for either higher performance or more privacy guarantees.
+ 
 
 ## Private transfer (default)
 
-Encrypts all transaction data: sender, recipient, asset, and amount. No single party — including TACEO — sees what anyone holds or sends. The transaction graph (which addresses transacted with which) is visible to node operators, not onchain.
+Provides full onchain privacy by encrypting all transaction data: sender, recipient, asset, and amount. No single party — including TACEO — sees what anyone holds or sends. The transaction graph (i.e., which addresses transacted) is visible to node operators, not onchain.
+Allows for up to 1,000 TPS (50+ per instance, parallelized).
 
-**Throughput:** up to 1,000 TPS (50 TPS per instance, parallelized across 20 instances).
 
-## Confidential transfer
 
-Encrypts asset and amount. Sender and recipient remain visible onchain.
+## Optimizations
+Depending on the specific application the system might be optimized towards more throughput or an even higher level of privacy.
 
-**Throughput:** ~300 TPS per instance.
+### Graph-private transfer
 
-**Use it if:** you need higher throughput than the private tier and can accept visible counterparties — this is the only mode Confidential x402 exposes today.
+Encrypts everything the private mode does, plus hides the transaction graph from node operators. No single party sees anything.
 
-## Graph-private transfer
+**Use it if:** you need a stronger trust assumption against node operators than the default option provides.
 
-Encrypts everything the private tier does, plus hides the transaction graph from node operators. No single party sees anything.
+### Partial-private transfer
 
-**Throughput:** ~7.5 TPS per instance.
+Encrypts asset and amount. Sender and recipient remain visible onchain. Similar to privacy guarantees FHE-based solutions can offer.
 
-**Use it if:** you need a stronger trust assumption than the default and can accept the lower throughput.
+
+**Use it if:** you need higher throughput than the private tier and can accept visible counterparties.
+
+
 
 ## Comparison
 
-| | Confidential transfer | Private transfer (default) | Graph-private transfer |
+| | Partial-private | Private (default) | Graph-private transfer |
 |---|---|---|---|
-| Hides | Asset, amount | Sender, recipient, asset, amount | Sender, recipient, asset, amount, transaction graph |
-| Reveals | Sender, recipient — onchain | Transaction graph — to node operators only | Nothing, to any party |
-| Throughput | ~300 TPS per instance | Up to 1,000 TPS (50 TPS/instance) | ~7.5 TPS per instance |
+| **Hides** | Asset, amount | Sender, recipient, asset, amount | Sender, recipient, asset, amount, transaction graph |
+| **Reveals** | Sender, recipient (onchain) | Transaction graph to node operators only | Nothing, to any party |
