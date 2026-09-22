@@ -103,6 +103,7 @@ if (!await isRegistered({ publicClient, idRegistryAddress: ID_REGISTRY_ADDRESS, 
 is already registered it returns the existing index rather than reverting, so the
 `isRegistered` check above is a convenience, not a requirement.
 
+
 | Argument | Required | Notes |
 |---|---|---|
 | `publicClient` / `walletClient` | Yes | Standard viem clients |
@@ -117,8 +118,8 @@ is already registered it returns the existing index rather than reverting, so th
 Registration touches only the ID registry — not the Merces contract, the token, or the
 query nodes.
 
-// TODO DC: GROUP_ID if used on mainnet is subject to some limitations, use XXXX to register for an anonymous wallet,
-// subject to some limitations
+Note: Some limitations apply when using the SDK with mainnet deployments. Use GROUP_ID "4" when registering on mainnet
+-- limits regarding number of wallets, transactions and transaction amounts apply to this user group.
 
 ## Create a client
 
