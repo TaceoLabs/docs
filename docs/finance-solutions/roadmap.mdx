@@ -15,11 +15,10 @@ proving into witness extension; more efficient oblivious RAM; and shallower Merk
 Alternative proof systems are under evaluation.
 
 ## Post-quantum readiness
-{/* TODO(lukas): needs to be double-checked with PQ roadmap (https://taceo-labs.slack.com/archives/C08EZHQAG1G/p1782735293054229) and/or a researcher  */}
-Most of the Merces stack is already quantum-safe, and this is by construction rather than
-by luck — the MPC layer is information-theoretic, and the hash functions and oblivious
-data structures underneath it are symmetric primitives that a quantum adversary only
-weakens quadratically, not fatally.
+
+Most of the Merces stack is already quantum-safe — the MPC layer is information-theoretic, and the hash functions and oblivious
+data structures underneath it are build from symmetric primitives that a quantum adversary only
+weakens quadratically at best.
 
 Two areas need migration, and they differ in urgency.
 
