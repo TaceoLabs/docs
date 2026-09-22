@@ -101,6 +101,7 @@ const sidebars: SidebarsConfig = {
           label: "Integrate",
           items: [
             "finance-solutions/integrate/client-sdk",
+            "finance-solutions/integrate/client-sdk-omap",
             "finance-solutions/integrate/gateway",
             "finance-solutions/integrate/operator-interface",
             "finance-solutions/integrate/stack",
