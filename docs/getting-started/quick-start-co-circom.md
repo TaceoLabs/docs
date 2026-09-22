@@ -1,11 +1,9 @@
 # Quick Start coCircom
 
-{/* TODO(lukas): check open todos below */}
+coCircom is an implementation of [collaborative SNARKs](/docs/primer/collabSNARKs-primer), with a focus on the [circom framework](https://github.com/iden3/circom).
+In contrast to traditional SNARKs, which are run by a single prover, collaborative SNARKs are executed using a [multiparty computation protocol](/docs/taceo-network).
 
-coCircom is an implementation of collaborative SNARKs (TODO reference), with a focus on the [circom](https://circom.io) framework.
-In contrast to traditional SNARKs, which are run by a single prover, collaborative SNARKs are executed using a multiparty computation protocol (TODO reference).
-
-If you just want to get your hands dirty as fast as possible, here is a run-down on how to collaboratively prove the `Multiplier2` example from the [circom documentation](https://docs.circom.io/getting-started/installation/) using Groth16.
+If you just want to get your hands dirty as fast as possible, here is a run-down on how to collaboratively prove the `Multiplier2` example from the [circom documentation](https://github.com/iden3/circom/blob/a100faedb1c62d4d3e1463f8a3f88342d82351cd/mkdocs/docs/getting-started/installation.md) using Groth16.
 
 First of all, here is the relevant circom file:
 
