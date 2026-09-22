@@ -102,6 +102,7 @@ const sidebars: SidebarsConfig = {
           items: [
             "finance-solutions/integrate/client-sdk",
             "finance-solutions/integrate/client-sdk-omap",
+            "finance-solutions/integrate/client-sdk-oft",
             "finance-solutions/integrate/gateway",
             "finance-solutions/integrate/operator-interface",
             "finance-solutions/integrate/stack",
