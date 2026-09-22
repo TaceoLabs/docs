@@ -28,8 +28,6 @@ Either timeout raises `TimeoutError`, meaning the client stopped waiting — not
 
 ## Configuration
 
-{/* TODO(lukas): is that one actually available and does it work? Afaik, that's only true for the Merces OMap demo(s). */}
-
 The gateway takes a `wss://` base URL; the client appends the WebSocket path itself.
 
 ```typescript
@@ -41,3 +39,5 @@ const client = new Client({
 ```
 
 Note that the published TypeScript client routes transfers, withdrawals and vault operations through the gateway — `gatewayUrl` is a required field, and those methods have no direct-to-contract variant. Going direct for those operations means calling the contract yourself rather than using those client methods. See [Client SDK](/docs/finance-solutions/integrate/client-sdk).
+
+Note that the gateway is currently only available for selected deployments (refer to [deployments overview](/docs/start-here/deployments-and-status)).

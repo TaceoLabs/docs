@@ -100,7 +100,6 @@ const sidebars: SidebarsConfig = {
           type: "category",
           label: "Integrate",
           items: [
-            "finance-solutions/integrate/quickstart",
             "finance-solutions/integrate/client-sdk",
             "finance-solutions/integrate/gateway",
             "finance-solutions/integrate/operator-interface",
