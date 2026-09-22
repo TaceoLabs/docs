@@ -8,7 +8,13 @@ description: How Merces stores balances, executes transfers, and proves correctn
 Merces holds account balances as secret shares across the TACEO Network, with a commitment onchain. Every state transition is proven with a coSNARK: the network updates balances it cannot see, and anyone can verify the update was correct. The storage structure differs by transfer mode.
 
 
-{/* TODO(lukas): add here architecture diagram from allhands monthly -> https://docs.google.com/presentation/d/1B9cYetEtlP30W3gk-ypaEKgfXhUe8-G9IYkoZacYs3c/edit?slide=id.g38b9ba573c5_0_231#slide=id.g38b9ba573c5_0_231 + describe or refer further components (clientSDK, compliance service, zk circuits,...) */}
+![Architecture](architecture.png)
+
+Further information on the building blocks can be accessed here:
+- [Compliance Service](/docs/finance-solutions/compliance/overview)
+- [Client/Wallet SDK](/docs/finance-solutions/integrate/client-sdk)
+- [MPC Network](/docs/taceo-network/)
+- [ZK Circuits](/docs/overview)
 
 ## Storage
 
