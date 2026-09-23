@@ -44,6 +44,128 @@ TACEO is chain-agnostic — the network runs off-chain, so most services touch n
 You can find contract addresses and Node URLs within the README of the corresponding SDKs.
 {/* TODO(david): add SDK links once published */}
 
+<details>
+  <summary>OFT - Monad Testnet</summary>
+  ```
+# Monad Testnet Configuration (Adapter chain - has separate ERC-20)
+CHAIN_ID=10143
+CHAIN_NAME=Monad Testnet
+RPC_URL=https://testnet-rpc.monad.xyz
+CONTRACT_KIND=adapter
+
+# Contract addresses
+ID_REGISTRY_ADDRESS=0x3cae9f1934b9079212531673cafc070a2e44bdc8
+MERCES_ADDRESS=0x654d4c73473e060a1de5888fab34bcb41af073cf
+TOKEN_ADDRESS=0xb1ed36367611392c04d14f80812d86749dc02d9c
+
+# Gateway URL (for deposit/withdraw/transfer/send)
+# Note: SDK appends /ws automatically - do NOT include /ws here
+GATEWAY_URL=wss://chain-a-gateway.merces-oft.taceo.io
+
+# MPC Node URLs
+NODE_0_URL=https://chain-a-node0.merces-oft.taceo.io
+NODE_1_URL=https://chain-a-node1.merces-oft.taceo.io
+NODE_2_URL=https://chain-a-node2.merces-oft.taceo.io
+  ```
+</details>
+
+<details>
+  <summary>OFT - Sepolia Testnet</summary>
+  ```
+# Sepolia Testnet Configuration (OFT chain - Merces IS the token)
+CHAIN_ID=11155111
+CHAIN_NAME=Sepolia
+RPC_URL=https://rpc.sepolia.org
+CONTRACT_KIND=oft
+
+# Contract addresses (MERCES_ADDRESS == TOKEN_ADDRESS on OFT chains)
+ID_REGISTRY_ADDRESS=0x0643ed2c7d94ef1aeedf0b14c9c0905ceaa4ebec
+MERCES_ADDRESS=0xa6f5ac12e0996b96a8e748e48040386d852a3c11
+# TOKEN_ADDRESS omitted on OFT chains
+
+# Gateway URL (for deposit/withdraw/transfer/send)
+GATEWAY_URL=wss://chain-b-gateway.merces-oft.taceo.io/ws
+
+# MPC Node URLs
+NODE_0_URL=https://chain-b-node0.merces-oft.taceo.io
+NODE_1_URL=https://chain-b-node1.merces-oft.taceo.io
+NODE_2_URL=https://chain-b-node2.merces-oft.taceo.io
+  ```
+</details>
+
+<details>
+  <summary>OFT - Base Sepolia Testnet</summary>
+  ```
+# Base Sepolia Testnet Configuration (OFT chain - Merces IS the token)
+CHAIN_ID=84532
+CHAIN_NAME=Base Sepolia
+RPC_URL=https://sepolia.base.org
+CONTRACT_KIND=oft
+
+# Contract addresses (MERCES_ADDRESS == TOKEN_ADDRESS on OFT chains)
+ID_REGISTRY_ADDRESS=0x3824113dbe2f267d791467f6e05530694d66580a
+MERCES_ADDRESS=0x1440bbc50a658456ba81019d71dcead4019e34e3
+# TOKEN_ADDRESS omitted on OFT chains
+
+# Gateway URL (for deposit/withdraw/transfer/send)
+GATEWAY_URL=wss://chain-c-gateway.merces-oft.taceo.io/ws
+
+# MPC Node URLs
+NODE_0_URL=https://chain-c-node0.merces-oft.taceo.io
+NODE_1_URL=https://chain-c-node1.merces-oft.taceo.io
+NODE_2_URL=https://chain-c-node2.merces-oft.taceo.io
+  ```
+</details>
+
+<details>
+  <summary>Omap - Plasma Testnet</summary>
+  ```
+# Plasma Testnet Configuration (Chain ID 9746)
+CHAIN_ID=9746
+RPC_URL=https://testnet-rpc.plasma.to
+
+# Contract addresses
+ID_REGISTRY_CONTRACT=0x357966580C4F2f527646f8670E71Dc6F3DE7ff00
+MERCES_ADDRESS=0xce9dBeD2958Cbe4d79415254bDFCC384C89C8E8e
+TOKEN_ADDRESS=0xbd81d64eb5a409cf1d1d2f175897cf102b56ffbe
+VAULT_ADDRESS=0x3D2B3bC89c8D07Bb46C755bd8fde7D4271cf40d7
+
+# Service URLs
+ID_REGISTRY_URL=https://id-registry.merces2.taceo.io
+GATEWAY_URL=wss://gateway.merces2.taceo.io
+ORCHESTRATOR_URL=https://orchestrator.merces2.taceo.io
+
+# MPC Node URLs
+NODE_0_URL=https://node0.merces2.taceo.io
+NODE_1_URL=https://node1.merces2.taceo.io
+NODE_2_URL=https://node2.merces2.taceo.io
+  ```
+</details>
+
+<details>
+  <summary>Omap - Stable Testnet</summary>
+  ```
+# Stable Testnet Configuration (Chain ID 2201)
+CHAIN_ID=2201
+RPC_URL=https://rpc.testnet.stable.xyz
+
+# Contract addresses
+ID_REGISTRY_CONTRACT=0x530900984F20831336f0e14c6f74004D0f1DB95a
+MERCES_ADDRESS=0xc682B041B1de7AF910E39DCda56138c76c8AF897
+TOKEN_ADDRESS=0x71146e8695c0d7bb0b0c57d3229b27793fca87fb
+VAULT_ADDRESS=0xE67b5933CA36273C17b7384a96bEBc2c340c9093
+
+ID_REGISTRY_URL=https://stable.id-registry.merces2.taceo.io
+GATEWAY_URL=wss://stable.gateway.merces2.taceo.io
+ORCHESTRATOR_URL=https://stable.orchestrator.merces2.taceo.io
+
+NODE_0_URL=https://stable.node0.merces2.taceo.io
+NODE_1_URL=https://stable.node1.merces2.taceo.io
+NODE_2_URL=https://stable.node2.merces2.taceo.io
+  ```
+</details>
+
+
 ## Agent Solutions (Confidential x402)
 
 ### Testnets
