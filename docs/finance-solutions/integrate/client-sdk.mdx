@@ -20,6 +20,10 @@ targeting, and the deployment's contract addresses and query-node URLs — see
 The ERC-20 you wrap must support [ERC-2612](https://eips.ethereum.org/EIPS/eip-2612)
 permits. Deposits are signed as a permit rather than a separate `approve()` transaction.
 
+:::info RPC Stability
+Note that - depending on the stability of your chosen RPC provider - you may have to add retries to various calls.
+:::
+
 ## Install
 
 ```bash
