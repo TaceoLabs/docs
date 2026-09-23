@@ -41,8 +41,56 @@ TACEO is chain-agnostic — the network runs off-chain, so most services touch n
 
 ### Contracts & Addresses
 
-You can find contract addresses and Node URLs within the README of the corresponding SDKs.
-{/* TODO(david): add SDK links once published */}
+Below you will find various contracts and addresses necessary to interact with the different Merces versions. You may
+also find these in the READMEs of the corresponding SDKs.
+
+<details>
+  <summary>Merces - Monad Mainnet</summary>
+  ```
+# Monad Mainnet Configuration
+CHAIN_ID=10143
+CHAIN_NAME=Monad Mainnet
+RPC_URL=https://monad-mainnet.g.alchemy.com/v2/demo
+
+# Contract addresses (core)
+ID_REGISTRY_ADDRESS=0xF55DFe8242ec117F44Acd932adb5C233b582A04a
+MERCES_ADDRESS=0x9Dd5DE40592AdfcDD60F0f3fF3B014553998f7c1
+TOKEN_ADDRESS=0x754704Bc059F8C67012fEd69BC8A327a5aafb603
+
+# MPC Node URLs (query nodes)
+NODE_0_URL=https://query.node0.usdc.monad.merces.taceo.network
+NODE_1_URL=https://query.node1.usdc.monad.merces.taceo.network
+NODE_2_URL=https://query.node2.usdc.monad.merces.taceo.network
+
+# User group (4 = ANON, recommended for mainnet SDK testing)
+# ANON limits: Fee=0, Max Amount/Tx=1000000 (1 USDC), Max Txs/Epoch=35, Max members=100
+GROUP_ID=4
+  ```
+</details>
+
+<details>
+  <summary>Merces - Worldchain Mainnet</summary>
+  ```
+# Worldchain Mainnet Configuration
+CHAIN_ID=480
+CHAIN_NAME=Worldchain Mainnet
+RPC_URL=https://worldchain-mainnet.g.alchemy.com/public
+
+# Contract addresses (core)
+ID_REGISTRY_ADDRESS=0x57bE2153f2f832830F228EEe22C2bFA3a785FE40
+MERCES_ADDRESS=0x458838De82E065A84e947D7dAC3844E473c404DA
+TOKEN_ADDRESS=0x79A02482A880bCE3F13e09Da970dC34db4CD24d1
+
+# MPC Node URLs (query nodes)
+NODE_0_URL=https://query.node0.usdc.world.merces.taceo.network
+NODE_1_URL=https://query.node1.usdc.world.merces.taceo.network
+NODE_2_URL=https://query.node2.usdc.world.merces.taceo.network
+
+# User group (4 = ANON, recommended for mainnet SDK testing)
+# ANON limits: Fee=0, Max Amount/Tx=1000000 (1 USDC), Max Txs/Epoch=35, Max members=100
+GROUP_ID=4
+  ```
+</details>
 
 <details>
   <summary>OFT - Monad Testnet</summary>
