@@ -155,7 +155,7 @@ Same chain, sender and receiver both hidden. The receiver must already be regist
 
 ## Send across chains
 
-```typescript
+```typescriptk
 const dstPublicClient = createPublicClient({ chain: destChain, transport: http(DEST_RPC_URL) });
 
 await client.send(
@@ -174,6 +174,8 @@ on that chain.
 Amounts are converted to six shared decimals in transit, matching the contract's cross-chain
 factor. A chain with more local decimals than that loses the remainder, so prefer amounts that
 divide cleanly.
+
+Note that chainId needs to be passed as a BigInt.
 
 ## History
 

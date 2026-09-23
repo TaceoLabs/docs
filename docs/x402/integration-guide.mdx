@@ -21,6 +21,25 @@ start with the [Quickstart](../quickstart) instead.
 npm install @taceo/confidential-x402 @x402/fetch viem
 ```
 
+Note that you may need to pin the following versions:
+```json
+{
+  "dependencies": {
+    "@taceo/confidential-x402": "1.0.2",
+    "@x402/fetch": "2.10.0",
+    "@x402/express": "2.10.0",
+    "@x402/core": "2.10.0"
+  },
+  "overrides": {
+    "@x402/core": "2.10.0",
+    "@x402/express": "2.10.0",
+    "@x402/fetch": "2.10.0",
+    "@x402/evm": "2.10.0",
+    "@x402/extensions": "2.10.0"
+  }
+}
+```
+
 </TabItem>
 <TabItem value="rust" label="Rust">
 
