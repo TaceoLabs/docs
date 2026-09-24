@@ -27,7 +27,7 @@ Note that - depending on the stability of your chosen RPC provider - you may hav
 ## Install
 
 ```bash
-npm install @taceolabs/merces-client viem
+npm install @taceo/merces-client viem
 ```
 
 `viem` is also a direct dependency of the client, so keep your version in the same
@@ -50,7 +50,7 @@ ID registry always produce the same secret — so it does not need storing, only
 re-deriving:
 
 ```typescript
-import { deriveAuthSecret } from '@taceolabs/merces-client';
+import { deriveAuthSecret } from '@taceo/merces-client';
 
 const authSecret = await deriveAuthSecret(walletClient, ID_REGISTRY_ADDRESS);
 ```
@@ -62,7 +62,7 @@ If you hold the secret elsewhere — a key vault, a CLI flag — parse it from i
 form instead:
 
 ```typescript
-import { parseAuthSecret } from '@taceolabs/merces-client';
+import { parseAuthSecret } from '@taceo/merces-client';
 
 const authSecret = parseAuthSecret(process.env.MERCES_AUTH_SECRET!);
 ```
@@ -80,7 +80,7 @@ Registration joins a **user group**, which sets the account's per-transaction an
 per-epoch limits.
 
 ```typescript
-import { isRegistered, register } from '@taceolabs/merces-client';
+import { isRegistered, register } from '@taceo/merces-client';
 
 if (!await isRegistered({ publicClient, idRegistryAddress: ID_REGISTRY_ADDRESS, address })) {
   const index = await register({
@@ -121,7 +121,7 @@ Note: Some limitations apply when using the SDK with mainnet deployments. Use GR
 ```typescript
 import { createPublicClient, createWalletClient, http } from 'viem';
 import { privateKeyToAccount } from 'viem/accounts';
-import { Client } from '@taceolabs/merces-client';
+import { Client } from '@taceo/merces-client';
 
 const account = privateKeyToAccount(process.env.PRIVATE_KEY as `0x${string}`);
 
@@ -264,7 +264,7 @@ so they fail fast and cost no gas:
 import {
   UserGroupAmountLimitError,
   UserGroupTransactionLimitError,
-} from '@taceolabs/merces-client';
+} from '@taceo/merces-client';
 
 try {
   await client.transfer({ receiver, amount });
@@ -307,7 +307,7 @@ import {
   NotCompliantError,
   InsufficientBalanceError,
   ActionTimeoutError,
-} from '@taceolabs/merces-client';
+} from '@taceo/merces-client';
 
 try {
   await client.transfer({ receiver, amount });

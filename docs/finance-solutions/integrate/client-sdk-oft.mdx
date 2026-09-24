@@ -4,7 +4,7 @@ title: Client SDK - OFT
 
 # Client SDK - OFT
 
-`@taceolabs/merces-oft-client` is the client for confidential cross-chain transfers over
+`@taceo/merces-oft-client` is the client for confidential cross-chain transfers over
 LayerZero OFT. It generates proofs locally, derives and holds your protocol keys, and drives
 a viem `PublicClient`/`WalletClient` to submit transactions. Amounts never leave it in the
 clear.
@@ -38,7 +38,7 @@ table, and why `token` is omitted from the config there.
 ## Install
 
 ```bash
-npm install @taceolabs/merces-oft-client viem
+npm install @taceo/merces-oft-client viem
 ```
 
 The package bundles its proving artifacts — the circuit wasm and zkeys ship inside it — so
@@ -50,7 +50,7 @@ builds.
 ```typescript
 import { createPublicClient, createWalletClient, http } from 'viem';
 import { privateKeyToAccount } from 'viem/accounts';
-import { Client } from '@taceolabs/merces-oft-client';
+import { Client } from '@taceo/merces-oft-client';
 
 const account = privateKeyToAccount(process.env.PRIVATE_KEY as `0x${string}`);
 
@@ -184,7 +184,7 @@ Two functions, both standalone imports.
 `getTransactions` reads one node's public view — commitments rather than amounts:
 
 ```typescript
-import { getTransactions } from '@taceolabs/merces-oft-client';
+import { getTransactions } from '@taceo/merces-oft-client';
 
 const rows = await getTransactions(NODE_0_URL, { offset: 0, limit: 25 });
 ```
@@ -193,7 +193,7 @@ const rows = await getTransactions(NODE_0_URL, { offset: 0, limit: 25 });
 combining their secret shares locally:
 
 ```typescript
-import { getMyHistory } from '@taceolabs/merces-oft-client';
+import { getMyHistory } from '@taceo/merces-oft-client';
 
 const mine = await getMyHistory(
   [NODE_0_URL, NODE_1_URL, NODE_2_URL],
