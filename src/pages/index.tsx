@@ -151,7 +151,7 @@ function GuidanceSection() {
                   label="Join Discord"
                 />
                 <ArrowLink
-                  to="mailto:hello@taceo.io"
+                  to="mailto:partnerships@taceo.io"
                   label="Email the team"
                 />
               </div>

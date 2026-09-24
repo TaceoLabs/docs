@@ -13,16 +13,16 @@ to help decrypt, Merces users hold encrypted notes they can use to exit independ
 the TACEO Network.
 
 :::info Deployment Status
-The escape hatch is currently in testing.
+The escape hatch is currently in beta stage and will be released to mainnet soon.
 :::
 
 ## How it works
 
-The network already cannot reroute your funds or censor you — every state update carries a
+The network design already ensure no funds can be rerouted or stolen — every state update carries a
 proof the chain verifies. But that is not liveness: a network that cannot cheat you can
 still stop.
 
-So on every transfer, the network publishes each party's balance and blinding value,
+To ensure unilateral exit, the network publishes for every transfer, each party's balance and blinding value,
 encrypted under their registered key. You hold your own opening long before anything goes
 wrong.
 
