@@ -85,7 +85,7 @@ const config: Config = {
           { from: "/docs/use-cases/ai", to: "/docs/x402/use-cases/" },
           { from: "/docs/use-cases/data-ownership", to: "/docs/taceo-network/data-sovereignty/" },
           { from: "/docs/use-cases/attribution", to: "/docs/taceo-network/data-sovereignty/" },
-          { from: "/docs/use-cases/proof", to: "/docs/taceo-proof/overview/" },
+          { from: "/docs/use-cases/proof", to: "/docs/services/taceo-proof/overview/" },
           { from: "/docs/use-cases/gaming", to: "/docs/taceo-network/" },
           
           // --- resources/* and the duplicate primer ---

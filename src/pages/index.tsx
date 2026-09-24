@@ -101,10 +101,10 @@ function GuidanceSection() {
             description="Production-ready privacy primitives you can call directly: privacy-preserving nullifiers (TACEO:OPRF), private proof delegation (TACEO:Proof), confidential shared state (TACEO:OMap) and unique feature matching (TACEO:Match)."
             ctas={[
               { to: "/docs/services/overview", label: "Browse services" },
-              { to: "/docs/taceo-oprf/overview", label: "TACEO:OPRF" },
-              { to: "/docs/taceo-proof/overview", label: "TACEO:Proof" },
-              { to: "/docs/taceo-omap/overview", label: "TACEO:OMap" },
-              { to: "/docs/taceo-match/overview", label: "TACEO:Match" },
+              { to: "/docs/services/taceo-oprf/overview", label: "TACEO:OPRF" },
+              { to: "/docs/services/taceo-proof/overview", label: "TACEO:Proof" },
+              { to: "/docs/services/taceo-omap/overview", label: "TACEO:OMap" },
+              { to: "/docs/services/taceo-match/overview", label: "TACEO:Match" },
             ]}
           />
 
