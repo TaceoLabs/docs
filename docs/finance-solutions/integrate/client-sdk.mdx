@@ -94,9 +94,12 @@ if (!await isRegistered({ publicClient, idRegistryAddress: ID_REGISTRY_ADDRESS, 
 }
 ```
 
-`register` returns the account's leaf index in the tree. It is idempotent: if the address
-is already registered it returns the existing index rather than reverting, so the
-`isRegistered` check above is a convenience, not a requirement.
+`register` returns the account's leaf index in the tree. It is idempotent for a matching
+registration: if the address is already registered under the same `groupId` and
+`authSecret`, it returns the existing index rather than reverting, so the `isRegistered`
+check above is a convenience, not a requirement. If the address is already registered
+under a *different* group or secret, it throws `AlreadyRegisteredInDifferentGroupError` or
+`AlreadyRegisteredWithDifferentAuthSecretError` instead — see [Errors](#errors).
 
 
 | Argument | Required | Notes |
@@ -243,13 +246,6 @@ waits for the receipt, reads the `ActionQueued` log, then waits for the matching
 hash of the transaction containing that event, and throw `InvalidTransactionError` if the
 network rejected the action.
 
-If you need to submit and wait separately — a long-running job, a resumed session —
-`waitForAction` is public and takes the submission hash:
-
-```typescript
-const settled = await client.waitForAction(submissionHash);
-```
-
 An `ActionTimeoutError` means you stopped waiting, not that the action failed. It may
 still settle. Check the balance or history before retrying.
 
@@ -353,6 +349,8 @@ Every error extends `MercesClientError`.
 | Error | Means |
 |---|---|
 | `NotRegisteredError` | The address has no leaf in the ID registry |
+| `AlreadyRegisteredInDifferentGroupError` | `register` was called with a `groupId` that doesn't match the address's existing registration |
+| `AlreadyRegisteredWithDifferentAuthSecretError` | `register` was called with an `authSecret` that doesn't match the address's existing registration |
 | `NotCompliantError` | A policy check rejected the action |
 | `InsufficientBalanceError` | Carries `amount` and `balance` |
 | `InvalidAmountError` | The amount is zero or negative |
