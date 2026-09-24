@@ -1,0 +1,16 @@
+---
+title: Private shared state (PSS)
+description: The state model Merces and the TACEO Network are built on.
+---
+
+# Private shared state (PSS)
+
+Private Shared State is a state model that lets multiple parties keep their data private while still computing on it collaboratively. Each party's data is secret-shared and distributed across multiple nodes, so no single node ever sees it in full — and coSNARKs make the resulting computation publicly verifiable, combining the confidentiality of secret sharing with the verifiability of zero-knowledge proofs.
+
+The TACEO Network is the decentralized compute fabric that establishes and governs this model: it's what runs the MPC underneath every TACEO service, Merces included.
+
+Merces fully supports PSS in the comparison sense used elsewhere in these docs: unlike single-operator or FHE-based designs, Merces's private state can be computed on collaboratively by the network without any party reconstructing it, and the update is provable via coSNARK rather than assumed.
+
+Further reading:
+- [Private Shared State (concept)](https://core.taceo.io/articles/private-shared-state/)
+- [Foundations of Private Shared State: The TACEO Network](https://core.taceo.io/articles/pss-taceo-network/)

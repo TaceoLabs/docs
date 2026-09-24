@@ -1,0 +1,20 @@
+---
+title: Overview
+---
+
+# Compliance
+
+Compliance on Merces lets regulated entities meet AML, sanctions-screening and lawful-disclosure obligations without exposing plaintext user data — not to the application, not to a screening provider, and not to TACEO. It is built into the payment flow at the protocol layer, and the construction is operator-blind: no single party, whether TACEO, a node operator or the contract owner, holds plaintext data or can move funds unilaterally.
+
+## Two halves, on opposite sides of the transaction
+
+**Before a transaction settles**, the question is whether it should happen at all: sanctions screening, AML checks, policy gating. This is enforcement, and it runs inside the protocol. The architectural slot that runs it is the **Compliance Engine**; [Predicate](https://predicate.io) is the default provider filling that slot today. See [Pre-transaction screening](/docs/finance-solutions/compliance/pre-transaction-screening).
+
+**After a transaction settles**, the question is what happened: an auditor inspects a transfer, a regulator issues a lawful demand, a compliance officer reviews a flagged payment. This runs through **threshold decryption**, surfaced in the **Compliance Dashboard**. See [Post-transaction disclosure](/docs/finance-solutions/compliance/post-transaction-disclosure).
+
+## What Merces does not do
+
+**Identity sits outside Merces.** KYC — verifying who a person or entity is before they transact — is the responsibility of the integrating business, not of Merces. Sybil resistance and credential verification belong to TACEO Identity. AML is a different thing from KYC: it runs per transaction, through the Compliance Engine, against wallet addresses rather than identities.
+
+**There are no viewing keys.** A viewing key, as the term is used elsewhere in the industry, is a standing capability whose holder can decrypt data alone, offline, indefinitely. Merces has no equivalent, deliberately. Balances are held as secret shares, and decryption requires threshold cooperation across the network — there is nothing for any party to hold.
+

@@ -1,0 +1,26 @@
+---
+title: Card payments & delegated spend
+---
+
+# Card payments & delegated spend
+
+A card backed by an onchain balance turns every purchase into a public record. Merces lets a cardholder spend from a private balance, so the merchant gets paid without the cardholder's spending history becoming readable.
+
+This depends on **delegated spend**: the ability for another party to move funds on a user's behalf, which a card flow requires and which Merces supports natively.
+
+## The flow
+
+1. The cardholder pays at the merchant's terminal.
+2. The payment network checks and locks funds.
+3. The purchase is finalised at the point of sale.
+4. Funds move from the cardholder's private balance to the card provider's private wallet — or, alternatively, directly to the merchant's private account.
+5. The card provider periodically sweeps its account and off-ramps.
+6. The card provider settles with the merchant in fiat.
+
+## What stays private
+
+The cardholder's balance and their transaction history stay encrypted throughout. Settlement between the card provider and the merchant happens off the public ledger, in the provider's normal fiat rails.
+
+## Where to start
+
+[Private virtual account](/docs/finance-solutions/private-virtual-account/overview) covers the account and its transfers.

@@ -1,0 +1,40 @@
+---
+title: Escape hatch
+description: Whether users can exit Merces unilaterally, without operator involvement.
+---
+
+# Escape hatch
+
+An escape hatch is the ability to exit a system unilaterally — without needing the
+operators running it to cooperate.
+
+Merces supports one: unlike designs that rely purely on ciphertexts an operator would need
+to help decrypt, Merces users hold encrypted notes they can use to exit independently of
+the TACEO Network.
+
+:::info Deployment Status
+The escape hatch is currently in beta stage and will be released to mainnet soon.
+:::
+
+## How it works
+
+The network design already ensure no funds can be rerouted or stolen — every state update carries a
+proof the chain verifies. But that is not liveness: a network that cannot cheat you can
+still stop.
+
+To ensure unilateral exit, the network publishes for every transfer, each party's balance and blinding value,
+encrypted under their registered key. You hold your own opening long before anything goes
+wrong.
+
+If the queue stalls for a fixed window, roughly a day, the contract switches to escape mode
+on its own — no operator, committee or multisig decides this. Each user then redeems
+independently, proving they hold the key registered at their index, and the contract pays
+out. Recovery runs through a reconciliation step where the network accounts for every
+redemption before normal processing resumes.
+
+Redemption is a withdrawal, so the amount and receiving address become public, exactly as
+with a normal withdrawal.
+
+For the full design — the note and nullifier construction, the fraud proof that keeps the
+published openings honest, and why the trigger belongs to nobody — see
+[Escape hatches in MPC, and who may open them](https://core.taceo.io/articles/escape-hatch).

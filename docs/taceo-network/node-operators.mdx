@@ -1,28 +1,52 @@
-# Node Operators
+---
+title: Node operators
+---
 
-The network is operated by independent node operators running MPC infrastructure.
-Node operators are currently permissioned, high-reputation parties to ensure reliability and security for production workloads.
+# Node operators
 
-For each service instance, computation is assigned to a committee of nodes rather than a single operator.
+The TACEO Network is run by independent node operators: a mix of professional infrastructure providers and academic labs. Each operates under agreement, with defined SLAs and liabilities, so every node on the network has an accountable operator behind it. Most run on major cloud providers with multi-region support.
 
-This committee model is what enforces distributed trust:
+Operators are currently permissioned — high-reputation parties vetted for reliability on production workloads. Participation is expected to broaden over time while preserving the threshold-based guarantees below.
 
-- no single operator can unilaterally access full private inputs
-- no single operator can produce a valid result alone
-- threshold participation is required for successful execution
+## Two models
 
-As the network expands, participation is expected to broaden while preserving threshold-based security guarantees.
+**Managed.** Compute runs across TACEO's vetted operator set. There is nothing to set up or maintain, and monitoring is on-call around the clock.
 
-## Security Model
+**Bring your own.** Nominate your own operators — your validators, your infrastructure team, or a provider you already work with. The deployment runs in cloud accounts they own, which means the guarantee that no single party sees your data extends to include you. The operator set is configured per protocol.
 
-The TACEO Network is built on threshold MPC protocols designed to protect data during computation.
+## Onboarding
 
-At a high level, the security model assumes:
+1. Access to the infrastructure-as-code repository
+2. Monitoring setup
+3. Test deployment
+4. On-call handshake
 
-- fewer than the configured threshold of nodes collude in a given committee
-- node operators run approved protocol implementations correctly
-- service and governance controls are operated according to network policy
+## How operations run
 
-Under these assumptions, private inputs remain confidential and outputs are produced through protocol-level distributed execution.
+**No chain, no token.** Encrypted compute is distributed across independent MPC nodes, and operators are compensated directly by TACEO.
 
-In practical terms, security combines cryptographic guarantees with operational controls, including committee diversity, controlled service deployment, and active infrastructure monitoring.
+**Infrastructure as code.** TACEO publishes the sources and operators apply them. Planned changes ship in a fixed weekly update window.
+
+**Monitored by TACEO.** TACEO monitors every node, so continuous monitoring is not an operator burden. On an incident, TACEO pages the operator, who applies the fix within a contracted reaction window.
+
+## Committee model
+
+For each service instance, computation is assigned to a committee of nodes rather than a single operator. This is what enforces distributed trust:
+
+- No single operator can unilaterally access full private inputs
+- No single operator can produce a valid result alone
+- Threshold participation is required for successful execution
+
+## Security model
+
+The network is built on threshold MPC protocols designed to protect data during computation. The model assumes that fewer than the configured threshold of nodes collude in a given committee, that operators run approved protocol implementations correctly, and that service and governance controls are operated according to network policy.
+
+Under those assumptions, private inputs remain confidential and outputs are produced through protocol-level distributed execution. In practice, security combines the cryptographic guarantees with operational controls: committee diversity, controlled service deployment, and active infrastructure monitoring.
+
+## Running a node for a specific service
+
+Hardware, networking and operational requirements are per service. See [Running a node](/docs/services/taceo-proof/ops/onboarding) for TACEO:Proof.
+
+## Becoming an operator
+
+[Get in touch](mailto:partnerships@taceo.io).

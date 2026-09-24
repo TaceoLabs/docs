@@ -1,0 +1,44 @@
+---
+title: Privacy model
+description: The three transfer modes Merces supports, and which one is the default.
+---
+
+# Privacy model
+
+Merces optimizes for maximum privacy with high-performance transaction throughput. The default model (private transfers) 
+guarantee full onchain privacy, while the operating nodes learn only minimal information. 
+
+The protocol is capable to optimize for either higher performance or more privacy guarantees.
+ 
+
+## Private transfer (default)
+
+Provides full onchain privacy by encrypting all transaction data: sender, recipient, asset, and amount. No single party — including TACEO — sees what anyone holds or sends. The transaction graph (i.e., which addresses transacted) is visible to node operators, not onchain.
+Allows for up to 1,000 TPS (50+ per instance, parallelized).
+
+
+
+## Optimizations
+Depending on the specific application the system might be optimized towards more throughput or an even higher level of privacy.
+
+### Graph-private transfer
+
+Encrypts everything the private mode does, plus hides the transaction graph from node operators. No single party sees anything.
+
+**Use it if:** you need a stronger trust assumption against node operators than the default option provides.
+
+### Partial-private transfer
+
+Encrypts asset and amount. Sender and recipient remain visible onchain. Similar to privacy guarantees FHE-based solutions can offer.
+
+
+**Use it if:** you need higher throughput than the private tier and can accept visible counterparties.
+
+
+
+## Comparison
+
+| | Partial-private | Private (default) | Graph-private transfer |
+|---|---|---|---|
+| **Hides** | Asset, amount | Sender, recipient, asset, amount | Sender, recipient, asset, amount, transaction graph |
+| **Reveals** | Sender, recipient (onchain) | Transaction graph to node operators only | Nothing, to any party |

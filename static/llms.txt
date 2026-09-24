@@ -20,8 +20,8 @@ TACEO is best known for the privacy-preserving identity infrastructure used by W
 ## Privacy Services
 
 - [Privacy Services Overview](https://docs.taceo.io/docs/services/overview): Compare TACEO:OPRF, TACEO:Proof, and upcoming services.
-- [TACEO:OPRF](https://docs.taceo.io/docs/taceo-oprf/overview): Privacy-preserving nullifiers via oblivious pseudorandom functions. In production via World ID and zkPassport.
-- [TACEO:Proof](https://docs.taceo.io/docs/taceo-proof/overview): Private proof delegation for ZK proofs without exposing witness data to any single party.
+- [TACEO:OPRF](https://docs.taceo.io/docs/services/taceo-oprf/overview): Privacy-preserving nullifiers via oblivious pseudorandom functions. In production via World ID and zkPassport.
+- [TACEO:Proof](https://docs.taceo.io/docs/services/taceo-proof/overview): Private proof delegation for ZK proofs without exposing witness data to any single party.
 
 ## TACEO Network
 

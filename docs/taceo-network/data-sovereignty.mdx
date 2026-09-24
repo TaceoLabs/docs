@@ -1,0 +1,19 @@
+---
+title: Data sovereignty
+---
+
+# Data sovereignty
+
+Because the operator set is configured per deployment, sovereignty requirements are a setup choice rather than a blocker.
+
+For an EU deployment, nominate EU-domiciled operators running in EU cloud regions. Sensitive data is then secret-shared only across operators inside your jurisdiction, and no single operator — TACEO included — ever holds it in the clear.
+
+The same applies to any other jurisdiction: the constraint is expressed by who you nominate as operators and where they run, not by a separate deployment of the software.
+
+## What this changes
+
+**Residency by design.** Data is secret-shared across the operators you nominated, in the regions they run in.
+
+**Your operators, your jurisdiction.** Bring-your-own operators means the deployment runs in cloud accounts those operators control. See [Node operators](/docs/taceo-network/node-operators).
+
+**No plaintext honeypot to localize.** There is no location where the data exists in the clear, so residency is not a question of securing a single sensitive store — there isn't one.

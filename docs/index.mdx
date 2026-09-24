@@ -9,102 +9,101 @@ import Link from "@docusaurus/Link";
 
 # Welcome to TACEO
 
-TACEO provides a privacy layer for applications that need to compute on
-sensitive data without exposing inputs. Our **finance solutions** sit on top of **integrable
-privacy services**, all powered by the **TACEO Network**, a production MPC network already
-running at global scale.
+TACEO provides encrypted compute for applications that run on sensitive data without
+exposing it. 
 
-We're best known for our identity work: TACEO Network is a privacy backbone for
-global-scale identity systems, with services used by **World** and **zkPassport**. We're now bringing
-the same stack to onchain finance through **Merces**.
+Our **Finance Solution** Merces, acts as a privacy layer for onchain finance. It enables private payments and tokenized assets on public blockchains - all powered by the TACEO Network.
+The **Agent Solutions**, powers the x402 standard, to bring the same privacy to
+agent-to-agent payments. 
+
+Our **Identity Solutions** bring privacy-preserving verification to
+identity systems. The TACEO network forms the privacy backbone for global-scale identity systems such as **World**, 
+**zkPassport**, and **Boop**.
+
+For what's live today — chains, frontends etc. — see [Deployments & status](/docs/start-here/deployments-and-status).
 
 ## TACEO Solutions
 
 <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2rem', marginTop: '2rem'}}>
 
-<div className="service-card-primary" style={{padding: '1.5rem 1.8rem'}}>
+<div className="service-card-primary">
 
-### **Finance Solutions**
+### Finance Solutions
 
 Private payments on the EVM chains you already use, built on Merces. Merces wraps ERC-20s like USDC into private balances, with compliance primitives at the protocol layer.
 
-**Live on Arc, Base, and Plasma testnets.** ~5M demo transactions, ~300 TPS, sub-cent gas on L2. Mainnet deployment in progress.
-<br />
-**Get in touch.** Stablecoin issuers, fintechs, and payment infrastructure teams shipping private rails to production. Talk to us.
+**Use this if you are:** a stablecoin issuer, fintech, or payments team moving value onchain without putting your business on a public ledger.
 
-{/* prettier-ignore */}
 <div className="button-row" style={{marginTop: '1.25rem', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '1rem'}}>
   <Link className="button button--primary get-in-touch-btn" to="/docs/finance-solutions/overview">Read Finance Solutions</Link>
-  <Link className="button button--outline button--primary get-in-touch-btn" to="/docs/finance-solutions/x402/quickstart">Try the Quickstart</Link>
 </div>
 
 </div>
 
-<div className="service-card-primary" style={{padding: '1.5rem 1.8rem'}}>
+<div className="service-card-primary">
 
-### **Identity Solutions**
+### Agent Solutions
 
-Privacy-preserving identity at global scale. TACEO:OPRF is in production for **World** and **zkPassport** - the same MPC backbone that powers iris-code uniqueness and private credential matching is available for your identity system.
+Confidential payments for AI agents, built on x402. Hides the asset and amount of an agent-to-agent transfer; sender and recipient stay onchain.
 
-**In production.** Distributed nullifiers, threshold passport identification, and confidential biometrics, backed by a threshold MPC network with no single point of failure.
+**Use this if you are:** building agents that need to transact without exposing deal terms.
 
-**Get in touch.** Identity protocol teams and credential issuers building privacy-first systems. Talk to us.
+<div className="button-row" style={{marginTop: '1.25rem', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '1rem'}}>
+  <Link className="button button--primary get-in-touch-btn" to="/docs/x402/introduction">Read Agent Solutions</Link>
+  <Link className="button button--outline button--primary get-in-touch-btn" to="/docs/x402/quickstart">Try the Quickstart</Link>
+</div>
 
+</div>
 
-{/* prettier-ignore */}
+<div className="service-card-primary">
+
+### Identity Solutions
+
+Privacy-preserving identity at global scale. TACEO:OPRF and TACEO:Match are in production for World and zkPassport — the same MPC backbone that powers iris-code uniqueness and private credential matching is available for your identity system.
+
+**Use this if you are:** an identity protocol team or credential issuer building privacy-first verification.
+
 <div className="button-row" style={{marginTop: '1.25rem', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '1rem'}}>
   <Link className="button button--primary get-in-touch-btn" to="/docs/identity-solutions/overview">Read Identity Solutions</Link>
-  <Link className="button button--outline button--primary get-in-touch-btn" to="/docs/identity-solutions/nullifiers/getting-started/quickstart">Try the Quickstart</Link>
 </div>
 
 </div>
 
 </div>
 
-
-## Other paths
+## Network & Developers
 
 <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem', marginTop: '2rem'}}>
 
 <div className="service-card-muted">
 
-### **Privacy Services**
+### TACEO Network
 
-_OPRF, Proof, OMap_
+_OPRF, Proof, OMap, Match, and the network underneath_
 
-Production-ready privacy primitives you can call directly: privacy-preserving nullifiers
-(TACEO:OPRF), private proof delegation (TACEO:Proof), and confidential shared state (TACEO:OMap).
+Production-ready privacy primitives you can call directly, and the MPC network that runs them: verifiable collaboration over encrypted data, node operators, and governance.
 
-**Use this if you are:** an application developer adding a single privacy feature without taking
-on a full system.
-<br />
-<br />
+**Use this if you are:** an application developer adding a single privacy feature, or a partner or node operator evaluating the foundation everything else builds on.
 
-{/* prettier-ignore */}
-<Link className="button button--primary get-in-touch-btn" to="/docs/services/overview" style={{ marginTop: "1rem", display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '1rem'}}>Explore Services</Link>
+<Link className="button button--primary get-in-touch-btn" to="/docs/taceo-network" style={{ marginTop: "1rem", display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '1rem'}}>Explore TACEO Network</Link>
 
 </div>
 
 <div className="service-card-muted">
 
-### **TACEO Network**
+### Developer Tools
 
-_The MPC network underneath_
+_coCircom, coNoir_
 
-Understand how the network enables verifiable collaboration over encrypted data, the security
-model, and governance. The same MPC foundation TACEO co-architected for World's iris-code
-system runs in production at global scale.
+The underlying MPC tooling for building your own collaborative SNARKs directly.
 
-**Use this if you are:** a partner, technical stakeholder, or potential node operator evaluating
-the foundation everything else builds on.
+**Use this if you are:** implementing custom privacy-preserving computation rather than using one of TACEO's own products.
 
-{/* prettier-ignore */}
-<Link className="button button--primary get-in-touch-btn" to="/docs/taceo-network" style={{ marginTop: "1rem", display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '1rem'}}>Explore Network</Link>
-</div>
+<Link className="button button--primary get-in-touch-btn" to="/docs/overview" style={{ marginTop: "1rem", display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '1rem'}}>Explore Developer Tools</Link>
 
 </div>
 
-
+</div>
 
 ## Get In Touch
 
@@ -121,10 +120,8 @@ the foundation everything else builds on.
 {/* prettier-ignore */}
 <div style={{marginTop: '1rem', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem'}}>
   <Link className="button button--primary get-in-touch-btn" to="https://taceo.io/discord">💬 Join Discord</Link>
-  <Link className="button button--outline button--primary get-in-touch-btn" to="mailto:hello@taceo.io">📧 Email Us</Link>
+  <Link className="button button--outline button--primary get-in-touch-btn" to="mailto:partnerships@taceo.io">📧 Email Us</Link>
 </div>
 
+
 </div>
-
----
-

@@ -1,0 +1,213 @@
+---
+title: Client SDK - OFT
+---
+
+# Client SDK - OFT
+
+`@taceo/merces-oft-client` is the client for confidential cross-chain transfers over
+LayerZero OFT. It generates proofs locally, derives and holds your protocol keys, and drives
+a viem `PublicClient`/`WalletClient` to submit transactions. Amounts never leave it in the
+clear.
+
+It covers the same-chain operations — deposit, withdraw, transfer — plus `send` for moving
+value between chains.
+
+:::info Testnet
+The OFT deployment is a demo across Monad Testnet, Sepolia and Base Sepolia. See
+[What the demo does not do](/docs/finance-solutions/cross-chain/quickstart#limitations) before building
+anything on it, and [Deployments & status](/docs/start-here/deployments-and-status) for
+addresses.
+
+Note that - depending on the stability of your chosen RPC provider - you may have to add retries to various calls.
+:::
+
+## Two kinds of chain
+
+Each chain runs one of two contracts, and you tell the client which with `contractKind`:
+
+**`'adapter'`** — the chain has its own ERC-20, and the Merces adapter wraps it. Deposits pull
+tokens from that ERC-20 via an EIP-3009 authorization relayed through the gateway.
+
+**`'oft'`** — there is no separate ERC-20; the Merces contract *is* the token. Deposits burn
+your public balance directly, so they cannot be relayed — the burn is keyed off `msg.sender`
+and your own wallet must send the transaction.
+
+This is why an OFT chain's Merces and token address are the same address on the deployments
+table, and why `token` is omitted from the config there.
+
+## Install
+
+```bash
+npm install @taceo/merces-oft-client viem
+```
+
+The package bundles its proving artifacts — the circuit wasm and zkeys ship inside it — so
+there is nothing to download before generating a proof. It provides both ESM and CommonJS
+builds.
+
+## Create a client
+
+```typescript
+import { createPublicClient, createWalletClient, http } from 'viem';
+import { privateKeyToAccount } from 'viem/accounts';
+import { Client } from '@taceo/merces-oft-client';
+
+const account = privateKeyToAccount(process.env.PRIVATE_KEY as `0x${string}`);
+
+const publicClient = createPublicClient({ chain, transport: http(RPC_URL) });
+const walletClient = createWalletClient({ account, chain, transport: http(RPC_URL) });
+
+const client = await Client.create({
+  contractAddress:   MERCES_ADDRESS,
+  contractKind:      'adapter',
+  idRegistryAddress: ID_REGISTRY_ADDRESS,
+  token:             TOKEN_ADDRESS,   // omit on an OFT chain
+  gatewayUrl:        GATEWAY_URL,
+  walletClient,
+  publicClient,
+});
+```
+
+`Client.create` is asynchronous and registers the wallet with the ID registry on first use, so
+there is no separate register step. It prompts for one wallet signature the first time it runs
+for a given wallet in a browser session; the derived keys are cached for the session, so a page
+reload does not re-prompt.
+
+That signature derives three protocol keys, each with a distinct job: an authentication key to
+spend with, a scanning key to detect notes addressed to you, and a fraud-challenge key to
+decrypt balances. Splitting them means note-watching can be delegated without delegating the
+ability to spend.
+
+:::warning
+This requires you to pass your private key to the SDK. Use testing wallets or secure the key/environment variable in some manner.
+:::
+
+### Configuration
+
+| Option | Required | Notes |
+|---|---|---|
+| `contractAddress` | Yes | The deployed Merces contract |
+| `contractKind` | Yes | `'adapter'` or `'oft'` — selects the ABI |
+| `idRegistryAddress` | Yes | The ID registry **contract**. Registry data is read onchain, not from a service |
+| `token` | No | ERC-20 address. Omit for the native token, or on an OFT chain |
+| `gatewayUrl` | No | Required for deposit, withdraw, transfer and send. An OFT chain with no ERC-20 has no gasless deposit path, so `Client.create` still succeeds without it — registration alone does not need it |
+| `walletClient` | Yes | Must have an account configured |
+| `publicClient` | Yes | |
+| `txReceiptTimeout` | No | Wait for a transaction receipt. Default 30,000 ms |
+| `mpcEventTimeout` | No | Wait for the `ProcessedMPC` event. Default 330,000 ms |
+
+`client.address()` returns the operating address; `client.registryIndex()` returns its leaf
+index in the registry tree.
+
+## Progress reporting
+
+`deposit`, `withdraw`, `transfer` and `send` all accept an optional `onStep` callback, called
+with `'proving'`, `'submitting'` and `'confirming'` in turn. Proving happens locally and is the
+slow step, so a UI wants this:
+
+```typescript
+await client.deposit(amount, (step) => setStatus(step));
+```
+
+Each resolves with `{ queuedTxHash, completedTxHash }` — the transaction that queued the action,
+and the one carrying the MPC network's `ProcessedMPC` confirmation.
+
+## Deposit and withdraw
+
+```typescript
+await client.deposit(1_000_000n);
+await client.withdraw(500_000n);
+```
+
+Deposits credit your own account; withdrawals pay out to `client.address()`.
+
+:::warning Do not blindly retry a failed deposit
+On an OFT chain the deposit burns your public balance in a transaction your own wallet sends.
+If that lands but confirmation does not arrive in time, the client throws
+`DepositConfirmationTimeoutError` carrying the `queuedTxHash`. The burn already happened —
+retrying burns again. Check the balance or that transaction before doing anything else.
+:::
+
+## Balance
+
+```typescript
+const balance = await client.balance();
+```
+
+This scans onchain notes newest-first for the latest one addressed to you and decrypts it,
+returning zero if you have no note yet.
+
+`balance()` waits for the action queue to drain first, so it can hang while the network is
+behind. `myCurrentNote()` reads the same note without waiting:
+
+```typescript
+const note = await client.myCurrentNote();
+// { noteIndex, balance, redeemed } | null
+```
+
+## Transfer
+
+```typescript
+await client.transfer(RECEIVER_ADDRESS, amount);
+```
+
+Same chain, sender and receiver both hidden. The receiver must already be registered.
+
+## Send across chains
+
+```typescriptk
+const dstPublicClient = createPublicClient({ chain: destChain, transport: http(DEST_RPC_URL) });
+
+await client.send(
+  DST_CHAIN_ID,
+  DST_ID_REGISTRY_ADDRESS,
+  dstPublicClient,
+  RECEIVER_ADDRESS,
+  amount,
+);
+```
+
+The client holds no directory of chains, so you supply the destination chain's ID registry
+address and a `PublicClient` connected to it — it needs to read the receiver's registry proof
+on that chain.
+
+Amounts are converted to six shared decimals in transit, matching the contract's cross-chain
+factor. A chain with more local decimals than that loses the remainder, so prefer amounts that
+divide cleanly.
+
+Note that chainId needs to be passed as a BigInt.
+
+## History
+
+Two functions, both standalone imports.
+
+`getTransactions` reads one node's public view — commitments rather than amounts:
+
+```typescript
+import { getTransactions } from '@taceo/merces-oft-client';
+
+const rows = await getTransactions(NODE_0_URL, { offset: 0, limit: 25 });
+```
+
+`getMyHistory` returns your own history with real amounts, by querying all three nodes and
+combining their secret shares locally:
+
+```typescript
+import { getMyHistory } from '@taceo/merces-oft-client';
+
+const mine = await getMyHistory(
+  [NODE_0_URL, NODE_1_URL, NODE_2_URL],
+  client.registryIndex(),
+  { startTime, endTime },
+);
+```
+
+Only rows where your index is the sender or receiver come back. Entries are a tagged union over
+`Deposit`, `Withdraw`, `Transfer`, `Send` and `Receive`, so narrow on `kind` before reading
+fields.
+
+## Reference
+
+The package ships TypeScript definitions, so an editor gives you full signatures inline.
+Lower-level primitives — commitments, note scanning, witness and proof generation for each
+circuit — are also exported if you need to build against the protocol directly.

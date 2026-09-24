@@ -1,0 +1,428 @@
+---
+title: Client SDK
+---
+
+# Client SDK
+
+The Merces client runs entirely in your application. It generates proofs locally, holds
+the authentication secret, reads balances from the query nodes and submits transactions
+directly to the Merces contract. Amounts and balances never leave it in the clear.
+
+This page covers the TypeScript client. A Rust client exists at parity and is used
+internally — see [Rust client](#rust-client).
+
+## Requirements
+
+Node.js 22 or later. An account with a funded ERC-20 balance on the chain you are
+targeting, and the deployment's contract addresses and query-node URLs — see
+[Deployments & status](/docs/start-here/deployments-and-status).
+
+The ERC-20 you wrap must support [ERC-2612](https://eips.ethereum.org/EIPS/eip-2612)
+permits. Deposits are signed as a permit rather than a separate `approve()` transaction.
+
+:::info RPC Stability
+Note that - depending on the stability of your chosen RPC provider - you may have to add retries to various calls.
+:::
+
+## Install
+
+```bash
+npm install @taceo/merces-client viem
+```
+
+`viem` is also a direct dependency of the client, so keep your version in the same
+`^2.55.0` range to avoid two copies in the tree.
+
+The package ships its own proving artifacts — the circuit wasm and proving keys are
+inside it, about 10 MB — so there is nothing to download before generating a proof. They
+are resolved relative to the module and cached in memory after first use, which works in
+Node, Vite, webpack and Next.js alike. Expect the first proof of a process to be slower
+than the rest.
+
+## The authentication secret
+
+Every account is identified in the ID registry by a commitment to a BN254 field element
+called the **authentication secret**. Transfer and withdraw proofs prove ownership of the
+registered leaf using it.
+
+Derive it from a wallet signature. The derivation is deterministic — the same wallet and
+ID registry always produce the same secret — so it does not need storing, only
+re-deriving:
+
+```typescript
+import { deriveAuthSecret } from '@taceo/merces-client';
+
+const authSecret = await deriveAuthSecret(walletClient, ID_REGISTRY_ADDRESS);
+```
+
+This prompts the wallet for an EIP-712 signature. Remote wallets will show it as a
+human-readable `AuthSecretDerivation` message rather than an opaque hash.
+
+If you hold the secret elsewhere — a key vault, a CLI flag — parse it from its decimal
+form instead:
+
+```typescript
+import { parseAuthSecret } from '@taceo/merces-client';
+
+const authSecret = parseAuthSecret(process.env.MERCES_AUTH_SECRET!);
+```
+
+:::warning
+The authentication secret is a spending credential. Anyone who holds it can prove
+ownership of the account's balance. Treat it like a private key: never log it, never send
+it to a server, and never put it in client-side storage you do not control.
+:::
+
+## Register
+
+An address must be registered at the ID registry before it can hold a balance.
+Registration joins a **user group**, which sets the account's per-transaction and
+per-epoch limits.
+
+```typescript
+import { isRegistered, register } from '@taceo/merces-client';
+
+if (!await isRegistered({ publicClient, idRegistryAddress: ID_REGISTRY_ADDRESS, address })) {
+  const index = await register({
+    publicClient,
+    walletClient,
+    idRegistryAddress: ID_REGISTRY_ADDRESS,
+    authSecret,
+    groupId: GROUP_ID,
+    maxFee: parseUnits('1', decimals),
+  });
+}
+```
+
+`register` returns the account's leaf index in the tree. It is idempotent for a matching
+registration: if the address is already registered under the same `groupId` and
+`authSecret`, it returns the existing index rather than reverting, so the `isRegistered`
+check above is a convenience, not a requirement. If the address is already registered
+under a *different* group or secret, it throws `AlreadyRegisteredInDifferentGroupError` or
+`AlreadyRegisteredWithDifferentAuthSecretError` instead — see [Errors](#errors).
+
+
+| Argument | Required | Notes |
+|---|---|---|
+| `publicClient` / `walletClient` | Yes | Standard viem clients |
+| `idRegistryAddress` | Yes | The `IIdRegistry` contract |
+| `authSecret` | Yes | From `deriveAuthSecret` or `parseAuthSecret` |
+| `groupId` | Yes | The user group to join |
+| `maxFee` | Yes | The highest join fee you are willing to pay. The call reverts rather than exceeding it |
+| `userGroupAuthorization` | No | Signed authorization, for groups that are not open to join |
+| `deadline` | No | Unix seconds. Defaults to one hour from now |
+| `complianceData` | No | Attestation bytes, if the deployment gates registration on a policy check. See [Compliance](#compliance) |
+
+Registration touches only the ID registry — not the Merces contract, the token, or the
+query nodes.
+
+Note: Some limitations apply when using the SDK with mainnet deployments. Use GROUP_ID "4" when registering on mainnet
+-- limits regarding number of wallets, transactions and transaction amounts apply to this user group.
+
+## Create a client
+
+Use viem's built-in chains rather than `defineChain`. The built-in chains include
+chain-specific settings that affect event watching:
+
+```typescript
+import { createPublicClient, createWalletClient, http } from 'viem';
+import { privateKeyToAccount } from 'viem/accounts';
+import * as viemChains from 'viem/chains';
+import { Client } from '@taceo/merces-client';
+
+const account = privateKeyToAccount(process.env.PRIVATE_KEY as `0x${string}`);
+
+// Look up chain from viem's built-in chains
+const chain = Object.values(viemChains).find(c => c.id === CHAIN_ID);
+
+const publicClient = createPublicClient({ chain, transport: http(RPC_URL) });
+const walletClient = createWalletClient({ account, chain, transport: http(RPC_URL) });
+
+const client = new Client(publicClient, walletClient, {
+  idRegistryAddress: ID_REGISTRY_ADDRESS,
+  contractAddress:   MERCES_ADDRESS,
+  erc20Address:      TOKEN_ADDRESS,
+  authSecret,
+  nodeUrls: [NODE_0_URL, NODE_1_URL, NODE_2_URL],
+  complianceUrl: COMPLIANCE_URL, // required for mainnet deployments
+});
+```
+
+`client.address` returns the address the client is operating as.
+
+:::warning
+This requires you to pass your private key to the SDK. Use testing wallets or secure the key/environment variable in some manner.
+:::
+
+:::warning Transport Configuration
+Do not use aggressive timeouts on the HTTP transport. The SDK uses `watchContractEvent`
+to detect when actions are processed, which relies on polling. Aggressive timeouts can
+cause these requests to fail, resulting in `ActionTimeoutError` even though the action
+succeeded on-chain.
+
+```typescript
+// WRONG - may break event watching
+http(url, { timeout: 10_000, retryCount: 0 })
+
+// CORRECT - use defaults
+http(url)
+```
+:::
+
+### Configuration
+
+| Option | Required | Notes |
+|---|---|---|
+| `idRegistryAddress` | Yes | The `IIdRegistry` contract |
+| `contractAddress` | Yes | The Merces contract |
+| `erc20Address` | Yes | The ERC-20 being wrapped |
+| `authSecret` | Yes | Committed at the ID registry during registration |
+| `nodeUrls` | Yes | The three query nodes. Each serves one share |
+| `complianceUrl` | No | URL of the compliance service. Required for mainnet deployments |
+| `queryRetryMaxTimes` | No | Maximum consistency retry attempts. Default 10 |
+| `queryRetryMinDelayMs` | No | Minimum delay before first retry. Default 100 |
+| `queryRetryMaxDelayMs` | No | Maximum delay between retries (doubles each attempt). Default 2000 |
+| `actionTimeoutMs` | No | Wait for the `ActionProcessed` event. Default 30,000 |
+
+Raising `actionTimeoutMs` is the usual fix under load — a timeout there means you stopped
+waiting, not that the action failed.
+
+## Deposit
+
+Deposits move ERC-20 tokens from the public balance into the account's confidential
+balance. There is no separate `approve()` step: the client signs an ERC-2612 permit,
+valid for one hour, and the contract pulls the tokens with it.
+
+```typescript
+import { parseUnits } from 'viem';
+
+await client.deposit({ amount: parseUnits('100', decimals) });
+```
+
+A deposit always credits the depositing account. To move funds to someone else, deposit
+and then transfer.
+
+## Balances
+
+```typescript
+const onchain      = await client.erc20Balance();    // public, read from the token contract
+const confidential = await client.privateBalance();  // secret-shared across the query nodes
+```
+
+`privateBalance()` asks all three query nodes for their share and reconstructs the value
+locally. Every node must answer consistently, so a node lagging behind causes a retry
+rather than a wrong answer. If they cannot agree within the retry limits, it throws.
+
+## Transfer
+
+```typescript
+await client.transfer({
+  receiver: RECEIVER_ADDRESS,
+  amount: parseUnits('50', decimals),
+});
+```
+
+Sender, receiver and amount are all hidden behind commitments. The receiver must already
+be registered.
+
+## Withdraw
+
+```typescript
+await client.withdraw({ amount: parseUnits('50', decimals) });
+
+// or pay out to a different address
+await client.withdraw({ amount, receiver: OTHER_ADDRESS });
+```
+
+Tokens are paid out only once the MPC network has processed the action. A withdrawal ends
+in an ordinary token transfer, so its amount and destination are visible onchain — but
+nothing links it to any particular confidential transfer.
+
+## Waiting and settlement
+
+`deposit`, `withdraw` and `transfer` do not return when the transaction is mined. Each
+waits for the receipt, reads the `ActionQueued` log, then waits for the matching
+`ActionProcessed` event that carries the MPC network's decision. They resolve with the
+hash of the transaction containing that event, and throw `InvalidTransactionError` if the
+network rejected the action.
+
+An `ActionTimeoutError` means you stopped waiting, not that the action failed. It may
+still settle. Check the balance or history before retrying.
+
+## History
+
+```typescript
+const { transactions, total } = await client.history({ page: 0, pageSize: 25 });
+```
+
+`page` counts back from the most recent action, so page 0 is the latest `pageSize`
+entries. `total` is the account's entry count across all pages.
+
+Each entry is:
+
+| Field | Type | Notes |
+|---|---|---|
+| `actionIndex` | `bigint` | The action's index in the contract |
+| `transactionType` | `'deposit' \| 'withdraw' \| 'incoming_transfer' \| 'outgoing_transfer'` | |
+| `senderAddress` | `Address \| null` | Resolved from the registry. `null` for deposits |
+| `receiverAddress` | `Address \| null` | `null` for withdrawals |
+| `amount` | `bigint` | |
+| `txHash` | `Hash` | |
+| `timestamp` | `number` | Unix seconds |
+
+The nodes serve the balance left after each action, so `amount` is derived from the
+difference between consecutive balances rather than stored directly. Entries within a
+page are ordered oldest first.
+
+## User groups and limits
+
+Each account's user group caps how much it can move per transaction and how many
+transactions it can make per epoch. Both are enforced client-side before a proof is built,
+so they fail fast and cost no gas:
+
+```typescript
+import {
+  UserGroupAmountLimitError,
+  UserGroupTransactionLimitError,
+} from '@taceo/merces-client';
+
+try {
+  await client.transfer({ receiver, amount });
+} catch (err) {
+  if (err instanceof UserGroupAmountLimitError) {
+    // err.amount, err.maxAmountPerTx
+  } else if (err instanceof UserGroupTransactionLimitError) {
+    // err.maxTxsPerEpoch — the account is out of transactions until the next epoch
+  }
+}
+```
+
+## Compliance
+
+Mainnet deployments (Monad, Worldchain) require compliance attestation for `register`,
+`deposit`, and `withdraw`. Transfers do not require compliance — policy is enforced at
+the points where value enters and leaves the system.
+
+### For registration
+
+Fetch compliance data and pass it to `register`:
+
+```typescript
+import { fetchComplianceData, register } from '@taceo/merces-client';
+
+const complianceData = await fetchComplianceData(COMPLIANCE_URL, address);
+
+await register({
+  publicClient,
+  walletClient,
+  idRegistryAddress: ID_REGISTRY_ADDRESS,
+  authSecret,
+  groupId: GROUP_ID,
+  maxFee: parseUnits('1', decimals),
+  complianceData,
+});
+```
+
+### For deposit and withdraw
+
+Pass `complianceUrl` when creating the client. The SDK fetches attestation automatically:
+
+```typescript
+const client = new Client(publicClient, walletClient, {
+  // ... other config
+  complianceUrl: COMPLIANCE_URL,
+});
+
+// Compliance is handled internally
+await client.deposit({ amount });
+await client.withdraw({ amount });
+```
+
+If the deployment gates an action and the attestation is missing or rejected, the call
+throws `NotCompliantError`. See [Pre-transaction screening](/docs/finance-solutions/compliance/pre-transaction-screening)
+for policy configuration.
+
+## Errors
+
+Every error extends `MercesClientError`.
+
+| Error | Means |
+|---|---|
+| `NotRegisteredError` | The address has no leaf in the ID registry |
+| `AlreadyRegisteredInDifferentGroupError` | `register` was called with a `groupId` that doesn't match the address's existing registration |
+| `AlreadyRegisteredWithDifferentAuthSecretError` | `register` was called with an `authSecret` that doesn't match the address's existing registration |
+| `NotCompliantError` | A policy check rejected the action |
+| `InsufficientBalanceError` | Carries `amount` and `balance` |
+| `InvalidAmountError` | The amount is zero or negative |
+| `CannotTransferToSelfError` | Sender and receiver are the same account |
+| `UserGroupAmountLimitError` | Carries `amount` and `maxAmountPerTx` |
+| `UserGroupTransactionLimitError` | Carries `maxTxsPerEpoch` |
+| `InvalidTransactionError` | The MPC network marked the action invalid |
+| `ActionTimeoutError` | `actionTimeoutMs` elapsed before `ActionProcessed` |
+
+```typescript
+import {
+  MercesClientError,
+  NotCompliantError,
+  InsufficientBalanceError,
+  ActionTimeoutError,
+} from '@taceo/merces-client';
+
+try {
+  await client.transfer({ receiver, amount });
+} catch (err) {
+  if (err instanceof NotCompliantError) {
+    // policy rejection — surface it, do not retry blindly
+  } else if (err instanceof InsufficientBalanceError) {
+    // err.amount vs err.balance
+  } else if (err instanceof ActionTimeoutError) {
+    // may still settle — check history before retrying
+  } else if (err instanceof MercesClientError) {
+    // anything else from the client
+  } else {
+    throw err;
+  }
+}
+```
+
+## CLI
+
+The package installs a `taceo-merces-client` binary that exposes the same operations, useful for
+trying a deployment without writing code. Configuration comes from flags or the matching
+`MERCES_CLIENT_*` environment variables:
+
+```bash
+taceo-merces-client deposit --amount 1000 \
+  --id-registry-address 0x... \
+  --contract-address 0x... \
+  --erc20-address 0x... \
+  --rpc-url http://127.0.0.1:8545 \
+  --node-urls http://localhost:10010,http://localhost:10011,http://localhost:10012 \
+  --private-key 0x...
+```
+
+Without `--auth-secret`, it derives one by signature as above.
+
+For mainnet deployments, use `--chain` to load preset configuration:
+
+```bash
+taceo-merces-client deposit --amount 1 \
+  --chain monad \
+  --private-key 0x...
+```
+
+The `--chain` flag (`monad` or `world`) supplies default addresses, node URLs, RPC URL,
+and compliance URL for that deployment. `--rpc-url` overrides the default RPC if both
+are given.
+
+Available commands: `deposit`, `withdraw`, `transfer`, `register`, `get-private-balance`,
+`get-erc20-balance`, `get-history`.
+
+## Rust client
+
+`taceo-merces-client` is the Rust client, at feature parity with this one. It is used
+internally and is not yet published to crates.io.
+
+## Reference
+
+The package ships TypeScript definitions, so an editor gives you full signatures inline.

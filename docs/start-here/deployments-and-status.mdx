@@ -1,0 +1,251 @@
+---
+title: "Deployments & status"
+description: "Current chain deployments for TACEO products."
+---
+
+TACEO is chain-agnostic — the network runs off-chain, so most services touch no chain at all, and the products that settle onchain need a contract deployment rather than a protocol change and can be deployed to all EVM-compatible chains.
+
+# Deployments & status
+
+## Finance Solutions (Merces)
+
+### Production
+
+| Chain | Status | Access |
+|---|---|---|
+| Monad | Mainnet, limited users, volume caps | Via [SDK](/docs/finance-solutions/integrate/client-sdk) |
+| Worldchain | Mainnet, limited users, volume caps | Via [SDK](/docs/finance-solutions/integrate/client-sdk) |
+
+### Testnets
+
+| Chain | Notes | Access |
+|---|---|---|
+| Plasma | Merces testnet | Via [Omap SDK](/docs/finance-solutions/integrate/client-sdk-omap) or https://plasma.merces-demo.taceo.io |
+| Stable Testnet | Merces testnet | Via [Omap SDK](/docs/finance-solutions/integrate/client-sdk-omap) or https://stable.merces-demo.taceo.io |
+| Monad Testnet | Cross-chain OFT demo, LayerZero | Via [OFT SDK](/docs/finance-solutions/integrate/client-sdk-oft) or https://crosschain.merces-demo.taceo.io |
+| Sepolia | Cross-chain OFT demo, LayerZero | Via [OFT SDK](/docs/finance-solutions/integrate/client-sdk-oft) or https://crosschain.merces-demo.taceo.io |
+| Base Sepolia | Cross-chain OFT demo, LayerZero | Via [OFT SDK](/docs/finance-solutions/integrate/client-sdk-oft) or https://crosschain.merces-demo.taceo.io |
+| Base | Merces Dashboard Demo | https://dashboard.merces-demo.taceo.io/base |
+| Arc | Merces Dashboard Demo | https://dashboard.merces-demo.taceo.io/arc |
+
+### Feature availability
+
+| Feature | Monad (prod) | Worldchain (prod) | Plasma (testnet) | Stable (testnet) | OFT (testnet) |
+|---|:---:|:---:|:---:|:---:|:---:|
+| Transfer | ✅ (with limits) | ✅ (with limits) | ✅ | ✅ | ✅ | 
+| Deposit / Withdraw | ✅ (with limits) | ✅ (with limits) | ✅ | ✅ | ✅ | 
+| Yield | — | — | ✅ | ✅ | - |
+| Cross-chain bridging | — | — | - | - | ✅ |
+| Gateway | — | — | ✅ | ✅ | - |
+| Omap | — | — | ✅ | ✅ | - |
+
+### Contracts & Addresses
+
+Below you will find various contracts and addresses necessary to interact with the different Merces versions. You may
+also find these in the READMEs of the corresponding SDKs.
+
+Note that depending on the chosen version and RPC endpoints you may see intermittent "internal server errors" or
+WebSocket timeouts. Ensure that you have a stable RPC provider and implement retry logic with delays where necessary.
+
+<details>
+  <summary>Merces - Monad Mainnet</summary>
+  ```
+# Monad Mainnet Configuration
+CHAIN_ID=143
+CHAIN_NAME=Monad Mainnet
+RPC_URLS=https://rpc.monad.xyz
+
+# Contract addresses (core)
+ID_REGISTRY_ADDRESS=0xF55DFe8242ec117F44Acd932adb5C233b582A04a
+MERCES_ADDRESS=0x9Dd5DE40592AdfcDD60F0f3fF3B014553998f7c1
+TOKEN_ADDRESS=0x754704Bc059F8C67012fEd69BC8A327a5aafb603
+
+# MPC Node URLs (query nodes)
+NODE_0_URL=https://query.node0.usdc.monad.merces.taceo.network
+NODE_1_URL=https://query.node1.usdc.monad.merces.taceo.network
+NODE_2_URL=https://query.node2.usdc.monad.merces.taceo.network
+
+# User group (4 = ANON, recommended for mainnet SDK testing)
+# ANON limits: Fee=0, Max Amount/Tx=1000000 (1 USDC), Max Txs/Epoch=35, Max members=100
+GROUP_ID=4
+
+# Compliance service URL (required for registration/deposit/withdraw)
+COMPLIANCE_URL=https://compliance.usdc.monad.merces.taceo.network/
+  ```
+</details>
+
+<details>
+  <summary>Merces - Worldchain Mainnet</summary>
+  ```
+# Worldchain Mainnet Configuration
+CHAIN_ID=480
+CHAIN_NAME=Worldchain Mainnet
+RPC_URLS=https://worldchain-mainnet.g.alchemy.com/public,https://sparkling-autumn-dinghy.worldchain-mainnet.quiknode.pro,https://worldchain-mainnet.gateway.tenderly.co
+
+# Contract addresses (core)
+ID_REGISTRY_ADDRESS=0x57bE2153f2f832830F228EEe22C2bFA3a785FE40
+MERCES_ADDRESS=0x458838De82E065A84e947D7dAC3844E473c404DA
+TOKEN_ADDRESS=0x79A02482A880bCE3F13e09Da970dC34db4CD24d1
+
+# MPC Node URLs (query nodes)
+NODE_0_URL=https://query.node0.usdc.world.merces.taceo.network
+NODE_1_URL=https://query.node1.usdc.world.merces.taceo.network
+NODE_2_URL=https://query.node2.usdc.world.merces.taceo.network
+
+# User group (4 = ANON, recommended for mainnet SDK testing)
+# ANON limits: Fee=0, Max Amount/Tx=1000000 (1 USDC), Max Txs/Epoch=35, Max members=100
+GROUP_ID=4
+
+# Compliance service URL (required for registration/deposit/withdraw)
+COMPLIANCE_URL=https://compliance.usdc.world.merces.taceo.network
+  ```
+</details>
+
+<details>
+  <summary>OFT - Monad Testnet</summary>
+  ```
+# Monad Testnet Configuration (Adapter chain - has separate ERC-20)
+CHAIN_ID=10143
+CHAIN_NAME=Monad Testnet
+RPC_URLS=https://rpc.ankr.com/monad_testnet,https://monad-testnet-rpc.huginn.tech,https://testnet-rpc.monad.xyz
+CONTRACT_KIND=adapter
+
+# Contract addresses
+ID_REGISTRY_ADDRESS=0x3cae9f1934b9079212531673cafc070a2e44bdc8
+MERCES_ADDRESS=0x654d4c73473e060a1de5888fab34bcb41af073cf
+TOKEN_ADDRESS=0xb1ed36367611392c04d14f80812d86749dc02d9c
+
+# Gateway URL (for deposit/withdraw/transfer/send)
+# Note: SDK appends /ws automatically - do NOT include /ws here
+GATEWAY_URL=wss://chain-a-gateway.merces-oft.taceo.io
+
+# MPC Node URLs
+NODE_0_URL=https://chain-a-node0.merces-oft.taceo.io
+NODE_1_URL=https://chain-a-node1.merces-oft.taceo.io
+NODE_2_URL=https://chain-a-node2.merces-oft.taceo.io
+  ```
+</details>
+
+<details>
+  <summary>OFT - Sepolia Testnet</summary>
+  ```
+# Sepolia Testnet Configuration (OFT chain - Merces IS the token)
+CHAIN_ID=11155111
+CHAIN_NAME=Sepolia
+RPC_URLS=https://ethereum-sepolia-rpc.publicnode.com,https://sepolia.gateway.tenderly.co,https://0xrpc.io/sep
+CONTRACT_KIND=oft
+
+# Contract addresses (MERCES_ADDRESS == TOKEN_ADDRESS on OFT chains)
+ID_REGISTRY_ADDRESS=0x0643ed2c7d94ef1aeedf0b14c9c0905ceaa4ebec
+MERCES_ADDRESS=0xa6f5ac12e0996b96a8e748e48040386d852a3c11
+# TOKEN_ADDRESS omitted on OFT chains
+
+# Gateway URL (for deposit/withdraw/transfer/send)
+GATEWAY_URL=wss://chain-b-gateway.merces-oft.taceo.io/ws
+
+# MPC Node URLs
+NODE_0_URL=https://chain-b-node0.merces-oft.taceo.io
+NODE_1_URL=https://chain-b-node1.merces-oft.taceo.io
+NODE_2_URL=https://chain-b-node2.merces-oft.taceo.io
+  ```
+</details>
+
+<details>
+  <summary>OFT - Base Sepolia Testnet</summary>
+  ```
+# Base Sepolia Testnet Configuration (OFT chain - Merces IS the token)
+CHAIN_ID=84532
+CHAIN_NAME=Base Sepolia
+RPC_URLS=https://base-sepolia.gateway.tenderly.co,https://sepolia.base.org
+CONTRACT_KIND=oft
+
+# Contract addresses (MERCES_ADDRESS == TOKEN_ADDRESS on OFT chains)
+ID_REGISTRY_ADDRESS=0x3824113dbe2f267d791467f6e05530694d66580a
+MERCES_ADDRESS=0x1440bbc50a658456ba81019d71dcead4019e34e3
+# TOKEN_ADDRESS omitted on OFT chains
+
+# Gateway URL (for deposit/withdraw/transfer/send)
+GATEWAY_URL=wss://chain-c-gateway.merces-oft.taceo.io/ws
+
+# MPC Node URLs
+NODE_0_URL=https://chain-c-node0.merces-oft.taceo.io
+NODE_1_URL=https://chain-c-node1.merces-oft.taceo.io
+NODE_2_URL=https://chain-c-node2.merces-oft.taceo.io
+  ```
+</details>
+
+<details>
+  <summary>Omap - Plasma Testnet</summary>
+  ```
+# Plasma Testnet Configuration (Chain ID 9746)
+CHAIN_ID=9746
+RPC_URLS=https://testnet-rpc.plasma.to,https://lb.routeme.sh/rpc/evm/9746
+
+# Contract addresses
+ID_REGISTRY_CONTRACT=0x357966580C4F2f527646f8670E71Dc6F3DE7ff00
+MERCES_ADDRESS=0xce9dBeD2958Cbe4d79415254bDFCC384C89C8E8e
+TOKEN_ADDRESS=0xbd81d64eb5a409cf1d1d2f175897cf102b56ffbe
+VAULT_ADDRESS=0x3D2B3bC89c8D07Bb46C755bd8fde7D4271cf40d7
+
+# Service URLs
+ID_REGISTRY_URL=https://id-registry.merces2.taceo.io
+GATEWAY_URL=wss://gateway.merces2.taceo.io
+ORCHESTRATOR_URL=https://orchestrator.merces2.taceo.io
+
+# MPC Node URLs
+NODE_0_URL=https://node0.merces2.taceo.io
+NODE_1_URL=https://node1.merces2.taceo.io
+NODE_2_URL=https://node2.merces2.taceo.io
+  ```
+</details>
+
+<details>
+  <summary>Omap - Stable Testnet</summary>
+  ```
+# Stable Testnet Configuration (Chain ID 2201)
+CHAIN_ID=2201
+RPC_URLS=https://rpc.testnet.stable.xyz,https://lb.routeme.sh/rpc/evm/2201
+
+# Contract addresses
+ID_REGISTRY_CONTRACT=0x530900984F20831336f0e14c6f74004D0f1DB95a
+MERCES_ADDRESS=0xc682B041B1de7AF910E39DCda56138c76c8AF897
+TOKEN_ADDRESS=0x71146e8695c0d7bb0b0c57d3229b27793fca87fb
+VAULT_ADDRESS=0xE67b5933CA36273C17b7384a96bEBc2c340c9093
+
+ID_REGISTRY_URL=https://stable.id-registry.merces2.taceo.io
+GATEWAY_URL=wss://stable.gateway.merces2.taceo.io
+ORCHESTRATOR_URL=https://stable.orchestrator.merces2.taceo.io
+
+NODE_0_URL=https://stable.node0.merces2.taceo.io
+NODE_1_URL=https://stable.node1.merces2.taceo.io
+NODE_2_URL=https://stable.node2.merces2.taceo.io
+  ```
+</details>
+
+
+## Agent Solutions (Confidential x402)
+
+### Testnets
+
+| Chain | Notes | Access |
+|---|---|---|
+| Base Sepolia | Confidential mode only | Via [x402 SDK](/docs/x402/integration-guide) or https://x402.merces-demo.taceo.io |
+
+### Node operation
+
+All three nodes in the testnet deployment are currently operated by TACEO.
+
+## Identity Solutions - Live
+
+- **World.** Personhood network, live and distributed across the TACEO Network's operators. Runs on TACEO:OPRF and MPC-based iris code matching. Over 18 million users.
+- **ZKPassport.** Live in production since 2026 — the second production deployment of TACEO:OPRF, after World. Proves age, nationality, and humanity directly from a passport's NFC chip via a nullifier the network computes under a 2-of-3 secret-shared key; nothing sensitive leaves the user's device.
+
+## TACEO Network - Services
+
+| Service | Status | What it does |
+|---|---|---|
+| TACEO:Proof | Live in production | MPC + coSNARKs generate a verifiable zero-knowledge proof; no single party sees the witness |
+| TACEO:OPRF | Live in production | Derives unique, unlinkable nullifiers from a user's input without anyone seeing the input. In production for World and ZKPassport |
+| TACEO:OMap | Deployed, onboarding first applications | Private key-value state; reads and updates reveal nothing, including the access pattern |
+| TACEO:Match | In active integration | Biometric matching where no party ever holds a template |
+

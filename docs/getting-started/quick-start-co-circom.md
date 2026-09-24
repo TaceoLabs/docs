@@ -1,9 +1,9 @@
 # Quick Start coCircom
 
-coCircom is an implementation of [collaborative SNARKs](../resources/collsnarks.md), with a focus on the [circom](https://circom.io) framework.
-In contrast to traditional SNARKs, which are run by a single prover, collaborative SNARKs are executed using a [multiparty computation protocol](../resources/mpc.md).
+coCircom is an implementation of [collaborative SNARKs](/docs/primer/collabSNARKs-primer), with a focus on the [circom framework](https://github.com/iden3/circom).
+In contrast to traditional SNARKs, which are run by a single prover, collaborative SNARKs are executed using a [multiparty computation protocol](/docs/taceo-network).
 
-If you just want to get your hands dirty as fast as possible, here is a run-down on how to collaboratively prove the `Multiplier2` example from the [circom documentation](https://docs.circom.io/getting-started/installation/) using Groth16.
+If you just want to get your hands dirty as fast as possible, here is a run-down on how to collaboratively prove the `Multiplier2` example from the [circom documentation](https://github.com/iden3/circom/blob/a100faedb1c62d4d3e1463f8a3f88342d82351cd/mkdocs/docs/getting-started/installation.md) using Groth16.
 
 First of all, here is the relevant circom file:
 
@@ -35,7 +35,7 @@ In the first step, we compile an `.r1cs` file using circom and create a verifica
 circom multiplier2.circom --r1cs
 ```
 
-You will find a file called `multiplier2.r1cs` in your working folder. To create the keys you can either follow the circom documentation, or download the two keys from our [GitHub](https://github.com/TaceoLabs/collaborative-circom/tree/b90e9e61cbb674f274dbd154842b77c1d09275ea/co-circom/examples/groth16/test_vectors/multiplier2), where we created the keys already (you will need `multiplier2.zkey` and `verification_key.json`).
+You will find a file called `multiplier2.r1cs` in your working folder. To create the keys you can either follow the circom documentation, or download the two keys from our [GitHub](https://github.com/TaceoLabs/co-snarks/tree/b90e9e61cbb674f274dbd154842b77c1d09275ea/co-circom/examples/groth16/test_vectors/multiplier2), where we created the keys already (you will need `multiplier2.zkey` and `verification_key.json`).
 
 ## Split the Input
 
@@ -93,7 +93,7 @@ dns_name = "localhost:10002"
 cert_path = "data/cert2.der"
 ```
 
-You can download the TLS certificates from our [GitHub](https://github.com/TaceoLabs/collaborative-circom/tree/c089006f5f17623518c6dc25b344ecfbf987c197/co-circom/examples/data) and put them under `data/`.
+You can download the TLS certificates from our [GitHub](https://github.com/TaceoLabs/co-snarks/tree/c089006f5f17623518c6dc25b344ecfbf987c197/co-circom/examples/data) and put them under `data/`.
 
 We move the `.toml` files to `configs/` and execute the following command (for every party).
 
@@ -142,7 +142,7 @@ $ snarkjs groth16 verify verification_key.json public_input.json proof.0.json
 [INFO]  snarkJS: OK!
 ```
 
-For a full `shell` script executing all of the commands at once, have a look at our [GitHub](https://github.com/TaceoLabs/collaborative-circom/blob/b90e9e61cbb674f274dbd154842b77c1d09275ea/co-circom/examples/groth16/run_full_multiplier2.sh). In this folder you find this exact example, and some more.
+For a full `shell` script executing all of the commands at once, have a look at our [GitHub](https://github.com/TaceoLabs/co-snarks/blob/b90e9e61cbb674f274dbd154842b77c1d09275ea/co-circom/examples/groth16/run_full_multiplier2.sh). In this folder you find this exact example, and some more.
 
 **And now you can dive into the rest of the book** 🦀
 

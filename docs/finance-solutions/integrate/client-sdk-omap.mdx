@@ -1,0 +1,290 @@
+---
+title: Client SDK - OMap
+---
+
+# Client SDK - OMap
+
+The OMap client is the Merces client used on the Plasma and Stable deployments. It runs
+entirely in your application: it generates proofs locally, holds the signing key, and talks
+to the gateway, the ID registry and the MPC nodes on your behalf. Balances and amounts
+never leave it in the clear.
+
+It exposes two privacy modes and the yield vault, neither of which the Monad and Worldchain
+client offers.
+
+:::info Which client do I need?
+Pick by deployment. **Plasma and Stable** use this client,
+[`@taceo/merces2-client`](https://www.npmjs.com/package/@taceo/merces2-client). **Monad and
+Worldchain** use [`@taceo/merces-client`](/docs/finance-solutions/integrate/client-sdk),
+which has a different API. They are not interchangeable.
+:::
+
+:::warning Testnet
+Plasma and Stable are testnets using test tokens with no real-world value. Never use
+mainnet keys or real funds against them.
+
+Note that - depending on the stability of your chosen RPC provider - you may have to add retries to various calls.
+:::
+
+## Endpoints and addresses
+
+Three services sit in front of Merces on these deployments. Plasma and Stable share the
+same service endpoints:
+
+| Service | URL |
+|---|---|
+| ID registry | `https://id-registry.merces2.taceo.io` |
+| Gateway | `wss://gateway.merces2.taceo.io` |
+| Orchestrator | `https://orchestrator.merces2.taceo.io` |
+
+The vault contract differs per deployment, and exists only on these two:
+
+| Deployment | Vault |
+|---|---|
+| Plasma | `0x3D2B3bC89c8D07Bb46C755bd8fde7D4271cf40d7` |
+| Stable | `0xE67b5933CA36273C17b7384a96bEBc2c340c9093` |
+
+Node URLs and the Merces, ID registry and token contract addresses are on
+[Deployments & status](/docs/start-here/deployments-and-status).
+
+Note that the ID registry appears twice in a deployment's configuration, as two different
+things: the service URL above, and the ID registry *contract* address on the Deployments
+page. This client needs both.
+
+## Requirements
+
+Node.js 20 or later, a wallet funded on the chain you are targeting, the endpoints and vault
+address above, and the Merces, ID registry and token contract addresses for that deployment.
+
+The package is **ESM-only**. It has no CommonJS build, so it cannot be `require()`d — use
+`import`, or a bundler that handles ESM.
+
+## Install
+
+```bash
+npm install @taceo/merces2-client viem
+```
+
+The package bundles its own proving artifacts — the circuit wasm and the zkey ship inside
+it — so there is nothing else to download before you can generate a proof.
+
+## Create a client
+
+```typescript
+import { createWalletClient, createPublicClient, http } from 'viem';
+import { privateKeyToAccount } from 'viem/accounts';
+import { Client } from '@taceo/merces2-client';
+
+const account = privateKeyToAccount(process.env.PRIVATE_KEY as `0x${string}`);
+
+const walletClient = createWalletClient({ account, chain, transport: http(RPC_URL) });
+const publicClient = createPublicClient({ chain, transport: http(RPC_URL) });
+
+const client = new Client({
+  idRegistryUrl: 'https://id-registry.merces2.taceo.io',
+  gatewayUrl:    'wss://gateway.merces2.taceo.io',
+  nodeUrls: [NODE_0_URL, NODE_1_URL, NODE_2_URL],
+  contractAddress: MERCES_ADDRESS,
+  tokenAddress:    TOKEN_ADDRESS,
+  vaultAddress:    VAULT_ADDRESS,
+  token: 'EIP3009',
+  walletClient,
+  publicClient,
+});
+```
+
+:::warning
+This requires you to pass your private key to the SDK. Use testing wallets or secure the key/environment variable in some manner.
+:::
+
+### Configuration
+
+| Option | Required | Notes |
+|---|---|---|
+| `idRegistryUrl` | Yes | Maps wallet addresses to their index in the tree |
+| `gatewayUrl` | Yes | WebSocket endpoint that submits transactions and reports completion |
+| `nodeUrls` | Yes | The MPC nodes. Shares are encrypted to their public keys |
+| `contractAddress` | Yes | The Merces contract on your chain |
+| `tokenAddress` | Yes | The ERC-20 being wrapped |
+| `vaultAddress` | Yes | Required even if you never use the vault |
+| `token` | Yes | `'ERC20'` or `'EIP3009'`. Both deployments use `'EIP3009'` |
+| `gatewayTimeout` | No | Wait for the gateway's queued and completed messages. Default 30,000 ms |
+| `txReceiptTimeout` | No | Wait for a transaction receipt. Default 30,000 ms |
+| `mpcEventTimeout` | No | Wait for the on-chain `ProcessedMPC` event. Default 30,000 ms |
+
+`client.address()` returns the address the client is operating as.
+
+## Register
+
+An address must be registered before it can hold a balance:
+
+```typescript
+const index = await client.register();
+```
+
+This derives the client's key from a wallet signature and registers the public key against
+your address, returning your index in the tree. It throws `RegisterError` if registration
+fails, and the derivation is deterministic — the same wallet always produces the same key.
+
+## Privacy modes
+
+Every operation comes in two variants. Which you choose determines what the transaction
+reveals and how fast it settles — see [Privacy model](/docs/finance-solutions/concepts/privacy-model)
+for what each mode hides, from whom, and the throughput each sustains.
+
+The method names predate the terminology on that page:
+
+| Method prefix | Mode |
+|---|---|
+| `private*` | Private (default) |
+| `confidential*` | Partial-private |
+
+Graph-private transfers are not exposed by this client.
+
+Pick per transaction — an account can use both.
+
+## Deposit
+
+Deposits move tokens from the public balance into the Merces balance. The amount is visible
+onchain either way, since tokens are moving; the mode determines whether the crediting
+account is hidden.
+
+```typescript
+import { parseUnits } from 'viem';
+
+const decimals = await client.getDecimals();
+const amount = parseUnits('100', decimals);
+
+await client.confidentialDeposit(amount);
+// or
+await client.privateDeposit(amount);
+```
+
+`getSymbol()` and `getName()` are also available for token metadata.
+
+## Balances
+
+```typescript
+const onchain = await client.getErc20Balance();   // public
+const merces  = await client.getPrivateBalance(); // reconstructed from the node shares
+const vault   = await client.getVaultBalance();   // vault shares
+```
+
+## Transfer
+
+```typescript
+await client.confidentialTransfer(RECEIVER_ADDRESS, amount);
+// or
+await client.privateTransfer(RECEIVER_ADDRESS, amount);
+```
+
+The receiver must already be registered. Transferring to your own address throws
+`CannotTransferToSelfError`.
+
+## Withdraw
+
+```typescript
+await client.confidentialWithdraw(amount);
+// or
+await client.privateWithdraw(amount);
+```
+
+A withdrawal ends in an ordinary token transfer, so its amount and destination are visible
+onchain — but in private mode nothing links it to any particular transfer.
+
+## Vault
+
+The vault is an ERC-4626 yield vault. Deposits and withdrawals are private: the holder is
+carried as a secret-shared identity reference, so positions are not attributable.
+
+```typescript
+await client.vaultDeposit(amount);
+await client.vaultWithdraw(amount);
+
+const shares = await client.convertToShares(assets);
+const assets = await client.convertToAssets(shares);
+```
+
+`getVaultBalance()` returns your holding in shares; `convertToAssets` turns that into the
+underlying token amount. See [Private yield](/docs/finance-solutions/private-defi/private-yield).
+
+## Transaction history
+
+Two functions, for two different jobs. Both are standalone imports rather than methods on
+`Client`, and both take the ID registry and orchestrator URLs explicitly.
+
+`getTxHistory` returns the account's own decrypted history:
+
+```typescript
+import { getTxHistory } from '@taceo/merces2-client';
+
+const history = await getTxHistory(
+  'https://id-registry.merces2.taceo.io',
+  'https://orchestrator.merces2.taceo.io',
+  client.address(),
+);
+```
+
+`getTxList` returns a paginated list with a total count, for building a ledger view:
+
+```typescript
+import { getTxList } from '@taceo/merces2-client';
+
+const { transactions, total } = await getTxList(
+  'https://id-registry.merces2.taceo.io',
+  'https://orchestrator.merces2.taceo.io',
+  { page: 1, pageSize: 25 },
+);
+```
+
+Both accept optional `startTime` and `endTime` bounds. Results are a tagged union across the
+eight transaction kinds — private and confidential deposit, withdraw and transfer, plus
+vault deposit and withdraw — so narrow before reading fields:
+
+```typescript
+for (const tx of history) {
+  if ('PrivateTransfer' in tx) {
+    console.log(tx.PrivateTransfer.amount, tx.PrivateTransfer.time_stamp);
+  }
+}
+```
+
+`getTxHistory` decrypts to plain values. `getTxList` returns entries where private fields
+are still secret shares, so use it for counts and pagination rather than for reading
+amounts.
+
+## Errors
+
+| Error | Means |
+|---|---|
+| `RegisterError` | Registration failed |
+| `NotFoundError` | The address is not registered |
+| `InvalidAmountError` | The amount is zero or negative |
+| `InsufficientBalanceError` | Not enough balance for the operation |
+| `CannotTransferToSelfError` | Sender and receiver are the same account |
+| `ProofError` | Proof generation failed |
+| `InvalidTransactionError` | The MPC network marked the transaction invalid |
+| `TimeoutError` | One of the configured timeouts elapsed |
+
+```typescript
+import { TimeoutError, InsufficientBalanceError } from '@taceo/merces2-client';
+
+try {
+  await client.privateTransfer(receiver, amount);
+} catch (err) {
+  if (err instanceof InsufficientBalanceError) {
+    // ...
+  } else if (err instanceof TimeoutError) {
+    // may still have been processed — see below
+  } else {
+    throw err;
+  }
+}
+```
+
+A `TimeoutError` is not a failure signal. The transaction may still be processed — check the
+balance or the history before retrying, or a double spend becomes possible.
+
+## Reference
+
+The package ships TypeScript definitions, so an editor gives you full signatures inline.

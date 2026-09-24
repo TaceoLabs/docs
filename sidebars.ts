@@ -13,52 +13,122 @@ import type { SidebarsConfig } from "@docusaurus/plugin-content-docs";
 const sidebars: SidebarsConfig = {
   // Unified sidebar structure for all documentation
   mainSidebar: [
-    "index",
+    {
+      type: "category",
+      label: "Start here",
+      collapsed: false,
+      link: { type: "doc", id: "index" },
+      items: [
+        "start-here/deployments-and-status",
+        "start-here/glossary",
+        "start-here/public-repos",
+      ],
+    },
     {
       type: "category",
       label: "Finance Solutions",
       collapsed: false,
-      link: { type: "doc", id: "finance-solutions/overview" },
       items: [
+        "finance-solutions/overview",
         {
           type: "category",
-          label: "Private Payments",
-          link: { type: "doc", id: "finance-solutions/payments/introduction" },
+          label: "Concepts",
           items: [
-            "finance-solutions/payments/quickstart",
-            "finance-solutions/payments/how-it-works",
+            "finance-solutions/concepts/privacy-model",
+            "finance-solutions/concepts/architecture",
+            "finance-solutions/concepts/escape-hatch",
+            "finance-solutions/concepts/private-shared-state",
           ],
         },
         {
           type: "category",
-          label: "Confidential x402",
-          link: { type: "doc", id: "finance-solutions/x402/introduction" },
+          label: "Private virtual account",
           items: [
-            "finance-solutions/x402/quickstart",
-            "finance-solutions/x402/how-it-works",
-            "finance-solutions/x402/integration-guide",
-            "finance-solutions/x402/protocol-reference",
-            "finance-solutions/x402/network-and-contracts",
+            "finance-solutions/private-virtual-account/overview",
+            "finance-solutions/private-virtual-account/deposit-and-withdraw",
+            "finance-solutions/private-virtual-account/transfers",
+            "finance-solutions/private-virtual-account/transaction-history",
           ],
         },
-        "finance-solutions/compliance/introduction",
         {
           type: "category",
-          label: "Private Yield",
-          link: { type: "doc", id: "finance-solutions/yield/introduction" },
+          label: "Private DeFi",
           items: [
-            "finance-solutions/yield/quickstart",
-            "finance-solutions/yield/how-it-works",
+            "finance-solutions/private-defi/overview",
+            "finance-solutions/private-defi/private-yield",
           ],
         },
+        {
+          type: "category",
+          label: "Private RWAs",
+          items: [
+            "finance-solutions/private-rwas/overview",
+            "finance-solutions/private-rwas/private-holdings",
+            "finance-solutions/private-rwas/disclosure",
+          ],
+        },
+        {
+          type: "category",
+          label: "Cross-chain (LayerZero OFT)",
+          items: [
+            "finance-solutions/cross-chain/how-it-works",
+            "finance-solutions/cross-chain/quickstart",
+          ],
+        },
+        {
+          type: "category",
+          label: "Compliance",
+          items: [
+            "finance-solutions/compliance/overview",
+            "finance-solutions/compliance/pre-transaction-screening",
+            "finance-solutions/compliance/post-transaction-disclosure",
+          ],
+        },
+        {
+          type: "category",
+          label: "Use cases",
+          items: [
+            "finance-solutions/use-cases/overview",
+            "finance-solutions/use-cases/payments-payroll-batch",
+            "finance-solutions/use-cases/treasury",
+            "finance-solutions/use-cases/card-payments",
+            "finance-solutions/use-cases/on-off-ramp",
+          ],
+        },
+        {
+          type: "category",
+          label: "Integrate",
+          items: [
+            "finance-solutions/integrate/client-sdk",
+            "finance-solutions/integrate/client-sdk-omap",
+            "finance-solutions/integrate/client-sdk-oft",
+            "finance-solutions/integrate/gateway",
+            "finance-solutions/integrate/operator-interface",
+            "finance-solutions/integrate/stack",
+          ],
+        },
+        "finance-solutions/roadmap",
+      ],
+    },
+    {
+      type: "category",
+      label: "Agent Solutions",
+      items: [
+        "x402/introduction",
+        "x402/quickstart",
+        "x402/how-it-works",
+        "x402/use-cases",
+        "x402/integration-guide",
+        "x402/protocol-reference",
+        "x402/network-and-contracts",
       ],
     },
     {
       type: "category",
       label: "Identity Solutions",
       collapsed: false,
-      link: { type: "doc", id: "identity-solutions/overview" },
       items: [
+        "identity-solutions/overview",
         {
           type: "category",
           label: "Distributed Nullifiers",
@@ -81,74 +151,74 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: "category",
-      label: "TACEO Services",
-      link: { type: "doc", id: "services/overview" },
+      label: "TACEO Network",
       items: [
+        "taceo-network/index",
+        "taceo-network/network",
         {
           type: "category",
-          label: "TACEO:OPRF",
-          link: { type: "doc", id: "taceo-oprf/overview" },
+          label: "TACEO Services",
           items: [
-            "taceo-oprf/authorization",
+            "services/overview",
             {
               type: "category",
-              label: "Development",
-              items: ["taceo-oprf/beta-oprf"],
-            },
-            "taceo-oprf/api",
-          ],
-        },
-        {
-          type: "category",
-          label: "TACEO:Proof",
-          link: { type: "doc", id: "taceo-proof/overview" },
-          items: [
-            {
-              type: "category",
-              label: "Getting Started",
+              label: "TACEO:OPRF",
               items: [
-                "taceo-proof/dev/quick-start-co-circom",
-                "taceo-proof/dev/quick-start-co-noir",
+                "services/taceo-oprf/overview",
+                "services/taceo-oprf/authorization",
+                {
+                  type: "category",
+                  label: "Development",
+                  items: ["services/taceo-oprf/beta-oprf"],
+                },
+                "services/taceo-oprf/api",
               ],
             },
-            "taceo-proof/dev/blueprints",
-            "taceo-proof/dev/bestpractice",
+            {
+              type: "category",
+              label: "TACEO:Proof",
+              items: [
+                "services/taceo-proof/overview",
+                {
+                  type: "category",
+                  label: "Getting Started",
+                  items: [
+                    "services/taceo-proof/dev/quick-start-co-circom",
+                    "services/taceo-proof/dev/quick-start-co-noir",
+                  ],
+                },
+                "services/taceo-proof/dev/blueprints",
+                "services/taceo-proof/dev/bestpractice",
+              ],
+            },
+            {
+              type: "category",
+              label: "TACEO:Match",
+              items: ["services/taceo-match/overview", "services/taceo-match/concepts"],
+            },
+            {
+              type: "category",
+              label: "TACEO:OMap",
+              items: ["services/taceo-omap/overview", "services/taceo-omap/concepts"],
+            }
           ],
         },
-        {
-          type: "category",
-          label: "TACEO:Match",
-          link: { type: "doc", id: "taceo-match/overview" },
-          items: ["taceo-match/concepts"],
-        },
-        {
-          type: "category",
-          label: "TACEO:OMap",
-          link: { type: "doc", id: "taceo-omap/overview" },
-          items: ["taceo-omap/concepts"],
-        }
-      ],
-    },
-    {
-      type: "category",
-      label: "TACEO Network",
-      link: { type: "doc", id: "taceo-network/index" },
-      items: [
-        "taceo-network/network",
+
         "taceo-network/node-operators",
         "taceo-network/governance",
+        "taceo-network/data-sovereignty",
         "taceo-network/roadmap",
       ],
     },
     {
       type: "category",
       label: "Developer Tools",
-      link: { type: "doc", id: "overview" },
       items: [
         {
           type: "category",
           label: "Getting Started",
           items: [
+            "overview",
             "getting-started/install",
             "getting-started/quick-start-co-circom",
             "getting-started/quick-start-co-noir",
@@ -158,8 +228,8 @@ const sidebars: SidebarsConfig = {
         {
           type: "category",
           label: "Examples",
-          link: { type: "doc", id: "examples/examples" },
           items: [
+            "examples/examples",
             "examples/poseidon",
             "examples/poseidon_noir",
             "examples/kyc",
@@ -175,8 +245,8 @@ const sidebars: SidebarsConfig = {
             {
               type: "category",
               label: "Command-Line Interface",
-              link: { type: "doc", id: "co-circom/cli/cli" },
               items: [
+                "co-circom/cli/cli",
                 "co-circom/cli/split-input",
                 "co-circom/cli/merge-input-shares",
                 "co-circom/cli/split-witness",
@@ -197,13 +267,13 @@ const sidebars: SidebarsConfig = {
         {
           type: "category",
           label: "coNoir",
-          link: { type: "doc", id: "co-noir/co-noir" },
           items: [
+            "co-noir/co-noir",
             {
               type: "category",
               label: "Command-Line Interface",
-              link: { type: "doc", id: "co-noir/cli/cli" },
               items: [
+                "co-noir/cli/cli",
                 "co-noir/cli/split-input",
                 "co-noir/cli/merge-input-shares",
                 "co-noir/cli/split-witness",
@@ -222,8 +292,7 @@ const sidebars: SidebarsConfig = {
             {
               type: "category",
               label: "Rust Library",
-              link: { type: "doc", id: "co-noir/lib/lib" },
-              items: ["co-noir/lib/example"],
+              items: ["co-noir/lib/lib", "co-noir/lib/example"],
             },
           ],
         },
@@ -243,13 +312,6 @@ const sidebars: SidebarsConfig = {
       label: "Learning Resources",
       items: [
         "primer/collabSNARKs-primer",
-        "resources/mpc",
-        "resources/zkp",
-        {
-          type: "doc",
-          id: "resources/collsnarks",
-          label: "coSNARKs Further Reading",
-        },
       ],
     },
   ],

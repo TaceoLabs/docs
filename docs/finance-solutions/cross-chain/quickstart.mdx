@@ -1,0 +1,39 @@
+---
+title: Quickstart
+---
+
+# Quickstart
+
+Try out the demo at **[crosschain.merces-taceo.taceo.io](https://crosschain.merces-demo.taceo.io/)**. It runs across three testnets, with a Merces deployment and a MPC network on each.
+Alternatively, you can use the **[clientSDK](../integrate/client-sdk-oft.mdx)** to interact with the deployed system on your own.
+
+| Network | Chain ID |
+|---|---|
+| Monad Testnet | 10143 |
+| Sepolia | 11155111 |
+| Base Sepolia | 84532 |
+
+All three use the LayerZero Endpoint V2 at `0x6EDCE65403992e310A62460808c4b910D972f10f`.
+
+:::info Testnet only
+Test tokens with no real-world value. Do not use mainnet private keys or real funds.
+:::
+
+## Walk the flow
+Before you start, make sure you have a browser wallet with testnet funds on whichever chain you want to start from.
+
+1. **Connect your wallet** and **register an account**. Registration signs you up with the ID registry on the acting chain — the same step as any Merces account.
+2. **Pick your acting chain.** The demo can switch between the three networks; the one you select is where your next operation runs.
+3. **Deposit** to move public funds into a private balance on that chain. The transaction request is sent to the Merce contract, where the MPC picks it up, processes it and debits your private account.
+4. **Bridge** to move that private balance to either your wallet or any other registered wallet on another chain. This is the cross-chain path: *debit on the source chain -> LayerZero message -> credit on the destination*.
+5. **Withdraw** on the destination chain when you want public ERC-20 back. This is the point at which tokens are actually minted to you.
+
+---
+
+## Limitations
+
+The cross-chain demo shows the Merces OFT Adapter working end to end across three testnets. Parts of the surrounding stack are stood in for rather than run.
+
+- There is no DVN: The demo runs no real DVN. In its place is a relayer service that watches the chains for sends and posts them on the other chain. That relayer carries no threshold assumptions and performs no ZK verification — it is a transport stand-in, not a verification layer.
+
+- Nodes by TACEO: Each of the three chains runs a three-party MPC network, and TACEO hosts all parties. The threshold assumption behind the privacy guarantee is not independently distributed in this deployment.

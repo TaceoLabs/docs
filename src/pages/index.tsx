@@ -89,7 +89,7 @@ function GuidanceSection() {
                 label: "Finance Solutions overview",
               },
               {
-                to: "/docs/finance-solutions/x402/quickstart",
+                to: "/docs/x402/quickstart",
                 label: "Confidential x402 quickstart",
               },
             ]}
@@ -101,10 +101,10 @@ function GuidanceSection() {
             description="Production-ready privacy primitives you can call directly: privacy-preserving nullifiers (TACEO:OPRF), private proof delegation (TACEO:Proof), confidential shared state (TACEO:OMap) and unique feature matching (TACEO:Match)."
             ctas={[
               { to: "/docs/services/overview", label: "Browse services" },
-              { to: "/docs/taceo-oprf/overview", label: "TACEO:OPRF" },
-              { to: "/docs/taceo-proof/overview", label: "TACEO:Proof" },
-              { to: "/docs/taceo-omap/overview", label: "TACEO:OMap" },
-              { to: "/docs/taceo-match/overview", label: "TACEO:Match" },
+              { to: "/docs/services/taceo-oprf/overview", label: "TACEO:OPRF" },
+              { to: "/docs/services/taceo-proof/overview", label: "TACEO:Proof" },
+              { to: "/docs/services/taceo-omap/overview", label: "TACEO:OMap" },
+              { to: "/docs/services/taceo-match/overview", label: "TACEO:Match" },
             ]}
           />
 
@@ -129,7 +129,6 @@ function GuidanceSection() {
             <div className={styles.quickLinkCard}>
               <p className={styles.quickLinkTitle}>New to Privacy Tech?</p>
               <div className={styles.quickLinkList}>
-                <ArrowLink to="/docs/resources/mpc" label="MPC primer" />
                 <ArrowLink
                   to="/docs/primer/collabSNARKs-primer"
                   label="CoSNARKs primer"
@@ -152,7 +151,7 @@ function GuidanceSection() {
                   label="Join Discord"
                 />
                 <ArrowLink
-                  to="mailto:hello@taceo.io"
+                  to="mailto:partnerships@taceo.io"
                   label="Email the team"
                 />
               </div>

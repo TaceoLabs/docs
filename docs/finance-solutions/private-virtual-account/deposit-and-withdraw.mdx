@@ -1,0 +1,37 @@
+---
+title: Deposit & Withdraw
+---
+
+# Deposit & withdraw flows
+
+Deposits move tokens from a public wallet into a private virtual account. Withdrawals move them back out. These are the two points where value crosses between the public token and its private form.
+
+## Deposit
+
+A deposit follows the same five steps as any Merces action:
+
+1. **Proof generation, client-side.** The client splits the deposit amount into additive secret shares, encrypts each to the corresponding MPC operator's public key, and generates a Groth16 proof that the shares are consistent with the committed amount. This step is fully local.
+2. **Submission.** The client sends the proof and ciphertexts to the gateway over WebSocket; the gateway constructs and submits the deposit transaction to the Merces contract. Alternatively, the client can post the encrypted transaction details directly to the contract.
+3. **Onchain verification.** The contract verifies the Groth16 proof, records the new commitment, and emits an event signalling the MPC network to pick up the queued action.
+4. **MPC balance update.** The operators jointly decrypt the ciphertexts to recover the deposit amount, update the user's secret-shared balance, and generate a second Groth16 proof that the update is correct. They call `processMPC()` on the contract with the proof and updated commitments.
+5. **Finalisation.** The contract verifies the MPC proof and commits the new balance state. The transaction hash returns to the client either through the gateway or is directly queried from the contract.
+
+```mermaid
+sequenceDiagram
+    Note over Client: generate Groth16 ZK proof + encrypt shares
+    Client->>Gateway (opt.): PrivateDeposit (proof + ciphertexts)
+    Gateway (opt.)->>Merces Contract: submit deposit tx
+    Note over Merces Contract: verify client proof, emit event
+    Merces Contract->>MPC Network: read_queue(action_index)
+    Note over MPC Network: decrypt shares, update balances, generate proof
+    MPC Network->>Merces Contract: processMPC(proof, new_commitments)
+    Note over Merces Contract: verify MPC proof, update commitments, emit event
+    Merces Contract->>Gateway (opt.): tx_hash
+    Gateway (opt.)->>Client: tx_hash
+```
+
+
+## Withdraw
+
+A withdrawal follows the same structure in reverse: the client proves entitlement to the amount, the contract verifies and queues the action, the MPC network debits the secret-shared balance and proves the update, and the contract releases the token back to the public wallet.
+

@@ -1,0 +1,38 @@
+---
+title: Roadmap
+description: Where Merces is heading
+---
+
+# Roadmap 
+For what is running today, and where, see
+[Deployments & status](/docs/start-here/deployments-and-status).
+
+## Performance
+
+Throughput work continues along several tracks: batching, so proving cost is amortised
+across a group of transactions rather than paid per transaction; GPU acceleration beyond
+proving into witness extension; more efficient oblivious RAM; and shallower Merkle trees.
+Alternative proof systems are under evaluation.
+
+## Post-quantum readiness
+
+Most of the Merces stack is already quantum-safe — the MPC layer is information-theoretic, and the hash functions and oblivious
+data structures underneath it are build from symmetric primitives that a quantum adversary only
+weakens quadratically at best.
+
+Two areas need migration, and they differ in urgency.
+
+**Encryption used for censorship resistance** relies on classical key derivation. Because
+the resulting ciphertexts are published onchain, an observer can retain them today and
+decrypt them once a cryptographically relevant quantum computer exists — *harvest now,
+decrypt later*. This affects the confidentiality of past transactions, not control of
+funds. Migration to post-quantum key encapsulation is active work. The engineering
+difficulty is that post-quantum KEMs are expensive to prove in zero knowledge, and simply
+dropping the onchain ciphertext would remove a client's ability to demonstrate censorship
+— so the fix has to preserve that property rather than trade it away.
+
+**The proof system** faces no such deadline. Groth16 offers perfect zero-knowledge, so
+there are no past secrets for a future adversary to extract; the exposure is forging new
+proofs, which only matters once quantum hardware actually exists. Hash-based proof systems
+are the migration path, and they carry a substantial performance cost today, so the plan
+is to move when the threat is real rather than pre-emptively.
