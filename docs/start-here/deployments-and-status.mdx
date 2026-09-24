@@ -53,7 +53,7 @@ WebSocket timeouts. Ensure that you have a stable RPC provider and implement ret
 # Monad Mainnet Configuration
 CHAIN_ID=10143
 CHAIN_NAME=Monad Mainnet
-RPC_URL=https://monad-mainnet.g.alchemy.com/v2/demo
+RPC_URLS=https://143.rpc.thirdweb.com,https://rpc.monad.xyz,https://monad-rpc.huginn.tech,https://monad-mainnet.g.alchemy.com/v2/demo
 
 # Contract addresses (core)
 ID_REGISTRY_ADDRESS=0xF55DFe8242ec117F44Acd932adb5C233b582A04a
@@ -77,7 +77,7 @@ GROUP_ID=4
 # Worldchain Mainnet Configuration
 CHAIN_ID=480
 CHAIN_NAME=Worldchain Mainnet
-RPC_URL=https://worldchain-mainnet.g.alchemy.com/public
+RPC_URLS=https://worldchain-mainnet.g.alchemy.com/public,https://sparkling-autumn-dinghy.worldchain-mainnet.quiknode.pro,https://worldchain-mainnet.gateway.tenderly.co
 
 # Contract addresses (core)
 ID_REGISTRY_ADDRESS=0x57bE2153f2f832830F228EEe22C2bFA3a785FE40
@@ -101,7 +101,7 @@ GROUP_ID=4
 # Monad Testnet Configuration (Adapter chain - has separate ERC-20)
 CHAIN_ID=10143
 CHAIN_NAME=Monad Testnet
-RPC_URL=https://testnet-rpc.monad.xyz
+RPC_URLS=https://rpc.ankr.com/monad_testnet,https://monad-testnet-rpc.huginn.tech,https://testnet-rpc.monad.xyz
 CONTRACT_KIND=adapter
 
 # Contract addresses
@@ -126,7 +126,7 @@ NODE_2_URL=https://chain-a-node2.merces-oft.taceo.io
 # Sepolia Testnet Configuration (OFT chain - Merces IS the token)
 CHAIN_ID=11155111
 CHAIN_NAME=Sepolia
-RPC_URL=https://ethereum-sepolia-rpc.publicnode.com
+RPC_URLS=https://ethereum-sepolia-rpc.publicnode.com,https://sepolia.gateway.tenderly.co,https://0xrpc.io/sep
 CONTRACT_KIND=oft
 
 # Contract addresses (MERCES_ADDRESS == TOKEN_ADDRESS on OFT chains)
@@ -150,7 +150,7 @@ NODE_2_URL=https://chain-b-node2.merces-oft.taceo.io
 # Base Sepolia Testnet Configuration (OFT chain - Merces IS the token)
 CHAIN_ID=84532
 CHAIN_NAME=Base Sepolia
-RPC_URL=https://sepolia.base.org
+RPC_URLS=https://base-sepolia.gateway.tenderly.co,https://sepolia.base.org
 CONTRACT_KIND=oft
 
 # Contract addresses (MERCES_ADDRESS == TOKEN_ADDRESS on OFT chains)
@@ -173,7 +173,7 @@ NODE_2_URL=https://chain-c-node2.merces-oft.taceo.io
   ```
 # Plasma Testnet Configuration (Chain ID 9746)
 CHAIN_ID=9746
-RPC_URL=https://testnet-rpc.plasma.to
+RPC_URLS=https://testnet-rpc.plasma.to,https://lb.routeme.sh/rpc/evm/9746
 
 # Contract addresses
 ID_REGISTRY_CONTRACT=0x357966580C4F2f527646f8670E71Dc6F3DE7ff00
@@ -198,7 +198,7 @@ NODE_2_URL=https://node2.merces2.taceo.io
   ```
 # Stable Testnet Configuration (Chain ID 2201)
 CHAIN_ID=2201
-RPC_URL=https://rpc.testnet.stable.xyz
+RPC_URLS=https://rpc.testnet.stable.xyz,https://lb.routeme.sh/rpc/evm/2201
 
 # Contract addresses
 ID_REGISTRY_CONTRACT=0x530900984F20831336f0e14c6f74004D0f1DB95a
