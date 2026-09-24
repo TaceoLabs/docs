@@ -4,21 +4,21 @@ title: Private holdings & cap table
 
 # Private holdings & cap table
 
-A tokenized asset's cap table is its register of who holds what. On a public chain that register is readable by anyone: every position, every change in position, and the full graph of who transferred to whom. Competitors read it, counterparties read it, and so does anyone building a profile of an investor.
+A tokenized asset's cap table is its register of who holds what. On a public chain that register is readable by anyone: every position, every change in position, and the full graph of who transferred to whom.
 
-Under Merces the register still exists and still settles onchain — it is just not published in the clear.
+Under Merces the register still exists and still settles onchain, but it is not published in the clear.
 
 ## How holdings are represented
 
-Each holder's position is an encrypted commitment onchain, backed by a balance held as secret shares across the TACEO Network's operators. No single party, TACEO included, sees a position in plaintext. A holder can read their own position; nobody reads it for them.
+Each holder's position is an encrypted commitment onchain, backed by a balance held as secret shares across the TACEO Network's operators. No single party, TACEO included, sees a position in plaintext. Holders can only read their own positions.
 
-Because positions are commitments rather than plaintext balances, the cap table cannot be reconstructed by watching the chain. What an observer sees is that the register changed and that the change was valid — not who moved, or how much.
+Because positions are commitments rather than plaintext balances, the cap table cannot be reconstructed by watching the chain. What an observer sees is that the register changed and that the change was valid, however not who moved it, or how much.
 
 ## What stays verifiable
 
 Every change to the register is accompanied by a proof that it was correct: that the transferring holder had the position they claimed, and that the resulting state follows from the prior one. The chain carries a complete, verifiable audit trail of the asset's history, and verifying that trail does not require decrypting anything behind it.
 
-This is the property that distinguishes a private cap table from an off-chain one. A spreadsheet at a transfer agent is also private, and also unverifiable by anyone who is not holding the spreadsheet. A Merces register is private and provable at the same time.
+This is the property that distinguishes a private onchain cap table from an offchain one. A spreadsheet at a transfer agent is also private, but also unverifiable by anyone who is not holding the spreadsheet. A Merces register is private and provable at the same time.
 
 ## Seeing the book
 

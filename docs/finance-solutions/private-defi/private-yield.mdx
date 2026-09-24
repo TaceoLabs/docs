@@ -4,15 +4,11 @@ title: Private yield
 
 # Private yield
 
-:::info Testnet only
-Private yield runs on testnet and is not available on production chains. The vault simulates yield by periodically adding assets to the pool rather than sourcing returns from a live lending market, and uses test tokens with no real-world value.
-:::
-
 Private yield lets users put assets held in a private Merces balance to work. Funds move from the private account into a vault that accrues yield over time, without exposing positions, amounts, or counterparty relationships onchain.
 
 ## How it works
 
-The vault is an [ERC-4626](https://eips.ethereum.org/EIPS/eip-4626) contract whose internal balances are held as secret shares across the TACEO MPC network, exactly like private transfer balances. Neither the balance nor the yield accrual is ever written to the chain in plaintext.
+The vault is an [ERC-4626](https://eips.ethereum.org/EIPS/eip-4626) contract whose internal balances are held as secret shares across the TACEO network, exactly like private account balances. Neither the balance nor the yield accrual is ever written to the chain in plaintext.
 
 A position is represented as vault shares. Shares change in value as the vault's underlying pool changes, but the share count and its underlying value stay private.
 
@@ -26,7 +22,7 @@ In practice:
 At no point is a plaintext balance or share count visible onchain or to any single party.
 
 :::tip Token support
-The description below uses one token throughout for simplicity. The vault standard and private yield support any supported token.
+The description below uses one token throughout for simplicity. The vault standard and private yield support any token.
 :::
 
 ## Components
@@ -42,7 +38,7 @@ The description below uses one token throughout for simplicity. The vault standa
 
 A vault deposit moves funds from a private balance into the vault. From the user's perspective it is atomic: the private balance decreases, the vault share balance increases. Underneath it is two chained Merces actions — a private withdraw, then a vault deposit.
 
-1. The client generates a ZK proof and encrypted shares and sends them to the gateway over WebSocket.
+1. The client generates a ZK proof and encrypted shares and posts them direclty to the contract or use the gateway over WebSocket.
 2. The gateway submits the transaction to the Merces contract.
 3. The MPC network processes the transition and withdraws the amount from the user's private balance.
 4. Once the contract has processed that withdraw, it queues a second action to deposit the amount into the vault.
@@ -95,3 +91,7 @@ sequenceDiagram
     Merces Contract->>Gateway: tx_hash
     Gateway->>Client: tx_hash
 ```
+
+## Privacy
+Token positions and vault shares are held privately in the Merces contract. An onchain observer can not link a token balance to a specific user wallet.
+Since the vault itself is a public contract the deposit to / withdraw from the vault is also a public transaction. However, the transaction is triggered by the Merces contract and does not reveal on behalf of which user it acts. 

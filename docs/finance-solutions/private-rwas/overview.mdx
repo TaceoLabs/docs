@@ -6,19 +6,19 @@ title: Overview
 
 Tokenizing funds, credit, or securities onchain means holdings, transfers, and investor positions become public by default. For regulated issuers and their investors that is unacceptable, and it is one of the reasons institutional tokenization has stalled short of production.
 
-Merces changes what is published. Ownership balances are held as encrypted commitments rather than readable balances, and transfers settle on the public chain without disclosing who transacted or in what size. The asset stays where it is: no new L1, no smart-contract rewrite, deployed on the EVM chain the asset already lives on.
+Merces changes what is published. Ownership balances are held as encrypted commitments rather than readable balances, and transfers settle on the public chain without disclosing who transacted or in what size. The asset stays where it is: no new L1, no smart-contract rewrite, deployed on the chain the asset already lives on.
 
 ## What Merces adds
 
 **Private holdings and transfers.** Ownership balances are held as encrypted commitments. Secondary transfers hide holder, counterparty and size while still settling on the public chain.
 
-**Confidential state transitions.** Allocation, pricing and settlement logic execute privately, with outputs verified onchain by proof — public verification without public data.
+**Confidential state transitions.** Allocation, pricing and settlement logic execute privately, with outputs verified onchain via cryptographic proofs.
 
-**Auditable by design.** Threshold description in conjunction with decryption requests lets issuers and regulators view exactly the positions or transactions in scope, and nothing else. That is a different posture from the all-or-nothing transparency of a public token, where the only options are full exposure or an opaque off-chain register.
+**Auditable by design.** Threshold description in conjunction with decryption requests lets issuers and regulators view exactly the positions or transactions in scope to fulfill their regulatory and compliance needs.
 
 ## In this section
 
 - [Private holdings & cap table](/docs/finance-solutions/private-rwas/private-holdings) — how the register of ownership works when balances are encrypted
 - [Disclosure & audit views](/docs/finance-solutions/private-rwas/disclosure) — showing an auditor or regulator exactly what is in scope
 
-The underlying mechanics are the same ones behind any Merces balance — see [Architecture](/docs/finance-solutions/concepts/architecture) and [Privacy Model](/docs/finance-solutions/concepts/privacy-model).
+The underlying mechanics are the same ones behind any Merces balance — see [Architecture](/docs/finance-solutions/concepts/architecture) and [Privacy model](/docs/finance-solutions/concepts/privacy-model).

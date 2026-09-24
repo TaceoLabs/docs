@@ -73,7 +73,6 @@ const sidebars: SidebarsConfig = {
           items: [
             "finance-solutions/cross-chain/how-it-works",
             "finance-solutions/cross-chain/quickstart",
-            "finance-solutions/cross-chain/limitations",
           ],
         },
         {
