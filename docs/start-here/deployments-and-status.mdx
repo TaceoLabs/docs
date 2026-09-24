@@ -51,9 +51,9 @@ WebSocket timeouts. Ensure that you have a stable RPC provider and implement ret
   <summary>Merces - Monad Mainnet</summary>
   ```
 # Monad Mainnet Configuration
-CHAIN_ID=10143
+CHAIN_ID=143
 CHAIN_NAME=Monad Mainnet
-RPC_URLS=https://143.rpc.thirdweb.com,https://rpc.monad.xyz,https://monad-rpc.huginn.tech,https://monad-mainnet.g.alchemy.com/v2/demo
+RPC_URLS=https://rpc.monad.xyz
 
 # Contract addresses (core)
 ID_REGISTRY_ADDRESS=0xF55DFe8242ec117F44Acd932adb5C233b582A04a
@@ -68,6 +68,9 @@ NODE_2_URL=https://query.node2.usdc.monad.merces.taceo.network
 # User group (4 = ANON, recommended for mainnet SDK testing)
 # ANON limits: Fee=0, Max Amount/Tx=1000000 (1 USDC), Max Txs/Epoch=35, Max members=100
 GROUP_ID=4
+
+# Compliance service URL (required for registration/deposit/withdraw)
+COMPLIANCE_URL=https://compliance.usdc.monad.merces.taceo.network/
   ```
 </details>
 
@@ -92,6 +95,9 @@ NODE_2_URL=https://query.node2.usdc.world.merces.taceo.network
 # User group (4 = ANON, recommended for mainnet SDK testing)
 # ANON limits: Fee=0, Max Amount/Tx=1000000 (1 USDC), Max Txs/Epoch=35, Max members=100
 GROUP_ID=4
+
+# Compliance service URL (required for registration/deposit/withdraw)
+COMPLIANCE_URL=https://compliance.usdc.world.merces.taceo.network
   ```
 </details>
 
