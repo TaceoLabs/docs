@@ -108,7 +108,7 @@ is already registered it returns the existing index rather than reverting, so th
 | `maxFee` | Yes | The highest join fee you are willing to pay. The call reverts rather than exceeding it |
 | `userGroupAuthorization` | No | Signed authorization, for groups that are not open to join |
 | `deadline` | No | Unix seconds. Defaults to one hour from now |
-| `complianceData` | No | Attestation bytes, if the deployment gates registration on a policy check |
+| `complianceData` | No | Attestation bytes, if the deployment gates registration on a policy check. See [Compliance](#compliance) |
 
 Registration touches only the ID registry — not the Merces contract, the token, or the
 query nodes.
@@ -118,12 +118,19 @@ Note: Some limitations apply when using the SDK with mainnet deployments. Use GR
 
 ## Create a client
 
+Use viem's built-in chains rather than `defineChain`. The built-in chains include
+chain-specific settings that affect event watching:
+
 ```typescript
 import { createPublicClient, createWalletClient, http } from 'viem';
 import { privateKeyToAccount } from 'viem/accounts';
+import * as viemChains from 'viem/chains';
 import { Client } from '@taceo/merces-client';
 
 const account = privateKeyToAccount(process.env.PRIVATE_KEY as `0x${string}`);
+
+// Look up chain from viem's built-in chains
+const chain = Object.values(viemChains).find(c => c.id === CHAIN_ID);
 
 const publicClient = createPublicClient({ chain, transport: http(RPC_URL) });
 const walletClient = createWalletClient({ account, chain, transport: http(RPC_URL) });
@@ -134,6 +141,7 @@ const client = new Client(publicClient, walletClient, {
   erc20Address:      TOKEN_ADDRESS,
   authSecret,
   nodeUrls: [NODE_0_URL, NODE_1_URL, NODE_2_URL],
+  complianceUrl: COMPLIANCE_URL, // required for mainnet deployments
 });
 ```
 
@@ -141,6 +149,21 @@ const client = new Client(publicClient, walletClient, {
 
 :::warning
 This requires you to pass your private key to the SDK. Use testing wallets or secure the key/environment variable in some manner.
+:::
+
+:::warning Transport Configuration
+Do not use aggressive timeouts on the HTTP transport. The SDK uses `watchContractEvent`
+to detect when actions are processed, which relies on polling. Aggressive timeouts can
+cause these requests to fail, resulting in `ActionTimeoutError` even though the action
+succeeded on-chain.
+
+```typescript
+// WRONG - may break event watching
+http(url, { timeout: 10_000, retryCount: 0 })
+
+// CORRECT - use defaults
+http(url)
+```
 :::
 
 ### Configuration
@@ -152,12 +175,13 @@ This requires you to pass your private key to the SDK. Use testing wallets or se
 | `erc20Address` | Yes | The ERC-20 being wrapped |
 | `authSecret` | Yes | Committed at the ID registry during registration |
 | `nodeUrls` | Yes | The three query nodes. Each serves one share |
-| `queryTimeoutMs` | No | Balance and history requests. Default 15,000 |
-| `queryRetryDelayMs` | No | Delay between consistency retries. Default 500 |
+| `complianceUrl` | No | URL of the compliance service. Required for mainnet deployments |
+| `queryRetryMaxTimes` | No | Maximum consistency retry attempts. Default 10 |
+| `queryRetryMinDelayMs` | No | Minimum delay before first retry. Default 100 |
+| `queryRetryMaxDelayMs` | No | Maximum delay between retries (doubles each attempt). Default 2000 |
 | `actionTimeoutMs` | No | Wait for the `ActionProcessed` event. Default 30,000 |
 
-`queryTimeoutMs` and `actionTimeoutMs` cover different stages. Raising
-`actionTimeoutMs` is the usual fix under load — a timeout there means you stopped
+Raising `actionTimeoutMs` is the usual fix under load — a timeout there means you stopped
 waiting, not that the action failed.
 
 ## Deposit
@@ -184,7 +208,7 @@ const confidential = await client.privateBalance();  // secret-shared across the
 
 `privateBalance()` asks all three query nodes for their share and reconstructs the value
 locally. Every node must answer consistently, so a node lagging behind causes a retry
-rather than a wrong answer. If they cannot agree within `queryTimeoutMs`, it throws.
+rather than a wrong answer. If they cannot agree within the retry limits, it throws.
 
 ## Transfer
 
@@ -279,11 +303,48 @@ try {
 
 ## Compliance
 
-`register`, `deposit` and `withdraw` accept an optional `complianceData` — attestation
-bytes from a policy provider, passed through to the contract. Transfers do not: policy is
-enforced at the points where value enters and leaves the system. If the deployment gates
-an action and the attestation is missing or rejected, the call throws `NotCompliantError`.
-See [Pre-transaction screening](/docs/finance-solutions/compliance/pre-transaction-screening).
+Mainnet deployments (Monad, Worldchain) require compliance attestation for `register`,
+`deposit`, and `withdraw`. Transfers do not require compliance — policy is enforced at
+the points where value enters and leaves the system.
+
+### For registration
+
+Fetch compliance data and pass it to `register`:
+
+```typescript
+import { fetchComplianceData, register } from '@taceo/merces-client';
+
+const complianceData = await fetchComplianceData(COMPLIANCE_URL, address);
+
+await register({
+  publicClient,
+  walletClient,
+  idRegistryAddress: ID_REGISTRY_ADDRESS,
+  authSecret,
+  groupId: GROUP_ID,
+  maxFee: parseUnits('1', decimals),
+  complianceData,
+});
+```
+
+### For deposit and withdraw
+
+Pass `complianceUrl` when creating the client. The SDK fetches attestation automatically:
+
+```typescript
+const client = new Client(publicClient, walletClient, {
+  // ... other config
+  complianceUrl: COMPLIANCE_URL,
+});
+
+// Compliance is handled internally
+await client.deposit({ amount });
+await client.withdraw({ amount });
+```
+
+If the deployment gates an action and the attestation is missing or rejected, the call
+throws `NotCompliantError`. See [Pre-transaction screening](/docs/finance-solutions/compliance/pre-transaction-screening)
+for policy configuration.
 
 ## Errors
 
@@ -328,12 +389,12 @@ try {
 
 ## CLI
 
-The package installs a `client-ts` binary that exposes the same operations, useful for
+The package installs a `taceo-merces-client` binary that exposes the same operations, useful for
 trying a deployment without writing code. Configuration comes from flags or the matching
 `MERCES_CLIENT_*` environment variables:
 
 ```bash
-client-ts deposit --amount 1000 \
+taceo-merces-client deposit --amount 1000 \
   --id-registry-address 0x... \
   --contract-address 0x... \
   --erc20-address 0x... \
@@ -343,6 +404,21 @@ client-ts deposit --amount 1000 \
 ```
 
 Without `--auth-secret`, it derives one by signature as above.
+
+For mainnet deployments, use `--chain` to load preset configuration:
+
+```bash
+taceo-merces-client deposit --amount 1 \
+  --chain monad \
+  --private-key 0x...
+```
+
+The `--chain` flag (`monad` or `world`) supplies default addresses, node URLs, RPC URL,
+and compliance URL for that deployment. `--rpc-url` overrides the default RPC if both
+are given.
+
+Available commands: `deposit`, `withdraw`, `transfer`, `register`, `get-private-balance`,
+`get-erc20-balance`, `get-history`.
 
 ## Rust client
 
