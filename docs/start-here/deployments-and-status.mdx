@@ -22,6 +22,7 @@ TACEO is chain-agnostic — the network runs off-chain, so most services touch n
 |---|---|---|
 | Plasma | Merces testnet | Via [Omap SDK](/docs/finance-solutions/integrate/client-sdk-omap) or https://plasma.merces-demo.taceo.io |
 | Stable Testnet | Merces testnet | Via [Omap SDK](/docs/finance-solutions/integrate/client-sdk-omap) or https://stable.merces-demo.taceo.io |
+| Amoy Polygon Testnet | Merces testnet | Via [Omap SDK](/docs/finance-solutions/integrate/client-sdk-omap) or https://polygon.merces-demo.taceo.io |
 | Monad Testnet | Cross-chain OFT demo, LayerZero | Via [OFT SDK](/docs/finance-solutions/integrate/client-sdk-oft) or https://crosschain.merces-demo.taceo.io |
 | Sepolia | Cross-chain OFT demo, LayerZero | Via [OFT SDK](/docs/finance-solutions/integrate/client-sdk-oft) or https://crosschain.merces-demo.taceo.io |
 | Base Sepolia | Cross-chain OFT demo, LayerZero | Via [OFT SDK](/docs/finance-solutions/integrate/client-sdk-oft) or https://crosschain.merces-demo.taceo.io |
@@ -30,14 +31,14 @@ TACEO is chain-agnostic — the network runs off-chain, so most services touch n
 
 ### Feature availability
 
-| Feature | Monad (prod) | Worldchain (prod) | Plasma (testnet) | Stable (testnet) | OFT (testnet) |
+| Feature | Monad (prod) | Worldchain (prod) | Plasma (testnet) | Stable (testnet) | Polygon (testnet) | OFT (testnet) |
 |---|:---:|:---:|:---:|:---:|:---:|
-| Transfer | ✅ (with limits) | ✅ (with limits) | ✅ | ✅ | ✅ | 
-| Deposit / Withdraw | ✅ (with limits) | ✅ (with limits) | ✅ | ✅ | ✅ | 
-| Yield | — | — | ✅ | ✅ | - |
-| Cross-chain bridging | — | — | - | - | ✅ |
-| Gateway | — | — | ✅ | ✅ | - |
-| Omap | — | — | ✅ | ✅ | - |
+| Transfer | ✅ (with limits) | ✅ (with limits) | ✅ | ✅ | ✅ | ✅ | 
+| Deposit / Withdraw | ✅ (with limits) | ✅ (with limits) | ✅ | ✅ | ✅ | ✅ |
+| Yield | — | — | ✅ | ✅ | - | ✅ |
+| Cross-chain bridging | — | — | - | - | ✅ | - |
+| Gateway | — | — | ✅ | ✅ | - | ✅ |
+| Omap | — | — | ✅ | ✅ | - | ✅ |
 
 ### Contracts & Addresses
 
@@ -219,6 +220,31 @@ ORCHESTRATOR_URL=https://stable.orchestrator.merces2.taceo.io
 NODE_0_URL=https://stable.node0.merces2.taceo.io
 NODE_1_URL=https://stable.node1.merces2.taceo.io
 NODE_2_URL=https://stable.node2.merces2.taceo.io
+  ```
+</details>
+
+<details>
+  <summary>Omap - Amoy Polygon Testnet</summary>
+  ```
+# Amoy Polygon Testnet Configuration (Chain ID 80002)
+CHAIN_ID=80002
+RPC_URLS=https://rpc-amoy.polygon.technology
+
+# Contract addresses
+ID_REGISTRY_CONTRACT=0xA7Fa3E31BF159744184bF70B30986253188DEFd3
+MERCES_ADDRESS=0xc682B041B1de7AF910E39DCda56138c76c8AF897
+TOKEN_ADDRESS=0xB184e5dF26Fd1E7213B76192602f3d0FDe550B5a
+VAULT_ADDRESS=0xCE0a243191CF99b10171be72CFF54318c700E63E
+
+# Service URLs
+ID_REGISTRY_URL=https://id-registry.merces2.taceo.io
+GATEWAY_URL=wss://gateway.merces2.taceo.io
+ORCHESTRATOR_URL=https://orchestrator.merces2.taceo.io
+
+# MPC Node URLs
+NODE_0_URL=https://node0.merces2.taceo.io
+NODE_1_URL=https://node1.merces2.taceo.io
+NODE_2_URL=https://node2.merces2.taceo.io
   ```
 </details>
 
