@@ -32,12 +32,12 @@ The gateway takes a `wss://` base URL; the client appends the WebSocket path its
 
 ```typescript
 const client = new Client({
-  gatewayUrl: 'wss://gateway.merces2.taceo.io',
+  gatewayUrl: 'wss://plasma.gateway.merces2.taceo.io', // <chain>.gateway.merces2.taceo.io
   gatewayTimeout: 60_000, // optional, default 30_000
   // ...
 });
 ```
 
-Note that the published TypeScript client routes transfers, withdrawals and vault operations through the gateway — `gatewayUrl` is a required field, and those methods have no direct-to-contract variant. Going direct for those operations means calling the contract yourself rather than using those client methods. See [Client SDK](/docs/finance-solutions/integrate/client-sdk).
+`gatewayUrl` is optional. With it set, the TypeScript client routes transfers, withdrawals and vault operations through the gateway. Without it, the client sends every operation directly to the contract from the user's wallet, who then pays gas. This requires `token: 'ERC20'` — `'EIP3009'` needs the gateway and the constructor throws without one. See [Client SDK - OMap](/docs/finance-solutions/integrate/client-sdk-omap).
 
 Note that the gateway is currently only available for selected deployments (refer to [deployments overview](/docs/start-here/deployments-and-status)).
