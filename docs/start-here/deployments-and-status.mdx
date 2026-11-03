@@ -23,7 +23,6 @@ TACEO is chain-agnostic — the network runs off-chain, so most services touch n
 | Plasma | Merces testnet | Via [Omap SDK](/docs/finance-solutions/integrate/client-sdk-omap) or https://plasma.merces-demo.taceo.io |
 | Stable Testnet | Merces testnet | Via [Omap SDK](/docs/finance-solutions/integrate/client-sdk-omap) or https://stable.merces-demo.taceo.io |
 | Amoy Polygon Testnet | Merces testnet | Via [Omap SDK](/docs/finance-solutions/integrate/client-sdk-omap) or https://polygon.merces-demo.taceo.io |
-| Zenith Testnet | Merces testnet | Via [Omap SDK](/docs/finance-solutions/integrate/client-sdk-omap) or https://zenith.merces-demo.taceo.io |
 | Monad Testnet | Cross-chain OFT demo, LayerZero | Via [OFT SDK](/docs/finance-solutions/integrate/client-sdk-oft) or https://crosschain.merces-demo.taceo.io |
 | Sepolia | Cross-chain OFT demo, LayerZero | Via [OFT SDK](/docs/finance-solutions/integrate/client-sdk-oft) or https://crosschain.merces-demo.taceo.io |
 | Base Sepolia | Cross-chain OFT demo, LayerZero | Via [OFT SDK](/docs/finance-solutions/integrate/client-sdk-oft) or https://crosschain.merces-demo.taceo.io |
@@ -32,14 +31,14 @@ TACEO is chain-agnostic — the network runs off-chain, so most services touch n
 
 ### Feature availability
 
-| Feature | Monad (prod) | Worldchain (prod) | Plasma (testnet) | Stable (testnet) | Polygon (testnet) | Zenith (testnet) | OFT (testnet) |
-|---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| Transfer | ✅ (with limits) | ✅ (with limits) | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Deposit / Withdraw | ✅ (with limits) | ✅ (with limits) | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Yield | — | — | ✅ | ✅ | ✅ | ✅ | - |
-| Cross-chain bridging | — | — | - | - | - | - | ✅ |
-| Gateway | — | — | ✅ | ✅ | ✅ | ✅ | - |
-| Omap | — | — | ✅ | ✅ | ✅ | ✅ | - |
+| Feature | Monad (prod) | Worldchain (prod) | Plasma (testnet) | Stable (testnet) | Polygon (testnet) | OFT (testnet) |
+|---|:---:|:---:|:---:|:---:|:---:|:---:|
+| Transfer | ✅ (with limits) | ✅ (with limits) | ✅ | ✅ | ✅ | ✅ |
+| Deposit / Withdraw | ✅ (with limits) | ✅ (with limits) | ✅ | ✅ | ✅ | ✅ |
+| Yield | — | — | ✅ | ✅ | ✅ | - |
+| Cross-chain bridging | — | — | - | - | - | ✅ |
+| Gateway | — | — | ✅ | ✅ | ✅ | - |
+| Omap | — | — | ✅ | ✅ | ✅ | - |
 
 ### Contracts & Addresses
 
@@ -246,31 +245,6 @@ ORCHESTRATOR_URL=https://polygon.orchestrator.merces2.taceo.io
 NODE_0_URL=https://polygon.node0.merces2.taceo.io
 NODE_1_URL=https://polygon.node1.merces2.taceo.io
 NODE_2_URL=https://polygon.node2.merces2.taceo.io
-  ```
-</details>
-
-<details>
-  <summary>Omap - Zenith Testnet</summary>
-  ```
-# Zenith Testnet Configuration (Chain ID 936485)
-CHAIN_ID=936485
-RPC_URLS=https://rpc.testnet.zenith.network
-
-# Contract addresses
-ID_REGISTRY_CONTRACT=0x9E783d754f565cEdaa5aC843CE8ca67b057DA119
-MERCES_ADDRESS=0x866866243c8C484444164f3aF60f42ee8bb7B0AE
-TOKEN_ADDRESS=0x71146e8695C0d7BB0B0c57d3229b27793FCA87FB
-VAULT_ADDRESS=0xE67b5933CA36273C17b7384a96bEBc2c340c9093
-
-# Service URLs
-ID_REGISTRY_URL=https://zenith.id-registry.merces2.taceo.io
-GATEWAY_URL=wss://zenith.gateway.merces2.taceo.io
-ORCHESTRATOR_URL=https://zenith.orchestrator.merces2.taceo.io
-
-# MPC Node URLs
-NODE_0_URL=https://zenith.node0.merces2.taceo.io
-NODE_1_URL=https://zenith.node1.merces2.taceo.io
-NODE_2_URL=https://zenith.node2.merces2.taceo.io
   ```
 </details>
 

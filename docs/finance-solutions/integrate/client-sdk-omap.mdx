@@ -4,7 +4,7 @@ title: Client SDK - OMap
 
 # Client SDK - OMap
 
-The OMap client is the Merces client used on the Plasma, Stable, Polygon and Zenith deployments. It runs
+The OMap client is the Merces client used on the Plasma, Stable and Polygon deployments. It runs
 entirely in your application: it generates proofs locally, holds the signing key, and talks
 to the gateway, the ID registry and the MPC nodes on your behalf. Balances and amounts
 never leave it in the clear.
@@ -13,7 +13,7 @@ It exposes two privacy modes and the yield vault, neither of which the Monad and
 client offers.
 
 :::info Which client do I need?
-Pick by deployment. **Plasma, Stable, Polygon and Zenith** use this client,
+Pick by deployment. **Plasma, Stable and Polygon** use this client,
 [`@taceo/merces2-client`](https://www.npmjs.com/package/@taceo/merces2-client). **Monad and
 Worldchain** use [`@taceo/merces-client`](/docs/finance-solutions/integrate/client-sdk),
 which has a different API. They are not interchangeable.
@@ -30,7 +30,7 @@ Note that - depending on the stability of your chosen RPC provider - you may hav
 
 Three services sit in front of Merces on these deployments; the gateway is optional. Each
 deployment has its own endpoints, following the pattern `<chain>.<service>.merces2.taceo.io`,
-where `<chain>` is `plasma`, `stable`, `polygon` or `zenith`. For Plasma:
+where `<chain>` is `plasma`, `stable` or `polygon`. For Plasma:
 
 | Service | URL |
 |---|---|
@@ -45,7 +45,6 @@ The vault contract differs per deployment:
 | Plasma | `0x3D2B3bC89c8D07Bb46C755bd8fde7D4271cf40d7` |
 | Stable | `0xE67b5933CA36273C17b7384a96bEBc2c340c9093` |
 | Polygon Amoy | `0xCE0a243191CF99b10171be72CFF54318c700E63E` |
-| Zenith | `0xE67b5933CA36273C17b7384a96bEBc2c340c9093` |
 
 Node URLs and the Merces, ID registry and token contract addresses are on
 [Deployments & status](/docs/start-here/deployments-and-status).
