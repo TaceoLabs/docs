@@ -10,7 +10,7 @@ The whole interaction with a single node is done via websockets. A Rust-based re
 
 **Encoding:** CBOR, JSON
 
-**Protocol version:** semver from client, sent either in the `x-taceo-oprf-protocol-version` header or as the `version` query parameter (`wss://<host>/api/<auth_module>/oprf?version=<semver>`, for clients such as browsers that cannot set headers). If both are present, the header takes precedence.
+**Protocol version:** semver from client, sent either in the `x-taceo-oprf-protocol-version` header or as the `version` query parameter (`wss://<host>/api/<auth_module>/oprf?version=<semver>`, for clients such as browsers that cannot set headers). If both are present, the query parameter takes precedence.
 
 ### Message Flow
 
