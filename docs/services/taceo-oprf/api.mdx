@@ -10,7 +10,7 @@ The whole interaction with a single node is done via websockets. A Rust-based re
 
 **Encoding:** CBOR, JSON
 
-**Additional header:** `x-taceo-oprf-protocol-version` (semver from client)
+**Protocol version:** semver from client, sent either in the `x-taceo-oprf-protocol-version` header or as the `version` query parameter (`wss://<host>/api/<auth_module>/oprf?version=<semver>`, for clients such as browsers that cannot set headers). If both are present, the query parameter takes precedence.
 
 ### Message Flow
 
@@ -31,21 +31,27 @@ A client initializes a single session at $n$ MPC-nodes. As soon as the client su
 
 ### Errors
 
-Before doing the upgrade handshake, the server will verify the `x-taceo-oprf-protocol-version` header. It will reject clients providing a non-acceptable version with a BAD_REQUEST status-code.
+Before doing the upgrade handshake, the server will verify the protocol version (header or `version` query parameter). It will reject clients providing a missing or non-acceptable version with a BAD_REQUEST status-code.
 
 After establishing the web-socket connection, the server will always close the web-socket connection with a dedicated CloseFrame.
 
-| Code | Name                  | Description                                                                              |
-| ---- | --------------------- | ---------------------------------------------------------------------------------------- |
-| 1003 | Unexpected message    | Cannot parse message from user or sends PING/PONG messages.                              |
-| 1008 | session reuse         | If the client reuses an open session-id.                                                 |
-| 1008 | authorization error   | Implementation dependent authorization failed.                                           |
-| 1011 | INTERNAL_SERVER_ERROR | If the server encounters an internal error                                               |
-| 4001 | timeout               | The server will send this error code if the session exceeds its lifetime.                |
-| 4002 | bad request           | If the client sends invalid data and the server refuses to handle the request. Examples: |
+| Code      | Name                                   | Description                                                                                                |
+| --------- | -------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| 1003      | Unexpected message                     | Unexpected web-socket message (e.g. PING/PONG) or the client switched between JSON and CBOR between rounds. |
+| 1011      | INTERNAL_SERVER_ERROR                  | If the server encounters an internal error.                                                                |
+| 4001      | TIMEOUT                                | The session exceeded its lifetime.                                                                         |
+| 4002      | CORRUPTED_MESSAGE                      | The message could not be parsed (invalid JSON/CBOR or wrong message).                                     |
+| 4003      | SESSION_REUSE                          | The client reuses an open session-id (`request_id`).                                                       |
+| 4004      | UNKNOWN_OPRF_KEY_ID                    | The OPRF key ID resolved by the authorization module is unknown to the node.                               |
+| 4005      | BLINDED_QUERY_IS_IDENTITY              | The blinded query is the identity point.                                                                   |
+| 4006      | COEFFICIENTS_DOES_NOT_EQUAL_THRESHOLD  | The number of contributing parties in round 2 is not the threshold.                                       |
+| 4007      | MISSING_MY_COEFFICIENT                 | The node's own party ID is not among the contributing parties in round 2.                                 |
+| 4008      | UNSORTED_CONTRIBUTING_PARTIES          | The contributing party IDs in round 2 are not sorted.                                                     |
+| 4009      | DUPLICATE_COEFFICIENT                  | The contributing party IDs in round 2 contain a duplicate.                                                |
+| 4010      | DELETED_OPRF_KEY_ID                    | The requested OPRF key ID was deleted.                                                                     |
+| 4500–4999 | authorization error                    | Implementation dependent authorization failed. Authorization modules may also use a standard RFC 6455 code (e.g. 1008). |
 
-- threshold does not match commitments received in round 2
-- contributing party IDs not sorted in round 2 |
+The codes 4001–4499 are reserved for the service; the constants are defined in [`oprf_error_codes`](https://github.com/TaceoLabs/oprf-service/blob/main/oprf-types/src/api.rs).
 
 ### Messages
 
@@ -72,11 +78,21 @@ pub struct OprfResponse {
 	pub commitments: PartialDLogCommitmentsShamir,
 	/// The party ID of the node
 	pub party_id: PartyId,
-	/// The `OprfPublicKey` that was used for this OPRF computation.
-  pub oprf_public_key: OprfPublicKey,
+	/// The `OprfPublicKey` that was used for this OPRF computation, together with the epoch of the key share.
+	pub oprf_pub_key_with_epoch: OprfPublicKeyWithEpoch,
+}
+
+pub struct OprfPublicKeyWithEpoch {
+	/// The key
+	pub key: OprfPublicKey,
+	/// The epoch of the key share used by this node
+	pub epoch: ShareEpoch,
 }
 
 pub struct PartyId(pub u16);
+
+#[serde(transparent)]
+pub struct ShareEpoch(u32);
 
 #[serde(transparent)]
 pub struct OprfPublicKey(
@@ -138,6 +154,10 @@ pub struct DLogEqualityCommitments {
     #[serde(deserialize_with = "babyjubjub::deserialize_affine")]
     /// The share of G*e2, the second part of the two-nonce commitment to the randomness r2 = d2 + e2*b
     pub(crate) e2: Affine,
+    /// The Lagrange coefficients of the nodes whose commitments were aggregated, i.e. `party_id + 1`
+    /// for each contributing node (party 0 → 1). Must be sorted ascending, without duplicates,
+    /// exactly threshold many and include the receiving node (see error codes 4006–4009).
+    pub(crate) contributing_parties: Vec<u16>,
 }
 ```
 
