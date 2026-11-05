@@ -1,45 +1,77 @@
-Every commit to main gets deployed to https://docs.taceo.io via cloudflare pages.
+# TACEO Documentation
 
---- original Docusaurus readme below ---
+This repository contains the source code for the TACEO documentation website.
 
-# Website
+The documentation is available at https://docs.taceo.io/.
 
-This website is built using [Docusaurus](https://docusaurus.io/), a modern static website generator.
+The website is built using [Docusaurus](https://docusaurus.io/), a static website generator.
 
-### Installation
+## Prerequisites
 
-```
-$ yarn
-```
+Before getting started, ensure you have:
 
-### Local Development
+- Node.js 18 or later
+- npm
 
-```
-$ yarn start
-```
+## Installation
 
-This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
+Clone the repository:
 
-### Build
-
-```
-$ yarn build
+```bash
+git clone https://github.com/TaceoLabs/docs.git
+cd docs
 ```
 
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
+Install dependencies using the existing package lockfile:
 
-### Deployment
-
-Using SSH:
-
-```
-$ USE_SSH=true yarn deploy
+```bash
+npm ci
 ```
 
-Not using SSH:
+## Local Development
 
-```
-$ GIT_USER=<Your GitHub username> yarn deploy
+Start the local development server:
+
+```bash
+npm run start
 ```
 
-If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
+Docusaurus starts a local development server and opens the documentation website in your browser.
+
+Most changes are reflected without restarting the server.
+
+## Build
+
+Generate a production build:
+
+```bash
+npm run build
+```
+
+The generated static website is written to the `build` directory.
+
+## Deployment
+
+The TACEO documentation website is deployed through Cloudflare Pages.
+
+Changes merged into the `main` branch are deployed to:
+
+https://docs.taceo.io/
+
+The deployment process is managed by the project's Cloudflare Pages configuration.
+
+The generic Docusaurus GitHub Pages deployment commands are not required for local development or documentation contributions.
+
+## Contributing
+
+Contributions that improve the documentation are welcome for review.
+
+To propose a change:
+
+1. Fork this repository.
+2. Create a branch for your changes.
+3. Make and review your changes.
+4. Run the production build to check for errors.
+5. Open a pull request against the `main` branch.
+
+Please keep pull requests focused and provide a clear description of the changes.
