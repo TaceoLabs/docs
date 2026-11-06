@@ -6,3 +6,11 @@ updates:
       interval: weekly
     cooldown:
       default-days: 3
+    groups:
+      npm-security:
+        applies-to: security-updates
+        patterns: ["*"]
+      npm-minor-patch:
+        applies-to: version-updates
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
